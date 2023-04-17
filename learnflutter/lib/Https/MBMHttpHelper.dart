@@ -8,13 +8,15 @@ import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 final dio = Dio();
 void configureDio() {
   // Set default configs
-  dio.options.baseUrl = 'https://api.pub.dev';
+  dio.options.baseUrl =
+      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json';
   dio.options.connectTimeout = const Duration(seconds: 5);
   dio.options.receiveTimeout = const Duration(seconds: 3);
 
   // Or create `Dio` with a `BaseOptions` instance.
   final options = BaseOptions(
-    baseUrl: 'https://api.pub.dev',
+    baseUrl:
+        'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   );
@@ -53,17 +55,30 @@ class Result {
   }
 }
 
-void getHttp() async {
+Future<ModelMenu> getHttp() async {
+  var menuModel;
   final response = await dio.get(
       'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json');
   if (response.statusCode == 200) {
-    var munemodel;
+    var menus;
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
-          if (value.errorCode == 0)
-            {
-              munemodel = ModelMenu.fromJson((value.result)),
-              print(value.result)
-            }
+          if (value.errorCode == 0) {menus = ModelMenu.fromJson((value.result))}
         });
+    return menus;
   }
+  return menuModel;
+}
+
+Future<List> getListCategories() async {
+  var menuModel;
+  final response = await dio.get(
+      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json');
+  if (response.statusCode == 200) {
+    var menus;
+    await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
+          if (value.errorCode == 0) {menus = ModelMenu.fromJson((value.result))}
+        });
+    return menus.categories;
+  }
+  return menuModel.categories;
 }

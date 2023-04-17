@@ -1,9 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_import, non_constant_identifier_names, use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_import, non_constant_identifier_names, use_full_hex_values_for_flutter_colors, override_on_non_overriding_member, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
 import 'package:grouped_list/grouped_list.dart';
-
+import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'Menu/MenuController.dart';
 
 void main() {
@@ -27,19 +27,91 @@ List _elements = [
   {'name': 'Danny', 'group': 'Team C'},
   {'name': 'Danny', 'group': 'Team C'},
 ];
+List categories = [];
+bool isReload = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
+  MyApp setState() => MyApp();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MenuController());
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key});
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final Future<String> _calculation = Future<String>.delayed(
+    const Duration(seconds: 2),
+    () => 'Data Loaded',
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.displayMedium!,
+      textAlign: TextAlign.center,
+      child: FutureBuilder<String>(
+        future: _calculation, // a previously-obtained Future<String> or null
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              const Icon(
+                Icons.check_circle_outline,
+                color: Colors.green,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Result: ${snapshot.data}'),
+              ),
+            ];
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
       ),
-      home: MenuController(_elements),
     );
   }
 }
