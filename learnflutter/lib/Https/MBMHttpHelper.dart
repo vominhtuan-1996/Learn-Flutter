@@ -58,7 +58,7 @@ class Result {
 Future<ModelMenu> getHttp() async {
   var menuModel;
   final response = await dio.get(
-      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json');
+      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
   if (response.statusCode == 200) {
     var menus;
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
@@ -72,7 +72,7 @@ Future<ModelMenu> getHttp() async {
 Future<List> getListCategories() async {
   var menuModel;
   final response = await dio.get(
-      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json');
+      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
   if (response.statusCode == 200) {
     var menus;
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {

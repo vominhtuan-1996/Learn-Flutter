@@ -6,7 +6,7 @@ class ModelMenu {
   final List<dynamic> categories;
   final List<dynamic> menus;
 
-  const ModelMenu({
+  ModelMenu({
     required this.categories,
     required this.menus,
   });
@@ -21,9 +21,9 @@ class ModelMenu {
 
 class ModelMenuCategories {
   final String title;
-  final bool isSelected;
+  late bool isSelected;
 
-  const ModelMenuCategories({
+  ModelMenuCategories({
     required this.title,
     required this.isSelected,
   });
