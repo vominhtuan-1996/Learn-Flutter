@@ -1,9 +1,13 @@
-// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields
+// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MenuController extends StatefulWidget {
   const MenuController({super.key});
@@ -13,59 +17,69 @@ class MenuController extends StatefulWidget {
 }
 
 class MenuControllerWidgetState extends State<MenuController> {
+  late bool isLoading = false;
   late TextEditingController _controllerTextField = TextEditingController();
+  final ScrollController _controllerScrollView = ScrollController();
+  double fontSizeCell = 12;
+  double fontSizeSectionTitile = 16;
   late List categories = [];
   late List menus = [];
-  late List recentlyUsed = [
-    ChildMenusModel(
-        iconChildMenu: 'ic_menu_survey',
-        titleChildMenu: 'Khảo sát ngoại vi',
-        routeName: 'routeName'),
-    ChildMenusModel(
-        iconChildMenu: 'ic_menu_maintenance',
-        titleChildMenu: 'Bảo trì POP',
-        routeName: ''),
-    ChildMenusModel(
-        iconChildMenu: 'ic_menu_survey',
-        titleChildMenu: 'Khảo sát ngoại vi XLA',
-        routeName: ''),
-    ChildMenusModel(
-        iconChildMenu: 'ic_menu_mark',
-        titleChildMenu: 'Chấm trụ điện',
-        routeName: '')
-  ];
+  late List recentlyUsed = [];
   @override
   void initState() {
-    super.initState();
+    SVProgressHUD.show(status: 'Loadding......');
     getListCategories();
+    recentlyUsed = parseChildMenusModel(
+        SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+    super.initState();
   }
 
   void getListCategories() {
     getHttp().then((value) => {
           categories = value.categories,
           menus = value.menus,
-          setState(() {}),
+          setState(() {
+            isLoading = true;
+            SVProgressHUD.dismiss();
+          }),
           print(categories)
         });
+  }
+
+  void _animateToIndex(int index) {
+    index = index == 0 ? 1 : index;
+    ModelMenusItem item = menus[index];
+    double heightCell = item.childMenus.length / 4 > 1
+        ? (item.childMenus.length / 4).toInt() * 110 + 40
+        : 150;
+    _controllerScrollView.animateTo(
+      ((index * heightCell)),
+      duration: Duration(seconds: 2),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Grouped List View Example'),
-        // ),
-        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xFFFFF3E9),
-        body: Expanded(
+        body: SafeArea(
+            child: Container(
+          child: GestureDetector(
+            onTap: () {
+              dismissKeyboard();
+            },
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            initUISearchView(),
-            initUICategories(),
-            initUIToolRecentlyUsed(),
-            initUIMenus(),
-          ],
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                initUISearchView(),
+                initUICategories(),
+                initUIToolRecentlyUsed(),
+                SizedBox(height: 20),
+                initUIMenus(),
+              ],
+            ),
+          ),
         )));
   }
 
@@ -95,10 +109,8 @@ class MenuControllerWidgetState extends State<MenuController> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0), color: Colors.white),
             child: Center(
-              child: Icon(
-                Icons.notifications,
-                color: Colors.orange,
-              ),
+              child: Image.asset(
+                  loadImageWithImageName('ic_notification', TypeImage.png)),
             )));
   }
 
@@ -112,12 +124,10 @@ class MenuControllerWidgetState extends State<MenuController> {
       ),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        prefixIcon: Icon(Icons.search, color: Colors.orange),
+        prefixIcon: Image.asset(
+            loadImageWithImageName('ic_search_organe', TypeImage.png)),
         hintText: "Tìm kiếm chức năng",
-        hintStyle: TextStyle(
-          fontSize: 16.0,
-          color: const Color(0xFFFDA758),
-        ),
+        hintStyle: textStyleManrope(Color(0xFFFDA758), 16, FontWeight.normal),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
@@ -137,9 +147,29 @@ class MenuControllerWidgetState extends State<MenuController> {
     print(routeName);
   }
 
-  GestureDetector childMenusCell(ChildMenusModel data) {
+  GestureDetector childMenusCell(ChildMenusModel data, bool isRecentlyUsed) {
     return GestureDetector(
       onTap: () {
+        bool isAddObject = false;
+        List<ChildMenusModel> cacheRecentlyUsed = parseChildMenusModel(
+            SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+        for (ChildMenusModel element in cacheRecentlyUsed) {
+          if (element.titleChildMenu == data.titleChildMenu) {
+            isAddObject = false;
+            break;
+          } else {
+            isAddObject = true;
+          }
+        }
+        if (isAddObject || cacheRecentlyUsed.length == 0) {
+          cacheRecentlyUsed.add(data);
+          SharedPreferenceUtils.putObjectList(
+              keysaveCache_childMenus, cacheRecentlyUsed);
+          setState(() {
+            recentlyUsed = parseChildMenusModel(
+                SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+          });
+        }
         selectItemChildMenu(data.routeName);
       },
       child: Column(
@@ -158,14 +188,12 @@ class MenuControllerWidgetState extends State<MenuController> {
             height: 6,
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
               child: Center(
-                child: Text(data.titleChildMenu,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                    )),
-              ))
+            child: Text(data.titleChildMenu,
+                textAlign: TextAlign.center,
+                style: textStyleManrope(
+                    Color(0xFF795675), fontSizeCell, FontWeight.normal)),
+          ))
         ],
       ),
     );
@@ -174,6 +202,7 @@ class MenuControllerWidgetState extends State<MenuController> {
   Expanded initUIMenus() {
     return Expanded(
         child: ListView.builder(
+            controller: _controllerScrollView,
             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
             scrollDirection: Axis.vertical,
             itemCount: menus.length,
@@ -185,14 +214,10 @@ class MenuControllerWidgetState extends State<MenuController> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
-                          item.parentMenuTitle,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Text(item.parentMenuTitle,
+                            textAlign: TextAlign.left,
+                            style: textStyleManrope(Color(0xFF795675),
+                                fontSizeSectionTitile, FontWeight.bold)),
                         SizedBox(height: 10),
                         Container(
                           height:
@@ -201,11 +226,13 @@ class MenuControllerWidgetState extends State<MenuController> {
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4, childAspectRatio: 5 / 6),
+                                    crossAxisCount: 4,
+                                    childAspectRatio: 5 / 6,
+                                    crossAxisSpacing: 7),
                             itemBuilder: (BuildContext ctxt, int index) {
                               ChildMenusModel childMenusModel =
                                   item.childMenus[index];
-                              return childMenusCell(childMenusModel);
+                              return childMenusCell(childMenusModel, false);
                             },
                             itemCount: item.childMenus.length,
                           ),
@@ -215,40 +242,38 @@ class MenuControllerWidgetState extends State<MenuController> {
   }
 
   Container initUIToolRecentlyUsed() {
+    // recentlyUsed = [];
     return Container(
       alignment: Alignment.center,
       // color: Colors.red,
       child: Column(children: <Widget>[
         Container(
-            // color: Colors.blue,
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
-                    'Tool sử dụng gần đây',
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Text('Tool sử dụng gần đây',
+                      textAlign: TextAlign.left,
+                      style: textStyleManrope(Color(0xFF795675),
+                          fontSizeSectionTitile, FontWeight.bold)),
                   SizedBox(height: 10),
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    height: 120,
-                    child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                      ),
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        ChildMenusModel childMenusModel = recentlyUsed[index];
-                        return childMenusCell(childMenusModel);
-                      },
-                      itemCount: recentlyUsed.length,
-                    ),
-                  ),
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      height: recentlyUsed.length > 0 ? 100 : 0,
+                      child: recentlyUsed.length > 0
+                          ? GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                              ),
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return childMenusCell(
+                                    recentlyUsed[index], true);
+                              },
+                              itemCount: recentlyUsed.length,
+                            )
+                          : Container()),
                 ]))
       ]),
     );
@@ -271,11 +296,12 @@ class MenuControllerWidgetState extends State<MenuController> {
         itemCount: categories.length,
         reverse: false,
         itemBuilder: (BuildContext ctxt, int index) {
-          return categoriseCell(categories[index]);
+          return categoriseCell(categories[index], index);
         });
   }
 
-  GestureDetector categoriseCell(ModelMenuCategories categoriesItem) {
+  GestureDetector categoriseCell(
+      ModelMenuCategories categoriesItem, int index) {
     return GestureDetector(
         onTap: () {
           if (categoriesItem.isSelected) {
@@ -287,8 +313,11 @@ class MenuControllerWidgetState extends State<MenuController> {
                 element.isSelected = false;
               }
             }
-            setState(() {});
+            setState(() {
+              initUICategories();
+            });
           }
+          _animateToIndex(index);
         },
         child: Container(
           padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
@@ -305,10 +334,12 @@ class MenuControllerWidgetState extends State<MenuController> {
                 child: Text(
                   categoriesItem.title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: (categoriesItem.isSelected)
+                  style: textStyleManrope(
+                      (categoriesItem.isSelected)
                           ? Colors.white
-                          : Color(0xFFFDA758)),
+                          : Color(0xFFFDA758),
+                      14,
+                      FontWeight.normal),
                 ),
               )),
         ));

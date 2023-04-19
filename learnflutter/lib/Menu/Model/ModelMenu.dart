@@ -71,6 +71,14 @@ class ChildMenusModel {
         titleChildMenu: json['titleChildMenu'],
         routeName: json['routeName']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'iconChildMenu': iconChildMenu,
+      'titleChildMenu': titleChildMenu,
+      'routeName': routeName
+    };
+  }
 }
 
 List<ModelMenusItem> parseModelMenusItem(List responseBody) {

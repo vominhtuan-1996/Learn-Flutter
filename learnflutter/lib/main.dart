@@ -1,34 +1,18 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_import, non_constant_identifier_names, use_full_hex_values_for_flutter_colors, override_on_non_overriding_member, unused_element
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'Menu/MenuController.dart';
 
 void main() {
-  runApp(const MyApp());
+  AppConfig.init(() {
+    runApp(MyApp());
+  });
 }
-
-List _elements = [
-  {'name': 'John', 'group': 'Team A'},
-  {'name': 'Will', 'group': 'Team B'},
-  {'name': 'Beth', 'group': 'Team A'},
-  {'name': 'Miranda', 'group': 'Team B'},
-  {'name': 'Mike', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-  {'name': 'Danny', 'group': 'Team C'},
-];
-List categories = [];
-bool isReload = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -39,6 +23,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
+          // textTheme: GoogleFonts.manropeTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.blue,
         ),
         home: MenuController());
