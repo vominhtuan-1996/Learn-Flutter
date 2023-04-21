@@ -14,6 +14,18 @@ const String keysaveCache_childMenus = 'childMenus';
 
 enum TypeImage { png, jpg, jpeg }
 
+enum IconTabbarMoBiMap {
+  ic_tabbar_tool_selected,
+  ic_tabbar_tool_unselected,
+  ic_tabbar_search_selected,
+  ic_tabbar_search_unselected,
+  ic_tabbar_map_selected,
+  ic_tabbar_map_unselected,
+  ic_tabbar_user_selected,
+  ic_tabbar_user_unselected,
+  ic_tabbar_scanQRCode
+}
+
 String loadImageWithImageName(String imageName, TypeImage typeImage) {
   return 'assets/images/' + imageName + '.' + typeImage.name.toString();
 }
@@ -44,8 +56,6 @@ class SharedPreferenceUtils {
 
   static init() async {
     prefs = await SharedPreferences.getInstance();
-    // storing lists
-    // await putObjectList('data', []);
   }
 
   static Future<bool> putStringList(String key, List<String> list) async {
@@ -78,7 +88,10 @@ class SharedPreferenceUtils {
   static List<Map>? getObjectList(String key) {
     if (prefs == null) return null;
     List<String>? dataList = prefs.getStringList(key);
-    return dataList!.map((value) {
+    if (dataList == null) {
+      return [];
+    }
+    return dataList?.map((value) {
       Map _dataMap = json.decode(value);
       return _dataMap;
     }).toList();

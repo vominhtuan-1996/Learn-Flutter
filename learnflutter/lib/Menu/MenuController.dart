@@ -18,19 +18,19 @@ class MenuController extends StatefulWidget {
 }
 
 class MenuControllerWidgetState extends State<MenuController> {
-  late bool isLoading = false;
+  bool isLoading = false;
   TextEditingController _controllerTextField = TextEditingController();
-  final ItemScrollController _controllerScrollView = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
+  ItemScrollController _controllerScrollView = ItemScrollController();
+  ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
   double fontSizeCell = 12;
   double fontSizeSectionTitile = 16;
   double fontSizeSearchView = 16;
-  late List categories = [];
-  late List menus = [];
-  late List menusSearch = [];
-  late List recentlyUsed = [];
-  late bool isSearch = false;
+  List categories = [];
+  List menus = [];
+  List menusSearch = [];
+  List recentlyUsed = [];
+  bool isSearch = false;
+
   @override
   void initState() {
     SVProgressHUD.show(status: 'Loadding......');
@@ -52,34 +52,7 @@ class MenuControllerWidgetState extends State<MenuController> {
         });
   }
 
-  void _animateToIndex(int index) {
-    _controllerScrollView.jumpTo(index: index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color(0xFFFFF3E9),
-        body: SafeArea(
-            child: Container(
-          child: GestureDetector(
-            onTap: () {
-              dismissKeyboard();
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                initUISearchView(),
-                initUICategories(),
-                initUIToolRecentlyUsed(),
-                SizedBox(height: 20),
-                initUIMenus(),
-              ],
-            ),
-          ),
-        )));
-  }
-
+  // UI SearchView
   Container initUISearchView() {
     return Container(
       height: 100,
@@ -124,16 +97,7 @@ class MenuControllerWidgetState extends State<MenuController> {
           prefixIcon: Image.asset(
               loadImageWithImageName('ic_search_organe', TypeImage.png)),
           suffixIcon: _controllerTextField.text.length > 0
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _controllerTextField.clear();
-                    });
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: Color(0xFFFDA758),
-                  ))
+              ? initUISuffixIconSearchView()
               : null,
           hintText: "Tìm kiếm chức năng",
           hintStyle: textStyleManrope(Color(0xFFFDA758).withOpacity(0.5),
@@ -155,11 +119,27 @@ class MenuControllerWidgetState extends State<MenuController> {
         }));
   }
 
+  GestureDetector initUISuffixIconSearchView() {
+    return GestureDetector(
+        onTap: () {
+          setState(() {
+            isSearch = false;
+            _controllerTextField.clear();
+          });
+        },
+        child: Icon(
+          Icons.close,
+          color: Color(0xFFFDA758),
+        ));
+  }
+
+  // Action SearchView
+
   void FillterSearchViewWithText(String value) {
     List<dynamic> filter = [];
     menusSearch = [];
-    for (ModelMenusItem item in menus) {
-      filter.addAll(item.childMenus);
+    for (ModelMenusItem itemFiltter in menus) {
+      filter.addAll(itemFiltter.childMenus);
     }
     filter.retainWhere((countryone) {
       ChildMenusModel itemchild = countryone;
@@ -168,29 +148,185 @@ class MenuControllerWidgetState extends State<MenuController> {
           .contains(value..toLowerCase());
     });
     setState(() {
-      for (ModelMenusItem items in menus) {
-        bool contains =
-            items.childMenus.toSet().intersection(filter.toSet()).isNotEmpty;
-        if (contains) {
+      for (ModelMenusItem itemMenus in menus) {
+        if (itemMenus.childMenus
+            .toSet()
+            .intersection(filter.toSet())
+            .isNotEmpty) {
           List childMenus = [];
-          for (ChildMenusModel childMenuFiltter in filter) {
-            for (ChildMenusModel childMenuModel in items.childMenus) {
-              if (childMenuFiltter.titleChildMenu ==
+          for (ChildMenusModel childFiltter in filter) {
+            for (ChildMenusModel childMenuModel in itemMenus.childMenus) {
+              if (childFiltter.titleChildMenu ==
                   childMenuModel.titleChildMenu) {
-                childMenus.add(childMenuFiltter);
+                childMenus.add(childFiltter);
               }
             }
           }
           menusSearch.add(ModelMenusItem(
-              childMenus: childMenus, parentMenuTitle: items.parentMenuTitle));
+              childMenus: childMenus,
+              parentMenuTitle: itemMenus.parentMenuTitle));
         }
       }
       isSearch = value.length > 0 ? true : false;
     });
   }
 
-  void selectItemChildMenu(String routeName) {
-    print(routeName);
+  // UICategories
+  Container initUICategories() {
+    return Container(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+        alignment: Alignment.center,
+        height: 60,
+        child: ListViewCategorise(),
+      ),
+    );
+  }
+
+  ListView ListViewCategorise() {
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        reverse: false,
+        itemBuilder: (BuildContext ctxt, int index) {
+          return categoriseCell(categories[index], index);
+        });
+  }
+
+  GestureDetector categoriseCell(
+      ModelMenuCategories categoriesItem, int index) {
+    return GestureDetector(
+        onTap: () {
+          if (categoriesItem.isSelected) {
+            return;
+          } else {
+            categoriesItem.isSelected = !categoriesItem.isSelected;
+            for (ModelMenuCategories element in categories) {
+              if (categoriesItem.title != element.title) {
+                element.isSelected = false;
+              }
+            }
+            setState(() {
+              initUICategories();
+            });
+          }
+          animatejumpToIndex(index);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
+          alignment: Alignment.center,
+          child: Container(
+              height: 40,
+              width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color: (categoriesItem.isSelected)
+                      ? Color(0xFFFDA758)
+                      : Colors.white),
+              child: Center(
+                child: Text(
+                  categoriesItem.title,
+                  textAlign: TextAlign.center,
+                  style: textStyleManrope(
+                      (categoriesItem.isSelected)
+                          ? Colors.white
+                          : Color(0xFFFDA758),
+                      14,
+                      FontWeight.normal),
+                ),
+              )),
+        ));
+  }
+
+  // Action Categories
+  void animatejumpToIndex(int index) {
+    _controllerScrollView.jumpTo(index: index);
+  }
+
+  // UIToolRecentlyUsed
+
+  Container initUIToolRecentlyUsed() {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(children: <Widget>[
+        Container(
+            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text('Tool sử dụng gần đây',
+                      textAlign: TextAlign.left,
+                      style: textStyleManrope(Color(0xFF795675),
+                          fontSizeSectionTitile, FontWeight.bold)),
+                  SizedBox(height: 10),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      height: recentlyUsed.length > 0 ? 100 : 0,
+                      child: recentlyUsed.length > 0
+                          ? GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                              ),
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return childMenusCell(
+                                    recentlyUsed[index], true);
+                              },
+                              itemCount: recentlyUsed.length,
+                            )
+                          : Container()),
+                ]))
+      ]),
+    );
+  }
+
+  // UIMenus
+  Expanded initUIMenus() {
+    return Expanded(
+        child: ScrollablePositionedList.builder(
+            itemScrollController: _controllerScrollView,
+            itemPositionsListener: itemPositionsListener,
+            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            scrollDirection: Axis.vertical,
+            itemCount: isSearch ? menusSearch.length : menus.length,
+            reverse: false,
+            itemBuilder: (BuildContext ctxt, int index) {
+              ModelMenusItem item =
+                  isSearch ? menusSearch[index] : menus[index];
+              return Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Text(item.parentMenuTitle,
+                            textAlign: TextAlign.left,
+                            style: textStyleManrope(Color(0xFF795675),
+                                fontSizeSectionTitile, FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Container(
+                          height: item.childMenus.length / 4 > 1
+                              ? caculatorHeightWithCount(
+                                      item.childMenus.length) *
+                                  110
+                              : 110,
+                          child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    childAspectRatio: 5 / 6,
+                                    crossAxisSpacing: 7),
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              ChildMenusModel childMenusModel =
+                                  item.childMenus[index];
+                              return childMenusCell(childMenusModel, false);
+                            },
+                            itemCount: item.childMenus.length,
+                          ),
+                        ),
+                      ]));
+            }));
   }
 
   GestureDetector childMenusCell(ChildMenusModel data, bool isRecentlyUsed) {
@@ -245,6 +381,7 @@ class MenuControllerWidgetState extends State<MenuController> {
     );
   }
 
+  //
   int caculatorHeightWithCount(int count) {
     int value = 0;
     if (count % 4 > 0) {
@@ -255,154 +392,32 @@ class MenuControllerWidgetState extends State<MenuController> {
     return value;
   }
 
-  Expanded initUIMenus() {
-    return Expanded(
-        child: ScrollablePositionedList.builder(
-            itemScrollController: _controllerScrollView,
-            itemPositionsListener: itemPositionsListener,
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-            scrollDirection: Axis.vertical,
-            itemCount: isSearch ? menusSearch.length : menus.length,
-            reverse: false,
-            itemBuilder: (BuildContext ctxt, int index) {
-              ModelMenusItem item =
-                  isSearch ? menusSearch[index] : menus[index];
-              return Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Text(item.parentMenuTitle,
-                            textAlign: TextAlign.left,
-                            style: textStyleManrope(Color(0xFF795675),
-                                fontSizeSectionTitile, FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Container(
-                          height: item.childMenus.length / 4 > 1
-                              ? caculatorHeightWithCount(
-                                      item.childMenus.length) *
-                                  110
-                              : 110,
-                          child: GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    childAspectRatio: 5 / 6,
-                                    crossAxisSpacing: 7),
-                            itemBuilder: (BuildContext ctxt, int index) {
-                              ChildMenusModel childMenusModel =
-                                  item.childMenus[index];
-                              return childMenusCell(childMenusModel, false);
-                            },
-                            itemCount: item.childMenus.length,
-                          ),
-                        ),
-                      ]));
-            }));
+  // ACtion Menus Cell
+  void selectItemChildMenu(String routeName) {
+    print(routeName);
   }
 
-  Container initUIToolRecentlyUsed() {
-    // recentlyUsed = [];
-    return Container(
-      alignment: Alignment.center,
-      // color: Colors.red,
-      child: Column(children: <Widget>[
-        Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: const Color(0xFFFFF3E9),
+        body: SafeArea(
+            child: Container(
+          child: GestureDetector(
+            onTap: () {
+              dismissKeyboard();
+            },
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text('Tool sử dụng gần đây',
-                      textAlign: TextAlign.left,
-                      style: textStyleManrope(Color(0xFF795675),
-                          fontSizeSectionTitile, FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      height: recentlyUsed.length > 0 ? 100 : 0,
-                      child: recentlyUsed.length > 0
-                          ? GridView.builder(
-                              scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                              ),
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return childMenusCell(
-                                    recentlyUsed[index], true);
-                              },
-                              itemCount: recentlyUsed.length,
-                            )
-                          : Container()),
-                ]))
-      ]),
-    );
-  }
-
-  Container initUICategories() {
-    return Container(
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-        alignment: Alignment.center,
-        height: 60,
-        child: ListViewCategorise(),
-      ),
-    );
-  }
-
-  ListView ListViewCategorise() {
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        reverse: false,
-        itemBuilder: (BuildContext ctxt, int index) {
-          return categoriseCell(categories[index], index);
-        });
-  }
-
-  GestureDetector categoriseCell(
-      ModelMenuCategories categoriesItem, int index) {
-    return GestureDetector(
-        onTap: () {
-          if (categoriesItem.isSelected) {
-            return;
-          } else {
-            categoriesItem.isSelected = !categoriesItem.isSelected;
-            for (ModelMenuCategories element in categories) {
-              if (categoriesItem.title != element.title) {
-                element.isSelected = false;
-              }
-            }
-            setState(() {
-              initUICategories();
-            });
-          }
-          _animateToIndex(index);
-        },
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
-          alignment: Alignment.center,
-          child: Container(
-              height: 40,
-              width: 100,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: (categoriesItem.isSelected)
-                      ? Color(0xFFFDA758)
-                      : Colors.white),
-              child: Center(
-                child: Text(
-                  categoriesItem.title,
-                  textAlign: TextAlign.center,
-                  style: textStyleManrope(
-                      (categoriesItem.isSelected)
-                          ? Colors.white
-                          : Color(0xFFFDA758),
-                      14,
-                      FontWeight.normal),
-                ),
-              )),
-        ));
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                initUISearchView(),
+                initUICategories(),
+                initUIToolRecentlyUsed(),
+                SizedBox(height: 20),
+                initUIMenus(),
+              ],
+            ),
+          ),
+        )));
   }
 }
