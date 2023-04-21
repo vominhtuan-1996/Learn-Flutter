@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          // textTheme: GoogleFonts.manropeTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.blue,
         ),
         home: MenuController());

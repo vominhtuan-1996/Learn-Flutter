@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import
+// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import, unnecessary_cast
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +8,7 @@ import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class MenuController extends StatefulWidget {
   const MenuController({super.key});
@@ -18,13 +19,18 @@ class MenuController extends StatefulWidget {
 
 class MenuControllerWidgetState extends State<MenuController> {
   late bool isLoading = false;
-  late TextEditingController _controllerTextField = TextEditingController();
-  final ScrollController _controllerScrollView = ScrollController();
+  TextEditingController _controllerTextField = TextEditingController();
+  final ItemScrollController _controllerScrollView = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   double fontSizeCell = 12;
   double fontSizeSectionTitile = 16;
+  double fontSizeSearchView = 16;
   late List categories = [];
   late List menus = [];
+  late List menusSearch = [];
   late List recentlyUsed = [];
+  late bool isSearch = false;
   @override
   void initState() {
     SVProgressHUD.show(status: 'Loadding......');
@@ -47,16 +53,7 @@ class MenuControllerWidgetState extends State<MenuController> {
   }
 
   void _animateToIndex(int index) {
-    index = index == 0 ? 1 : index;
-    ModelMenusItem item = menus[index];
-    double heightCell = item.childMenus.length / 4 > 1
-        ? (item.childMenus.length / 4).toInt() * 110 + 40
-        : 150;
-    _controllerScrollView.animateTo(
-      ((index * heightCell)),
-      duration: Duration(seconds: 2),
-      curve: Curves.fastOutSlowIn,
-    );
+    _controllerScrollView.jumpTo(index: index);
   }
 
   @override
@@ -116,31 +113,80 @@ class MenuControllerWidgetState extends State<MenuController> {
 
   TextField initUITextField() {
     return TextField(
-      controller: _controllerTextField,
-      autofocus: false,
-      style: TextStyle(
-        fontSize: 16.0,
-        color: const Color(0xFFFDA758),
-      ),
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        prefixIcon: Image.asset(
-            loadImageWithImageName('ic_search_organe', TypeImage.png)),
-        hintText: "Tìm kiếm chức năng",
-        hintStyle: textStyleManrope(Color(0xFFFDA758), 16, FontWeight.normal),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(15.0),
+        controller: _controllerTextField,
+        autofocus: false,
+        style: TextStyle(
+          fontSize: fontSizeSearchView,
+          color: const Color(0xFFFDA758),
         ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(15.0),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          prefixIcon: Image.asset(
+              loadImageWithImageName('ic_search_organe', TypeImage.png)),
+          suffixIcon: _controllerTextField.text.length > 0
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _controllerTextField.clear();
+                    });
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Color(0xFFFDA758),
+                  ))
+              : null,
+          hintText: "Tìm kiếm chức năng",
+          hintStyle: textStyleManrope(Color(0xFFFDA758).withOpacity(0.5),
+              fontSizeSearchView, FontWeight.normal),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
         ),
-      ),
-    );
+        onChanged: ((value) {
+          FillterSearchViewWithText(value);
+        }));
+  }
+
+  void FillterSearchViewWithText(String value) {
+    List<dynamic> filter = [];
+    menusSearch = [];
+    for (ModelMenusItem item in menus) {
+      filter.addAll(item.childMenus);
+    }
+    filter.retainWhere((countryone) {
+      ChildMenusModel itemchild = countryone;
+      return itemchild.titleChildMenu
+          .toLowerCase()
+          .contains(value..toLowerCase());
+    });
+    setState(() {
+      for (ModelMenusItem items in menus) {
+        bool contains =
+            items.childMenus.toSet().intersection(filter.toSet()).isNotEmpty;
+        if (contains) {
+          List childMenus = [];
+          for (ChildMenusModel childMenuFiltter in filter) {
+            for (ChildMenusModel childMenuModel in items.childMenus) {
+              if (childMenuFiltter.titleChildMenu ==
+                  childMenuModel.titleChildMenu) {
+                childMenus.add(childMenuFiltter);
+              }
+            }
+          }
+          menusSearch.add(ModelMenusItem(
+              childMenus: childMenus, parentMenuTitle: items.parentMenuTitle));
+        }
+      }
+      isSearch = value.length > 0 ? true : false;
+    });
   }
 
   void selectItemChildMenu(String routeName) {
@@ -199,16 +245,28 @@ class MenuControllerWidgetState extends State<MenuController> {
     );
   }
 
+  int caculatorHeightWithCount(int count) {
+    int value = 0;
+    if (count % 4 > 0) {
+      value = (count / 4).toInt() + 1 as int;
+    } else {
+      value = (count / 4).toInt();
+    }
+    return value;
+  }
+
   Expanded initUIMenus() {
     return Expanded(
-        child: ListView.builder(
-            controller: _controllerScrollView,
+        child: ScrollablePositionedList.builder(
+            itemScrollController: _controllerScrollView,
+            itemPositionsListener: itemPositionsListener,
             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
             scrollDirection: Axis.vertical,
-            itemCount: menus.length,
+            itemCount: isSearch ? menusSearch.length : menus.length,
             reverse: false,
             itemBuilder: (BuildContext ctxt, int index) {
-              ModelMenusItem item = menus[index];
+              ModelMenusItem item =
+                  isSearch ? menusSearch[index] : menus[index];
               return Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -220,8 +278,11 @@ class MenuControllerWidgetState extends State<MenuController> {
                                 fontSizeSectionTitile, FontWeight.bold)),
                         SizedBox(height: 10),
                         Container(
-                          height:
-                              item.childMenus.length / 4 > 1 ? 2 * 110 : 110,
+                          height: item.childMenus.length / 4 > 1
+                              ? caculatorHeightWithCount(
+                                      item.childMenus.length) *
+                                  110
+                              : 110,
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:

@@ -37,10 +37,10 @@ class ModelMenuCategories {
 }
 
 class ModelMenusItem {
-  final String parentMenuTitle;
-  final List childMenus;
+  late String parentMenuTitle;
+  late List childMenus;
 
-  const ModelMenusItem({
+  ModelMenusItem({
     required this.parentMenuTitle,
     required this.childMenus,
   });
@@ -59,7 +59,7 @@ class ChildMenusModel {
   final String titleChildMenu;
   final String routeName;
 
-  const ChildMenusModel({
+  ChildMenusModel({
     required this.iconChildMenu,
     required this.titleChildMenu,
     required this.routeName,
