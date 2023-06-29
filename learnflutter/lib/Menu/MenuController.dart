@@ -1,23 +1,27 @@
-// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import, unnecessary_cast
+// ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import, unnecessary_cast, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:learnflutter/Helpper/Bitmap_Utils.dart';
 import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:learnflutter/Nitification_Center/notification_center.dart';
+import 'package:notification_center/notification_center.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class MenuController extends StatefulWidget {
-  const MenuController({super.key});
-
+class Menu_Controller extends StatefulWidget {
+  const Menu_Controller({super.key});
+  // NotificationCenter().sub
+  // .subscribe('updateCounter' {});
   @override
-  State<MenuController> createState() => MenuControllerWidgetState();
+  State<Menu_Controller> createState() => MenuControllerWidgetState();
 }
 
-class MenuControllerWidgetState extends State<MenuController> {
+class MenuControllerWidgetState extends State<Menu_Controller> {
   bool isLoading = false;
   TextEditingController _controllerTextField = TextEditingController();
   ItemScrollController _controllerScrollView = ItemScrollController();
@@ -35,8 +39,7 @@ class MenuControllerWidgetState extends State<MenuController> {
   void initState() {
     SVProgressHUD.show(status: 'Loadding......');
     getListCategories();
-    recentlyUsed = parseChildMenusModel(
-        SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+    recentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
     super.initState();
   }
 
@@ -55,32 +58,32 @@ class MenuControllerWidgetState extends State<MenuController> {
   // UI SearchView
   Container initUISearchView() {
     return Container(
-      height: 100,
       padding: EdgeInsets.fromLTRB(20, 37, 20, 0),
       child: Row(
-        children: [
-          Expanded(child: initUITextField()),
-          SizedBox(width: 11),
-          initUiNotification()
-        ],
+        children: [Expanded(child: initUITextField()), SizedBox(width: 11), initUiNotification()],
       ),
     );
   }
 
   GestureDetector initUiNotification() {
     return GestureDetector(
-        onTap: () {
+        onTap: () async {
           print('action notification');
+          Uint8List bitmap = await BitmapUtils().generateImagePngAsBytes('action notification');
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => Container(
+              child: Image.memory(bitmap),
+            ),
+          );
         },
         child: Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), color: Colors.white),
             child: Center(
-              child: Image.asset(
-                  loadImageWithImageName('ic_notification', TypeImage.png)),
+              child: Image.asset(loadImageWithImageName('ic_notification', TypeImage.png)),
             )));
   }
 
@@ -94,14 +97,10 @@ class MenuControllerWidgetState extends State<MenuController> {
         ),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          prefixIcon: Image.asset(
-              loadImageWithImageName('ic_search_organe', TypeImage.png)),
-          suffixIcon: _controllerTextField.text.length > 0
-              ? initUISuffixIconSearchView()
-              : null,
+          prefixIcon: Image.asset(loadImageWithImageName('ic_search_organe', TypeImage.png)),
+          suffixIcon: _controllerTextField.text.length > 0 ? initUISuffixIconSearchView() : null,
           hintText: "Tìm kiếm chức năng",
-          hintStyle: textStyleManrope(Color(0xFFFDA758).withOpacity(0.5),
-              fontSizeSearchView, FontWeight.normal),
+          hintStyle: textStyleManrope(Color(0xFFFDA758).withOpacity(0.5), fontSizeSearchView, FontWeight.normal),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
@@ -136,35 +135,34 @@ class MenuControllerWidgetState extends State<MenuController> {
   // Action SearchView
 
   void FillterSearchViewWithText(String value) {
+    bool isAddMenusSearch = false;
     List<dynamic> filter = [];
     menusSearch = [];
+    List childMenus = [];
     for (ModelMenusItem itemFiltter in menus) {
       filter.addAll(itemFiltter.childMenus);
     }
     filter.retainWhere((countryone) {
       ChildMenusModel itemchild = countryone;
-      return itemchild.titleChildMenu
-          .toLowerCase()
-          .contains(value..toLowerCase());
+      childMenus = [];
+      return itemchild.titleChildMenu.toLowerCase().contains(value..toLowerCase());
     });
     setState(() {
       for (ModelMenusItem itemMenus in menus) {
-        if (itemMenus.childMenus
-            .toSet()
-            .intersection(filter.toSet())
-            .isNotEmpty) {
-          List childMenus = [];
+        childMenus = [];
+        isAddMenusSearch = false;
+        if (itemMenus.childMenus.toSet().intersection(filter.toSet()).isNotEmpty) {
           for (ChildMenusModel childFiltter in filter) {
             for (ChildMenusModel childMenuModel in itemMenus.childMenus) {
-              if (childFiltter.titleChildMenu ==
-                  childMenuModel.titleChildMenu) {
+              if (childFiltter.titleChildMenu == childMenuModel.titleChildMenu) {
                 childMenus.add(childFiltter);
+                isAddMenusSearch = true;
               }
             }
           }
-          menusSearch.add(ModelMenusItem(
-              childMenus: childMenus,
-              parentMenuTitle: itemMenus.parentMenuTitle));
+          if (isAddMenusSearch) {
+            menusSearch.add(ModelMenusItem(childMenus: childMenus, parentMenuTitle: itemMenus.parentMenuTitle));
+          }
         }
       }
       isSearch = value.length > 0 ? true : false;
@@ -193,8 +191,7 @@ class MenuControllerWidgetState extends State<MenuController> {
         });
   }
 
-  GestureDetector categoriseCell(
-      ModelMenuCategories categoriesItem, int index) {
+  GestureDetector categoriseCell(ModelMenuCategories categoriesItem, int index) {
     return GestureDetector(
         onTap: () {
           if (categoriesItem.isSelected) {
@@ -218,21 +215,12 @@ class MenuControllerWidgetState extends State<MenuController> {
           child: Container(
               height: 40,
               width: 100,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: (categoriesItem.isSelected)
-                      ? Color(0xFFFDA758)
-                      : Colors.white),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.0), color: (categoriesItem.isSelected) ? Color(0xFFFDA758) : Colors.white),
               child: Center(
                 child: Text(
                   categoriesItem.title,
                   textAlign: TextAlign.center,
-                  style: textStyleManrope(
-                      (categoriesItem.isSelected)
-                          ? Colors.white
-                          : Color(0xFFFDA758),
-                      14,
-                      FontWeight.normal),
+                  style: textStyleManrope((categoriesItem.isSelected) ? Colors.white : Color(0xFFFDA758), 14, FontWeight.normal),
                 ),
               )),
         ));
@@ -251,32 +239,25 @@ class MenuControllerWidgetState extends State<MenuController> {
       child: Column(children: <Widget>[
         Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text('Tool sử dụng gần đây',
-                      textAlign: TextAlign.left,
-                      style: textStyleManrope(Color(0xFF795675),
-                          fontSizeSectionTitile, FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      height: recentlyUsed.length > 0 ? 100 : 0,
-                      child: recentlyUsed.length > 0
-                          ? GridView.builder(
-                              scrollDirection: Axis.horizontal,
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                              ),
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return childMenusCell(
-                                    recentlyUsed[index], true);
-                              },
-                              itemCount: recentlyUsed.length,
-                            )
-                          : Container()),
-                ]))
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+              Text('Tool sử dụng gần đây', textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.bold)),
+              SizedBox(height: 10),
+              Container(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  height: recentlyUsed.length > 0 ? 100 : 0,
+                  child: recentlyUsed.length > 0
+                      ? GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                          ),
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return childMenusCell(recentlyUsed[index], true);
+                          },
+                          itemCount: recentlyUsed.length,
+                        )
+                      : Container()),
+            ]))
       ]),
     );
   }
@@ -292,40 +273,25 @@ class MenuControllerWidgetState extends State<MenuController> {
             itemCount: isSearch ? menusSearch.length : menus.length,
             reverse: false,
             itemBuilder: (BuildContext ctxt, int index) {
-              ModelMenusItem item =
-                  isSearch ? menusSearch[index] : menus[index];
+              ModelMenusItem item = isSearch ? menusSearch[index] : menus[index];
               return Container(
                   alignment: Alignment.center,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Text(item.parentMenuTitle,
-                            textAlign: TextAlign.left,
-                            style: textStyleManrope(Color(0xFF795675),
-                                fontSizeSectionTitile, FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Container(
-                          height: item.childMenus.length / 4 > 1
-                              ? caculatorHeightWithCount(
-                                      item.childMenus.length) *
-                                  110
-                              : 110,
-                          child: GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    childAspectRatio: 5 / 6,
-                                    crossAxisSpacing: 7),
-                            itemBuilder: (BuildContext ctxt, int index) {
-                              ChildMenusModel childMenusModel =
-                                  item.childMenus[index];
-                              return childMenusCell(childMenusModel, false);
-                            },
-                            itemCount: item.childMenus.length,
-                          ),
-                        ),
-                      ]));
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                    Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.w600)),
+                    SizedBox(height: 10),
+                    Container(
+                      height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
+                      child: GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          ChildMenusModel childMenusModel = item.childMenus[index];
+                          return childMenusCell(childMenusModel, false);
+                        },
+                        itemCount: item.childMenus.length,
+                      ),
+                    ),
+                  ]));
             }));
   }
 
@@ -333,8 +299,7 @@ class MenuControllerWidgetState extends State<MenuController> {
     return GestureDetector(
       onTap: () {
         bool isAddObject = false;
-        List<ChildMenusModel> cacheRecentlyUsed = parseChildMenusModel(
-            SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+        List<ChildMenusModel> cacheRecentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
         for (ChildMenusModel element in cacheRecentlyUsed) {
           if (element.titleChildMenu == data.titleChildMenu) {
             isAddObject = false;
@@ -345,11 +310,9 @@ class MenuControllerWidgetState extends State<MenuController> {
         }
         if (isAddObject || cacheRecentlyUsed.length == 0) {
           cacheRecentlyUsed.add(data);
-          SharedPreferenceUtils.putObjectList(
-              keysaveCache_childMenus, cacheRecentlyUsed);
+          SharedPreferenceUtils.putObjectList(keysaveCache_childMenus, cacheRecentlyUsed);
           setState(() {
-            recentlyUsed = parseChildMenusModel(
-                SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+            recentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
           });
         }
         selectItemChildMenu(data.routeName);
@@ -359,22 +322,16 @@ class MenuControllerWidgetState extends State<MenuController> {
         children: <Widget>[
           Container(
               height: 50,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFFDA758).withOpacity(0.2)),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFFFDA758).withOpacity(0.2)),
               child: Center(
-                child: Image.asset(
-                    loadImageWithImageName(data.iconChildMenu, TypeImage.png)),
+                child: Image.asset(loadImageWithImageName(data.iconChildMenu, TypeImage.png)),
               )),
           SizedBox(
             height: 6,
           ),
           Container(
               child: Center(
-            child: Text(data.titleChildMenu,
-                textAlign: TextAlign.center,
-                style: textStyleManrope(
-                    Color(0xFF795675), fontSizeCell, FontWeight.normal)),
+            child: Text(data.titleChildMenu, textAlign: TextAlign.center, style: textStyleManrope(Color(0xFF795675), fontSizeCell, FontWeight.normal)),
           ))
         ],
       ),
@@ -383,13 +340,7 @@ class MenuControllerWidgetState extends State<MenuController> {
 
   //
   int caculatorHeightWithCount(int count) {
-    int value = 0;
-    if (count % 4 > 0) {
-      value = (count / 4).toInt() + 1 as int;
-    } else {
-      value = (count / 4).toInt();
-    }
-    return value;
+    return count % 4 != 0 ? (count / 4).toInt() + 1 : (count / 4).toInt();
   }
 
   // ACtion Menus Cell

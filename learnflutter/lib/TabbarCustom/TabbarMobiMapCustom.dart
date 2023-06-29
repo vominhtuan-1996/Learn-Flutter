@@ -1,7 +1,8 @@
-// ignore_for_file: unnecessary_import, unused_field, avoid_unnecessary_containers, prefer_const_constructors, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_import, unused_field, avoid_unnecessary_containers, prefer_const_constructors, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:learnflutter/ARKit/arkit_screen.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:learnflutter/Menu/MenuController.dart';
 
@@ -12,8 +13,7 @@ class TabbarMobiMapCustom extends StatefulWidget {
   State<TabbarMobiMapCustom> createState() => TabbarMobiMapCustomWidgetState();
 }
 
-class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
-    with SingleTickerProviderStateMixin {
+class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom> with SingleTickerProviderStateMixin {
   late TabController _controller;
   late int _index;
 
@@ -25,10 +25,8 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    MenuController(),
-    Center(
-      child: Text('Index 1: Business'),
-    ),
+    Menu_Controller(),
+    ARKitScreen(),
     Center(
       child: Text(
         'Index 2: School',
@@ -67,28 +65,16 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
           },
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              activeIcon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_tool_selected.name,
-                  'Chức năng',
-                  true),
+              activeIcon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_tool_selected.name, 'Chức năng', true),
               label: 'Chức năng',
               tooltip: '',
-              icon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_tool_unselected.name,
-                  'Chức năng',
-                  false),
+              icon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_tool_unselected.name, 'Chức năng', false),
             ),
             BottomNavigationBarItem(
-              activeIcon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_search_selected.name,
-                  'Tra cứu',
-                  true),
+              activeIcon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_search_selected.name, 'Tra cứu', true),
               label: 'Tra cứu',
               tooltip: '',
-              icon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_search_unselected.name,
-                  'Tra cứu',
-                  false),
+              icon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_search_unselected.name, 'Tra cứu', false),
             ),
             BottomNavigationBarItem(
               icon: Container(
@@ -100,36 +86,22 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
                   height: 50,
                   width: 50,
                   child: Center(
-                    child: Image.asset(loadImageWithImageName(
-                        IconTabbarMoBiMap.ic_tabbar_scanQRCode.name,
-                        TypeImage.png)),
+                    child: Image.asset(loadImageWithImageName(IconTabbarMoBiMap.ic_tabbar_scanQRCode.name, TypeImage.png)),
                   )),
               label: '',
               tooltip: '',
             ),
             BottomNavigationBarItem(
-              activeIcon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_map_selected.name,
-                  'Bản đồ',
-                  true),
+              activeIcon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_map_selected.name, 'Bản đồ', true),
               label: 'Bản đồ',
               tooltip: '',
-              icon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_map_unselected.name,
-                  'Bản đồ',
-                  false),
+              icon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_map_unselected.name, 'Bản đồ', false),
             ),
             BottomNavigationBarItem(
-              activeIcon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_user_selected.name,
-                  'Cá nhân',
-                  true),
+              activeIcon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_user_selected.name, 'Cá nhân', true),
               label: 'Cá nhân',
               tooltip: '',
-              icon: iconNavigationBarItemCustom(
-                  IconTabbarMoBiMap.ic_tabbar_user_unselected.name,
-                  'Cá nhân',
-                  false),
+              icon: iconNavigationBarItemCustom(IconTabbarMoBiMap.ic_tabbar_user_unselected.name, 'Cá nhân', false),
             ),
           ],
         ),
@@ -137,8 +109,7 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
     );
   }
 
-  Container iconNavigationBarItemCustom(
-      String imageName, String tabbarName, bool active) {
+  Container iconNavigationBarItemCustom(String imageName, String tabbarName, bool active) {
     Color textColor = active ? Color(0xFFFDA758) : Color(0xFF795675);
     return Container(
         padding: EdgeInsets.symmetric(vertical: 0),
@@ -147,16 +118,12 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom>
           children: <Widget>[
             Container(
               height: 20,
-              child:
-                  Image.asset(loadImageWithImageName(imageName, TypeImage.png)),
+              child: Image.asset(loadImageWithImageName(imageName, TypeImage.png)),
             ),
             SizedBox(
               height: tabbarName.isNotEmpty ? 9 : 0,
             ),
-            Text(tabbarName,
-                textAlign: TextAlign.center,
-                style: textStyleManrope(textColor,
-                    tabbarName.isNotEmpty ? 12 : 0, FontWeight.normal)),
+            Text(tabbarName, textAlign: TextAlign.center, style: textStyleManrope(textColor, tabbarName.isNotEmpty ? 12 : 0, FontWeight.normal)),
           ],
         ));
   }

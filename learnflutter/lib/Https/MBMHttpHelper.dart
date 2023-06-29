@@ -8,15 +8,13 @@ import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 final dio = Dio();
 void configureDio() {
   // Set default configs
-  dio.options.baseUrl =
-      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json';
+  dio.options.baseUrl = 'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json';
   dio.options.connectTimeout = const Duration(seconds: 5);
   dio.options.receiveTimeout = const Duration(seconds: 3);
 
   // Or create `Dio` with a `BaseOptions` instance.
   final options = BaseOptions(
-    baseUrl:
-        'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json',
+    baseUrl: 'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   );
@@ -44,21 +42,16 @@ class Result {
   var errorCode;
   var message;
   Map<String, dynamic> result;
-  Result(
-      {required this.errorCode, required this.message, required this.result});
+  Result({required this.errorCode, required this.message, required this.result});
 
   factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
-        errorCode: json['errorCode'],
-        message: json['message'],
-        result: json['result']);
+    return Result(errorCode: json['errorCode'], message: json['message'], result: json['result']);
   }
 }
 
 Future<ModelMenu> getHttp() async {
   var menuModel;
-  final response = await dio.get(
-      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
+  final response = await dio.get('https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
   if (response.statusCode == 200) {
     var menus;
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
@@ -71,8 +64,7 @@ Future<ModelMenu> getHttp() async {
 
 Future<List> getListCategories() async {
   var menuModel;
-  final response = await dio.get(
-      'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
+  final response = await dio.get('https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/menus_json.json');
   if (response.statusCode == 200) {
     var menus;
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
@@ -81,4 +73,13 @@ Future<List> getListCategories() async {
     return menus.categories;
   }
   return menuModel.categories;
+}
+
+Future<dynamic> postdataTelegram(String message) async {
+  final body = {
+    "chat_id": "-720215949",
+    "text": message,
+  };
+  final response = await dio.post('https://api.telegram.org/bot5296962866:AAEhBcpidAR1Fs2autI86D2Eff7fmwPI3ZI/sendMessage', data: body);
+  return response;
 }

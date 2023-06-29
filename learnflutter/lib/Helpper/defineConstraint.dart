@@ -1,11 +1,17 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, unused_import, prefer_const_constructors, unnecessary_null_comparison, constant_identifier_names
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Menu/Model/ModelMenu.dart';
+import 'package:learnflutter/Nitification_Center/notification_center.dart';
+import 'package:learnflutter/main.dart';
+import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workmanager/workmanager.dart';
 
 Size size = WidgetsBinding.instance.window.physicalSize;
 double widthScreen = size.width;
@@ -47,8 +53,40 @@ class AppConfig {
   static Future init(VoidCallback callback) async {
     WidgetsFlutterBinding.ensureInitialized();
     await SharedPreferenceUtils.init();
+    NotificationCenter().subscribe("updateCounter", _updateCounter);
+    Workmanager().initialize(
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode: true, // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+    );
     callback();
   }
+}
+
+void _updateCounter() {
+  NotificationService().showNotification(title: 'Sample title', body: DateTime.now().toString());
+  postdataTelegram('updateCounter_${DateTime.now().toString()}');
+  // Timer.periodic(const Duration(minutes: 1), (timer) {
+  //   print(DateTime.now().toString());
+  //   NotificationCenter().notify('updateCounter');
+  // });
+  Timer(
+    Duration(minutes: 5),
+    () {
+      // print(DateTime.now().toString());
+      // NotificationCenter().notify('updateCounter');
+      Workmanager().registerOneOffTask(
+        simpleTaskKey,
+        simpleTaskKey,
+        inputData: <String, dynamic>{
+          'int': 1,
+          'bool': true,
+          'double': 1.0,
+          'string': 'string',
+          'array': [1, 2, 3],
+        },
+      );
+    },
+  );
 }
 
 class SharedPreferenceUtils {
@@ -58,16 +96,7 @@ class SharedPreferenceUtils {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> putStringList(String key, List<String> list) async {
-    return prefs.setStringList(key, list);
-  }
-
-  static List<String>? getStringList(String key) {
-    return prefs.getStringList(key);
-  }
-
-  static Future<Future<bool>?> putObjectList(
-      String key, List<Object> list) async {
+  static Future<Future<bool>?> putObjectList(String key, List<Object> list) async {
     if (prefs == null) return null;
     List<String> _dataList = list.map((value) {
       return json.encode(value);
@@ -75,8 +104,7 @@ class SharedPreferenceUtils {
     return prefs.setStringList(key, _dataList);
   }
 
-  static List<T>? getObjList<T>(String key, T f(Map v),
-      {List<T> defValue = const []}) {
+  static List<T>? getObjList<T>(String key, T f(Map v), {List<T> defValue = const []}) {
     if (prefs == null) return null;
     List<Map>? dataList = getObjectList(key);
     List<T> list = dataList!.map((value) {
@@ -95,5 +123,15 @@ class SharedPreferenceUtils {
       Map _dataMap = json.decode(value);
       return _dataMap;
     }).toList();
+  }
+}
+
+class TimeUtils {
+  TimeUtils._();
+
+  /// dateTime == null get Timestamp current
+  static int timestamp({DateTime? dateTime}) {
+    dateTime ??= DateTime.now();
+    return (dateTime.millisecondsSinceEpoch / 1000).round();
   }
 }
