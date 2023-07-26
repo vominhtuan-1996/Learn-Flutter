@@ -1,4 +1,5 @@
 import UIKit
+import flutter_isolate
 import Flutter
 import flutter_local_notifications
 import workmanager
@@ -20,6 +21,7 @@ import workmanager
           // you may want to register only specific plugins.
           AppDelegate.registerPlugins(with: registry)
       }
+      FlutterIsolatePlugin.isolatePluginRegistrantClassName = "IsolatePluginRegistrant"
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
           GeneratedPluginRegistrant.register(with: registry)}
       
@@ -32,7 +34,6 @@ import workmanager
       WorkmanagerPlugin.registerTask(withIdentifier: "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-    
     static func registerPlugins(with registry: FlutterPluginRegistry) {
                 GeneratedPluginRegistrant.register(with: registry)
            }

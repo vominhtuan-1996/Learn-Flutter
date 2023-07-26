@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/Nitification_Center/notification_center.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Menu_Controller extends StatefulWidget {
   const Menu_Controller({super.key});
@@ -58,7 +59,7 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
   // UI SearchView
   Container initUISearchView() {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 37, 20, 0),
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
       child: Row(
         children: [Expanded(child: initUITextField()), SizedBox(width: 11), initUiNotification()],
       ),
@@ -265,34 +266,36 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
   // UIMenus
   Expanded initUIMenus() {
     return Expanded(
-        child: ScrollablePositionedList.builder(
-            itemScrollController: _controllerScrollView,
-            itemPositionsListener: itemPositionsListener,
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-            scrollDirection: Axis.vertical,
-            itemCount: isSearch ? menusSearch.length : menus.length,
-            reverse: false,
-            itemBuilder: (BuildContext ctxt, int index) {
-              ModelMenusItem item = isSearch ? menusSearch[index] : menus[index];
-              return Container(
-                  alignment: Alignment.center,
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                    Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.w600)),
-                    SizedBox(height: 10),
-                    Container(
-                      height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
-                      child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          ChildMenusModel childMenusModel = item.childMenus[index];
-                          return childMenusCell(childMenusModel, false);
-                        },
-                        itemCount: item.childMenus.length,
-                      ),
-                    ),
-                  ]));
-            }));
+      child: ScrollablePositionedList.builder(
+        itemScrollController: _controllerScrollView,
+        itemPositionsListener: itemPositionsListener,
+        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+        scrollDirection: Axis.vertical,
+        itemCount: isSearch ? menusSearch.length : menus.length,
+        reverse: false,
+        itemBuilder: (BuildContext ctxt, int index) {
+          ModelMenusItem item = isSearch ? menusSearch[index] : menus[index];
+          return Container(
+              alignment: Alignment.center,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.w600)),
+                SizedBox(height: 10),
+                Container(
+                  height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      ChildMenusModel childMenusModel = item.childMenus[index];
+                      return childMenusCell(childMenusModel, false);
+                    },
+                    itemCount: item.childMenus.length,
+                  ),
+                ),
+              ]));
+        },
+      ),
+    );
   }
 
   GestureDetector childMenusCell(ChildMenusModel data, bool isRecentlyUsed) {
@@ -351,24 +354,69 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFFFF3E9),
-        body: SafeArea(
-            child: Container(
-          child: GestureDetector(
-            onTap: () {
-              dismissKeyboard();
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                initUISearchView(),
-                initUICategories(),
-                initUIToolRecentlyUsed(),
-                SizedBox(height: 20),
-                initUIMenus(),
-              ],
+      backgroundColor: const Color(0xFFFFF3E9),
+      body: SafeArea(
+          child: NestedScrollView(
+        // Setting floatHeaderSlivers to true is required in order to float
+        // the outer slivers over the inner scrollable.
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              floating: true,
+              expandedHeight: 260,
+              forceElevated: innerBoxIsScrolled,
+              leading: const BackButton(color: Colors.transparent),
+              leadingWidth: 0,
+              backgroundColor: const Color(0xFFFFF3E9),
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: EdgeInsets.only(top: 0),
+                collapseMode: CollapseMode.pin,
+                background: Column(
+                  children: [
+                    initUISearchView(),
+                    initUICategories(),
+                    initUIToolRecentlyUsed(),
+                  ],
+                ),
+              ),
             ),
-          ),
-        )));
+          ];
+        },
+        body:
+            //initUIMenus(),
+            ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: 30,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 50,
+              child: Center(child: Text('Item $index')),
+            );
+          },
+        ),
+      )),
+    );
   }
 }
+
+ 
+// SafeArea(
+//         child: Container(
+//           child: GestureDetector(
+//             onTap: () {
+//               dismissKeyboard();
+//             },
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: <Widget>[
+//                 initUISearchView(),
+//                 initUICategories(),
+//                 initUIToolRecentlyUsed(),
+//                 SizedBox(height: 20),
+//                 initUIMenus(),
+//               ],
+//             ),
+//           ),
+//         ),
+//       )

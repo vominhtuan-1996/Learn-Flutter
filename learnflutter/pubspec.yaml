@@ -42,7 +42,11 @@ dependencies:
   flutter_local_notifications: ^14.1.1
   notification_center: ^0.0.3
   draggable_fab: ^0.1.4
-  keyboard_overlay: ^1.0.0
+  flutter_isolate: ^2.0.4
+  flutter_downloader: ^1.10.5
+  carousel_slider: ^4.2.1
+  shimmer: ^3.0.0
+  # keyboard_overlay: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

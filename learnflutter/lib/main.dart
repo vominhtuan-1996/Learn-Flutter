@@ -9,8 +9,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
 import 'package:learnflutter/Https/MBMHttpHelper.dart';
+import 'package:learnflutter/Nested/nested_scroll_screen.dart';
 import 'package:learnflutter/Nitification_Center/notification_center.dart';
 import 'package:learnflutter/TabbarCustom/TabbarMobiMapCustom.dart';
+import 'package:learnflutter/courasel/courasel_screen.dart';
+import 'package:learnflutter/isolate/isolate_screen.dart';
+import 'package:learnflutter/shimmer/shimmer_widget.dart';
+import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Menu/MenuController.dart';
@@ -130,45 +135,53 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Flutter WorkManager Example"),
-        ),
-        floatingActionButton: DraggableFab(
-          child: FloatingActionButton(
-            onPressed: () {
-              //action after pressing this button
-            },
-            child: Icon(Icons.add),
-          ),
-        ),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.red,
-            ),
-            Container(
-              width: 90,
-              height: 90,
-              color: Colors.green,
-            ),
-            Draggable(
-              onDragEnd: (details) {
-                print(details.offset);
-              },
-              feedback: context.widget,
-              child: Container(
-                color: Colors.blue,
-                width: 60,
-                height: 60,
-                child: Icon(Icons.add),
-              ),
-            ),
-          ],
-        ),
-      ),
+      initialRoute: '/test_screen',
+      // onGenerateRoute: Routes.generateRoute,
+      // initialRoute: Routes.splash,
+      routes: {
+        '/test_screen': (ctx) => TestScreen(),
+        '/courasel_screen': (ctx) => CarouselDemoHome(),
+        '/nested_scroll_screen': (ctx) => NestedScrollViewExample(),
+        '/nocenter': (ctx) => NoCenterDemo(),
+        '/image': (ctx) => ImageSliderDemo(),
+        '/complicated': (ctx) => ComplicatedImageDemo(),
+        '/enlarge': (ctx) => EnlargeStrategyDemo(),
+        '/manual': (ctx) => ManuallyControlledSlider(),
+        '/noloop': (ctx) => NoonLoopingDemo(),
+        '/vertical': (ctx) => VerticalSliderDemo(),
+        '/fullscreen': (ctx) => FullscreenSliderDemo(),
+        '/ondemand': (ctx) => OnDemandCarouselDemo(),
+        '/indicator': (ctx) => CarouselWithIndicatorDemo(),
+        '/prefetch': (ctx) => PrefetchImageDemo(),
+        '/reason': (ctx) => CarouselChangeReasonDemo(),
+        '/position': (ctx) => KeepPageviewPositionDemo(),
+        '/multiple': (ctx) => MultipleItemDemo(),
+        '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
+        '/MenuController': (ctx) => Menu_Controller()
+      },
+      // home: Scaffold(
+      //   floatingActionButton: DraggableFab(
+      //     child: FloatingActionButton(
+      //       onPressed: () {
+      //         //action after pressing this button
+      //       },
+      //       child: Icon(Icons.add),
+      //     ),
+      //   ),
+      //   body: Column(
+      //     mainAxisAlignment: MainAxisAlignment.start,
+      //     children: <Widget>[
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           Navigator.of(context).push(
+      //             context,
+      //           );
+      //         },
+      //         child: const Text('Thử lại'),
+      //       )
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
