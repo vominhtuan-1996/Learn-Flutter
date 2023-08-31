@@ -2,16 +2,19 @@
 
 import 'dart:convert';
 
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:learnflutter/Menu/Model/ModelMenu.dart';
 
 final dio = Dio();
+
 void configureDio() {
   // Set default configs
   dio.options.baseUrl = 'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json';
   dio.options.connectTimeout = const Duration(seconds: 5);
   dio.options.receiveTimeout = const Duration(seconds: 3);
-
+  dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
   // Or create `Dio` with a `BaseOptions` instance.
   final options = BaseOptions(
     baseUrl: 'https://raw.githubusercontent.com/vominhtuan-1996/APITest/main/menu_flutter/file%20(4).json',
@@ -57,8 +60,10 @@ Future<ModelMenu> getHttp() async {
     await handleDataResponseResult(jsonDecode(response.data)).then((value) => {
           if (value.errorCode == 0) {menus = ModelMenu.fromJson((value.result))}
         });
+
     return menus;
   }
+  dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
   return menuModel;
 }
 

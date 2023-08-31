@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
@@ -12,10 +13,20 @@ import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Nested/nested_scroll_screen.dart';
 import 'package:learnflutter/Nitification_Center/notification_center.dart';
 import 'package:learnflutter/TabbarCustom/TabbarMobiMapCustom.dart';
+import 'package:learnflutter/bmprogresshud/bmprogresshud_screen.dart';
 import 'package:learnflutter/courasel/courasel_screen.dart';
+import 'package:learnflutter/date_picker/calender.dart';
+import 'package:learnflutter/date_picker/date_picker.dart';
+import 'package:learnflutter/date_picker/date_time_input.dart';
+import 'package:learnflutter/datetime_picker/datetime_picker_screen.dart';
+import 'package:learnflutter/interractiveView/intertiveview_screen.dart';
 import 'package:learnflutter/isolate/isolate_screen.dart';
+import 'package:learnflutter/popover/popover_scren.dart';
+import 'package:learnflutter/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/shimmer/shimmer_widget.dart';
+import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
+import 'package:learnflutter/tie_picker/tie_picker_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Menu/MenuController.dart';
@@ -134,7 +145,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: Locale('vi'),
+      title: 'dasdasdasda',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate, TiePickerLocalizations.delegate],
+      supportedLocales: [Locale('vi', 'VN'), ...TiePickerLocalizations.supportedLocales],
       initialRoute: '/test_screen',
       // onGenerateRoute: Routes.generateRoute,
       // initialRoute: Routes.splash,
@@ -142,6 +157,7 @@ class _MyAppState extends State<MyApp> {
         '/test_screen': (ctx) => TestScreen(),
         '/courasel_screen': (ctx) => CarouselDemoHome(),
         '/nested_scroll_screen': (ctx) => NestedScrollViewExample(),
+        '/basic': (ctx) => BasicDemo(),
         '/nocenter': (ctx) => NoCenterDemo(),
         '/image': (ctx) => ImageSliderDemo(),
         '/complicated': (ctx) => ComplicatedImageDemo(),
@@ -157,31 +173,17 @@ class _MyAppState extends State<MyApp> {
         '/position': (ctx) => KeepPageviewPositionDemo(),
         '/multiple': (ctx) => MultipleItemDemo(),
         '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
-        '/MenuController': (ctx) => Menu_Controller()
+        '/MenuController': (ctx) => Menu_Controller(),
+        '/bmprogresshud_screen': (ctx) => MBProgressHUD(),
+        '/intertiveview_screen': (ctx) => InteractiveViewerExample(),
+        '/popover_scren': (ctx) => PopoverExample(),
+        '/datetime_picker_screen': (ctx) => DatePickerScreen(),
+        '/date_picker': (ctx) => DatePickerScreenExample(),
+        '/date_time_input': (context) => DateTimeInputScreen(),
+        '/calender': (context) => CalenderScreen(title: 'Title'),
+        '/tie_picker_screen': (context) => TiePickerScreen(),
+        '/progress_hud_screen': (context) => ProgressHubScreenTest()
       },
-      // home: Scaffold(
-      //   floatingActionButton: DraggableFab(
-      //     child: FloatingActionButton(
-      //       onPressed: () {
-      //         //action after pressing this button
-      //       },
-      //       child: Icon(Icons.add),
-      //     ),
-      //   ),
-      //   body: Column(
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: <Widget>[
-      //       ElevatedButton(
-      //         onPressed: () {
-      //           Navigator.of(context).push(
-      //             context,
-      //           );
-      //         },
-      //         child: const Text('Thử lại'),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
