@@ -1,168 +1,192 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:learnflutter/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/shimmer/widget/shimmer_widget.dart';
 
-class MyHomePageTestShimmer extends StatefulWidget {
-  const MyHomePageTestShimmer({super.key});
+class ExampleUiLoadingAnimation extends StatefulWidget {
+  const ExampleUiLoadingAnimation({
+    super.key,
+  });
 
   @override
-  State<MyHomePageTestShimmer> createState() => _MyHomePageTestShimmerState();
+  State<ExampleUiLoadingAnimation> createState() => _ExampleUiLoadingAnimationState();
 }
 
-class _MyHomePageTestShimmerState extends State<MyHomePageTestShimmer> {
+class _ExampleUiLoadingAnimationState extends State<ExampleUiLoadingAnimation> {
+  bool _isLoading = true;
+
+  void _toggleLoading() {
+    setState(() {
+      _isLoading = !_isLoading;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        children: <Widget>[
-          LoadingListPage(),
+    return Scaffold(
+      body: Shimmer(
+        linearGradient: ShimmerUtils.shimmerGradient,
+        child: ListView(
+          physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
+          children: [
+            const SizedBox(height: 16),
+            _buildTopRowList(),
+            const SizedBox(height: 16),
+            _buildListItem(),
+            _buildListItem(),
+            _buildListItem(),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toggleLoading,
+        child: Icon(
+          _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTopRowList() {
+    return SizedBox(
+      height: 72,
+      child: ListView(
+        physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        children: [
+          const SizedBox(width: 16),
+          _buildTopRowItem(),
+          _buildTopRowItem(),
+          _buildTopRowItem(),
+          _buildTopRowItem(),
+          _buildTopRowItem(),
+          _buildTopRowItem(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTopRowItem() {
+    return ShimmerLoading(
+      isLoading: _isLoading,
+      child: const CircleListItem(),
+      //  ,
+    );
+  }
+
+  Widget _buildListItem() {
+    return ShimmerLoading(
+      isLoading: _isLoading,
+      child: CardListItem(
+        isLoading: _isLoading,
       ),
     );
   }
 }
 
-class LoadingListPage extends StatefulWidget {
-  const LoadingListPage({super.key});
-
-  @override
-  State<LoadingListPage> createState() => _LoadingListPageState();
-}
-
-class _LoadingListPageState extends State<LoadingListPage> {
+//----------- List Items ---------
+class CircleListItem extends StatelessWidget {
+  const CircleListItem({super.key});
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        enabled: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            // BannerPlaceholder(),
-            // TitlePlaceholder(width: double.infinity),
-            Container(
-              color: Colors.blue,
-              height: 16.0,
-            ),
-            // // ContentPlaceholder(
-            // //   lineType: ContentLineType.threeLines,
-            // // ),
-            // SizedBox(height: 16.0),
-            // // TitlePlaceholder(width: 200.0),
-            // SizedBox(height: 16.0),
-            // // ContentPlaceholder(
-            // //   lineType: ContentLineType.twoLines,
-            // // ),
-            // SizedBox(height: 16.0),
-            // // TitlePlaceholder(width: 200.0),
-            // SizedBox(height: 16.0),
-            Expanded(
-                child: Container(
-              width: double.infinity,
-              color: Colors.red,
-            ))
-            // ContentPlaceholder(
-            //   lineType: ContentLineType.twoLines,
-            // ),
-          ],
-        ));
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Container(
+        width: 54,
+        height: 54,
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
+        child: ClipOval(
+          child: Image.network(
+            'https://docs.flutter.dev/cookbook'
+            '/img-files/effects/split-check/Avatar1.jpg',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
   }
 }
 
-class SlideToUnlockPage extends StatelessWidget {
-  final List<String> days = <String>['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  final List<String> months = <String>[
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+class CardListItem extends StatelessWidget {
+  const CardListItem({
+    super.key,
+    required this.isLoading,
+  });
 
-  SlideToUnlockPage({super.key});
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    final DateTime time = DateTime.now();
-    final int hour = time.hour;
-    final int minute = time.minute;
-    final int day = time.weekday;
-    final int month = time.month;
-    final int dayInMonth = time.day;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Slide To Unlock'),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildImage(),
+          const SizedBox(height: 16),
+          _buildText(),
+        ],
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Positioned(
-            top: 48.0,
-            right: 0.0,
-            left: 0.0,
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    '${hour < 10 ? '0$hour' : '$hour'}:${minute < 10 ? '0$minute' : '$minute'}',
-                    style: const TextStyle(
-                      fontSize: 60.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
-                  ),
-                  Text(
-                    '${days[day - 1]}, ${months[month - 1]} $dayInMonth',
-                    style: const TextStyle(fontSize: 24.0, color: Colors.white),
-                  )
-                ],
-              ),
+    );
+  }
+
+  Widget _buildImage() {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image.network(
+            'https://docs.flutter.dev/cookbook'
+            '/img-files/effects/split-check/Food1.jpg',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildText() {
+    if (isLoading) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(16),
             ),
           ),
-          Positioned(
-              bottom: 32.0,
-              left: 0.0,
-              right: 0.0,
-              child: Center(
-                child: Opacity(
-                  opacity: 0.8,
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.black12,
-                    highlightColor: Colors.white,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/images/chevron_right.png',
-                          height: 20.0,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0),
-                        ),
-                        const Text(
-                          'Slide to unlock',
-                          style: TextStyle(
-                            fontSize: 28.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ))
+          const SizedBox(height: 16),
+          Container(
+            width: 250,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
         ],
-      ),
-    );
+      );
+    } else {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Text(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do '
+          'eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        ),
+      );
+    }
   }
 }

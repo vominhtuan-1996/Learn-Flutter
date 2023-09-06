@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/Helpper/defineConstraint.dart';
 import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
 import 'package:learnflutter/Https/MBMHttpHelper.dart';
@@ -19,8 +20,12 @@ import 'package:learnflutter/date_picker/calender.dart';
 import 'package:learnflutter/date_picker/date_picker.dart';
 import 'package:learnflutter/date_picker/date_time_input.dart';
 import 'package:learnflutter/datetime_picker/datetime_picker_screen.dart';
+import 'package:learnflutter/hero_animation/hero_animation_screen.dart';
+import 'package:learnflutter/hive_demo/model/person.dart';
+import 'package:learnflutter/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/interractiveView/intertiveview_screen.dart';
 import 'package:learnflutter/isolate/isolate_screen.dart';
+import 'package:learnflutter/matix/matix_screen.dart';
 import 'package:learnflutter/popover/popover_scren.dart';
 import 'package:learnflutter/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/shimmer/shimmer_widget.dart';
@@ -34,7 +39,13 @@ import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
 
 void main() {
-  AppConfig.init(() {
+  AppConfig.init(() async {
+    // Initialize hive
+    await Hive.initFlutter();
+    // Registering the adapter
+    Hive.registerAdapter(PersonAdapter());
+    // Opening the box
+    await Hive.openBox('peopleBox');
     // Workmanager().registerOneOffTask(
     //   "task-identifier",
     //   simpleTaskKey,
@@ -145,6 +156,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorSchemeSeed: const Color(0xff6750a4),
+        useMaterial3: true,
+      ),
       locale: Locale('vi'),
       title: 'dasdasdasda',
       debugShowCheckedModeBanner: false,
@@ -182,7 +197,11 @@ class _MyAppState extends State<MyApp> {
         '/date_time_input': (context) => DateTimeInputScreen(),
         '/calender': (context) => CalenderScreen(title: 'Title'),
         '/tie_picker_screen': (context) => TiePickerScreen(),
-        '/progress_hud_screen': (context) => ProgressHubScreenTest()
+        '/progress_hud_screen': (context) => ProgressHubScreenTest(),
+        '/shimmer_widget': (context) => ExampleUiLoadingAnimation(),
+        '/matix_screen': (context) => MatrixScreen(),
+        '/hero_animation_screen': (context) => Page1(),
+        '/info_screen': (context) => InfoScreen()
       },
     );
   }

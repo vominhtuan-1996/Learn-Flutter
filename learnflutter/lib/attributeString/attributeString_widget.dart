@@ -12,8 +12,8 @@ enum AttriButedSring {
 
 // param bắt buộc :
 /// type[attriButedChar] {[messagem],[charHighlight],[ignoreCase]}
-///  type[attriButedText] {[messagem],[texthighlight],[ignoreCase]}
-///  type[attriButedRange] {[messagem],[start],[end]}
+/// type[attriButedText] {[messagem],[texthighlight],[ignoreCase]}
+/// type[attriButedRange] {[messagem],[start],[end]}
 /// type[attriButedCustom] {[listAttributedCustom]}
 class AttriButedSringWidget extends StatelessWidget {
   const AttriButedSringWidget({

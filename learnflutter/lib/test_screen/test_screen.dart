@@ -2,9 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/Helpper/utills_helpper.dart';
 import 'package:learnflutter/attributeString/attributeString_widget.dart';
+import 'package:learnflutter/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/shimmer/widget/shimmer_loading_widget.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -21,190 +23,223 @@ class _TestScreenState extends State<TestScreen> {
       appBar: AppBar(
         title: const Text('Test Screen'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/progress_hud_screen');
-                },
-                child: const Text('progressHud Screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/popover_scren');
-                },
-                child: const Text('Popover Click'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/nested_scroll_screen');
-                },
-                child: const Text('nested_scroll_screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/courasel_screen');
-                },
-                child: const Text('courasel_screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/MenuController');
-                },
-                child: const Text('Menu'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/bmprogresshud_screen');
-                },
-                child: const Text('bmprogresshud_screen'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/intertiveview_screen');
-                },
-                child: const Text('InteractiveViewer'),
-              ),
-              Transform.scale(
-                scale: 1.5,
-                child: CupertinoSwitch(
-                  // This bool value toggles the switch.
-                  value: switchValue,
-                  activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
-                  trackColor: Color(0xFFD9D9D9),
-                  thumbColor: Colors.red,
-                  onChanged: (bool? value) {
-                    // This is called when the user toggles the switch.
-                    setState(() {
-                      switchValue = value ?? false;
-                    });
+      body: Shimmer(
+        linearGradient: ShimmerUtils.shimmerGradient,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                ShimmerLoading(
+                  isLoading: true,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/shimmer_widget');
+                    },
+                    child: const Text('Test Shimmer Widget'),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/hero_animation_screen');
                   },
+                  child: const Text('Hero Animation Screen'),
                 ),
-              ),
-              CupertinoButton(
-                onPressed: () => _showActionSheet(context),
-                child: const Text('CupertinoActionSheet'),
-              ),
-              CupertinoButton(
-                onPressed: () => _showAlertDialog(context),
-                child: const Text('CupertinoAlertDialog'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/datetime_picker_screen');
-                },
-                child: const Text('Date time Picker'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/date_picker');
-                },
-                child: const Text('Date Picker'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/date_time_input');
-                },
-                child: const Text('date_time_input'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/calender');
-                },
-                child: const Text('calender'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  pushToController(context: context, useRootNavigator: true, route: '/tie_picker_screen');
-                  // Navigator.of(context).pushNamed('/tie_picker_screen');
-                },
-                child: const Text('Tie Picker Screen'),
-              ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedChar,
-                message: 'Tuan IOS Su12',
-                charHighlight: 'U',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/info_screen');
+                  },
+                  child: const Text('Hive Demo'),
                 ),
-                highlightStyle: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/matix_screen');
+                  },
+                  child: const Text('matix Screen'),
                 ),
-                highlightColor: Colors.red,
-                ignoreCase: true,
-              ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedText,
-                message: 'Tuan IOS Su12',
-                texthighlight: 'Su',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/progress_hud_screen');
+                  },
+                  child: const Text('progressHud Screen'),
                 ),
-                highlightStyle: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/popover_scren');
+                  },
+                  child: const Text('Popover Click'),
                 ),
-                highlightColor: Colors.red,
-                ignoreCase: true,
-              ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedRange,
-                message: 'Tuan IOS Su12',
-                start: 0,
-                end: 12,
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/nested_scroll_screen');
+                  },
+                  child: const Text('nested_scroll_screen'),
                 ),
-                highlightStyle: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/courasel_screen');
+                  },
+                  child: const Text('courasel_screen'),
                 ),
-                highlightColor: Colors.red,
-                ignoreCase: true,
-              ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedCustom,
-                listAttributedCustom: [
-                  TextSpan(
-                    text: 'Tuan',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                      fontSize: 20,
-                    ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/MenuController');
+                  },
+                  child: const Text('Menu'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/bmprogresshud_screen');
+                  },
+                  child: const Text('bmprogresshud_screen'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/intertiveview_screen');
+                  },
+                  child: const Text('InteractiveViewer'),
+                ),
+                Transform.scale(
+                  scale: 1.5,
+                  child: CupertinoSwitch(
+                    // This bool value toggles the switch.
+                    value: switchValue,
+                    activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
+                    trackColor: Color(0xFFD9D9D9),
+                    thumbColor: Colors.red,
+                    onChanged: (bool? value) {
+                      // This is called when the user toggles the switch.
+                      setState(() {
+                        switchValue = value ?? false;
+                      });
+                    },
                   ),
-                  TextSpan(
-                    text: 'IOS',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                      fontSize: 12,
-                    ),
+                ),
+                CupertinoButton(
+                  onPressed: () => _showActionSheet(context),
+                  child: const Text('CupertinoActionSheet'),
+                ),
+                CupertinoButton(
+                  onPressed: () => _showAlertDialog(context),
+                  child: const Text('CupertinoAlertDialog'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/datetime_picker_screen');
+                  },
+                  child: const Text('Date time Picker'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/date_picker');
+                  },
+                  child: const Text('Date Picker'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/date_time_input');
+                  },
+                  child: const Text('date_time_input'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/calender');
+                  },
+                  child: const Text('calender'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    pushToController(context: context, useRootNavigator: true, route: '/tie_picker_screen');
+                    // Navigator.of(context).pushNamed('/tie_picker_screen');
+                  },
+                  child: const Text('Tie Picker Screen'),
+                ),
+                AttriButedSringWidget(
+                  typeAttriButed: AttriButedSring.attriButedChar,
+                  message: 'Tuan IOS Su12',
+                  charHighlight: 'U',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
                   ),
-                  TextSpan(
-                    text: 'Su12',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                      fontSize: 36,
-                    ),
+                  highlightStyle: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-            ],
+                  highlightColor: Colors.red,
+                  ignoreCase: true,
+                ),
+                AttriButedSringWidget(
+                  typeAttriButed: AttriButedSring.attriButedText,
+                  message: 'Tuan IOS Su12',
+                  texthighlight: 'Su',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  highlightStyle: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  highlightColor: Colors.red,
+                  ignoreCase: true,
+                ),
+                AttriButedSringWidget(
+                  typeAttriButed: AttriButedSring.attriButedRange,
+                  message: 'Tuan IOS Su12',
+                  start: 0,
+                  end: 12,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  highlightStyle: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  highlightColor: Colors.red,
+                  ignoreCase: true,
+                ),
+                ShimmerLoading(
+                  isLoading: true,
+                  child: AttriButedSringWidget(
+                    typeAttriButed: AttriButedSring.attriButedCustom,
+                    listAttributedCustom: [
+                      TextSpan(
+                        text: 'Tuan',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          fontSize: 20,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'IOS',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          fontSize: 12,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Su12',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                          fontSize: 36,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
