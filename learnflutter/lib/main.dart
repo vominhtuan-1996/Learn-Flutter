@@ -14,24 +14,33 @@ import 'package:learnflutter/Https/MBMHttpHelper.dart';
 import 'package:learnflutter/Nested/nested_scroll_screen.dart';
 import 'package:learnflutter/Nitification_Center/notification_center.dart';
 import 'package:learnflutter/TabbarCustom/TabbarMobiMapCustom.dart';
+import 'package:learnflutter/app_theme.dart';
+import 'package:learnflutter/base_loading_screen/page_loading_screen.dart';
 import 'package:learnflutter/bmprogresshud/bmprogresshud_screen.dart';
+import 'package:learnflutter/camera/camera_screen.dart';
 import 'package:learnflutter/courasel/courasel_screen.dart';
 import 'package:learnflutter/date_picker/calender.dart';
 import 'package:learnflutter/date_picker/date_picker.dart';
 import 'package:learnflutter/date_picker/date_time_input.dart';
 import 'package:learnflutter/datetime_picker/datetime_picker_screen.dart';
+import 'package:learnflutter/draggbel_scroll/draggel_scroll_screen.dart';
 import 'package:learnflutter/hero_animation/hero_animation_screen.dart';
 import 'package:learnflutter/hive_demo/model/person.dart';
 import 'package:learnflutter/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/interractiveView/intertiveview_screen.dart';
 import 'package:learnflutter/isolate/isolate_screen.dart';
 import 'package:learnflutter/matix/matix_screen.dart';
+import 'package:learnflutter/open_file/open_file_screen.dart';
+import 'package:learnflutter/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/popover/popover_scren.dart';
 import 'package:learnflutter/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/shimmer/shimmer_widget.dart';
+import 'package:learnflutter/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
+import 'package:learnflutter/theme/page_theme_screen.dart';
 import 'package:learnflutter/tie_picker/tie_picker_screen.dart';
+import 'package:learnflutter/web_browser/web_browser_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Menu/MenuController.dart';
@@ -39,25 +48,27 @@ import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
 
 void main() {
-  AppConfig.init(() async {
-    // Initialize hive
-    await Hive.initFlutter();
-    // Registering the adapter
-    Hive.registerAdapter(PersonAdapter());
-    // Opening the box
-    await Hive.openBox('peopleBox');
-    // Workmanager().registerOneOffTask(
-    //   "task-identifier",
-    //   simpleTaskKey,
-    //   constraints: Constraints(
-    //     // connected or metered mark the task as requiring internet
-    //     networkType: NetworkType.connected,
-    //     // require external power
-    //     // requiresCharging: true,
-    //   ),
-    // );
-    runApp(MyApp());
-  });
+  AppConfig.init(
+    () async {
+      // Initialize hive
+      await Hive.initFlutter();
+      // Registering the adapter
+      Hive.registerAdapter(PersonAdapter());
+      // Opening the box
+      await Hive.openBox('peopleBox');
+      // Workmanager().registerOneOffTask(
+      //   "task-identifier",
+      //   simpleTaskKey,
+      //   constraints: Constraints(
+      //     // connected or metered mark the task as requiring internet
+      //     networkType: NetworkType.connected,
+      //     // require external power
+      //     // requiresCharging: true,
+      //   ),
+      // );
+      runApp(MyApp());
+    },
+  );
 }
 
 // class MyApp extends StatelessWidget {
@@ -156,15 +167,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xff6750a4),
-        useMaterial3: true,
-      ),
+      theme: AppThemes.primaryTheme,
       locale: Locale('vi'),
       title: 'dasdasdasda',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate, TiePickerLocalizations.delegate],
-      supportedLocales: [Locale('vi', 'VN'), ...TiePickerLocalizations.supportedLocales],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        TiePickerLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('vi', 'VN'),
+        ...TiePickerLocalizations.supportedLocales,
+      ],
       initialRoute: '/test_screen',
       // onGenerateRoute: Routes.generateRoute,
       // initialRoute: Routes.splash,
@@ -201,7 +217,17 @@ class _MyAppState extends State<MyApp> {
         '/shimmer_widget': (context) => ExampleUiLoadingAnimation(),
         '/matix_screen': (context) => MatrixScreen(),
         '/hero_animation_screen': (context) => Page1(),
-        '/info_screen': (context) => InfoScreen()
+        '/info_screen': (context) => InfoScreen(),
+        '/snack_bar_screen': (ctx) => AweseomSnackBarExample(),
+        '/page_loading_screen': (ctx) => PageLoadingScreen(
+              message: 'Đang cập nhật dữ liệu...',
+            ),
+        '/camera_screen': (context) => CameraExampleHome(),
+        '/open_file_screen': (context) => OpenFileScreen(),
+        '/path_provider_screen': (context) => PathProviderScreen(title: 'PathProviderScreen'),
+        '/web_browser_screen': (context) => WebViewExample(),
+        '/draggel_scroll_screen': (context) => DraggbleScrollScreen(),
+        '/page_theme_screen': (context) => TestThemeScreen()
       },
     );
   }

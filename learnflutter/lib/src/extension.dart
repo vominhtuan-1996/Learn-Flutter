@@ -32,3 +32,36 @@ extension Context on BuildContext {
   double get w => size.width;
   double get h => size.height;
 }
+
+extension ExtensionString on String {
+  int get toInt => (int.parse(trim()));
+
+  double get toDouble => (double.parse(trim()));
+
+  bool get isNullOrEmpty {
+    bool hasSpace = RegExp(r'\s').hasMatch(this);
+    return isEmpty || hasSpace;
+  }
+
+  String get lastChars {
+    String output = "";
+    if (length > 0) {
+      output = trim()[length - 1];
+      print('Last character : $output');
+    } else {
+      print('Empty string, please check.');
+    }
+    return output;
+  }
+
+  String get firstChars {
+    var output = "";
+    if (length > 0) {
+      output = trim()[0];
+      print('First character : $output');
+    } else {
+      print('Empty string, please check.');
+    }
+    return output;
+  }
+}

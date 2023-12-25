@@ -69,11 +69,13 @@ class Button extends StatelessWidget {
           showPopover(
             context: context,
             bodyBuilder: (context) => Container(
+              width: 100,
+              height: 100,
               color: Colors.amberAccent,
             ),
             onPop: () => print('Popover was popped!'),
             direction: PopoverDirection.bottom,
-            backgroundColor: Colors.amberAccent,
+            backgroundColor: Colors.transparent,
             width: 350,
             height: 400,
             arrowHeight: 12,

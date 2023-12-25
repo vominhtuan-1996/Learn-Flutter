@@ -23,7 +23,8 @@ import workmanager
       }
       FlutterIsolatePlugin.isolatePluginRegistrantClassName = "IsolatePluginRegistrant"
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
-          GeneratedPluginRegistrant.register(with: registry)}
+          GeneratedPluginRegistrant.register(with: registry)
+      }
       
       WorkmanagerPlugin.registerTask(withIdentifier: "be.tramckrijte.workmanagerExample.taskId")
       WorkmanagerPlugin.registerTask(withIdentifier: "be.tramckrijte.workmanagerExample.simpleTask")

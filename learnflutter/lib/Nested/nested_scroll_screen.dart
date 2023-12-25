@@ -15,9 +15,11 @@ class NestedScrollViewExample extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Column(),
+              title: Container(
+                color: Colors.red,
+              ),
               floating: true,
-              expandedHeight: 200.0,
+              expandedHeight: 360.0,
               forceElevated: innerBoxIsScrolled,
               leading: const BackButton(color: Colors.transparent),
             ),

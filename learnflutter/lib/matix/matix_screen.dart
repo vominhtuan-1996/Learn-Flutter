@@ -38,13 +38,13 @@ class _MatrixScreenState extends State<MatrixScreen> {
                 _rz %= pi * 2;
               });
             },
-            onTap: () {
-              setState(() {
-                _rx = Random().nextDouble();
-                _ry = Random().nextDouble();
-                _rz = Random().nextDouble();
-              });
-            },
+            // onTap: () {
+            //   setState(() {
+            //     _rx = Random().nextDouble();
+            //     _ry = Random().nextDouble();
+            //     _rz = Random().nextDouble();
+            //   });
+            // },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -105,32 +105,64 @@ class Cube extends StatelessWidget {
     return Stack(
       children: [
         Transform(
-          //starboard 2
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..translate(100.0, -100.0, 0.0)
-            ..rotateY(pi / 2),
-          child: Container(width: 200, height: 200, color: Colors.orange, child: Center(child: Text('1'))),
-        ),
-        Transform(
-          // FORNT 1
-          transform: Matrix4.identity()..translate(0.0, 0.0, -100.0),
-          alignment: Alignment.center,
-          child: Container(width: 200, height: 200, color: Colors.red, child: Center(child: Text('2'))),
-        ),
-        Transform(
           //PORT 3
           alignment: Alignment.center,
           transform: Matrix4.identity()
             ..translate(-100.0, 0.0, 0.0)
             ..rotateY(-pi / 2),
-          child: Container(width: 200, height: 200, color: Colors.purple, child: Center(child: Text('3'))),
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.purple,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203635_9d761d059fb99a5dcffaf5ea28eb0ee6_646793.jpg'),
+                ),
+              )),
+        ),
+        Transform(
+          //starboard 2
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..translate(100.0, 0.0, 0.0)
+            ..rotateY(pi / 2),
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.orange,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203343_435385fa021573f31f986ad649309e43_428280.jpg'),
+                ),
+              )),
+        ),
+        Transform(
+          // FORNT 1
+          transform: Matrix4.identity()..translate(0.0, 0.0, -100.0),
+          alignment: Alignment.center,
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.red,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277202570_45c69497968fb655673fe5167863250d_763520.jpg'),
+                ),
+              )),
         ),
         Transform(
           //BACK 4
           alignment: Alignment.center,
           transform: Matrix4.identity()..translate(0.0, 0.0, 100.0),
-          child: Container(width: 200, height: 200, color: Colors.blue, child: Center(child: Text('4'))),
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.blue,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277206068_80075bbf7ff569987318b936c3034020_123463.jpg'),
+                ),
+              )),
         ),
         Transform(
           // 5
@@ -138,7 +170,15 @@ class Cube extends StatelessWidget {
           transform: Matrix4.identity()
             ..translate(0.0, 100.0, 0.0)
             ..rotateX(pi / 2),
-          child: Container(width: 200, height: 200, color: Colors.yellow, child: Center(child: Text('5'))),
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.yellow,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205747_f6f22e36cd5ff81f644bbfd748824cf9_676080.jpg'),
+                ),
+              )),
         ),
         Transform(
           // TOP 6
@@ -146,7 +186,15 @@ class Cube extends StatelessWidget {
           transform: Matrix4.identity()
             ..translate(0.0, -100.0, 0.0)
             ..rotateX(pi / 2),
-          child: Container(width: 200, height: 200, color: Colors.pink, child: Center(child: Text('6'))),
+          child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.pink,
+              child: Center(
+                child: Image(
+                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205325_ba9d3b34ef5dcf40a3e338b032b63d17_654209.jpg'),
+                ),
+              )),
         ),
       ],
     );

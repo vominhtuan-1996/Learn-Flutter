@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/Helpper/utills_helpper.dart';
 import 'package:learnflutter/attributeString/attributeString_widget.dart';
+import 'package:learnflutter/qr_code_example/qr_code_screen.dart';
 import 'package:learnflutter/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/src/extension.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -16,6 +19,26 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  _launchURL() async {
+    final Uri url = Uri.parse('https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  void splitCodeString() {
+    var value =
+        'https://ip.fpt.vn/keycloak/callback?session_state=99b4a2fe-3ba2-41d4-97a8-b4c0031b038f&code=66d06447-8e2d-4914-807f-52d26f65c120.99b4a2fe-3ba2-41d4-97a8-b4c0031b038f.ab352c75-07da-4d36-9912-09e722986f3d';
+    var newValue = value.split("?");
+    var newValues = newValue.last.split("&");
+    Map<String, dynamic> map = {};
+    for (var item in newValues) {
+      var items = item.split("=");
+      map[items.first] = items.last;
+    }
+    print(map['code']);
+  }
+
   bool switchValue = true;
   @override
   Widget build(BuildContext context) {
@@ -30,6 +53,68 @@ class _TestScreenState extends State<TestScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                ElevatedButton(
+                  onPressed: splitCodeString,
+                  child: Text('Split String'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/page_theme_screen');
+                  },
+                  child: Text(
+                    'Test Theme',
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/web_browser_screen');
+                  },
+                  child: Text('Test Web Browser'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/draggel_scroll_screen');
+                  },
+                  child: Text('Test draggel_scroll_screen'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/path_provider_screen');
+                  },
+                  child: Text('path_provider_screen'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/open_file_screen');
+                  },
+                  child: Text('Tap to open file'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const QRViewExample(),
+                    ));
+                  },
+                  child: const Text('qrView'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/camera_screen');
+                  },
+                  child: const Text('Test Camera'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/page_loading_screen');
+                  },
+                  child: const Text('Page Loading Screen'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/snack_bar_screen');
+                  },
+                  child: const Text('AweseomSnackBarExample'),
+                ),
                 ShimmerLoading(
                   isLoading: true,
                   child: ElevatedButton(
