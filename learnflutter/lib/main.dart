@@ -8,42 +8,42 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learnflutter/Helpper/defineConstraint.dart';
-import 'package:learnflutter/Helpper/flutter_section_table_view.dart';
-import 'package:learnflutter/Https/MBMHttpHelper.dart';
-import 'package:learnflutter/Nested/nested_scroll_screen.dart';
-import 'package:learnflutter/Nitification_Center/notification_center.dart';
-import 'package:learnflutter/TabbarCustom/TabbarMobiMapCustom.dart';
-import 'package:learnflutter/app_theme.dart';
+import 'package:learnflutter/helpper/define_constraint.dart';
+import 'package:learnflutter/helpper/flutter_section_table_view.dart';
+import 'package:learnflutter/core/https/MBMHttpHelper.dart';
+import 'package:learnflutter/helpper/hive_demo/model/person.dart';
+import 'package:learnflutter/modules/nested/nested_scroll_screen.dart';
+import 'package:learnflutter/core/notification_center/notification_center.dart';
+import 'package:learnflutter/helpper/tabbar_custom/tabbar_custom.dart';
+import 'package:learnflutter/core/app_theme.dart';
 import 'package:learnflutter/base_loading_screen/page_loading_screen.dart';
-import 'package:learnflutter/bmprogresshud/bmprogresshud_screen.dart';
-import 'package:learnflutter/camera/camera_screen.dart';
-import 'package:learnflutter/courasel/courasel_screen.dart';
-import 'package:learnflutter/date_picker/calender.dart';
-import 'package:learnflutter/date_picker/date_picker.dart';
-import 'package:learnflutter/date_picker/date_time_input.dart';
-import 'package:learnflutter/datetime_picker/datetime_picker_screen.dart';
-import 'package:learnflutter/draggbel_scroll/draggel_scroll_screen.dart';
-import 'package:learnflutter/hero_animation/hero_animation_screen.dart';
-import 'package:learnflutter/hive_demo/model/person.dart';
-import 'package:learnflutter/hive_demo/screen/info_screen.dart';
-import 'package:learnflutter/interractiveView/intertiveview_screen.dart';
-import 'package:learnflutter/isolate/isolate_screen.dart';
-import 'package:learnflutter/matix/matix_screen.dart';
-import 'package:learnflutter/open_file/open_file_screen.dart';
-import 'package:learnflutter/path_provider/path_provider_screen.dart';
-import 'package:learnflutter/popover/popover_scren.dart';
-import 'package:learnflutter/progress_hub/progress_hud_screen.dart';
-import 'package:learnflutter/shimmer/shimmer_widget.dart';
-import 'package:learnflutter/snack_bar/snack_bar_screen.dart';
+import 'package:learnflutter/modules/bmprogresshud/bmprogresshud_screen.dart';
+import 'package:learnflutter/modules/camera/camera_screen.dart';
+import 'package:learnflutter/core/routes/route.dart';
+import 'package:learnflutter/modules/courasel/courasel_screen.dart';
+import 'package:learnflutter/modules/date_picker/calender.dart';
+import 'package:learnflutter/modules/date_picker/date_picker.dart';
+import 'package:learnflutter/modules/date_picker/date_time_input.dart';
+import 'package:learnflutter/modules/datetime_picker/datetime_picker_screen.dart';
+import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
+import 'package:learnflutter/helpper/hero_animation/hero_animation_screen.dart';
+import 'package:learnflutter/modules/interractive_view/intertiveview_screen.dart';
+import 'package:learnflutter/modules/isolate/isolate_screen.dart';
+import 'package:learnflutter/modules/matix/matix_screen.dart';
+import 'package:learnflutter/modules/open_file/open_file_screen.dart';
+import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
+import 'package:learnflutter/modules/popover/popover_scren.dart';
+import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
+import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
-import 'package:learnflutter/tie_picker/tie_picker_screen.dart';
-import 'package:learnflutter/web_browser/web_browser_screen.dart';
+import 'package:learnflutter/modules/tie_picker/tie_picker_screen.dart';
+import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Menu/MenuController.dart';
+import 'modules/menu/menu_controller.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
 
@@ -181,54 +181,8 @@ class _MyAppState extends State<MyApp> {
         Locale('vi', 'VN'),
         ...TiePickerLocalizations.supportedLocales,
       ],
-      initialRoute: '/test_screen',
-      // onGenerateRoute: Routes.generateRoute,
-      // initialRoute: Routes.splash,
-      routes: {
-        '/test_screen': (ctx) => TestScreen(),
-        '/courasel_screen': (ctx) => CarouselDemoHome(),
-        '/nested_scroll_screen': (ctx) => NestedScrollViewExample(),
-        '/basic': (ctx) => BasicDemo(),
-        '/nocenter': (ctx) => NoCenterDemo(),
-        '/image': (ctx) => ImageSliderDemo(),
-        '/complicated': (ctx) => ComplicatedImageDemo(),
-        '/enlarge': (ctx) => EnlargeStrategyDemo(),
-        '/manual': (ctx) => ManuallyControlledSlider(),
-        '/noloop': (ctx) => NoonLoopingDemo(),
-        '/vertical': (ctx) => VerticalSliderDemo(),
-        '/fullscreen': (ctx) => FullscreenSliderDemo(),
-        '/ondemand': (ctx) => OnDemandCarouselDemo(),
-        '/indicator': (ctx) => CarouselWithIndicatorDemo(),
-        '/prefetch': (ctx) => PrefetchImageDemo(),
-        '/reason': (ctx) => CarouselChangeReasonDemo(),
-        '/position': (ctx) => KeepPageviewPositionDemo(),
-        '/multiple': (ctx) => MultipleItemDemo(),
-        '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
-        '/MenuController': (ctx) => Menu_Controller(),
-        '/bmprogresshud_screen': (ctx) => MBProgressHUD(),
-        '/intertiveview_screen': (ctx) => InteractiveViewerExample(),
-        '/popover_scren': (ctx) => PopoverExample(),
-        '/datetime_picker_screen': (ctx) => DatePickerScreen(),
-        '/date_picker': (ctx) => DatePickerScreenExample(),
-        '/date_time_input': (context) => DateTimeInputScreen(),
-        '/calender': (context) => CalenderScreen(title: 'Title'),
-        '/tie_picker_screen': (context) => TiePickerScreen(),
-        '/progress_hud_screen': (context) => ProgressHubScreenTest(),
-        '/shimmer_widget': (context) => ExampleUiLoadingAnimation(),
-        '/matix_screen': (context) => MatrixScreen(),
-        '/hero_animation_screen': (context) => Page1(),
-        '/info_screen': (context) => InfoScreen(),
-        '/snack_bar_screen': (ctx) => AweseomSnackBarExample(),
-        '/page_loading_screen': (ctx) => PageLoadingScreen(
-              message: 'Đang cập nhật dữ liệu...',
-            ),
-        '/camera_screen': (context) => CameraExampleHome(),
-        '/open_file_screen': (context) => OpenFileScreen(),
-        '/path_provider_screen': (context) => PathProviderScreen(title: 'PathProviderScreen'),
-        '/web_browser_screen': (context) => WebViewExample(),
-        '/draggel_scroll_screen': (context) => DraggbleScrollScreen(),
-        '/page_theme_screen': (context) => TestThemeScreen()
-      },
+      onGenerateRoute: Routes.generateRoute,
+      initialRoute: Routes.testScreen,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/extension/extension_context.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
 
 class TestThemeScreen extends StatefulWidget {
@@ -30,200 +30,337 @@ class TestThemeScreenState extends State<TestThemeScreen> {
         ),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-              child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Row(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.primary),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.primary),
+                  ),
+                  Text(
+                    'primary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
               ),
-              Text(
-                'primary',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onPrimary),
+                  ),
+                  Text(
+                    'onPrimary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.primaryContainer),
+                  ),
+                  Text(
+                    'primaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onPrimaryContainer),
+                  ),
+                  Text(
+                    'onPrimaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.secondary),
+                  ),
+                  Text(
+                    'secondary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onSecondary),
+                  ),
+                  Text(
+                    'onSecondary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.secondaryContainer),
+                  ),
+                  Text(
+                    'secondaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onSecondaryContainer),
+                  ),
+                  Text(
+                    'onSecondaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.tertiary),
+                  ),
+                  Text(
+                    'tertiary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onTertiary),
+                  ),
+                  Text(
+                    'onTertiary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.tertiaryContainer),
+                  ),
+                  Text(
+                    'tertiaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onTertiaryContainer),
+                  ),
+                  Text(
+                    'onTertiaryContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.error),
+                  ),
+                  Text(
+                    'error',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onError),
+                  ),
+                  Text(
+                    'onError',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.errorContainer),
+                  ),
+                  Text(
+                    'errorContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onErrorContainer),
+                  ),
+                  Text(
+                    'onErrorContainer',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.surface),
+                  ),
+                  Text(
+                    'surface',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onSurface),
+                  ),
+                  Text(
+                    'onSurface',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onSurfaceVariant),
+                  ),
+                  Text(
+                    'onSurfaceVariant',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.inversePrimary),
+                  ),
+                  Text(
+                    'inversePrimary',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.inverseSurface),
+                  ),
+                  Text(
+                    'inverseSurface',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.outline),
+                  ),
+                  Text(
+                    'outline',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 60,
+                    width: 60,
+                    decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.outlineVariant),
+                  ),
+                  Text(
+                    'outlineVariant',
+                    style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ],
               ),
             ],
           ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onPrimary),
-              ),
-              Text(
-                'onPrimary',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.primaryContainer),
-              ),
-              Text(
-                'primaryContainer',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onPrimaryContainer),
-              ),
-              Text(
-                'onPrimaryContainer',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.secondary,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onSecondary,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.secondaryContainer,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onSecondaryContainer,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.tertiary,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onTertiary,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.tertiaryContainer,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onTertiaryContainer,
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.error),
-              ),
-              Text(
-                'error',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onError),
-              ),
-              Text(
-                'onError',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.errorContainer),
-              ),
-              Text(
-                'errorContainer',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 8, right: 8),
-                height: 60,
-                width: 60,
-                decoration: AppBoxDecoration.boxDecorationCircle(context.theme.colorScheme.onErrorContainer),
-              ),
-              Text(
-                'onErrorContainer',
-                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-              ),
-            ],
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.surface,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onSurface,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.onSurfaceVariant,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.inversePrimary,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.inverseSurface,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.outline,
-          ),
-          Container(
-            height: 100,
-            width: context.mediaQuery.size.width,
-            color: context.theme.colorScheme.outlineVariant,
-          ),
-        ],
-      ))),
+        ),
+      ),
     );
   }
 }

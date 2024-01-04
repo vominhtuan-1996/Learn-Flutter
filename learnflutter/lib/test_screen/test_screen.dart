@@ -2,12 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/Helpper/utills_helpper.dart';
-import 'package:learnflutter/attributeString/attributeString_widget.dart';
-import 'package:learnflutter/qr_code_example/qr_code_screen.dart';
-import 'package:learnflutter/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/shimmer/widget/shimmer_widget.dart';
-import 'package:learnflutter/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/core/routes/route.dart';
+import 'package:learnflutter/helpper/utills_helpper.dart';
+import 'package:learnflutter/core/attribute_string/attribute_string_widget.dart';
+import 'package:learnflutter/modules/qr_code_example/qr_code_screen.dart';
+import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
 import 'package:learnflutter/src/extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -53,6 +54,12 @@ class _TestScreenState extends State<TestScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.numberFormatScreen);
+                  },
+                  child: Text('Test NumberForamtter'),
+                ),
                 ElevatedButton(
                   onPressed: splitCodeString,
                   child: Text('Split String'),
