@@ -29,6 +29,9 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
+        appBar: AppBar(
+          title: Text('Number Formatter'),
+        ),
         isLoading: false,
         child: SingleChildScrollView(
           child: Column(

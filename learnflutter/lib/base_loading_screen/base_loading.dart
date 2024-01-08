@@ -7,12 +7,14 @@ class BaseLoading extends StatefulWidget {
   BaseLoading({
     super.key,
     required this.isLoading,
-    this.message = "ddadddd",
+    this.message = 'Đang cập nhật dữ liệu...',
     required this.child,
+    this.appBar,
   });
   final bool isLoading;
-  final String message;
+  final String? message;
   final Widget child;
+  final PreferredSizeWidget? appBar;
   @override
   State<BaseLoading> createState() => BaseLoadingScreenState();
 }
@@ -30,59 +32,59 @@ class BaseLoadingScreenState extends State<BaseLoading> {
 
   @override
   Widget build(BuildContext context) {
-    double widthText = getTextWidth(text: widget.message, textStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.white));
+    double widthText = getTextWidth(text: widget.message ?? "Đang cập nhật dữ liệu...", textStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.white));
     double heightText = getTextHeight(
-      text: widget.message,
+      text: widget.message ?? "Đang cập nhật dữ liệu...",
       textStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
       maxWidthOfWidget: MediaQuery.of(context).size.width - 60,
     );
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(''),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: widget.appBar,
+          body: Container(
+            color: Colors.white,
+            child: widget.child,
+          ),
         ),
-        body: Stack(
-          children: [
-            Container(
-              color: Colors.white,
-              child: widget.child,
-            ),
-            Visibility(
-                visible: widget.isLoading,
+        Visibility(
+          visible: widget.isLoading,
+          child: Container(
+            color: Colors.grey.withOpacity(0.7),
+            child: Center(
                 child: Container(
-                  color: Colors.grey.withOpacity(0.7),
-                  child: Center(
-                      child: Container(
-                    decoration: AppBoxDecoration.boxDecorationBorderRadius(
-                      borderRadiusValue: 8.0,
-                      colorBackground: Colors.black54,
+              decoration: AppBoxDecoration.boxDecorationBorderRadius(
+                borderRadiusValue: 8.0,
+                colorBackground: Colors.black54,
+              ),
+              width: widthText > MediaQuery.of(context).size.width ? MediaQuery.of(context).size.width - 60 : widthText + 40,
+              height: widthText > MediaQuery.of(context).size.width ? heightText + 100 : heightText + 90,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: heightText > 0 ? 15 : 10),
+                  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.white),
                     ),
-                    width: widthText > MediaQuery.of(context).size.width ? MediaQuery.of(context).size.width - 60 : widthText + 40,
-                    height: widthText > MediaQuery.of(context).size.width ? heightText + 100 : heightText + 90,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: heightText > 0 ? 15 : 10),
-                        const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3.0,
-                            valueColor: AlwaysStoppedAnimation(Colors.white),
-                          ),
-                        ),
-                        SizedBox(height: heightText > 0 ? 15 : 10),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              widget.message,
-                              style: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
+                  ),
+                  SizedBox(height: heightText > 0 ? 15 : 10),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        widget.message ?? "Đang cập nhật dữ liệu...",
+                        style: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  )),
-                ))
-          ],
-        ));
+                  ),
+                ],
+              ),
+            )),
+          ),
+        ),
+      ],
+    );
   }
 }
