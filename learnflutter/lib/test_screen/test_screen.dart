@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnflutter/core/routes/route.dart';
 import 'package:learnflutter/helpper/utills_helpper.dart';
 import 'package:learnflutter/core/attribute_string/attribute_string_widget.dart';
@@ -43,6 +44,7 @@ class _TestScreenState extends State<TestScreen> {
   bool switchValue = true;
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test Screen'),
@@ -56,6 +58,12 @@ class _TestScreenState extends State<TestScreen> {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.silderVerticalScreen);
+                  },
+                  child: Text('Test Slider Vertical'),
+                ),
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushNamed(Routes.numberFormatScreen);
                   },
                   child: Text('Test NumberForamtter'),
@@ -64,12 +72,16 @@ class _TestScreenState extends State<TestScreen> {
                   onPressed: splitCodeString,
                   child: Text('Split String'),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/page_theme_screen');
-                  },
-                  child: Text(
-                    'Test Theme',
+                Container(
+                  width: ScreenUtil().setWidth(50),
+                  height: ScreenUtil().setHeight(200),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/page_theme_screen');
+                    },
+                    child: Text(
+                      'Test Theme',
+                    ),
                   ),
                 ),
                 ElevatedButton(

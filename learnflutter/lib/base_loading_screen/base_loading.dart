@@ -41,7 +41,7 @@ class BaseLoadingScreenState extends State<BaseLoading> {
     return Stack(
       children: [
         Scaffold(
-          appBar: widget.appBar,
+          appBar: widget.appBar ?? AppBar(),
           body: Container(
             color: Colors.white,
             child: widget.child,

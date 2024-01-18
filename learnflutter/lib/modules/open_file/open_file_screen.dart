@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/helpper/images/images_helper.dart';
+import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/item_widget.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
+import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -33,6 +38,30 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
         print(value.path);
       },
     );
+  }
+
+  Future<String> saveFolder(String folderName) async {
+    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
+    String appDocumentsPath = appDocumentsDirectory.path; // 2
+    String filePath = '$appDocumentsPath/DownLoadFile'; // 3
+    Directory(filePath).create(recursive: true).then(
+      (value) {
+        print(value.path);
+      },
+    );
+    return '$filePath/$folderName';
+  }
+
+  Future<String> downLoadFolder() async {
+    Directory appDocumentsDirectory = await getApplicationCacheDirectory(); // 1
+    String appDocumentsPath = appDocumentsDirectory.path; // 2
+    String filePath = '$appDocumentsPath/DownLoadFile'; // 3
+    Directory(filePath).create(recursive: true).then(
+      (value) {
+        print(value.path);
+      },
+    );
+    return filePath;
   }
 
   void _requestAppDocumentsDirectory() {
@@ -131,17 +160,29 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                   TextButton(
                     child: Text('Tap to get list file'),
                     onPressed: () {
-                      setState(() {
-                        _listofFiles();
-                      });
+                      UtilsHelper.logDebug(ItemDirectoryModel()..title = '312312312');
+                      // setState(() {
+                      //   _listofFiles();
+                      // });
                     },
                   ),
                   TextButton(
                     child: Text('Tap to save file'),
                     onPressed: () {
-                      createFolder('Camerra_${DateTime.now()}');
+                      createFolder('downLoadFile');
                     },
                   ),
+                  TextButton(
+                      onPressed: () async {
+                        String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659dfa9412b7409efc7a0560";
+                        // String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659e55ee12b7409efc7b2b6a";
+                        // String link = "https://i.stack.imgur.com/MMtcX.png";
+
+                        // downLoadFileWithLink(link, await saveFolder('659e55ee12b7409efc7b2b6a.zip'));
+                        final path = await downloadFile(link, await downLoadFolder());
+                        await OpenFile.open(path);
+                      },
+                      child: Text('DownLoad File')),
                   Expanded(
                     child: ListView.builder(
                       itemCount: listDirectory.length,

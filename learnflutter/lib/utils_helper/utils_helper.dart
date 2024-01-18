@@ -1,4 +1,9 @@
+// ignore_for_file: avoid_print
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:learnflutter/src/extension.dart';
 
 class UtilsHelper {
   UtilsHelper._();
@@ -31,5 +36,25 @@ class UtilsHelper {
   static Future<dynamic> navigationPushNamed(BuildContext context, String route, {dynamic data}) async {
     var navigator = Navigator.of(context);
     return await navigator.pushNamed(route, arguments: data);
+  }
+
+  static void fMapLog(String fmt, [Object? arg1, Object? arg2, Object? arg3, Object? arg4]) {
+    print('${StackTrace.current} --> $fmt');
+  }
+
+  static void logDebug(dynamic label) {
+    print(label);
+    Iterable<String> lines = StackTrace.current.toString().trimRight().split('\n');
+    for (var element in lines) {
+      if (element.substring(1, 3).toInt == 1) {
+        String temp = element;
+        final tempss = temp.split("dart");
+        final pack = tempss.first;
+        final packs = pack.split('(');
+        final line = tempss.last.split(':');
+        print("package : ${packs.last}dart\t\t\t\tline : ${line[1]}");
+        break;
+      }
+    }
   }
 }

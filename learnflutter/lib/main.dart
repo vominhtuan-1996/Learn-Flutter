@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/helpper/define_constraint.dart';
@@ -46,6 +47,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'modules/menu/menu_controller.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
+
+import 'package:flutter/foundation.dart';
 
 void main() {
   AppConfig.init(

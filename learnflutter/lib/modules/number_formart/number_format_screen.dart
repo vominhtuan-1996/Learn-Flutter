@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:learnflutter/Helpper/hive_demo/model/person.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/extension/extension_list.dart';
 import 'package:learnflutter/src/extension.dart';
 
 class NumberFormatterScreen extends StatefulWidget {
@@ -11,6 +13,16 @@ class NumberFormatterScreen extends StatefulWidget {
 }
 
 class NumberFormatterScreenState extends State<NumberFormatterScreen> {
+  bool rebuild = false;
+  List<Person> listExtension = [
+    Person(name: 'Tuan', country: 'country'),
+    Person(name: 'Tuan1', country: 'country'),
+    Person(name: 'Tuan2', country: 'country'),
+    Person(name: 'Tuan3', country: 'country'),
+  ];
+
+  List<num> listminmax = [1, 3.3, 3.2, 9, 12, 12.2, 1.2];
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +54,48 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                 },
                 inputFormatters: [],
               ),
-              ElevatedButton(onPressed: () {}, child: Text('data')),
+              ElevatedButton(
+                onPressed: () {
+                  print(listExtension.replace(item: Person(name: 'Tuan6', country: 'country'), index: 1));
+                  setState(() {
+                    rebuild = !rebuild;
+                  });
+                },
+                child: Text('Replace Object'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  listExtension.update(index: 2, item: Person(name: "Tuan10", country: "country"));
+                  setState(() {
+                    rebuild = !rebuild;
+                  });
+                },
+                onLongPress: () {
+                  print('onLongPress');
+                },
+                child: Text('Update Object'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print(listminmax.max);
+                  print(listminmax.min);
+                  listExtension.add(Person(name: listminmax.max.toString(), country: "country"));
+                  listExtension.add(Person(name: listminmax.min.toString(), country: "country"));
+                  setState(() {
+                    rebuild = !rebuild;
+                  });
+                },
+                child: Text('min max list '),
+              ),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemCount: listExtension.length,
+                  itemBuilder: (context, index) {
+                    return Text(listExtension[index].name.toString());
+                  },
+                ),
+              )
             ],
           ),
         ));

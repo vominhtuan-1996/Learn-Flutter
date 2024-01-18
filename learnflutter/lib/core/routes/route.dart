@@ -23,6 +23,7 @@ import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
+import 'package:learnflutter/modules/slider_vertical/slider_vertical_screen.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
 import 'package:learnflutter/modules/tie_picker/tie_picker_screen.dart';
@@ -77,6 +78,7 @@ class Routes {
   static const String draggelScrollScreen = "/draggel_scroll_screen";
   static const String pageThemeScreen = "/page_theme_screen";
   static const String numberFormatScreen = "/number_format_screen";
+  static const String silderVerticalScreen = 'slider_vertical_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -300,6 +302,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: numberFormatScreen),
           builder: (_) => const NumberFormatterScreen(),
+        );
+      case silderVerticalScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: silderVerticalScreen),
+          builder: (_) => const SliderVerticalScreen(),
         );
 
       default:
