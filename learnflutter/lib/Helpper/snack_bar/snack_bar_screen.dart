@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
 
 class AweseomSnackBarExample extends StatelessWidget {
   const AweseomSnackBarExample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return BaseLoading(
+      isLoading: false,
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

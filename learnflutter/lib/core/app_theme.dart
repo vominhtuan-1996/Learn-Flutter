@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/app_text_style.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/core/global/var_global.dart';
+import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
+import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/src/app_colors.dart';
 
 /// Custom theme for the app
@@ -133,23 +137,23 @@ class AppThemes {
     );
   }
 
-  static final primaryTheme = ThemeData(
+  static ThemeData primaryTheme(BuildContext context, SettingThemeState state) => ThemeData(
       textTheme: TextTheme(
-        displayLarge: AppTextStyles.themeDisplayLarge,
-        displayMedium: AppTextStyles.themeDisplayMedium,
-        displaySmall: AppTextStyles.themeDisplaySmall,
-        headlineLarge: AppTextStyles.themeHeadlineLarge,
-        headlineMedium: AppTextStyles.themeHeadlineMedium,
-        headlineSmall: AppTextStyles.themeHeadlineSmall,
-        titleLarge: AppTextStyles.themeTitleLarge,
-        titleMedium: AppTextStyles.themeTitleMedium,
-        titleSmall: AppTextStyles.themeTitleSmall,
-        bodyLarge: AppTextStyles.themeBodyLarge,
-        bodyMedium: AppTextStyles.themeBodyMedium,
-        bodySmall: AppTextStyles.themeBodySmall,
-        labelLarge: AppTextStyles.themeLabelLarge,
-        labelMedium: AppTextStyles.themeLabelMedium,
-        labelSmall: AppTextStyles.themeLabelSmall,
+        displayLarge: AppTextStyles.themeDisplayLarge.copyWith(fontSize: state.scaleText! * 57),
+        displayMedium: AppTextStyles.themeDisplayMedium.copyWith(fontSize: state.scaleText! * 45),
+        displaySmall: AppTextStyles.themeDisplaySmall.copyWith(fontSize: state.scaleText! * 36),
+        headlineLarge: AppTextStyles.themeHeadlineLarge.copyWith(fontSize: state.scaleText! * 32),
+        headlineMedium: AppTextStyles.themeHeadlineMedium.copyWith(fontSize: state.scaleText! * 28),
+        headlineSmall: AppTextStyles.themeHeadlineSmall.copyWith(fontSize: state.scaleText! * 24),
+        titleLarge: AppTextStyles.themeTitleLarge.copyWith(fontSize: state.scaleText! * 22),
+        titleMedium: AppTextStyles.themeTitleMedium.copyWith(fontSize: state.scaleText! * 16),
+        titleSmall: AppTextStyles.themeTitleSmall.copyWith(fontSize: state.scaleText! * 14),
+        bodyLarge: AppTextStyles.themeBodyLarge.copyWith(fontSize: state.scaleText! * 16),
+        bodyMedium: AppTextStyles.themeBodyMedium.copyWith(fontSize: state.scaleText! * 14),
+        bodySmall: AppTextStyles.themeBodySmall.copyWith(fontSize: state.scaleText! * 12),
+        labelLarge: AppTextStyles.themeLabelLarge.copyWith(fontSize: state.scaleText! * 14),
+        labelMedium: AppTextStyles.themeLabelMedium.copyWith(fontSize: state.scaleText! * 12),
+        labelSmall: AppTextStyles.themeLabelSmall.copyWith(fontSize: state.scaleText! * 11),
       ),
       hintColor: AppColors.hintTextLabel,
       primaryColor: AppColors.white,
@@ -159,8 +163,8 @@ class AppThemes {
       useMaterial3: true,
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        titleTextStyle: AppTextStyles.themeHeadlineMedium,
-        backgroundColor: AppColors.white,
+        titleTextStyle: AppTextStyles.themeHeadlineMedium.copyWith(fontSize: state.scaleText! * 28),
+        backgroundColor: state.light ?? false ? AppColors.white : AppColors.black,
         toolbarHeight: 44,
       ),
       switchTheme: SwitchThemeData(
@@ -199,7 +203,12 @@ class AppThemes {
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color?>(backGroundTextButton),
-          textStyle: MaterialStateProperty.resolveWith(textStyleTextButton),
+          textStyle: MaterialStateProperty.resolveWith(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused)) return AppTextStyles.themeBodyMedium.copyWith(fontSize: state.scaleText! * 12);
+              return AppTextStyles.themeBodyMedium.copyWith(fontSize: state.scaleText! * 12);
+            },
+          ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -212,8 +221,8 @@ class AppThemes {
           ),
           textStyle: MaterialStateProperty.resolveWith(
             (Set<MaterialState> states) {
-              if (states.contains(MaterialState.focused)) return AppTextStyles.themeLabelMedium;
-              return AppTextStyles.themeLabelMedium.copyWith(color: Colors.white, fontWeight: FontWeight.w700); // Defer to the widget's default.
+              if (states.contains(MaterialState.focused)) return AppTextStyles.themeLabelMedium.copyWith(fontSize: state.scaleText! * 12);
+              return AppTextStyles.themeLabelMedium.copyWith(fontSize: state.scaleText! * 12);
             },
           ),
         ),
@@ -245,7 +254,7 @@ class AppThemes {
           iconColor: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.focused)) return AppColors.black;
-              return AppColors.black; // Defer to the widget's default.
+              return state.light ?? false ? AppColors.black : AppColors.white; // Defer to the widget's default.
             },
           ),
         ),
@@ -312,33 +321,33 @@ class AppThemes {
         ),
       ),
       dropdownMenuTheme: const DropdownMenuThemeData(menuStyle: MenuStyle()),
-      colorScheme: const ColorScheme(
-        brightness: Brightness.light,
-        primary: AppColors.black, // Màu sắc chính được nhấn mạnh trên bề mặt
+      colorScheme: ColorScheme(
+        brightness: state.light ?? false ? Brightness.light : Brightness.dark,
+        primary: state.light ?? false ? AppColors.white : AppColors.black, // Màu sắc chính được nhấn mạnh trên bề mặt
         onPrimary: AppColors.primaryText, //Màu sắc Văn bản và biểu tượng
         primaryContainer: AppColors.yellowBackground, // Màu tô nổi bật trên bề mặt, dành cho các thành phần chính
         onPrimaryContainer: AppColors.grey, //Văn bản và biểu tượng đối với thành phần chính
-        secondary: Color(0xFFBBBBBB), //Màu sắc ít nổi bật hơn trên bề mặt
-        onSecondary: Color(0xFFEAEAEA), //Màu sắc Văn bản và biểu tượng
-        secondaryContainer: Color(0xFFBBBBBB), // Màu tô ít nổi bật trên bề mặt, dành cho các thành phần chính
-        onSecondaryContainer: Color(0xFFBBBBBB), //Văn bản và biểu tượng đối với thành phần chính
-        tertiary: Color(0xFF54B435), // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
-        onTertiary: Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
-        tertiaryContainer: Color(0xFF54B435), // Màu tô ít nổi bật thứ 3 trên bề mặt, dành cho các thành phần chính
-        onTertiaryContainer: Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
-        error: Color(0xFFF32424), //Màu sắc thu hút sự chú ý trên bề mặt của phần tô, biểu tượng và văn bản, biểu thị mức độ khẩn cấp
+        secondary: const Color(0xFFBBBBBB), //Màu sắc ít nổi bật hơn trên bề mặt
+        onSecondary: const Color(0xFFEAEAEA), //Màu sắc Văn bản và biểu tượng
+        secondaryContainer: const Color(0xFFBBBBBB), // Màu tô ít nổi bật trên bề mặt, dành cho các thành phần chính
+        onSecondaryContainer: const Color(0xFFBBBBBB), //Văn bản và biểu tượng đối với thành phần chính
+        tertiary: const Color(0xFF54B435), // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
+        onTertiary: const Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
+        tertiaryContainer: const Color(0xFF54B435), // Màu tô ít nổi bật thứ 3 trên bề mặt, dành cho các thành phần chính
+        onTertiaryContainer: const Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
+        error: const Color(0xFFF32424), //Màu sắc thu hút sự chú ý trên bề mặt của phần tô, biểu tượng và văn bản, biểu thị mức độ khẩn cấp
         onError: AppColors.red, //Văn bản và biểu tượng chống lỗi
         errorContainer: AppColors.red, // Màu tô thu hút sự chú ý trên bề mặt
         onErrorContainer: AppColors.red, // Văn bản và biểu tượng chống lại vùng chứa lỗi
-        surface: Color(0xFF54B435), //Màu mặc định cho nền
-        onSurface: Color(0xFF54B435), //Văn bản và biểu tượng trên nền
-        onSurfaceVariant: Color(0xFF54B435), //Màu nhấn mạnh hơn cho văn bản và biểu tượng
+        surface: const Color(0xFF54B435), //Màu mặc định cho nền
+        onSurface: const Color(0xFF54B435), //Văn bản và biểu tượng trên nền
+        onSurfaceVariant: const Color(0xFF54B435), //Màu nhấn mạnh hơn cho văn bản và biểu tượng
         inversePrimary: AppColors.backButtonColor, // Các phần tử có thể thao tác, chẳng hạn như nút văn bản, trên bề mặt nghịch đảo
         inverseSurface: AppColors.backButtonColor, //Nền lấp đầy cho các phần tử tương phản với bề mặt
         onInverseSurface: AppColors.backButtonColor, // Văn bản và biểu tượng trên bề mặt nghịch đảo
         outline: AppColors.backButtonColor, //Các ranh giới quan trọng, chẳng hạn như phác thảo trường văn bản
         outlineVariant: AppColors.background_02, //Các yếu tố trang trí, chẳng hạn như dải phân cách
-        background: Color(0xFFF1F2F3),
-        onBackground: Color(0xFFFFFFFF),
+        background: state.themeBackgound ?? const Color(0xFFF1F2F3), // state.light ?? false ? const Color(0xFFF1F2F3) : AppColors.black,
+        onBackground: state.themeBackgound ?? const Color(0xFFFFFFFF), //state.light ?? false ? const Color(0xFFFFFFFF) : AppColors.black,
       ));
 }

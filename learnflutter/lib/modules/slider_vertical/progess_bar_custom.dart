@@ -1,10 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:learnflutter/helpper/bitmap_utils.dart';
 
 class ProgressBar extends LeafRenderObjectWidget {
   const ProgressBar({
@@ -133,10 +132,10 @@ class RenderProgressBar extends RenderBox {
     return constraints.constrain(desiredSize);
   }
 
-  double _currentThumbValue = 0.5;
+  double _currentThumbValue = 0.0;
 
   @override
-  void paint(PaintingContext context, Offset offset) {
+  void paint(PaintingContext context, Offset offset) async {
     final canvas = context.canvas;
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
@@ -161,23 +160,27 @@ class RenderProgressBar extends RenderBox {
     //start
     backgroundTriangleLine.moveTo(thumbDx, (thumbSize));
     // point 1
+    print(_currentThumbValue);
     Offset point1Triangle = Offset(thumbDx + (thumbSize / 2), (thumbSize * 2));
     backgroundTriangleLine.lineTo(point1Triangle.dx, point1Triangle.dy);
     // point 2
-    Offset point2Triangle = Offset(thumbDx + (thumbSize * 3), (point1Triangle.dy));
+    Offset point2Triangle = Offset((thumbDx + size.width / 12) * _currentThumbValue - thumbSize, (point1Triangle.dy));
     backgroundTriangleLine.lineTo(point2Triangle.dx, point2Triangle.dy);
     // point 3
     Offset point3Triangle = Offset(point2Triangle.dx, (thumbSize * 6));
     backgroundTriangleLine.lineTo(point3Triangle.dx, point3Triangle.dy);
     // point 4
-    Offset point4Triangle = Offset(point3Triangle.dy, point3Triangle.dx / 2 - thumbSize / 4);
-    backgroundTriangleLine.lineTo(point4Triangle.dx, point4Triangle.dy);
+    Offset point4Triangle = Offset(thumbDx / 2, point3Triangle.dy);
+    backgroundTriangleLine.lineTo(point4Triangle.dx + (thumbSize * 2), point4Triangle.dy);
+
+    print(point4Triangle);
     // point 5
-    Offset point5Triangle = Offset(point4Triangle.dx, point2Triangle.dy);
-    backgroundTriangleLine.lineTo(point5Triangle.dx, point5Triangle.dy);
-    // point 6
-    Offset point6Triangle = Offset(point5Triangle.dx, point1Triangle.dy - thumbSize);
-    backgroundTriangleLine.lineTo(point6Triangle.dx, point6Triangle.dy);
+    // Offset point5Triangle = Offset(point4Triangle.dx, point4Triangle.dx - thumbDx);
+    // backgroundTriangleLine.lineTo(point5Triangle.dx, point5Triangle.dy);
+    // // point 6
+    // Offset point6Triangle = Offset(point5Triangle.dx, point5Triangle.dx);
+    // backgroundTriangleLine.lineTo(point6Triangle.dx, point6Triangle.dy);
+
     backgroundTriangleLine.close();
     canvas.drawPath(backgroundTriangleLine, thumbPaint);
 

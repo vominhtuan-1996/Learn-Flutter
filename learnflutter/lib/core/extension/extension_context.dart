@@ -35,4 +35,8 @@ extension ExtensionBuildContext on BuildContext {
   MediaQueryData get mediaQuery {
     return MediaQuery.of(this);
   }
+
+  double get textScale {
+    return MediaQuery.of(this).textScaleFactor;
+  }
 }

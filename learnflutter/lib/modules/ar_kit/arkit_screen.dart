@@ -28,7 +28,7 @@ class _aRKitScreenState extends State<ARKitScreen> {
   void onARKitViewCreated(ARKitController arkitController) {
     this.arkitController = arkitController;
     final node = ARKitNode(geometry: ARKitSphere(radius: 0.1), position: Vector3(0, 0, -0.5));
-    final node1 = ARKitNode(geometry: ARKitSphere(radius: 0.2), position: Vector3(10, 10, -0.5));
+    final node1 = ARKitNode(geometry: ARKitSphere(radius: 0.2), position: Vector3(100, 100, -0.5));
     final node2 = ARKitNode(geometry: ARKitSphere(radius: 0.3), position: Vector3(20, 20, -0.5));
     final node3 = ARKitNode(geometry: ARKitSphere(radius: 0.4), position: Vector3(30, 30, -0.5));
     final node4 = ARKitNode(geometry: ARKitSphere(radius: 0.5), position: Vector3(40, 0, -0.5));

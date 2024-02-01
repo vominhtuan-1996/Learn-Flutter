@@ -17,10 +17,10 @@ class BitmapUtils {
 
     final stroke = Paint()
       ..color = Colors.grey
-      ..colorFilter = ui.ColorFilter.linearToSrgbGamma()
+      ..colorFilter = const ui.ColorFilter.linearToSrgbGamma()
       ..style = PaintingStyle.stroke;
 
-    canvas.drawRect(Rect.fromLTWH(0.0, 0.0, 300.0, 100.0), stroke);
+    canvas.drawRect(const Rect.fromLTWH(0.0, 0.0, 100.0, 100.0), stroke);
     final textPainter = TextPainter(
         text: TextSpan(
           text: text,
@@ -47,12 +47,12 @@ class BitmapUtils {
 
 // Draw the text centered around the point (50, 100) for instance
     // MyCustomPainter().paint(canvas, Size(300, 200));
-    MyCustomPainter().paint(canvas, Size(100, 100));
-    textPainter.paint(canvas, Offset(110, 0));
-    textPainterABC.paint(canvas, Offset(110, 80));
+    MyCustomPainter().paint(canvas, const Size(100, 100));
+    textPainter.paint(canvas, const Offset(110, 0));
+    textPainterABC.paint(canvas, const Offset(110, 80));
 
     final picture = recorder.endRecording();
-    ui.Image img = await picture.toImage(300, 100);
+    ui.Image img = await picture.toImage(100, 100);
     final ByteData? pngBytes = await img.toByteData(format: ImageByteFormat.png);
     return pngBytes;
   }

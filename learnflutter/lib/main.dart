@@ -4,13 +4,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/helpper/define_constraint.dart';
-import 'package:learnflutter/helpper/flutter_section_table_view.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/helpper/hive_demo/model/person.dart';
 import 'package:learnflutter/modules/nested/nested_scroll_screen.dart';
@@ -35,6 +37,8 @@ import 'package:learnflutter/modules/open_file/open_file_screen.dart';
 import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
+import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
@@ -47,7 +51,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'modules/menu/menu_controller.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
-
 import 'package:flutter/foundation.dart';
 
 void main() {
@@ -59,16 +62,6 @@ void main() {
       Hive.registerAdapter(PersonAdapter());
       // Opening the box
       await Hive.openBox('peopleBox');
-      // Workmanager().registerOneOffTask(
-      //   "task-identifier",
-      //   simpleTaskKey,
-      //   constraints: Constraints(
-      //     // connected or metered mark the task as requiring internet
-      //     networkType: NetworkType.connected,
-      //     // require external power
-      //     // requiresCharging: true,
-      //   ),
-      // );
       runApp(MyApp());
     },
   );
@@ -169,23 +162,36 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppThemes.primaryTheme,
-      locale: Locale('vi'),
-      title: 'dasdasdasda',
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        TiePickerLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('vi', 'VN'),
-        ...TiePickerLocalizations.supportedLocales,
-      ],
-      onGenerateRoute: Routes.generateRoute,
-      initialRoute: Routes.testScreen,
+    // textScale = context.textScale;
+    return BlocProvider(
+      create: (context) => SettingThemeCubit(),
+      child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            theme: AppThemes.primaryTheme(context, state),
+            locale: Locale('vi'),
+            title: 'dasdasdasda',
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              // TiePickerLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('vi'), // English
+              Locale('en'), // Spanish
+            ],
+
+            // supportedLocales: [
+            //   Locale('vi', 'VN'),
+            //   ...TiePickerLocalizations.supportedLocales,
+            // ],
+            onGenerateRoute: Routes.generateRoute,
+            initialRoute: Routes.testScreen,
+          );
+        },
+      ),
     );
   }
 }

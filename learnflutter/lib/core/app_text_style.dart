@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/src/app_colors.dart';
 
+import 'global/var_global.dart';
+
 /// Never be use
 class AppTextStyles {
   // textTheme
@@ -34,6 +36,6 @@ class AppTextStyles {
   }
 
   static TextStyle textStyle(Color color, double fontSize, String? fontFamily, [FontWeight fontWe = FontWeight.w500, FontStyle fontStyle = FontStyle.normal]) {
-    return TextStyle(fontFamily: fontFamily, color: color, fontSize: fontSize, fontWeight: fontWe, fontStyle: fontStyle);
+    return TextStyle(fontFamily: fontFamily, color: color, fontSize: fontSize * textScale, fontWeight: fontWe, fontStyle: fontStyle);
   }
 }

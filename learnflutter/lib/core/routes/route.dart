@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learnflutter/modules/animation/animation_screen.dart';
+import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
+import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
+import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
 import 'package:learnflutter/helpper/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/modules/nested/nested_scroll_screen.dart';
@@ -21,9 +25,11 @@ import 'package:learnflutter/modules/open_file/open_file_screen.dart';
 import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/setting/setting_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/modules/slider_vertical/slider_vertical_screen.dart';
+import 'package:learnflutter/modules/smart_refresh/smart_refresh_screen.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
 import 'package:learnflutter/modules/tie_picker/tie_picker_screen.dart';
@@ -79,6 +85,12 @@ class Routes {
   static const String pageThemeScreen = "/page_theme_screen";
   static const String numberFormatScreen = "/number_format_screen";
   static const String silderVerticalScreen = 'slider_vertical_screen';
+  static const String materialSegmentedScreen = 'material_segmented_screen';
+  static const String animationScreen = 'animation_screen';
+  static const String setting = 'setting_screen';
+  static const String arkit = 'arkit_screen';
+  static const String colorPicker = 'color_picker_screen';
+  static const String refreshControl = 'smart_refresh_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -308,9 +320,38 @@ class Routes {
           routeSettings: const RouteSettings(name: silderVerticalScreen),
           builder: (_) => const SliderVerticalScreen(),
         );
-
+      case materialSegmentedScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: silderVerticalScreen),
+          builder: (_) => const MaterialSegmentedScreen(),
+        );
+      case animationScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: animationScreen),
+          builder: (_) => TransitionsHomePage(),
+        );
+      case setting:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: setting),
+          builder: (_) => SettingScreen(),
+        );
+      case arkit:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: arkit),
+          builder: (_) => ARKitScreen(),
+        );
+      case colorPicker:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: colorPicker),
+          builder: (_) => ColorPickerScreen(),
+        );
+      case refreshControl:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: refreshControl),
+          builder: (_) => SmartRefreshScreen(),
+        );
       default:
-        return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestThemeScreen());
+        return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());
     }
   }
 }

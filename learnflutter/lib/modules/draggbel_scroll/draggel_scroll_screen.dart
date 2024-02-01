@@ -1,42 +1,91 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
 
 class DraggbleScrollScreen extends StatelessWidget {
   const DraggbleScrollScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseLoading(
+      isLoading: false,
       appBar: AppBar(
         title: const Text('DraggableScrollableSheet'),
       ),
-      body: Column(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
-            child: Container(
-              color: Colors.red,
+            flex: 10,
+            child: DraggableScrollableActuator(
+              child: ListView.builder(
+                itemCount: 25,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 2) {
+                    return ListView.builder(
+                      itemCount: 25,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(title: Text('Item $index'));
+                      },
+                    );
+                  }
+                  return ListTile(title: Text('Item $index'));
+                },
+              ),
             ),
           ),
           Expanded(
-            child: DraggableScrollableSheet(
-              initialChildSize: 0.4,
-              minChildSize: 0.2,
-              maxChildSize: 0.6,
-              expand: false,
-              builder: (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  color: Colors.blue[100],
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: 25,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(title: Text('Item $index'));
-                    },
-                  ),
-                );
-              },
+            child: DraggableScrollableActuator(
+              child: Container(
+                color: Colors.blue[500],
+                child: ListView.builder(
+                  itemCount: 25,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(title: Text('Item $index'));
+                  },
+                ),
+              ),
             ),
           ),
+          Expanded(
+            child: DraggableScrollableActuator(
+              child: Container(
+                color: Colors.red[500],
+                child: ListView.builder(
+                  itemCount: 25,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(title: Text('Item $index'));
+                  },
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: DraggableScrollableActuator(
+              child: Container(
+                color: Colors.white,
+                child: ListView.builder(
+                  itemCount: 25,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(title: Text('Item $index'));
+                  },
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: DraggableScrollableActuator(
+              child: Container(
+                color: Colors.yellow[500],
+                child: ListView.builder(
+                  itemCount: 25,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(title: Text('Item $index'));
+                  },
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

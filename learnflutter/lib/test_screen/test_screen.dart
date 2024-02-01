@@ -2,11 +2,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnflutter/core/routes/route.dart';
 import 'package:learnflutter/helpper/utills_helpper.dart';
 import 'package:learnflutter/core/attribute_string/attribute_string_widget.dart';
+import 'package:learnflutter/l10n/helper.dart';
 import 'package:learnflutter/modules/qr_code_example/qr_code_screen.dart';
+import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
@@ -47,7 +50,7 @@ class _TestScreenState extends State<TestScreen> {
     ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Test Screen'),
+        title: Text(DemoLocalizations.of(context).title),
       ),
       body: Shimmer(
         linearGradient: ShimmerUtils.shimmerGradient,
@@ -56,6 +59,42 @@ class _TestScreenState extends State<TestScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.refreshControl);
+                  },
+                  child: Text('refreshControl Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.colorPicker);
+                  },
+                  child: Text('colorPicker Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.arkit);
+                  },
+                  child: Text('AR Kit Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.setting);
+                  },
+                  child: Text('Test setting'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.animationScreen);
+                  },
+                  child: Text('Test Animation'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
+                  },
+                  child: Text('Test Material Segmented'),
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(Routes.silderVerticalScreen);
@@ -72,16 +111,12 @@ class _TestScreenState extends State<TestScreen> {
                   onPressed: splitCodeString,
                   child: Text('Split String'),
                 ),
-                Container(
-                  width: ScreenUtil().setWidth(50),
-                  height: ScreenUtil().setHeight(200),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/page_theme_screen');
-                    },
-                    child: Text(
-                      'Test Theme',
-                    ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/page_theme_screen');
+                  },
+                  child: Text(
+                    'Test Theme',
                   ),
                 ),
                 ElevatedButton(
@@ -130,19 +165,19 @@ class _TestScreenState extends State<TestScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/snack_bar_screen');
+                    Navigator.of(context).pushNamed(Routes.snackBarScreen);
                   },
                   child: const Text('AweseomSnackBarExample'),
                 ),
-                ShimmerLoading(
-                  isLoading: true,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/shimmer_widget');
-                    },
-                    child: const Text('Test Shimmer Widget'),
-                  ),
-                ),
+                // ShimmerLoading(
+                //   isLoading: true,
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       Navigator.of(context).pushNamed('/shimmer_widget');
+                //     },
+                //     child: const Text('Test Shimmer Widget'),
+                //   ),
+                // ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed('/hero_animation_screen');
@@ -310,38 +345,38 @@ class _TestScreenState extends State<TestScreen> {
                   highlightColor: Colors.red,
                   ignoreCase: true,
                 ),
-                ShimmerLoading(
-                  isLoading: true,
-                  child: AttriButedSringWidget(
-                    typeAttriButed: AttriButedSring.attriButedCustom,
-                    listAttributedCustom: [
-                      TextSpan(
-                        text: 'Tuan',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 20,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'IOS',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          fontSize: 12,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Su12',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.amber,
-                          fontSize: 36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // ShimmerLoading(
+                //   isLoading: true,
+                //   child: AttriButedSringWidget(
+                //     typeAttriButed: AttriButedSring.attriButedCustom,
+                //     listAttributedCustom: [
+                //       TextSpan(
+                //         text: 'Tuan',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.red,
+                //           fontSize: 20,
+                //         ),
+                //       ),
+                //       TextSpan(
+                //         text: 'IOS',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.blue,
+                //           fontSize: 12,
+                //         ),
+                //       ),
+                //       TextSpan(
+                //         text: 'Su12',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.amber,
+                //           fontSize: 36,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

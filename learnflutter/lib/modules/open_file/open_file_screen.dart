@@ -161,9 +161,9 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                     child: Text('Tap to get list file'),
                     onPressed: () {
                       UtilsHelper.logDebug(ItemDirectoryModel()..title = '312312312');
-                      // setState(() {
-                      //   _listofFiles();
-                      // });
+                      setState(() {
+                        _listofFiles();
+                      });
                     },
                   ),
                   TextButton(

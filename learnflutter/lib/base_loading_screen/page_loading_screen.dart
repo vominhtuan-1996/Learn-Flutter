@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/base_loading_screen/state/base_loading_state.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/helpper/utills_helpper.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/modules/matix/matix_screen.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
 
 class PageLoadingScreen extends StatefulWidget {
   PageLoadingScreen({
@@ -45,7 +42,7 @@ class _PageLoadingScreenState extends State<PageLoadingScreen> {
                   onPressed: () {
                     context.read<BaseLoadingCubit>().showLoading();
                   },
-                  child: Text('Loading')),
+                  child: const Text('Loading')),
             ),
           );
         },

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/Helpper/hive_demo/model/person.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/extension/extension_list.dart';
 import 'package:learnflutter/src/extension.dart';
 
@@ -48,6 +49,10 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                height: context.mediaQuery.size.height / 2,
+                color: Colors.red,
+              ),
               TextField(
                 onChanged: (value) {
                   print(customRound(value.toDouble, 2));
