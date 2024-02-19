@@ -11,9 +11,18 @@ class MaterialSegmentedScreen extends StatefulWidget {
   State<MaterialSegmentedScreen> createState() => MaterialSegmentedScreenState();
 }
 
-class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> {
+class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  late int _indexTab = 0;
+  List colors = [Colors.red.shade200, Colors.blue.shade100, Colors.orange.shade200];
+  List title = ['ACCOUNT', 'HOME', 'NEW'];
+
   @override
   void initState() {
+    tabController = TabController(length: 3, vsync: this, initialIndex: _indexTab);
+    tabController.addListener(() {
+      _indexTab = tabController.index;
+    });
     super.initState();
   }
 
@@ -27,6 +36,7 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> {
     return BaseLoading(
         isLoading: false,
         child: DefaultTabController(
+          initialIndex: 0,
           length: 3,
           child: Scaffold(
             body: SafeArea(
@@ -36,55 +46,45 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> {
                     height: 50,
                     padding: EdgeInsets.zero,
                     child: SegmentedTabControl(
-                      // Customization of widget
-                      radius: const Radius.circular(8),
-                      backgroundColor: Colors.grey.shade300,
-                      indicatorColor: Colors.orange.shade200,
-                      tabTextColor: Colors.black45,
-                      selectedTabTextColor: Colors.white,
-                      squeezeIntensity: 2,
-                      height: 45,
-                      tabPadding: const EdgeInsets.symmetric(horizontal: 8),
-                      textStyle: context.textTheme.bodyMedium,
-                      selectedTextStyle: context.textTheme.bodyMedium,
-                      // Options for selection
-                      // All specified values will override the [SegmentedTabControl] setting
-                      tabs: [
-                        const SegmentTab(
-                          label: 'ACCOUNT',
-                          // For example, this overrides [indicatorColor] from [SegmentedTabControl]
-                          // color: Colors.red.shade200,
-                        ),
-                        SegmentTab(
-                          label: 'HOME',
-                          backgroundColor: Colors.blue.shade100,
-                          selectedTextColor: Colors.black45,
-                          textColor: Colors.black26,
-                        ),
-                        const SegmentTab(label: 'NEW'),
-                      ],
-                    ),
+                        controller: tabController,
+                        // Customization of widget
+                        radius: const Radius.circular(8),
+                        backgroundColor: Colors.grey.shade200,
+                        indicatorColor: colors[tabController.index],
+                        tabTextColor: Colors.black45,
+                        selectedTabTextColor: Colors.white,
+                        squeezeIntensity: 2,
+                        height: 45,
+                        tabPadding: const EdgeInsets.symmetric(horizontal: 8),
+                        textStyle: context.textTheme.bodyMedium,
+                        selectedTextStyle: context.textTheme.bodyMedium,
+                        // Options for selection
+                        // All specified values will override the [SegmentedTabControl] setting
+                        tabs: List.generate(
+                          tabController.length,
+                          (index) {
+                            return SegmentTab(
+                              label: title[index],
+                              color: colors[index],
+                            );
+                          },
+                        )),
                   ),
                   // Sample pages
                   Padding(
                     padding: const EdgeInsets.only(top: 56),
                     child: TabBarView(
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        SampleWidget(
-                          label: 'FIRST PAGE',
-                          color: Colors.red.shade200,
-                        ),
-                        SampleWidget(
-                          label: 'SECOND PAGE',
-                          color: Colors.blue.shade100,
-                        ),
-                        SampleWidget(
-                          label: 'THIRD PAGE',
-                          color: Colors.orange.shade200,
-                        ),
-                      ],
-                    ),
+                        physics: const BouncingScrollPhysics(),
+                        controller: tabController,
+                        children: List.generate(
+                          tabController.length,
+                          (index) {
+                            return SampleWidget(
+                              label: title[index],
+                              color: colors[index],
+                            );
+                          },
+                        )),
                   ),
                 ],
               ),

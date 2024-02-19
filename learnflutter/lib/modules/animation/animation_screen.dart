@@ -2,8 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
+import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
 import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/number_formart/number_format_screen.dart';
@@ -16,6 +20,11 @@ class TransitionsHomePage extends StatefulWidget {
 
 class TransitionsHomePageState extends State<TransitionsHomePage> {
   bool _slowAnimations = false;
+  double turns = 0.0;
+
+  void _changeRotation() {
+    setState(() => turns += 1.0 / 8.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +32,17 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
       appBar: AppBar(title: const Text('Material Transitions')),
       body: Column(
         children: <Widget>[
+          SizedBox(height: 50, width: 50, child: IconAnimationWidget()),
+          SizedBox(
+              height: 50,
+              width: 50,
+              child: IconAnimationWidget(
+                isRotate: true,
+              )),
+          RippleAnimationWidget(),
           Expanded(
             child: ListView(
               children: <Widget>[
-                _TransitionListTile(
-                  title: 'Container transform',
-                  subtitle: 'OpenContainer',
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const NumberFormatterScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
                 _TransitionListTile(
                   title: 'Shared axis',
                   subtitle: 'SharedAxisTransition',

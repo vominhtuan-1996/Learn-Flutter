@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/app_text_style.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/core/global/var_global.dart';
-import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/src/app_colors.dart';
 

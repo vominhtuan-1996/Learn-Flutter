@@ -39,7 +39,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                 initialColor: currentColor,
                 thumbRadius: 10,
                 colorListener: (int value) {
-                  getThemeBloc(context).changeThemeBackGround(Color(value));
+                  getThemeBloc(context).changeThemeBackground(Color(value));
                   setState(() {
                     currentColor = Color(value);
                     print(currentColor);
@@ -54,7 +54,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                   cornerRadius: 10,
                   pickMode: PickMode.Color,
                   colorListener: (int value) {
-                    getThemeBloc(context).changeThemeBackGround(Color(value));
+                    getThemeBloc(context).changeThemeBackground(Color(value));
                     setState(() {
                       currentColor = Color(value);
                     });
@@ -65,7 +65,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                   cornerRadius: 10,
                   pickMode: PickMode.Grey,
                   colorListener: (int value) {
-                    getThemeBloc(context).changeThemeBackGround(Color(value));
+                    getThemeBloc(context).changeThemeBackground(Color(value));
                     setState(() {
                       currentColor = Color(value);
                     });

@@ -6,15 +6,15 @@ import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 
 class PageLoadingScreen extends StatefulWidget {
-  PageLoadingScreen({
+  const PageLoadingScreen({
     super.key,
     this.isVisible = true,
     this.message = 'Loading...Loading...Loading...',
     this.styleMessage = const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
   });
-  bool isVisible;
-  String message;
-  TextStyle? styleMessage;
+  final bool isVisible;
+  final String message;
+  final TextStyle? styleMessage;
   @override
   State<PageLoadingScreen> createState() => _PageLoadingScreenState();
 }

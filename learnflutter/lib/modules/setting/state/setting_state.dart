@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:learnflutter/core/global/var_global.dart';
 
 class SettingThemeState {
   final ThemeData? themeData;
   final bool? light;
   final double? scaleText;
-  final Color? themeBackgound;
+  Color? themeBackgound = themeBackgoundGlobal;
   SettingThemeState({this.themeData, this.light = true, this.scaleText = 1.0, this.themeBackgound});
 
   factory SettingThemeState.initial({

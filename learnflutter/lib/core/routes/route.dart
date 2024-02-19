@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
+import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
+import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
 import 'package:learnflutter/helpper/hive_demo/screen/info_screen.dart';
@@ -91,6 +93,8 @@ class Routes {
   static const String arkit = 'arkit_screen';
   static const String colorPicker = 'color_picker_screen';
   static const String refreshControl = 'smart_refresh_screen';
+  static const String chart = 'chart_screen';
+  static const String dragTargetScreen = 'drag_target_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -349,6 +353,16 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: refreshControl),
           builder: (_) => SmartRefreshScreen(),
+        );
+      case chart:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: chart),
+          builder: (_) => ChartScreen(),
+        );
+      case dragTargetScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: dragTargetScreen),
+          builder: (_) => DragTargetScreen(),
         );
       default:
         return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());

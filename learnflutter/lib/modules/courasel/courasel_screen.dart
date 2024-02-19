@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:shimmer/shimmer.dart';
 
 final List<String> imgList = [
@@ -74,18 +76,9 @@ class DemoItem extends StatelessWidget {
 class CarouselDemoHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Carousel demo'),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.nightlight_round),
-              onPressed: () {
-                themeMode.value = themeMode.value == 1 ? 2 : 1;
-              })
-        ],
-      ),
-      body: ListView(
+    return BaseLoading(
+      isLoading: false,
+      child: ListView(
         children: <Widget>[
           DemoItem('Basic demo', '/basic'),
           DemoItem('No center mode demo', '/nocenter'),
@@ -330,15 +323,16 @@ class VerticalSliderDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Vertical sliding carousel demo')),
       body: Container(
+          height: context.mediaQuery.size.height / 2,
           child: CarouselSlider(
-        options: CarouselOptions(
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-          scrollDirection: Axis.vertical,
-          autoPlay: true,
-        ),
-        items: imageSliders,
-      )),
+            options: CarouselOptions(
+              aspectRatio: 2.0,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.vertical,
+              autoPlay: true,
+            ),
+            items: imageSliders,
+          )),
     );
   }
 }

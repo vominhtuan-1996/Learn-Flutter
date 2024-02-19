@@ -61,7 +61,6 @@ class AweseomSnackBarExample extends StatelessWidget {
                     contentType: ContentType.help,
                   ),
                 );
-
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(snackBar);

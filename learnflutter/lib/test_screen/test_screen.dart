@@ -61,6 +61,18 @@ class _TestScreenState extends State<TestScreen> {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.dragTargetScreen);
+                  },
+                  child: Text('dragTargetScreen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.chart);
+                  },
+                  child: Text('chart Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushNamed(Routes.refreshControl);
                   },
                   child: Text('refreshControl Screen'),
@@ -216,7 +228,7 @@ class _TestScreenState extends State<TestScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/courasel_screen');
+                    Navigator.of(context).pushNamed(Routes.courasel);
                   },
                   child: const Text('courasel_screen'),
                 ),
