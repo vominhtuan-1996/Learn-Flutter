@@ -57,6 +57,12 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                 onChanged: (value) {
                   print(customRound(value.toDouble, 2));
                 },
+                onTapOutside: (event) {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
                 inputFormatters: [],
               ),
               ElevatedButton(

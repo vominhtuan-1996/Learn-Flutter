@@ -63,9 +63,8 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,7 +92,7 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
                     isFav ? _animationController.reverse() : _animationController.forward();
                   },
                   icon: Icon(
-                    Icons.linked_camera,
+                    Icons.favorite_sharp,
                     color: _colorAnimation.value,
                     size: _sizeAnimation.value,
                   ));

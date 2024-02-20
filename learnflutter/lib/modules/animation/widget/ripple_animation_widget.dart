@@ -36,6 +36,12 @@ class RippleAnimationWidgetState extends State<RippleAnimationWidget> with Singl
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
@@ -48,11 +54,6 @@ class RippleAnimationWidgetState extends State<RippleAnimationWidget> with Singl
             _buildContainer(150 * _controller.value),
             _buildContainer(200 * _controller.value),
             _buildContainer(250 * _controller.value),
-            Align(
-                child: Icon(
-              Icons.phone_android,
-              size: _sizeAnimation.value,
-            )),
           ],
         );
       },
@@ -60,12 +61,15 @@ class RippleAnimationWidgetState extends State<RippleAnimationWidget> with Singl
   }
 
   Widget _buildContainer(double radius) {
-    return Container(
-      width: radius,
-      height: radius,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
+    return ClipOval(
+      child: Container(
+        width: radius,
+        height: radius / 2,
         color: _colorAnimation.value?.withOpacity(1 - _controller.value),
+        // decoration: BoxDecoration(
+        //   shape: BoxShape.circle,
+        //   color: _colorAnimation.value?.withOpacity(1 - _controller.value),
+        // ),
       ),
     );
   }

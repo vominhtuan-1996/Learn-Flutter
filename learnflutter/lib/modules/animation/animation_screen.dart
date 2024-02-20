@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
 import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
@@ -32,14 +33,37 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
       appBar: AppBar(title: const Text('Material Transitions')),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 50, width: 50, child: IconAnimationWidget()),
-          SizedBox(
+          const SizedBox(height: 50, width: 50, child: IconAnimationWidget()),
+          const SizedBox(
               height: 50,
               width: 50,
               child: IconAnimationWidget(
                 isRotate: true,
               )),
-          RippleAnimationWidget(),
+          const RippleAnimationWidget(),
+          Draggable(
+            data: 'colors',
+            feedback: Container(
+              width: context.mediaQuery.size.width / 2,
+              height: 100,
+              color: Colors.red,
+            ),
+            onDragStarted: () {},
+            childWhenDragging: Container(),
+            child: DragTarget(
+              builder: (context, candidateData, rejectedData) {
+                return Container(
+                  width: context.mediaQuery.size.width / 2,
+                  height: 100,
+                  color: Colors.red,
+                );
+              },
+              onWillAcceptWithDetails: (details) {
+                return true;
+              },
+              onAcceptWithDetails: (details) {},
+            ),
+          ),
           Expanded(
             child: ListView(
               children: <Widget>[

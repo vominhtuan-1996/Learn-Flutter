@@ -61,6 +61,18 @@ class _TestScreenState extends State<TestScreen> {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.customScrollScreen);
+                  },
+                  child: Text('customScrollScreen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.regexExampleScreen);
+                  },
+                  child: Text('regexExampleScreen'),
+                ),
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushNamed(Routes.dragTargetScreen);
                   },
                   child: Text('dragTargetScreen'),

@@ -4,6 +4,7 @@ import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
+import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
@@ -27,6 +28,7 @@ import 'package:learnflutter/modules/open_file/open_file_screen.dart';
 import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/regex/regex_example_screen.dart';
 import 'package:learnflutter/modules/setting/setting_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
@@ -95,6 +97,8 @@ class Routes {
   static const String refreshControl = 'smart_refresh_screen';
   static const String chart = 'chart_screen';
   static const String dragTargetScreen = 'drag_target_screen';
+  static const String regexExampleScreen = 'regex_example_screen';
+  static const String customScrollScreen = 'custom_scroll_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -364,6 +368,17 @@ class Routes {
           routeSettings: const RouteSettings(name: dragTargetScreen),
           builder: (_) => DragTargetScreen(),
         );
+      case regexExampleScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: regexExampleScreen),
+          builder: (_) => RegexExampleScreen(),
+        );
+      case customScrollScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: customScrollScreen),
+          builder: (_) => CustomScrollScreen(),
+        );
+
       default:
         return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());
     }
