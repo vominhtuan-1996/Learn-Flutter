@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/helpper/utills_helpper.dart';
+import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
 
 class BaseLoading extends StatefulWidget {
@@ -41,11 +42,67 @@ class BaseLoadingScreenState extends State<BaseLoading> {
     return Stack(
       children: [
         Scaffold(
+          extendBody: true,
           appBar: widget.appBar ?? AppBar(),
           body: Container(
             color: Colors.white,
             child: widget.child,
           ),
+          resizeToAvoidBottomInset: true,
+          // bottomNavigationBar: NavigationBar(
+          //   destinations: <NavigationDestination>[
+          //     NavigationDestination(
+          //       enabled: true,
+          //       icon: Badge(
+          //         label: Text('2'),
+          //         child: Icon(Icons.messenger_sharp),
+          //       ),
+          //       label: 'Messages',
+          //     ),
+          //     NavigationDestination(
+          //       enabled: true,
+          //       icon: Badge(
+          //         label: Text('2'),
+          //         child: Icon(Icons.messenger_sharp),
+          //       ),
+          //       label: 'Messages',
+          //     ),
+          //     NavigationDestination(
+          //       enabled: true,
+          //       icon: Badge(
+          //         label: Text('2'),
+          //         child: Icon(Icons.messenger_sharp),
+          //       ),
+          //       label: 'Messages',
+          //     ),
+          //     NavigationDestination(
+          //       enabled: true,
+          //       icon: Badge(
+          //         label: Text('2'),
+          //         child: Icon(Icons.messenger_sharp),
+          //       ),
+          //       label: 'Messages',
+          //     ),
+          //     NavigationDestination(
+          //       enabled: true,
+          //       icon: Badge(
+          //         label: Text(
+          //           '2',
+          //           style: context.textTheme.labelMedium?.copyWith(color: Colors.white),
+          //         ),
+          //         child: Icon(Icons.messenger_sharp),
+          //       ),
+          //       label: 'Messages',
+          //     ),
+          //   ],
+          //   onDestinationSelected: (int index) {
+          //     setState(() {
+          //       // currentPageIndex = index;
+          //     });
+          //   },
+          //   indicatorColor: Colors.amber,
+          //   selectedIndex: 1,
+          // ),
         ),
         Visibility(
           visible: widget.isLoading,

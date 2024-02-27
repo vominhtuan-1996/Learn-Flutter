@@ -6,6 +6,7 @@ import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
+import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
 import 'package:learnflutter/helpper/hive_demo/screen/info_screen.dart';
@@ -99,6 +100,7 @@ class Routes {
   static const String dragTargetScreen = 'drag_target_screen';
   static const String regexExampleScreen = 'regex_example_screen';
   static const String customScrollScreen = 'custom_scroll_screen';
+  static const String materialScreen = 'material_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -377,6 +379,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: customScrollScreen),
           builder: (_) => CustomScrollScreen(),
+        );
+      case materialScreen:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialScreen),
+          builder: (_) => MaterialScreen(),
         );
 
       default:

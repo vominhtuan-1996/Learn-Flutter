@@ -30,7 +30,19 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Material Transitions')),
+      appBar: AppBar(title: const Text('Material Transitions'), actions: [
+        GestureDetector(
+          onTap: () {
+            print('object');
+          },
+          child: const SizedBox(
+              height: 50,
+              width: 50,
+              child: IconAnimationWidget(
+                icon: Icons.shopping_cart_outlined,
+              )),
+        )
+      ]),
       body: Column(
         children: <Widget>[
           const SizedBox(height: 50, width: 50, child: IconAnimationWidget()),
@@ -52,10 +64,14 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
             childWhenDragging: Container(),
             child: DragTarget(
               builder: (context, candidateData, rejectedData) {
-                return Container(
-                  width: context.mediaQuery.size.width / 2,
-                  height: 100,
-                  color: Colors.red,
+                return Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    width: context.mediaQuery.size.width / 2,
+                    height: 100,
+                    color: Colors.red,
+                  ),
                 );
               },
               onWillAcceptWithDetails: (details) {
@@ -63,6 +79,30 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
               },
               onAcceptWithDetails: (details) {},
             ),
+          ),
+          Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print('object');
+                },
+                child: Container(
+                  width: context.mediaQuery.size.width / 2,
+                  height: 100,
+                  color: Colors.yellow,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print('object');
+                },
+                child: Container(
+                  width: context.mediaQuery.size.width / 2,
+                  height: 50,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: ListView(

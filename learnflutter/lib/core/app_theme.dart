@@ -324,21 +324,21 @@ class AppThemes {
         onPrimary: AppColors.primaryText, //Màu sắc Văn bản và biểu tượng
         primaryContainer: AppColors.yellowBackground, // Màu tô nổi bật trên bề mặt, dành cho các thành phần chính
         onPrimaryContainer: AppColors.grey, //Văn bản và biểu tượng đối với thành phần chính
-        secondary: const Color(0xFFBBBBBB), //Màu sắc ít nổi bật hơn trên bề mặt
-        onSecondary: const Color(0xFFEAEAEA), //Màu sắc Văn bản và biểu tượng
-        secondaryContainer: const Color(0xFFBBBBBB), // Màu tô ít nổi bật trên bề mặt, dành cho các thành phần chính
-        onSecondaryContainer: const Color(0xFFBBBBBB), //Văn bản và biểu tượng đối với thành phần chính
-        tertiary: const Color(0xFF54B435), // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
-        onTertiary: const Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
-        tertiaryContainer: const Color(0xFF54B435), // Màu tô ít nổi bật thứ 3 trên bề mặt, dành cho các thành phần chính
-        onTertiaryContainer: const Color(0xFF54B435), //Màu sắc Văn bản và biểu tượng
+        secondary: AppColors.blue, //Màu sắc ít nổi bật hơn trên bề mặt
+        onSecondary: AppColors.blue.withOpacity(0.8), //Màu sắc Văn bản và biểu tượng
+        secondaryContainer: AppColors.blue.withOpacity(0.6), // Màu tô ít nổi bật trên bề mặt, dành cho các thành phần chính
+        onSecondaryContainer: AppColors.blue.withOpacity(0.4), //Văn bản và biểu tượng đối với thành phần chính
+        tertiary: AppColors.blue, // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
+        onTertiary: AppColors.blue.withOpacity(0.8), //Màu sắc Văn bản và biểu tượng
+        tertiaryContainer: AppColors.blue.withOpacity(0.6), // Màu tô ít nổi bật thứ 3 trên bề mặt, dành cho các thành phần chính
+        onTertiaryContainer: AppColors.blue.withOpacity(0.4), //Màu sắc Văn bản và biểu tượng
         error: const Color(0xFFF32424), //Màu sắc thu hút sự chú ý trên bề mặt của phần tô, biểu tượng và văn bản, biểu thị mức độ khẩn cấp
         onError: AppColors.red, //Văn bản và biểu tượng chống lỗi
         errorContainer: AppColors.red, // Màu tô thu hút sự chú ý trên bề mặt
         onErrorContainer: AppColors.red, // Văn bản và biểu tượng chống lại vùng chứa lỗi
-        surface: const Color(0xFF54B435), //Màu mặc định cho nền
-        onSurface: const Color(0xFF54B435), //Văn bản và biểu tượng trên nền
-        onSurfaceVariant: const Color(0xFF54B435), //Màu nhấn mạnh hơn cho văn bản và biểu tượng
+        surface: AppColors.white, //Màu mặc định cho nền
+        onSurface: AppColors.black.withOpacity(0.8), //Văn bản và biểu tượng trên nền
+        onSurfaceVariant: AppColors.black.withOpacity(0.6), //Màu nhấn mạnh hơn cho văn bản và biểu tượng
         inversePrimary: AppColors.backButtonColor, // Các phần tử có thể thao tác, chẳng hạn như nút văn bản, trên bề mặt nghịch đảo
         inverseSurface: AppColors.backButtonColor, //Nền lấp đầy cho các phần tử tương phản với bề mặt
         onInverseSurface: AppColors.backButtonColor, // Văn bản và biểu tượng trên bề mặt nghịch đảo

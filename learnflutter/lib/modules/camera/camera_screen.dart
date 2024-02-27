@@ -9,6 +9,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:video_player/video_player.dart';
 
 /// Camera example home widget.
@@ -44,12 +45,7 @@ void _logError(String code, String? message) {
 }
 
 class _CameraExampleHomeState extends State<CameraExampleHome> with WidgetsBindingObserver, TickerProviderStateMixin {
-  CameraController? controller = CameraController(
-    // Get a specific camera from the list of available cameras.
-    _cameras.first,
-    // Define the resolution to use.
-    ResolutionPreset.ultraHigh,
-  );
+  CameraController? controller;
   XFile? imageFile;
   XFile? videoFile;
   VideoPlayerController? videoController;
@@ -73,7 +69,14 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with WidgetsBindi
   int _pointers = 0;
 
   @override
+  @override
   void initState() {
+    // try {
+    //   WidgetsFlutterBinding.ensureInitialized();
+    //   _cameras = await availableCameras();
+    // } on CameraException catch (e) {
+    //   _logError(e.code, e.description);
+    // }
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
@@ -139,17 +142,20 @@ class _CameraExampleHomeState extends State<CameraExampleHome> with WidgetsBindi
         children: <Widget>[
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: controller != null && controller!.value.isRecordingVideo ? Colors.redAccent : Colors.grey,
-                  width: 3.0,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
+              color: Colors.transparent,
+              width: context.mediaQuery.size.width,
+              height: 200,
+              child: ClipRect(
+                child: OverflowBox(
+                  alignment: Alignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: _cameraPreviewWidget(), // this is my CameraPreview
+                    ),
+                  ),
                 ),
               ),
             ),

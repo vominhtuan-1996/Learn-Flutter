@@ -26,64 +26,61 @@ class DragTargetScreenState extends State<DragTargetScreen> {
   Widget build(BuildContext context) {
     return BaseLoading(
       isLoading: false,
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              5,
-              (index) {
-                bool accepted = false;
-                Color color = colors[index];
-                Color colorAccepted = Colors.black;
-                Offset offset = Offset.zero;
-                return Draggable(
-                  data: colors,
-                  feedback: Container(
-                    width: context.mediaQuery.size.width / 2,
-                    height: 100,
-                    color: color,
-                  ),
-                  onDragStarted: () {
-                    indexStarted = index;
-                  },
-                  childWhenDragging: Container(),
-                  child: DragTarget(
-                    builder: (context, candidateData, rejectedData) {
-                      return accepted
-                          ? Positioned(
-                              left: offset.dx,
-                              top: offset.dy,
-                              child: Container(
-                                width: context.mediaQuery.size.width / 2,
-                                height: 100,
-                                color: colorAccepted,
-                              ),
-                            )
-                          : Container(
+      child: SingleChildScrollView(
+        child: Column(
+          children: List.generate(
+            5,
+            (index) {
+              bool accepted = false;
+              Color color = colors[index];
+              Color colorAccepted = Colors.black;
+              Offset offset = Offset.zero;
+              return Draggable(
+                data: colors,
+                feedback: Container(
+                  width: context.mediaQuery.size.width / 2,
+                  height: 100,
+                  color: color,
+                ),
+                onDragStarted: () {
+                  indexStarted = index;
+                },
+                childWhenDragging: Container(),
+                child: DragTarget(
+                  builder: (context, candidateData, rejectedData) {
+                    return accepted
+                        ? Positioned(
+                            left: offset.dx,
+                            top: offset.dy,
+                            child: Container(
                               width: context.mediaQuery.size.width / 2,
                               height: 100,
-                              color: color,
-                            );
-                    },
-                    onWillAcceptWithDetails: (details) {
-                      print('onWillAcceptWithDetails ${index}');
-                      print('onWillAcceptWithDetails ${details.offset.dx}');
-                      print('onWillAcceptWithDetails ${details.offset.dy}');
-                      return true;
-                    },
-                    onAcceptWithDetails: (details) {
-                      colorAccepted = (details.data as List)[indexStarted];
-                      print(index);
-                      offset = details.offset;
-                      print('onAcceptWithDetails ${details.offset.dx}');
-                      print('onAcceptWithDetails ${details.offset.dy}');
-                      accepted = true;
-                    },
-                  ),
-                );
-              },
-            ),
+                              color: colorAccepted,
+                            ),
+                          )
+                        : Container(
+                            width: context.mediaQuery.size.width / 2,
+                            height: 100,
+                            color: color,
+                          );
+                  },
+                  onWillAcceptWithDetails: (details) {
+                    print('onWillAcceptWithDetails ${index}');
+                    print('onWillAcceptWithDetails ${details.offset.dx}');
+                    print('onWillAcceptWithDetails ${details.offset.dy}');
+                    return true;
+                  },
+                  onAcceptWithDetails: (details) {
+                    colorAccepted = (details.data as List)[indexStarted];
+                    print(index);
+                    offset = details.offset;
+                    print('onAcceptWithDetails ${details.offset.dx}');
+                    print('onAcceptWithDetails ${details.offset.dy}');
+                    accepted = true;
+                  },
+                ),
+              );
+            },
           ),
         ),
       ),

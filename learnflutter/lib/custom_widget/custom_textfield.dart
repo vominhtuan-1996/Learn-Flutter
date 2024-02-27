@@ -154,7 +154,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
             if (widget.suffixIcon != null)
               Padding(
                 padding: const EdgeInsets.only(left: 8),
-                child: widget.suffixIcon!,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      widget.controller?.text = '';
+                    });
+                  },
+                  child: widget.suffixIcon!,
+                ),
               ),
           ],
         ),

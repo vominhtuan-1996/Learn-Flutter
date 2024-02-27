@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 
 class IconAnimationWidget extends StatefulWidget {
-  const IconAnimationWidget({super.key, this.isRotate = false});
+  const IconAnimationWidget({super.key, this.isRotate = false, this.icon = Icons.favorite_sharp});
   final bool isRotate;
+  final IconData icon;
   @override
   State<IconAnimationWidget> createState() => IconAnimationWidgetState();
 }
@@ -72,7 +73,6 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
     return widget.isRotate
         ? Container(
             alignment: Alignment.topCenter,
-            padding: const EdgeInsets.all(8.0),
             child: RotationTransition(
               turns: _sizeAnimation,
               child: IconButton(
@@ -88,11 +88,12 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
             animation: _animationController,
             builder: (context, child) {
               return IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
                     isFav ? _animationController.reverse() : _animationController.forward();
                   },
                   icon: Icon(
-                    Icons.favorite_sharp,
+                    widget.icon,
                     color: _colorAnimation.value,
                     size: _sizeAnimation.value,
                   ));

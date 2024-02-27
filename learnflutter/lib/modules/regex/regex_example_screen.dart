@@ -5,6 +5,8 @@ import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/input_formatter/input_formatter.dart';
 import 'package:learnflutter/core/regex/regex.dart';
 import 'package:learnflutter/custom_widget/custom_textfield.dart';
+import 'package:learnflutter/helpper/datetime_format/datetime_format.dart';
+import 'package:learnflutter/modules/material/component/material_textfield.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
 
 class RegexExampleScreen extends StatefulWidget {
@@ -84,6 +86,26 @@ class RegexExampleScreenState extends State<RegexExampleScreen> {
     return temp;
   }
 
+  Color focusedBorderColor(int index) {
+    Color colors = Colors.red;
+    switch (index) {
+      case 0:
+        colors = Colors.blue;
+        break;
+      case 1:
+        colors = Colors.yellow;
+        break;
+      case 2:
+        colors = Colors.pink;
+        break;
+      case 3:
+        colors = Colors.amber;
+        break;
+      default:
+    }
+    return colors;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
@@ -93,23 +115,15 @@ class RegexExampleScreenState extends State<RegexExampleScreen> {
             children: List.generate(
           20,
           (index) {
-            return Padding(
-              padding: EdgeInsets.all(8),
-              child: Container(
-                decoration: AppBoxDecoration.boxDecorationGreyBorder,
-                child: CustomTextField(
-                  hintText: hintText(index),
-                  hintStyle: context.textTheme.bodySmall?.copyWith(color: Colors.grey),
-                  secureText: false,
-                  textAlign: TextAlign.left,
-                  keyboardType: keyboardType(index),
-                  borderRadius: 14,
-                  textCapitalization: TextCapitalization.none,
-                  isShowCounterText: false,
-                  onTextChange: (value) {},
-                  inputFormatters: textInputFormatter(index),
-                ),
-              ),
+            TextEditingController controller = TextEditingController();
+            return MaterialTextField(
+              hintText: hintText(index),
+              keyboardType: keyboardType(index),
+              onChanged: (value) {},
+              inputFormatters: textInputFormatter(index),
+              focusedBorderColor: focusedBorderColor(index),
+              decorationBorderColor: Colors.amberAccent,
+              controller: controller,
             );
           },
         )),

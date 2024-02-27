@@ -10,6 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/helpper/define_constraint.dart';
@@ -60,6 +61,7 @@ void main() {
       await Hive.initFlutter();
       // Registering the adapter
       Hive.registerAdapter(PersonAdapter());
+
       // Opening the box
       await Hive.openBox('peopleBox');
       runApp(MyApp());
@@ -167,6 +169,7 @@ class _MyAppState extends State<MyApp> {
       create: (context) => SettingThemeCubit(),
       child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
         builder: (context, state) {
+          DeviceDimension().initValue(context);
           return MaterialApp(
             theme: AppThemes.primaryTheme(context, state),
             locale: Locale('vi'),
@@ -179,8 +182,8 @@ class _MyAppState extends State<MyApp> {
               // TiePickerLocalizations.delegate,
             ],
             supportedLocales: [
-              Locale('vi'), // English
-              Locale('en'), // Spanish
+              Locale('vi'),
+              Locale('en'),
             ],
 
             // supportedLocales: [

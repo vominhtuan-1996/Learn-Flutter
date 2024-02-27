@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 
 /// Flutter code sample for [CupertinoDatePicker].
 
@@ -51,8 +53,9 @@ class _DatePickerExampleState extends State<DatePickerExample> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
+    return BaseLoading(
+      isLoading: false,
+      appBar: CupertinoNavigationBar(
         middle: Text('CupertinoDatePicker Sample'),
       ),
       child: DefaultTextStyle(
@@ -89,10 +92,8 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                     // use the intl package to format the value based on the
                     // user's locale settings.
                     child: Text(
-                      '${date.month}-${date.year}',
-                      style: const TextStyle(
-                        fontSize: 22.0,
-                      ),
+                      '${date.day} - ${date.month} - ${date.year}',
+                      style: context.textTheme.bodyLarge,
                     ),
                   ),
                 ],

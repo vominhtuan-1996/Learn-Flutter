@@ -4,10 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/routes/route.dart';
 import 'package:learnflutter/helpper/utills_helpper.dart';
 import 'package:learnflutter/core/attribute_string/attribute_string_widget.dart';
 import 'package:learnflutter/l10n/helper.dart';
+import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/qr_code_example/qr_code_screen.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
@@ -48,17 +51,24 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 690));
-    return Scaffold(
+    return BaseLoading(
+      isLoading: false,
       appBar: AppBar(
         title: Text(DemoLocalizations.of(context).title),
       ),
-      body: Shimmer(
+      child: Shimmer(
         linearGradient: ShimmerUtils.shimmerGradient,
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.materialScreen);
+                  },
+                  child: Text('material 3 UI'),
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(Routes.customScrollScreen);
@@ -279,7 +289,13 @@ class _TestScreenState extends State<TestScreen> {
                   ),
                 ),
                 CupertinoButton(
-                  onPressed: () => _showActionSheet(context),
+                  onPressed: () => _showActionSheet(
+                      context: context,
+                      title: 'Hihi',
+                      titleCancleAction: '???',
+                      content: IconAnimationWidget(
+                        isRotate: true,
+                      )),
                   child: const Text('CupertinoActionSheet'),
                 ),
                 CupertinoButton(
@@ -288,7 +304,7 @@ class _TestScreenState extends State<TestScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/datetime_picker_screen');
+                    Navigator.of(context).pushNamed(Routes.datetimePickerScreen);
                   },
                   child: const Text('Date time Picker'),
                 ),
@@ -410,48 +426,53 @@ class _TestScreenState extends State<TestScreen> {
   }
 }
 
-void _showActionSheet(BuildContext context) {
+void _showActionSheet({
+  required BuildContext context,
+  String title = 'Thông báo',
+  Widget content = const Text('Nothing'),
+  String titleCancleAction = 'Cancle',
+}) {
   showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) => CupertinoActionSheet(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Title'),
-          Icon(Icons.close),
-        ],
+      title: Text(title),
+      message: content,
+      cancelButton: CupertinoActionSheetAction(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text(
+          titleCancleAction,
+          style: context.textTheme.titleMedium?.copyWith(color: Colors.blue),
+        ),
       ),
-      message: Container(
-        color: Colors.red,
-        height: 120,
-      ),
-      actions: <CupertinoActionSheetAction>[
-        CupertinoActionSheetAction(
-          /// This parameter indicates the action would be a default
-          /// default behavior, turns the action's text to bold text.
-          isDefaultAction: true,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Default Action'),
-        ),
-        CupertinoActionSheetAction(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Action'),
-        ),
-        CupertinoActionSheetAction(
-          /// This parameter indicates the action would perform
-          /// a destructive action such as delete or exit and turns
-          /// the action's text color to red.
-          isDestructiveAction: true,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Destructive Action'),
-        ),
-      ],
+      // actions: <CupertinoActionSheetAction>[
+      //   CupertinoActionSheetAction(
+      //     /// This parameter indicates the action would be a default
+      //     /// default behavior, turns the action's text to bold text.
+      //     isDefaultAction: true,
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: const Text('Default Action'),
+      //   ),
+      //   CupertinoActionSheetAction(
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: const Text('Action'),
+      //   ),
+      //   CupertinoActionSheetAction(
+      //     /// This parameter indicates the action would perform
+      //     /// a destructive action such as delete or exit and turns
+      //     /// the action's text color to red.
+      //     isDestructiveAction: true,
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: const Text('Destructive Action'),
+      //   ),
+      // ],
     ),
   );
 }

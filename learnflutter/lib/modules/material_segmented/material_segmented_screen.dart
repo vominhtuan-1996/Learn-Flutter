@@ -72,7 +72,7 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
                   ),
                   // Sample pages
                   Padding(
-                    padding: const EdgeInsets.only(top: 56),
+                    padding: const EdgeInsets.only(top: 50),
                     child: TabBarView(
                         physics: const BouncingScrollPhysics(),
                         controller: tabController,
@@ -120,7 +120,6 @@ class SampleWidget extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: Text(label),
     );

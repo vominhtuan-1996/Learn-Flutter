@@ -6,6 +6,7 @@ import 'package:learnflutter/core/app_text_style.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
+import 'package:learnflutter/modules/slider_vertical/tab_render_widget.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -104,7 +105,8 @@ class SettingScreenState extends State<SettingScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+              TabRenderWidget(tabColor: Colors.red, thumbColor: Colors.blue),
             ],
           ),
         ));
