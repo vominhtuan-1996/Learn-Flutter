@@ -35,6 +35,8 @@ class MaterialButton3 extends StatefulWidget {
     this.shadowOffset = const Offset(0.6, -2),
     this.fabIcon,
     this.fabIconColor = Colors.transparent,
+    this.textAlign = TextAlign.center,
+    this.disible = false,
   });
   final MaterialButtonType type;
   final String? lableText;
@@ -54,6 +56,8 @@ class MaterialButton3 extends StatefulWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final Offset shadowOffset;
+  final TextAlign? textAlign;
+  final bool disible;
   @override
   State<MaterialButton3> createState() => _MaterialButtonState();
 }

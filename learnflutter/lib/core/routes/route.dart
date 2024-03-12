@@ -6,6 +6,11 @@ import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
+import 'package:learnflutter/modules/material/component/material_badge.dart';
+import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
+import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
+import 'package:learnflutter/modules/material/component/material_button_detail.dart';
+import 'package:learnflutter/modules/material/material_date_picker.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
@@ -101,6 +106,11 @@ class Routes {
   static const String regexExampleScreen = 'regex_example_screen';
   static const String customScrollScreen = 'custom_scroll_screen';
   static const String materialScreen = 'material_screen';
+  static const String materialBadge = 'material_badge';
+  static const String materialBottomAppbar = 'material_bottom_app_bar';
+  static const String materialBottomSheet = 'material_bottom_sheet';
+  static const String materialButton = 'material_button_detail';
+  static const String materialDatePicker = 'material_date_picker';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -384,6 +394,37 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: materialScreen),
           builder: (_) => MaterialScreen(),
+        );
+      case materialBadge:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          // final data = arguments.da
+          routeSettings: const RouteSettings(name: materialBadge),
+          builder: (_) => MaterialBadge(data: param),
+        );
+      case materialBottomAppbar:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialBottomAppbar),
+          builder: (_) => MaterialBottomAppBar(data: param),
+        );
+      case materialBottomSheet:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialBottomSheet),
+          builder: (_) => MaterialBottomSheet(data: param),
+        );
+      case materialButton:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialButton),
+          builder: (_) => MaterialButtonDetail(data: param),
+        );
+      case materialDatePicker:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialDatePicker),
+          builder: (_) => MaterialDatePicker(data: param),
         );
 
       default:

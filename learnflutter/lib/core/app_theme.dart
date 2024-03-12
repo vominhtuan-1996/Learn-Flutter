@@ -317,6 +317,14 @@ class AppThemes {
           opticalSize: 100,
         ),
       ),
+      badgeTheme: BadgeThemeData(
+        alignment: AlignmentDirectional.center,
+        largeSize: 24,
+        backgroundColor: AppColors.red,
+        smallSize: 24,
+        textColor: AppColors.primaryText,
+        textStyle: AppTextStyles.themeLabelMedium.copyWith(fontSize: state.scaleText! * 12),
+      ),
       dropdownMenuTheme: const DropdownMenuThemeData(menuStyle: MenuStyle()),
       colorScheme: ColorScheme(
         brightness: state.light ?? false ? Brightness.light : Brightness.dark,
