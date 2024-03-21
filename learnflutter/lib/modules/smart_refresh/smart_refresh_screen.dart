@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
 
 class SmartRefreshScreen extends StatefulWidget {
   const SmartRefreshScreen({super.key});
@@ -28,7 +28,8 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    _refreshController.refreshFailed();
+    // _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
@@ -47,7 +48,6 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
       child: SmartRefresher(
         enablePullDown: true,
         enablePullUp: true,
-        header: const WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,

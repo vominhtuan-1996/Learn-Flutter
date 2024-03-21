@@ -1,13 +1,13 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:learnflutter/helpper/bitmap_utils.dart';
-import 'package:learnflutter/utils_helper/utils_helper.dart';
 
-class ProgressBar extends LeafRenderObjectWidget {
-  ProgressBar({
+class GraphicsWidget extends LeafRenderObjectWidget {
+  GraphicsWidget({
     Key? key,
     required this.barColor,
     required this.thumbColor,
@@ -34,8 +34,8 @@ class ProgressBar extends LeafRenderObjectWidget {
   final ValueChanged<double>? onChanged;
   final bool showLabel;
   @override
-  RenderProgressBar createRenderObject(BuildContext context) {
-    return RenderProgressBar(
+  RenderGraphicsWidget createRenderObject(BuildContext context) {
+    return RenderGraphicsWidget(
         barColor: barColor,
         thumbColor: thumbColor,
         thumbSize: thumbSize,
@@ -50,7 +50,7 @@ class ProgressBar extends LeafRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, RenderProgressBar renderObject) {
+  void updateRenderObject(BuildContext context, RenderGraphicsWidget renderObject) {
     renderObject
       ..barColor = barColor
       ..thumbColor = thumbColor
@@ -75,8 +75,8 @@ class ProgressBar extends LeafRenderObjectWidget {
   }
 }
 
-class RenderProgressBar extends RenderBox {
-  RenderProgressBar({
+class RenderGraphicsWidget extends RenderBox {
+  RenderGraphicsWidget({
     required Color barColor,
     required Color thumbColor,
     required double thumbSize,
@@ -100,23 +100,6 @@ class RenderProgressBar extends RenderBox {
         _onChanged = onChanged,
         _showLabel = showLabel {
     // initialize the gesture recognizer
-    _drag = HorizontalDragGestureRecognizer()
-      ..onStart = (DragStartDetails details) {
-        _updateThumbPosition(details.localPosition);
-      }
-      ..onUpdate = (DragUpdateDetails details) {
-        _updateThumbPosition(details.localPosition);
-      };
-  }
-
-  void _updateThumbPosition(Offset localPosition) {
-    var dx = localPosition.dx.clamp(0, size.width);
-    _currentThumbValue = (dx / size.width);
-    if (_onChanged != null) {
-      _onChanged!(_currentThumbValue * max);
-    }
-    markNeedsPaint();
-    markNeedsSemanticsUpdate();
   }
 
   Color get barColor => _barColor;
@@ -215,17 +198,20 @@ class RenderProgressBar extends RenderBox {
   @override
   double computeMaxIntrinsicHeight(double width) => thumbSize;
 
-  late HorizontalDragGestureRecognizer _drag;
+  late DragGestureRecognizer _drag;
 
   @override
   bool hitTestSelf(Offset position) => true;
 
+  List<Offset> pointsMove = [];
+
   @override
   void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
+    // pointsMove = [];
     assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent) {
-      _drag.addPointer(event);
-      markNeedsLayout();
+    if (event is PointerMoveEvent) {
+      pointsMove.add(event.localPosition);
+      markNeedsPaint();
     }
   }
 
@@ -248,64 +234,19 @@ class RenderProgressBar extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) async {
     final canvas = context.canvas;
-    canvas.save();
-    canvas.translate(offset.dx, offset.dy);
-
-    String value = _currentThumbValue == 0 ? min.toStringAsFixed(0) : (_currentThumbValue * _max).toStringAsFixed(0);
-    widthText = UtilsHelper.getTextWidth(text: value, textStyle: styleLabel);
-
-    TextPainter painter;
-    painter = TextPainter(
-      textAlign: TextAlign.left,
-      textDirection: TextDirection.ltr,
-      text: TextSpan(
-        text: value,
-        style: styleLabel,
-      ),
-    )..layout();
-    final thumbDx = _currentThumbValue * size.width;
-    final center = Offset(thumbDx, size.height / 2);
-    // paint bar
     final barPaint = Paint()
       ..color = barColor.withOpacity(0.3)
+      ..strokeJoin = StrokeJoin.round
       ..strokeWidth = _strokeWidth
-      ..strokeCap = _strokeCap;
-    final point1 = Offset(0, size.height / 2);
-    final point2 = Offset(size.width, size.height / 2);
-    canvas.drawLine(point1, point2, barPaint);
-
-    // paint bar
-    final barPaintActive = Paint()
-      ..color = barColor
-      ..strokeWidth = _strokeWidth
-      ..strokeCap = _strokeCap;
-
-    final point1Active = Offset(0, size.height / 2);
-    final point2Active = Offset(center.dx, size.height / 2);
-    canvas.drawLine(point1Active, point2Active, barPaintActive);
-
-    // paint thumb
-    final thumbPaint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = _strokeWidth;
-
-    // final pathThumb = Path();
-    final point1pathThumb = Offset(center.dx, center.dy - size.height / 2);
-    final point2pathThumb = Offset(center.dx, center.dy + size.height / 2);
-    canvas.drawLine(point1pathThumb, point2pathThumb, thumbPaint);
-
-    final thumbFillPaint = Paint()
-      ..color = thumbColor
-      ..strokeWidth = _strokeWidth * 0.8
-      ..strokeCap = _strokeCap;
-
-    // final pathThumb = Path();
-    final point1paththumbFillPaint = Offset(center.dx, center.dy - (size.height / 2 * 0.6));
-    final point2paththumbFillPaint = Offset(center.dx, center.dy + (size.height / 2) * 0.6);
-    canvas.drawLine(point1paththumbFillPaint, point2paththumbFillPaint, thumbFillPaint);
-    if (showLabel) {
-      painter.paint(canvas, Offset(center.dx - (widthText / 2) - (widthText / 24 * _currentThumbValue), point1pathThumb.dy - thumbSize));
+      ..isAntiAlias = true;
+    var point1 = pointsMove.isNotEmpty ? pointsMove.first : Offset.zero;
+    for (int i = 0; i < pointsMove.length - 1; i++) {
+      canvas.drawLine(pointsMove[i], pointsMove[i + 1], barPaint);
     }
+    // for (var element in pointsMove) {
+    //   canvas.drawLine(point1, element, barPaint);
+    //   point1 = element;
+    // }
     canvas.restore();
   }
 

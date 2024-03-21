@@ -1,24 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/extension/extension_textstyle.dart';
 import 'package:learnflutter/core/routes/argument_screen_model.dart';
 import 'package:learnflutter/core/routes/route.dart';
-import 'package:learnflutter/helpper/datetime_format/datetime_format.dart';
-import 'package:learnflutter/helpper/define_constraint.dart';
-import 'package:learnflutter/helpper/images/images_helper.dart';
-import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
-import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
-import 'package:learnflutter/modules/material/component/material_carousel.dart';
-import 'package:learnflutter/modules/material/component/material_checkbox.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
-import 'package:learnflutter/modules/material/component/material_textfield.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
 import 'package:learnflutter/src/app_colors.dart';
-import 'package:learnflutter/utils_helper/dialog_utils.dart';
 
 class RoouterMaterialModel {
   RoouterMaterialModel(this.title, this.router, this.description);
@@ -57,7 +46,11 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
       Routes.materialButton,
       'Buttons help people take actions, such as sending an email, sharing a document, or liking a comment.',
     ),
-    RoouterMaterialModel('Cards', Routes.datetimePickerScreen, 'Cards are versatile containers, holding anything from images to headlines, supporting text, buttons, lists, and other components.'),
+    RoouterMaterialModel(
+      'Cards',
+      Routes.materialButton,
+      'Cards are versatile containers, holding anything from images to headlines, supporting text, buttons, lists, and other components.',
+    ),
     RoouterMaterialModel('Carousel', Routes.datetimePickerScreen, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
     RoouterMaterialModel('Checkboxes', Routes.datetimePickerScreen,
         'Checkboxes allow users to select one or more items from a set and can be used to turn an option on or off. They’re a kind of selection control that helps users make a choice from a set of options.'),
@@ -87,12 +80,16 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     RoouterMaterialModel('Segmented buttons: outlined', Routes.datetimePickerScreen, 'Segmented buttons help people select options, switch views, and sort elements. '),
     RoouterMaterialModel('Side Sheets', Routes.datetimePickerScreen,
         'Side sheets are surfaces containing supplementary content or actions to support tasks as part of a flow. They are typically anchored on the right edge of larger screens like tablets and desktops.'),
-    RoouterMaterialModel('Sliders', Routes.datetimePickerScreen, 'Sliders allow users to make selections from a range of values.'),
+    RoouterMaterialModel('Sliders', Routes.materialSlider, 'Sliders allow users to make selections from a range of values.'),
     RoouterMaterialModel('Snackbars', Routes.datetimePickerScreen, 'Snackbars provide brief messages about app processes at the bottom of the screen.'),
     RoouterMaterialModel('Switch', Routes.datetimePickerScreen, 'Switches toggle the state of a single item on or off.'),
     RoouterMaterialModel('Tabs', Routes.datetimePickerScreen, 'Tabs organize and support navigation between groups of related content at the same level of hierarchy.'),
-    RoouterMaterialModel('Text fields', Routes.datetimePickerScreen, 'Text fields allow users to enter text into a UI. They typically appear in forms and dialogs.'),
-    RoouterMaterialModel('Time picker', Routes.datetimePickerScreen, 'Time pickers help users select and set a specific time.'),
+    RoouterMaterialModel('Text fields', Routes.materialTimePicker, 'Text fields allow users to enter text into a UI. They typically appear in forms and dialogs.'),
+    RoouterMaterialModel(
+      'Time picker',
+      Routes.materialTimePicker,
+      'Time pickers help users select and set a specific time.',
+    ),
     RoouterMaterialModel('Tooltips', Routes.datetimePickerScreen, 'Tooltips are informative, specific, and action-oriented text labels that provide contextual support'),
     RoouterMaterialModel('Top app bars', Routes.datetimePickerScreen, 'Top app bars display information and actions at the top of a screen, such as the page title and shortcuts to actions.'),
   ];

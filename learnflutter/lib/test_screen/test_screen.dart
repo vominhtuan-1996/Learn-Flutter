@@ -65,6 +65,18 @@ class _TestScreenState extends State<TestScreen> {
               children: <Widget>[
                 TextButton(
                   onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.customPaintScreen);
+                  },
+                  child: Text('custom Paint Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.graphicsScreen);
+                  },
+                  child: Text('graphics Screen'),
+                ),
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushNamed(Routes.materialScreen);
                   },
                   child: Text('material 3 UI'),

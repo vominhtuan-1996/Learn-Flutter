@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -53,6 +54,7 @@ import 'modules/menu/menu_controller.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flame/game.dart';
 
 void main() {
   AppConfig.init(

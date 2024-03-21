@@ -37,7 +37,7 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const ProgressBar(
+              ProgressBar(
                 barColor: Colors.blue,
                 thumbColor: Colors.red,
                 thumbSize: 20.0,

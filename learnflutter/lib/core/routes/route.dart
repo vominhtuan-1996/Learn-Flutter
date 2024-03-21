@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
+import 'package:learnflutter/modules/custom_paint/custom_paint_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
+import 'package:learnflutter/modules/graphics/graphics_screen.dart';
 import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
 import 'package:learnflutter/modules/material/component/material_button_detail.dart';
-import 'package:learnflutter/modules/material/material_date_picker.dart';
+import 'package:learnflutter/modules/material/component/material_date_picker.dart';
+import 'package:learnflutter/modules/material/component/material_slider.dart';
+import 'package:learnflutter/modules/material/graphics_widget.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
+import 'package:learnflutter/modules/material/component/material_time_picker.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
 import 'package:learnflutter/helpper/hive_demo/screen/info_screen.dart';
@@ -111,6 +117,10 @@ class Routes {
   static const String materialBottomSheet = 'material_bottom_sheet';
   static const String materialButton = 'material_button_detail';
   static const String materialDatePicker = 'material_date_picker';
+  static const String materialTimePicker = 'material_time_picker';
+  static const String materialSlider = 'material_slider';
+  static const String graphicsScreen = 'graphics_screen';
+  static const String customPaintScreen = "custom_paint_screen";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -426,6 +436,22 @@ class Routes {
           routeSettings: const RouteSettings(name: materialDatePicker),
           builder: (_) => MaterialDatePicker(data: param),
         );
+      case materialTimePicker:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialTimePicker),
+          builder: (_) => (MaterialTimePicker(data: param)),
+        );
+      case materialSlider:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialSlider),
+          builder: (_) => (MaterialSlider(data: param)),
+        );
+      case graphicsScreen:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
+      case customPaintScreen:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: customPaintScreen), builder: (_) => CustomPainterScreen());
 
       default:
         return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());
