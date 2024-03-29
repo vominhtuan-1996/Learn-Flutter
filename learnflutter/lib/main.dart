@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/core/global/var_global.dart';
@@ -41,8 +42,10 @@ import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
+import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
+import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
@@ -166,36 +169,45 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    // textScale = context.textScale;
-    return BlocProvider(
-      create: (context) => SettingThemeCubit(),
-      child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
-        builder: (context, state) {
-          DeviceDimension().initValue(context);
-          return MaterialApp(
-            theme: AppThemes.primaryTheme(context, state),
-            locale: Locale('vi'),
-            title: 'dasdasdasda',
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              // TiePickerLocalizations.delegate,
-            ],
-            supportedLocales: [
-              Locale('vi'),
-              Locale('en'),
-            ],
-
-            // supportedLocales: [
-            //   Locale('vi', 'VN'),
-            //   ...TiePickerLocalizations.supportedLocales,
-            // ],
-            onGenerateRoute: Routes.generateRoute,
-            initialRoute: Routes.testScreen,
-          );
-        },
+    return Shimmer(
+      linearGradient: ShimmerUtils.shimmerGradient,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SettingThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => BaseLoadingCubit(),
+          ),
+        ],
+        child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
+          builder: (context, state) {
+            DeviceDimension().initValue(context);
+            return MaterialApp(
+              theme: AppThemes.primaryTheme(context, state),
+              locale: Locale('vi'),
+              title: 'dasdasdasda',
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                // TiePickerLocalizations.delegate,
+              ],
+              supportedLocales: [
+                Locale('vi'),
+                Locale('en'),
+              ],
+              // home: Shimmer(linearGradient: ShimmerUtils.shimmerGradient),
+              // supportedLocales: [
+              //   Locale('vi', 'VN'),
+              //   ...TiePickerLocalizations.supportedLocales,
+              // ],
+              onGenerateRoute: Routes.generateRoute,
+              initialRoute: Routes.testScreen,
+            );
+          },
+        ),
       ),
     );
   }

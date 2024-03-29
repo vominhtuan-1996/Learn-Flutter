@@ -16,6 +16,22 @@ class ShimmerUtils {
     end: Alignment(1.0, 0.3),
     tileMode: TileMode.clamp,
   );
+
+  static const shimmerGradientBlue = LinearGradient(
+    colors: [
+      Color(0xFF1F1FDD),
+      Color.fromARGB(255, 33, 33, 210),
+      Color.fromARGB(255, 41, 41, 209),
+    ],
+    stops: [
+      0.1,
+      0.3,
+      0.4,
+    ],
+    begin: Alignment(-1.0, -0.3),
+    end: Alignment(1.0, 0.3),
+    tileMode: TileMode.clamp,
+  );
 }
 
 class SlidingGradientTransform extends GradientTransform {

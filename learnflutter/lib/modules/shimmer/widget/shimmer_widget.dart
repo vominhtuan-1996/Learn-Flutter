@@ -21,11 +21,9 @@ class Shimmer extends StatefulWidget {
 
 class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
-
   @override
   void initState() {
     super.initState();
-
     _shimmerController = AnimationController.unbounded(vsync: this)..repeat(min: -0.5, max: 1.5, period: const Duration(milliseconds: 1000));
   }
 
@@ -45,8 +43,7 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
       );
 
   bool get isSized => (context.findRenderObject() as RenderBox).hasSize;
-
-  Size get size => (context.findRenderObject() as RenderBox).size;
+  Size get size => isSized ? (context.findRenderObject() as RenderBox).size : Size.zero;
 
   Offset getDescendantOffset({
     required RenderBox descendant,

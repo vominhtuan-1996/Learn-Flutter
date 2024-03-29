@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
@@ -23,27 +24,30 @@ class _ExampleUiLoadingAnimationState extends State<ExampleUiLoadingAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Shimmer(
+    return BaseLoading(
+      child: Shimmer(
         linearGradient: ShimmerUtils.shimmerGradient,
-        child: ListView(
-          physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
-          children: [
-            const SizedBox(height: 16),
-            _buildTopRowList(),
-            const SizedBox(height: 16),
-            _buildListItem(),
-            _buildListItem(),
-            _buildListItem(),
-          ],
+        child: Expanded(
+          child: ListView(
+            shrinkWrap: true,
+            physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
+            children: [
+              // const SizedBox(height: 16),
+              _buildTopRowList(),
+              // const SizedBox(height: 16),
+              _buildListItem(),
+              _buildListItem(),
+              _buildListItem(),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleLoading,
-        child: Icon(
-          _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _toggleLoading,
+      //   child: Icon(
+      //     _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
+      //   ),
+      // ),
     );
   }
 
@@ -55,7 +59,7 @@ class _ExampleUiLoadingAnimationState extends State<ExampleUiLoadingAnimation> {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         children: [
-          const SizedBox(width: 16),
+          // const SizedBox(width: 16),
           _buildTopRowItem(),
           _buildTopRowItem(),
           _buildTopRowItem(),
