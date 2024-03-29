@@ -4,6 +4,7 @@ import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/base_loading_screen/state/base_loading_state.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 
 class PageLoadingScreen extends StatefulWidget {
   const PageLoadingScreen({
@@ -22,30 +23,22 @@ class PageLoadingScreen extends StatefulWidget {
 class _PageLoadingScreenState extends State<PageLoadingScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BaseLoadingCubit>(
-      create: (context) => BaseLoadingCubit(BaseLoadingState(isLoading: true)),
-      child: BlocBuilder<BaseLoadingCubit, BaseLoadingState>(
-        builder: (context, state) {
-          return BaseLoading(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                'Đang cập nhật dữ liệu',
-                style: context.textTheme.headlineMedium,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            isLoading: state.isLoading ?? false,
-            message: state.message,
-            child: Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    context.read<BaseLoadingCubit>().showLoading();
-                  },
-                  child: const Text('Loading')),
-            ),
-          );
-        },
+    final loadingCubit = getLoadingCubit(context);
+    return BaseLoading(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Đang cập nhật dữ liệu',
+          style: context.textTheme.headlineMedium,
+          overflow: TextOverflow.clip,
+        ),
+      ),
+      child: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              loadingCubit.showLoading();
+            },
+            child: const Text('Loading')),
       ),
     );
   }

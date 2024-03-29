@@ -4,12 +4,12 @@ import 'package:learnflutter/base_loading_screen/state/base_loading_state.dart';
 import 'package:learnflutter/cubit/base_cubit.dart';
 
 class BaseLoadingCubit extends BaseCubit<BaseLoadingState> {
-  BaseLoadingCubit(init) : super(BaseLoadingState(isLoading: false));
+  BaseLoadingCubit() : super(BaseLoadingState());
 
   void showLoading({String? message}) {
     bool loaded = state.isLoading ?? false;
     emit(state.copyWith(isLoading: !loaded, message: message));
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 20), () {
       dissmissLoading();
     });
   }
