@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:shimmer/shimmer.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -19,41 +18,36 @@ final themeMode = ValueNotifier(2);
 class CarouselDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        direction: ShimmerDirection.ltr,
-        enabled: false,
-        child: ValueListenableBuilder(
-          builder: (context, value, g) {
-            return MaterialApp(
-              initialRoute: '/',
-              darkTheme: ThemeData.dark(),
-              themeMode: ThemeMode.values.toList()[value as int],
-              debugShowCheckedModeBanner: false,
-              routes: {
-                '/': (ctx) => CarouselDemoHome(),
-                '/basic': (ctx) => BasicDemo(),
-                '/nocenter': (ctx) => NoCenterDemo(),
-                '/image': (ctx) => ImageSliderDemo(),
-                '/complicated': (ctx) => ComplicatedImageDemo(),
-                '/enlarge': (ctx) => EnlargeStrategyDemo(),
-                '/manual': (ctx) => ManuallyControlledSlider(),
-                '/noloop': (ctx) => NoonLoopingDemo(),
-                '/vertical': (ctx) => VerticalSliderDemo(),
-                '/fullscreen': (ctx) => FullscreenSliderDemo(),
-                '/ondemand': (ctx) => OnDemandCarouselDemo(),
-                '/indicator': (ctx) => CarouselWithIndicatorDemo(),
-                '/prefetch': (ctx) => PrefetchImageDemo(),
-                '/reason': (ctx) => CarouselChangeReasonDemo(),
-                '/position': (ctx) => KeepPageviewPositionDemo(),
-                '/multiple': (ctx) => MultipleItemDemo(),
-                '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
-              },
-            );
+    return ValueListenableBuilder(
+      builder: (context, value, g) {
+        return MaterialApp(
+          initialRoute: '/',
+          darkTheme: ThemeData.dark(),
+          themeMode: ThemeMode.values.toList()[value as int],
+          debugShowCheckedModeBanner: false,
+          routes: {
+            '/': (ctx) => CarouselDemoHome(),
+            '/basic': (ctx) => BasicDemo(),
+            '/nocenter': (ctx) => NoCenterDemo(),
+            '/image': (ctx) => ImageSliderDemo(),
+            '/complicated': (ctx) => ComplicatedImageDemo(),
+            '/enlarge': (ctx) => EnlargeStrategyDemo(),
+            '/manual': (ctx) => ManuallyControlledSlider(),
+            '/noloop': (ctx) => NoonLoopingDemo(),
+            '/vertical': (ctx) => VerticalSliderDemo(),
+            '/fullscreen': (ctx) => FullscreenSliderDemo(),
+            '/ondemand': (ctx) => OnDemandCarouselDemo(),
+            '/indicator': (ctx) => CarouselWithIndicatorDemo(),
+            '/prefetch': (ctx) => PrefetchImageDemo(),
+            '/reason': (ctx) => CarouselChangeReasonDemo(),
+            '/position': (ctx) => KeepPageviewPositionDemo(),
+            '/multiple': (ctx) => MultipleItemDemo(),
+            '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
           },
-          valueListenable: themeMode,
-        ));
+        );
+      },
+      valueListenable: themeMode,
+    );
   }
 }
 

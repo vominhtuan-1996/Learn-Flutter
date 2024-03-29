@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/app_text_style.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/slider_vertical/tab_render_widget.dart';

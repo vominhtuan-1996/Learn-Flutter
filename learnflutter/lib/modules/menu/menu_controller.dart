@@ -12,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/core/notification_center/notification_center.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:shimmer/shimmer.dart';
 
 class Menu_Controller extends StatefulWidget {
   const Menu_Controller({super.key});

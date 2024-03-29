@@ -56,381 +56,375 @@ class _TestScreenState extends State<TestScreen> {
       appBar: AppBar(
         title: Text(DemoLocalizations.of(context).title),
       ),
-      child: Shimmer(
-        linearGradient: ShimmerUtils.shimmerGradient,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.customPaintScreen);
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.customPaintScreen);
+                },
+                child: Text('custom Paint Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.graphicsScreen);
+                },
+                child: Text('graphics Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.materialScreen);
+                },
+                child: Text('material 3 UI'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.customScrollScreen);
+                },
+                child: Text('customScrollScreen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.regexExampleScreen);
+                },
+                child: Text('regexExampleScreen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.dragTargetScreen);
+                },
+                child: Text('dragTargetScreen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.chart);
+                },
+                child: Text('chart Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.refreshControl);
+                },
+                child: Text('refreshControl Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.colorPicker);
+                },
+                child: Text('colorPicker Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.arkit);
+                },
+                child: Text('AR Kit Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.setting);
+                },
+                child: Text('Test setting'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.animationScreen);
+                },
+                child: Text('Test Animation'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
+                },
+                child: Text('Test Material Segmented'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.silderVerticalScreen);
+                },
+                child: Text('Test Slider Vertical'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.numberFormatScreen);
+                },
+                child: Text('Test NumberForamtter'),
+              ),
+              ElevatedButton(
+                onPressed: splitCodeString,
+                child: Text('Split String'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/page_theme_screen');
+                },
+                child: Text(
+                  'Test Theme',
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/web_browser_screen');
+                },
+                child: Text('Test Web Browser'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/draggel_scroll_screen');
+                },
+                child: Text('Test draggel_scroll_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/path_provider_screen');
+                },
+                child: Text('path_provider_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/open_file_screen');
+                },
+                child: Text('Tap to open file'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const QRViewExample(),
+                  ));
+                },
+                child: const Text('qrView'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/camera_screen');
+                },
+                child: const Text('Test Camera'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/page_loading_screen');
+                },
+                child: const Text('Page Loading Screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.snackBarScreen);
+                },
+                child: const Text('AweseomSnackBarExample'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.shimmerWidget);
+                },
+                child: const Text('Test Shimmer Widget'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/hero_animation_screen');
+                },
+                child: const Text('Hero Animation Screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/info_screen');
+                },
+                child: const Text('Hive Demo'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/matix_screen');
+                },
+                child: const Text('matix Screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/progress_hud_screen');
+                },
+                child: const Text('progressHud Screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/popover_scren');
+                },
+                child: const Text('Popover Click'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/nested_scroll_screen');
+                },
+                child: const Text('nested_scroll_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.courasel);
+                },
+                child: const Text('courasel_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/MenuController');
+                },
+                child: const Text('Menu'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/bmprogresshud_screen');
+                },
+                child: const Text('bmprogresshud_screen'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/intertiveview_screen');
+                },
+                child: const Text('InteractiveViewer'),
+              ),
+              Transform.scale(
+                scale: 1.5,
+                child: CupertinoSwitch(
+                  // This bool value toggles the switch.
+                  value: switchValue,
+                  activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
+                  trackColor: Color(0xFFD9D9D9),
+                  thumbColor: Colors.red,
+                  onChanged: (bool? value) {
+                    // This is called when the user toggles the switch.
+                    setState(() {
+                      switchValue = value ?? false;
+                    });
                   },
-                  child: Text('custom Paint Screen'),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.graphicsScreen);
-                  },
-                  child: Text('graphics Screen'),
+              ),
+              CupertinoButton(
+                onPressed: () => _showActionSheet(
+                    context: context,
+                    title: 'Hihi',
+                    titleCancleAction: '???',
+                    content: IconAnimationWidget(
+                      isRotate: true,
+                    )),
+                child: const Text('CupertinoActionSheet'),
+              ),
+              CupertinoButton(
+                onPressed: () => _showAlertDialog(context),
+                child: const Text('CupertinoAlertDialog'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.datetimePickerScreen);
+                },
+                child: const Text('Date time Picker'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/date_picker');
+                },
+                child: const Text('Date Picker'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/date_time_input');
+                },
+                child: const Text('date_time_input'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/calender');
+                },
+                child: const Text('calender'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  pushToController(context: context, useRootNavigator: true, route: '/tie_picker_screen');
+                  // Navigator.of(context).pushNamed('/tie_picker_screen');
+                },
+                child: const Text('Tie Picker Screen'),
+              ),
+              AttriButedSringWidget(
+                typeAttriButed: AttriButedSring.attriButedChar,
+                message: 'Tuan IOS Su12',
+                charHighlight: 'U',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.materialScreen);
-                  },
-                  child: Text('material 3 UI'),
+                highlightStyle: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.customScrollScreen);
-                  },
-                  child: Text('customScrollScreen'),
+                highlightColor: Colors.red,
+                ignoreCase: true,
+              ),
+              AttriButedSringWidget(
+                typeAttriButed: AttriButedSring.attriButedText,
+                message: 'Tuan IOS Su12',
+                texthighlight: 'Su',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.regexExampleScreen);
-                  },
-                  child: Text('regexExampleScreen'),
+                highlightStyle: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.dragTargetScreen);
-                  },
-                  child: Text('dragTargetScreen'),
+                highlightColor: Colors.red,
+                ignoreCase: true,
+              ),
+              AttriButedSringWidget(
+                typeAttriButed: AttriButedSring.attriButedRange,
+                message: 'Tuan IOS Su12',
+                start: 0,
+                end: 12,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.chart);
-                  },
-                  child: Text('chart Screen'),
+                highlightStyle: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.refreshControl);
-                  },
-                  child: Text('refreshControl Screen'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.colorPicker);
-                  },
-                  child: Text('colorPicker Screen'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.arkit);
-                  },
-                  child: Text('AR Kit Screen'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.setting);
-                  },
-                  child: Text('Test setting'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.animationScreen);
-                  },
-                  child: Text('Test Animation'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
-                  },
-                  child: Text('Test Material Segmented'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.silderVerticalScreen);
-                  },
-                  child: Text('Test Slider Vertical'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.numberFormatScreen);
-                  },
-                  child: Text('Test NumberForamtter'),
-                ),
-                ElevatedButton(
-                  onPressed: splitCodeString,
-                  child: Text('Split String'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/page_theme_screen');
-                  },
-                  child: Text(
-                    'Test Theme',
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/web_browser_screen');
-                  },
-                  child: Text('Test Web Browser'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/draggel_scroll_screen');
-                  },
-                  child: Text('Test draggel_scroll_screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/path_provider_screen');
-                  },
-                  child: Text('path_provider_screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/open_file_screen');
-                  },
-                  child: Text('Tap to open file'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const QRViewExample(),
-                    ));
-                  },
-                  child: const Text('qrView'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/camera_screen');
-                  },
-                  child: const Text('Test Camera'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/page_loading_screen');
-                  },
-                  child: const Text('Page Loading Screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.snackBarScreen);
-                  },
-                  child: const Text('AweseomSnackBarExample'),
-                ),
-                // ShimmerLoading(
-                //   isLoading: true,
-                //   child: ElevatedButton(
-                //     onPressed: () {
-                //       Navigator.of(context).pushNamed('/shimmer_widget');
-                //     },
-                //     child: const Text('Test Shimmer Widget'),
-                //   ),
-                // ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/hero_animation_screen');
-                  },
-                  child: const Text('Hero Animation Screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/info_screen');
-                  },
-                  child: const Text('Hive Demo'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/matix_screen');
-                  },
-                  child: const Text('matix Screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/progress_hud_screen');
-                  },
-                  child: const Text('progressHud Screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/popover_scren');
-                  },
-                  child: const Text('Popover Click'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/nested_scroll_screen');
-                  },
-                  child: const Text('nested_scroll_screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.courasel);
-                  },
-                  child: const Text('courasel_screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/MenuController');
-                  },
-                  child: const Text('Menu'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/bmprogresshud_screen');
-                  },
-                  child: const Text('bmprogresshud_screen'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/intertiveview_screen');
-                  },
-                  child: const Text('InteractiveViewer'),
-                ),
-                Transform.scale(
-                  scale: 1.5,
-                  child: CupertinoSwitch(
-                    // This bool value toggles the switch.
-                    value: switchValue,
-                    activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
-                    trackColor: Color(0xFFD9D9D9),
-                    thumbColor: Colors.red,
-                    onChanged: (bool? value) {
-                      // This is called when the user toggles the switch.
-                      setState(() {
-                        switchValue = value ?? false;
-                      });
-                    },
-                  ),
-                ),
-                CupertinoButton(
-                  onPressed: () => _showActionSheet(
-                      context: context,
-                      title: 'Hihi',
-                      titleCancleAction: '???',
-                      content: IconAnimationWidget(
-                        isRotate: true,
-                      )),
-                  child: const Text('CupertinoActionSheet'),
-                ),
-                CupertinoButton(
-                  onPressed: () => _showAlertDialog(context),
-                  child: const Text('CupertinoAlertDialog'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.datetimePickerScreen);
-                  },
-                  child: const Text('Date time Picker'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/date_picker');
-                  },
-                  child: const Text('Date Picker'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/date_time_input');
-                  },
-                  child: const Text('date_time_input'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/calender');
-                  },
-                  child: const Text('calender'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    pushToController(context: context, useRootNavigator: true, route: '/tie_picker_screen');
-                    // Navigator.of(context).pushNamed('/tie_picker_screen');
-                  },
-                  child: const Text('Tie Picker Screen'),
-                ),
-                AttriButedSringWidget(
-                  typeAttriButed: AttriButedSring.attriButedChar,
-                  message: 'Tuan IOS Su12',
-                  charHighlight: 'U',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  highlightStyle: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  highlightColor: Colors.red,
-                  ignoreCase: true,
-                ),
-                AttriButedSringWidget(
-                  typeAttriButed: AttriButedSring.attriButedText,
-                  message: 'Tuan IOS Su12',
-                  texthighlight: 'Su',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  highlightStyle: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  highlightColor: Colors.red,
-                  ignoreCase: true,
-                ),
-                AttriButedSringWidget(
-                  typeAttriButed: AttriButedSring.attriButedRange,
-                  message: 'Tuan IOS Su12',
-                  start: 0,
-                  end: 12,
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  highlightStyle: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  highlightColor: Colors.red,
-                  ignoreCase: true,
-                ),
-                // ShimmerLoading(
-                //   isLoading: true,
-                //   child: AttriButedSringWidget(
-                //     typeAttriButed: AttriButedSring.attriButedCustom,
-                //     listAttributedCustom: [
-                //       TextSpan(
-                //         text: 'Tuan',
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.red,
-                //           fontSize: 20,
-                //         ),
-                //       ),
-                //       TextSpan(
-                //         text: 'IOS',
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.blue,
-                //           fontSize: 12,
-                //         ),
-                //       ),
-                //       TextSpan(
-                //         text: 'Su12',
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.amber,
-                //           fontSize: 36,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-              ],
-            ),
+                highlightColor: Colors.red,
+                ignoreCase: true,
+              ),
+              // ShimmerLoading(
+              //   isLoading: true,
+              //   child: AttriButedSringWidget(
+              //     typeAttriButed: AttriButedSring.attriButedCustom,
+              //     listAttributedCustom: [
+              //       TextSpan(
+              //         text: 'Tuan',
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.red,
+              //           fontSize: 20,
+              //         ),
+              //       ),
+              //       TextSpan(
+              //         text: 'IOS',
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.blue,
+              //           fontSize: 12,
+              //         ),
+              //       ),
+              //       TextSpan(
+              //         text: 'Su12',
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.amber,
+              //           fontSize: 36,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
           ),
         ),
       ),

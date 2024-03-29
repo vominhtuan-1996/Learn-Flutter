@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/helpper/drag.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/material_textfield.dart';
@@ -46,15 +47,16 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                DialogUtils.showBottomSheet(
-                    context: context,
-                    height: 200,
-                    contentWidget: Container(
-                      color: Colors.red,
-                    ));
+                showLoading(context: context, message: 'Đang cập nhật dữ liệu...');
+                // DialogUtils.showBottomSheet(
+                //     context: context,
+                //     height: 200,
+                //     contentWidget: Container(
+                //       color: Colors.red,
+                //     ));
               },
               type: MaterialButtonType.commonbutton,
-              lableText: 'Bottom Action Sheet ',
+              lableText: 'Bottom Action Sheet',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),

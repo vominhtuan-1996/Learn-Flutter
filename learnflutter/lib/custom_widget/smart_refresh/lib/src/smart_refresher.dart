@@ -488,9 +488,9 @@ class SmartRefresherState extends State<SmartRefresher> {
   Widget build(BuildContext context) {
     final RefreshConfiguration? configuration = RefreshConfiguration.of(context);
     Widget? body;
-    if (widget.builder != null)
-      body = widget.builder!(context, _getScrollPhysics(configuration, AlwaysScrollableScrollPhysics()) as RefreshPhysics);
-    else {
+    if (widget.builder != null) {
+      body = widget.builder!(context, _getScrollPhysics(configuration, const AlwaysScrollableScrollPhysics()) as RefreshPhysics);
+    } else {
       List<Widget>? slivers = _buildSliversByChild(context, widget.child, configuration);
       body = _buildBodyBySlivers(widget.child, slivers, configuration);
     }
@@ -667,7 +667,7 @@ class RefreshController {
   /// request complete,the header will enter complete state,
   ///
   /// resetFooterState : it will set the footer state from noData to idle
-  void refreshCompleted({bool resetFooterState: false}) {
+  void refreshCompleted({bool resetFooterState = false}) {
     headerMode?.value = RefreshStatus.completed;
     if (resetFooterState) {
       resetNoData();
@@ -677,7 +677,7 @@ class RefreshController {
   /// end twoLeveling,will return back first floor
   Future<void>? twoLevelComplete({Duration duration: const Duration(milliseconds: 500), Curve curve: Curves.linear}) {
     headerMode?.value = RefreshStatus.twoLevelClosing;
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       position!.animateTo(0.0, duration: duration, curve: curve).whenComplete(() {
         headerMode!.value = RefreshStatus.idle;
       });
@@ -698,7 +698,7 @@ class RefreshController {
   /// after data returned,set the footer state to idle
   void loadComplete() {
     // change state after ui update,else it will have a bug:twice loading
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       footerMode?.value = LoadStatus.idle;
     });
   }
@@ -706,14 +706,14 @@ class RefreshController {
   /// If catchError happen,you may call loadFailed indicate fetch data from network failed
   void loadFailed() {
     // change state after ui update,else it will have a bug:twice loading
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       footerMode?.value = LoadStatus.failed;
     });
   }
 
   /// load more success without error,but no data returned
   void loadNoData() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       footerMode?.value = LoadStatus.noMore;
     });
   }
@@ -818,12 +818,12 @@ class RefreshConfiguration extends InheritedWidget {
       required this.child,
       this.headerBuilder,
       this.footerBuilder,
-      this.dragSpeedRatio: 1.0,
+      this.dragSpeedRatio = 1.0,
       this.shouldFooterFollowWhenNotFull,
-      this.enableScrollWhenTwoLevel: true,
-      this.enableLoadingWhenNoData: false,
-      this.enableBallisticRefresh: false,
-      this.springDescription: const SpringDescription(
+      this.enableScrollWhenTwoLevel = true,
+      this.enableLoadingWhenNoData = false,
+      this.enableBallisticRefresh = false,
+      this.springDescription = const SpringDescription(
         mass: 2.2,
         stiffness: 150,
         damping: 16,
