@@ -5,11 +5,13 @@ import 'dart:convert';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
 import 'package:learnflutter/core/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
+import 'package:learnflutter/src/app_box_decoration.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
@@ -19,7 +21,7 @@ double widthScreen = size.width;
 double heightScreen = size.height;
 const String keysaveCache_childMenus = 'childMenus';
 
-enum TypeImage { png, jpg, jpeg }
+enum TypeImage { png, jpg, jpeg, svg }
 
 enum IconTabbarMoBiMap {
   ic_tabbar_tool_selected,
@@ -52,7 +54,9 @@ TextStyle textStyleManrope(Color color, double fontSize, FontWeight fontWe) {
 
 class AppConfig {
   static Future init(VoidCallback callback) async {
+    // SystemChrome.setSystemUIOverlayStyle(AppBoxDecoration.statusBarStyle);
     WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     await SharedPreferenceUtils.init();
     NotificationCenter().subscribe("updateCounter", _updateCounter);
     Workmanager().initialize(
@@ -64,7 +68,7 @@ class AppConfig {
 }
 
 void _updateCounter() {
-  NotificationService().showNotification(title: 'Sample title', body: DateTime.now().toString());
+  // NotificationService().showNotification(title: 'Sample title', body: DateTime.now().toString());
   postdataTelegram('updateCounter_${DateTime.now().toString()}');
   // Timer.periodic(const Duration(minutes: 1), (timer) {
   //   print(DateTime.now().toString());

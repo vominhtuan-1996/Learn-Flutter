@@ -9,7 +9,7 @@ class BaseLoadingCubit extends BaseCubit<BaseLoadingState> {
   void showLoading({String? message}) {
     bool loaded = state.isLoading ?? false;
     emit(state.copyWith(isLoading: !loaded, message: message));
-    Timer(Duration(seconds: 20), () {
+    Timer(Duration(seconds: 3), () {
       dissmissLoading();
     });
   }

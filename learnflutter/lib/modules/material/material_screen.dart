@@ -48,7 +48,7 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     ),
     RoouterMaterialModel(
       'Cards',
-      Routes.materialButton,
+      Routes.materialCard,
       'Cards are versatile containers, holding anything from images to headlines, supporting text, buttons, lists, and other components.',
     ),
     RoouterMaterialModel('Carousel', Routes.datetimePickerScreen, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
@@ -146,10 +146,11 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   type: MaterialButtonType.commonbutton,
                   lableText: model.title,
                   textAlign: TextAlign.left,
-                  labelTextStyle: context.textTheme.bodyLarge?.underlined(
-                    color: Colors.black,
-                    distance: 4,
+                  labelTextStyle: context.textTheme.bodyLarge?.toplined(
+                    color: Colors.red,
+                    distance: 1,
                     thickness: 4,
+                    style: TextDecorationStyle.dashed,
                   ),
                 );
               },

@@ -47,13 +47,12 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                showLoading(context: context, message: 'Đang cập nhật dữ liệu...');
-                // DialogUtils.showBottomSheet(
-                //     context: context,
-                //     height: 200,
-                //     contentWidget: Container(
-                //       color: Colors.red,
-                //     ));
+                DialogUtils.showBottomSheet(
+                    context: context,
+                    height: 200,
+                    contentWidget: Container(
+                      color: Colors.transparent,
+                    ));
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',

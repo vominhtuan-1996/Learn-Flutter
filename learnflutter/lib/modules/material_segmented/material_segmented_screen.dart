@@ -48,9 +48,9 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
                     child: SegmentedTabControl(
                         controller: tabController,
                         // Customization of widget
-                        radius: const Radius.circular(8),
-                        backgroundColor: Colors.grey.shade200,
-                        indicatorColor: colors[tabController.index],
+                        // radius: const Radius.circular(8),
+                        // backgroundColor: Colors.grey.shade200,
+                        // indicatorColor: colors[tabController.index],
                         tabTextColor: Colors.black45,
                         selectedTabTextColor: Colors.white,
                         squeezeIntensity: 2,

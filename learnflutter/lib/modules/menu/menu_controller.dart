@@ -382,18 +382,17 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
             ),
           ];
         },
-        body:
-            //initUIMenus(),
-            ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: 30,
-          itemBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 50,
-              child: Center(child: Text('Item $index')),
-            );
-          },
-        ),
+        body: initUIMenus(),
+        //     ListView.builder(
+        //   padding: const EdgeInsets.all(8),
+        //   itemCount: 30,
+        //   itemBuilder: (BuildContext context, int index) {
+        //     return SizedBox(
+        //       height: 50,
+        //       child: Center(child: Text('Item $index')),
+        //     );
+        //   },
+        // ),
       )),
     );
   }

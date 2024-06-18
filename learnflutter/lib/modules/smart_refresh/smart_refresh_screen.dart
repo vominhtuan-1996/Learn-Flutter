@@ -20,6 +20,7 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
     super.initState();
   }
 
+  bool _isLoading = true;
   @override
   void dispose() {
     super.dispose();
@@ -29,10 +30,14 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
+    setState(() {
+      _isLoading = !_isLoading;
+    });
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshFailed();
+
     // _refreshController.refreshCompleted();
   }
 
@@ -48,32 +53,30 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
-      child: Shimmer(
-        linearGradient: ShimmerUtils.shimmerGradient,
-        child: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: _refreshController,
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            child: SingleChildScrollView(
-              child: Column(
-                children: List.generate(
-                  items.length,
-                  (index) => ShimmerLoading(
-                    isLoading: true,
-                    child: SizedBox(
-                      height: 100,
-                      child: Card(
-                        child: Center(
-                          child: Text(items[index]),
-                        ),
-                      ),
+      child: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: SingleChildScrollView(
+          child: Column(
+            children: List.generate(
+              items.length,
+              (index) => ShimmerLoading(
+                isLoading: _isLoading,
+                child: Container(
+                  padding: EdgeInsets.all(10.0 * index),
+                  child: Card(
+                    child: Center(
+                      child: Text(items[index]),
                     ),
                   ),
                 ),
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

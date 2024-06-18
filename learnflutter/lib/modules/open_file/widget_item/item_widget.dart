@@ -1,14 +1,16 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:learnflutter/custom_widget/custom_snackbar.dart';
 import 'package:learnflutter/helpper/images/images_helper.dart';
-import 'package:learnflutter/helpper/hero_animation/hero_animation_screen.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/detail_file_screen.dart';
 import 'package:learnflutter/modules/open_file/widget_item/get_file_screen.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:popover/popover.dart';
+import 'package:xml/xml.dart';
 
 class ItemOpenFileWidget extends StatefulWidget {
   ItemOpenFileWidget({super.key, required this.index, required this.listDirectory});
@@ -41,7 +43,22 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
   }
 
   Future<void> openFile(ItemDirectoryModel model) async {
-    if (model.type == TypeDirectory.File.name) {
+    if (model.path?.split('.').last == "gpx") {
+      List<LatLng> coordinates = await extractCoordinatesFromGpx(model.path ?? "");
+
+      double totalDistance = 0;
+      for (int i = 0; i < coordinates.length - 1; i++) {
+        totalDistance += haversineDistance(coordinates[i], coordinates[i + 1]);
+      }
+      showBottomSheet(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Text('Quãng đường chạy được là: ${totalDistance} km'),
+          );
+        },
+      );
+    } else if (model.type == TypeDirectory.File.name) {
       await OpenFile.open('${model.path}');
     } else {
       List listDirectory = model.absolute!.listSync();
@@ -138,4 +155,42 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
       ),
     );
   }
+}
+
+class LatLng {
+  final double latitude;
+  final double longitude;
+
+  LatLng(this.latitude, this.longitude);
+}
+
+double haversineDistance(LatLng point1, LatLng point2) {
+  const double R = 6371; // bán kính Trái Đất tính bằng km
+  double lat1 = point1.latitude;
+  double lon1 = point1.longitude;
+  double lat2 = point2.latitude;
+  double lon2 = point2.longitude;
+
+  double dLat = _toRadians(lat2 - lat1);
+  double dLon = _toRadians(lon2 - lon1);
+  double a = sin(dLat / 2) * sin(dLat / 2) + cos(_toRadians(lat1)) * cos(_toRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  double distance = R * c;
+  return distance;
+}
+
+double _toRadians(double degree) {
+  return degree * pi / 180;
+}
+
+Future<List<LatLng>> extractCoordinatesFromGpx(String filePath) async {
+  var file = File(filePath);
+  var document = XmlDocument.parse(await file.readAsString());
+  var trkpts = document.findAllElements('trkpt');
+
+  return trkpts.map((trkpt) {
+    var lat = double.parse(trkpt.getAttribute('lat') ?? '0');
+    var lon = double.parse(trkpt.getAttribute('lon') ?? '0');
+    return LatLng(lat, lon);
+  }).toList();
 }

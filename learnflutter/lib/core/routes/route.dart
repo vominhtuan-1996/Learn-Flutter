@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
@@ -13,9 +11,9 @@ import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
 import 'package:learnflutter/modules/material/component/material_button_detail.dart';
+import 'package:learnflutter/modules/material/component/metarial_card/material_card_detail.dart';
 import 'package:learnflutter/modules/material/component/material_date_picker.dart';
 import 'package:learnflutter/modules/material/component/material_slider.dart';
-import 'package:learnflutter/modules/material/graphics_widget.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/component/material_time_picker.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
@@ -35,20 +33,22 @@ import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart'
 import 'package:learnflutter/helpper/hero_animation/hero_animation_screen.dart';
 import 'package:learnflutter/modules/interractive_view/intertiveview_screen.dart';
 import 'package:learnflutter/modules/matix/matix_screen.dart';
+import 'package:learnflutter/modules/noti_scroll/notification_scroll_screen.dart';
 import 'package:learnflutter/modules/number_formart/number_format_screen.dart';
 import 'package:learnflutter/modules/open_file/open_file_screen.dart';
 import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/reducer/reducer_screen.dart';
 import 'package:learnflutter/modules/regex/regex_example_screen.dart';
 import 'package:learnflutter/modules/setting/setting_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/modules/slider_vertical/slider_vertical_screen.dart';
 import 'package:learnflutter/modules/smart_refresh/smart_refresh_screen.dart';
+import 'package:learnflutter/sliver_appbar/main-appbar.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
-import 'package:learnflutter/modules/tie_picker/tie_picker_screen.dart';
 import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
 
 class Routes {
@@ -116,11 +116,15 @@ class Routes {
   static const String materialBottomAppbar = 'material_bottom_app_bar';
   static const String materialBottomSheet = 'material_bottom_sheet';
   static const String materialButton = 'material_button_detail';
+  static const String materialCard = 'material_card_detail';
   static const String materialDatePicker = 'material_date_picker';
   static const String materialTimePicker = 'material_time_picker';
   static const String materialSlider = 'material_slider';
   static const String graphicsScreen = 'graphics_screen';
   static const String customPaintScreen = "custom_paint_screen";
+  static const String reducerScreen = "reducer_screen";
+  static const String notificationScrollScreen = "notification_scroll_screen";
+  static const String menu = "menu";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -266,11 +270,6 @@ class Routes {
           builder: (_) => const CalenderScreen(
             title: '',
           ),
-        );
-      case tiePickerScreen:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: tiePickerScreen),
-          builder: (_) => const TiePickerScreen(),
         );
       case progressHudScreen:
         return SlideRightRoute(
@@ -430,6 +429,12 @@ class Routes {
           routeSettings: const RouteSettings(name: materialButton),
           builder: (_) => MaterialButtonDetail(data: param),
         );
+      case materialCard:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialCard),
+          builder: (_) => MaterialCardDetail(data: param),
+        );
       case materialDatePicker:
         final param = arguments.data as RoouterMaterialModel;
         return SlideRightRoute(
@@ -452,6 +457,12 @@ class Routes {
         return SlideRightRoute(routeSettings: const RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
       case customPaintScreen:
         return SlideRightRoute(routeSettings: const RouteSettings(name: customPaintScreen), builder: (_) => CustomPainterScreen());
+      case reducerScreen:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => ReducerScreen());
+      case notificationScrollScreen:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => NotificationScrollScreen());
+      case menu:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => SliverAppMenu());
 
       default:
         return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());

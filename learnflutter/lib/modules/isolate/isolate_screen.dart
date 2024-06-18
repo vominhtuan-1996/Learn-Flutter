@@ -29,7 +29,7 @@ class _IsolateWidgetState extends State<IsolateWidget> {
   void initState() {
     Isolate.spawn(
       (message) {
-        print(message);
+        // print(message);
       },
       widget.isolatesFunction(1000),
     );
@@ -71,7 +71,7 @@ class _IsolateWidgetState extends State<IsolateWidget> {
           onPressed: () async {
             Isolate.spawn(
               (message) {
-                print(message);
+                // print(message);
               },
               widget.isolatesFunction(3000),
             );

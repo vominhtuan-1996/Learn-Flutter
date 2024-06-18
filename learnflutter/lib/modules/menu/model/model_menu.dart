@@ -66,38 +66,25 @@ class ChildMenusModel {
   });
 
   factory ChildMenusModel.fromJson(Map<String, dynamic> json) {
-    return ChildMenusModel(
-        iconChildMenu: json['iconChildMenu'],
-        titleChildMenu: json['titleChildMenu'],
-        routeName: json['routeName']);
+    return ChildMenusModel(iconChildMenu: json['iconChildMenu'], titleChildMenu: json['titleChildMenu'], routeName: json['routeName']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'iconChildMenu': iconChildMenu,
-      'titleChildMenu': titleChildMenu,
-      'routeName': routeName
-    };
+    return {'iconChildMenu': iconChildMenu, 'titleChildMenu': titleChildMenu, 'routeName': routeName};
   }
 }
 
 List<ModelMenusItem> parseModelMenusItem(List responseBody) {
   final parsed = responseBody.cast<Map<String, dynamic>>();
-  return parsed
-      .map<ModelMenusItem>((json) => ModelMenusItem.fromJson(json))
-      .toList();
+  return parsed.map<ModelMenusItem>((json) => ModelMenusItem.fromJson(json)).toList();
 }
 
 List<ChildMenusModel> parseChildMenusModel(List responseBody) {
   final parsed = responseBody.cast<Map<String, dynamic>>();
-  return parsed
-      .map<ChildMenusModel>((json) => ChildMenusModel.fromJson(json))
-      .toList();
+  return parsed.map<ChildMenusModel>((json) => ChildMenusModel.fromJson(json)).toList();
 }
 
 List<ModelMenuCategories> parseModelMenuCategories(List responseBody) {
   final parsed = responseBody.cast<Map<String, dynamic>>();
-  return parsed
-      .map<ModelMenuCategories>((json) => ModelMenuCategories.fromJson(json))
-      .toList();
+  return parsed.map<ModelMenuCategories>((json) => ModelMenuCategories.fromJson(json)).toList();
 }

@@ -46,15 +46,17 @@ class BaseLoadingScreenState extends State<BaseLoading> {
         );
         widthText = widthText > context.mediaQuery.size.width ? context.mediaQuery.size.width - DeviceDimension.padding : widthText;
         return Stack(
+          clipBehavior: Clip.hardEdge,
           children: [
             Scaffold(
-              extendBody: true,
+              // extendBody: false,
               appBar: widget.appBar ?? AppBar(),
               body: Container(
+                width: context.mediaQuery.size.width,
+                height: context.mediaQuery.size.height,
                 color: Colors.white,
                 child: widget.child,
               ),
-              resizeToAvoidBottomInset: true,
             ),
             Visibility(
               visible: state.isLoading ?? false,

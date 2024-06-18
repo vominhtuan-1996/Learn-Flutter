@@ -50,7 +50,6 @@ class _TestScreenState extends State<TestScreen> {
   bool switchValue = true;
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(360, 690));
     return BaseLoading(
       isLoading: false,
       appBar: AppBar(
@@ -61,6 +60,25 @@ class _TestScreenState extends State<TestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.menu);
+                },
+                child: Text('Siler AppBar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.notificationScrollScreen);
+                },
+                child: Text('NotificationScrollScreen'),
+              ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.reducerScreen);
+                },
+                child: Text('reducer Screen'),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.customPaintScreen);
@@ -263,7 +281,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/MenuController');
+                  Navigator.of(context).pushNamed(Routes.menuControler);
                 },
                 child: const Text('Menu'),
               ),

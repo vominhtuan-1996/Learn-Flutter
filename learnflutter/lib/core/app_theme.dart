@@ -165,18 +165,18 @@ class AppThemes {
         toolbarHeight: 44,
       ),
       switchTheme: SwitchThemeData(
-        trackOutlineColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
+        trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
             return AppColors.grey.lighter; // Defer to the widget's default.
           },
         ),
-        trackOutlineWidth: MaterialStateProperty.resolveWith<double?>(
-          (Set<MaterialState> states) {
+        trackOutlineWidth: WidgetStateProperty.resolveWith<double?>(
+          (Set<WidgetState> states) {
             return 60; // Defer to the widget's default.
           },
         ),
-        thumbColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
+        thumbColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
             return AppColors.white; // Defer to the widget's default.
           },
         ),

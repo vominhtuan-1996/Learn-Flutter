@@ -81,7 +81,7 @@ class _BezierHeaderState extends RefreshIndicatorState<BezierHeader> with Ticker
     if (widget.onModeChange != null) {
       widget.onModeChange!(mode);
     }
-    super.onModeChange(mode);
+    // super.onModeChange(mode);
   }
 
   @override
@@ -284,12 +284,12 @@ class BezierCircleHeader extends StatefulWidget {
 
   BezierCircleHeader(
       {this.bezierColor,
-      this.rectHeight: 70,
-      this.circleColor: Colors.white,
-      this.enableChildOverflow: false,
-      this.dismissType: BezierDismissType.RectSpread,
-      this.circleType: BezierCircleType.Progress,
-      this.circleRadius: 12});
+      this.rectHeight = 70,
+      this.circleColor = Colors.white,
+      this.enableChildOverflow = false,
+      this.dismissType = BezierDismissType.RectSpread,
+      this.circleType = BezierCircleType.Progress,
+      this.circleRadius = 12});
 
   @override
   State<StatefulWidget> createState() {

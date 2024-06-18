@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,7 +50,6 @@ import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
 import 'package:learnflutter/theme/page_theme_screen.dart';
-import 'package:learnflutter/modules/tie_picker/tie_picker_screen.dart';
 import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -186,7 +186,6 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               theme: AppThemes.primaryTheme(context, state),
               locale: Locale('vi'),
-              title: 'dasdasdasda',
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,

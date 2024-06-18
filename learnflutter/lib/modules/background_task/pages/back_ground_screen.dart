@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/main.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:workmanager/workmanager.dart';
@@ -32,7 +33,7 @@ class _BackgroundServiceScreenState extends State<BackgroundServiceScreen> {
             ),
             Text(
               "Plugin initialization",
-              style: Theme.of(context).textTheme.headline5,
+              style: context.textTheme.bodyMedium,
             ),
             ElevatedButton(
               child: Text("Start the Flutter background service"),
@@ -126,7 +127,7 @@ class _BackgroundServiceScreenState extends State<BackgroundServiceScreen> {
             SizedBox(height: 16),
             Text(
               "Task cancellation",
-              style: Theme.of(context).textTheme.headline5,
+              style: context.textTheme.bodyMedium,
             ),
             ElevatedButton(
               child: Text("Cancel All"),

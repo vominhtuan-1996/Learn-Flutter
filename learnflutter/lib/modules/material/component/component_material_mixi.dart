@@ -7,7 +7,11 @@ import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
 
 mixin ComponentMaterialDetail {
-  Widget headerContentView({required BuildContext context, String? title, String? description}) {
+  Widget headerContentView({
+    required BuildContext context,
+    String? title,
+    String? description,
+  }) {
     return Container(
         padding: EdgeInsets.all(DeviceDimension.padding),
         color: context.theme.colorScheme.onSecondaryContainer,
@@ -15,16 +19,13 @@ mixin ComponentMaterialDetail {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ShimmerLoading(
-              isLoading: true,
-              child: Container(
-                color: Colors.red,
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    title ?? "",
-                    style: context.textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              isLoading: false,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  title ?? "",
+                  style: context.textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -33,13 +34,10 @@ mixin ComponentMaterialDetail {
               height: DeviceDimension.padding,
             ),
             ShimmerLoading(
-              isLoading: true,
-              child: Container(
-                color: Colors.black,
-                child: Text(
-                  description ?? "",
-                  style: context.textTheme.bodyMedium,
-                ),
+              isLoading: false,
+              child: Text(
+                description ?? "",
+                style: context.textTheme.bodyMedium,
               ),
             ),
           ],

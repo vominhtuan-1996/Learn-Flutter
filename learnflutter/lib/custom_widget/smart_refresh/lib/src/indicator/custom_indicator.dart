@@ -70,14 +70,10 @@ class CustomHeader extends RefreshIndicator {
     this.onOffsetChange,
     this.onModeChange,
     this.onResetValue,
-    double height: 60.0,
-    Duration completeDuration: const Duration(milliseconds: 600),
-    RefreshStyle refreshStyle: RefreshStyle.Follow,
-  }) : super(
-            key: key,
-            completeDuration: completeDuration,
-            refreshStyle: refreshStyle,
-            height: height);
+    double height = 60.0,
+    Duration completeDuration = const Duration(milliseconds: 600),
+    RefreshStyle refreshStyle = RefreshStyle.Follow,
+  }) : super(key: key, completeDuration: completeDuration, refreshStyle: refreshStyle, height: height);
 
   @override
   State<StatefulWidget> createState() {
@@ -93,7 +89,7 @@ class _CustomHeaderState extends RefreshIndicatorState<CustomHeader> {
     if (widget.onOffsetChange != null) {
       widget.onOffsetChange!(offset);
     }
-    super.onOffsetChange(offset);
+    // super.onOffsetChange(offset);
   }
 
   @override
@@ -102,7 +98,7 @@ class _CustomHeaderState extends RefreshIndicatorState<CustomHeader> {
     if (widget.onModeChange != null) {
       widget.onModeChange!(mode);
     }
-    super.onModeChange(mode);
+    // super.onModeChange(mode);
   }
 
   @override
@@ -147,19 +143,15 @@ class CustomFooter extends LoadIndicator {
 
   const CustomFooter({
     Key? key,
-    double height: 60.0,
+    double height = 60.0,
     this.onModeChange,
     this.onOffsetChange,
     this.readyLoading,
     this.endLoading,
-    LoadStyle loadStyle: LoadStyle.ShowAlways,
+    LoadStyle loadStyle = LoadStyle.ShowAlways,
     required this.builder,
     Function? onClick,
-  }) : super(
-            key: key,
-            onClick: onClick as void Function()?,
-            loadStyle: loadStyle,
-            height: height);
+  }) : super(key: key, onClick: onClick as void Function()?, loadStyle: loadStyle, height: height);
 
   @override
   State<StatefulWidget> createState() {
@@ -175,7 +167,7 @@ class _CustomFooterState extends LoadIndicatorState<CustomFooter> {
     if (widget.onOffsetChange != null) {
       widget.onOffsetChange!(offset);
     }
-    super.onOffsetChange(offset);
+    // super.onOffsetChange(offset);
   }
 
   @override
@@ -184,17 +176,17 @@ class _CustomFooterState extends LoadIndicatorState<CustomFooter> {
     if (widget.onModeChange != null) {
       widget.onModeChange!(mode);
     }
-    super.onModeChange(mode);
+    // super.onModeChange(mode);
   }
 
-  @override
-  Future readyToLoad() {
-    // TODO: implement readyToLoad
-    if (widget.readyLoading != null) {
-      return widget.readyLoading!();
-    }
-    return super.readyToLoad();
-  }
+  // @override
+  // Future readyToLoad() {
+  //   // TODO: implement readyToLoad
+  //   if (widget.readyLoading != null) {
+  //     return widget.readyLoading!();
+  //   }
+  //   // return super.readyToLoad();
+  // }
 
   @override
   Future endLoading() {

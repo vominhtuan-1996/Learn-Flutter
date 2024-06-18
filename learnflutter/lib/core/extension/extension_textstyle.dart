@@ -8,7 +8,7 @@ extension ExtensionTextStyle on TextStyle {
     Color? color,
     double distance = 1,
     double thickness = 1,
-    TextDecorationStyle style = TextDecorationStyle.solid,
+    TextDecorationStyle style = TextDecorationStyle.dashed,
   }) {
     return copyWith(
       shadows: [
@@ -19,6 +19,50 @@ extension ExtensionTextStyle on TextStyle {
       ],
       color: Colors.transparent,
       decoration: TextDecoration.underline,
+      decorationThickness: thickness,
+      decorationColor: color ?? this.color,
+      decorationStyle: style,
+    );
+  }
+
+  TextStyle toplined({
+    Color? color,
+    double distance = 1,
+    double thickness = 1,
+    TextDecorationStyle style = TextDecorationStyle.solid,
+  }) {
+    return copyWith(
+      shadows: [
+        Shadow(
+          color: this.color ?? Colors.black,
+          offset: Offset(0, -distance),
+          blurRadius: 0,
+        )
+      ],
+      color: Colors.transparent,
+      decoration: TextDecoration.overline,
+      decorationThickness: thickness,
+      decorationColor: color ?? this.color,
+      decorationStyle: style,
+    );
+  }
+
+  TextStyle centerlined({
+    Color? color,
+    double distance = 1,
+    double thickness = 1,
+    TextDecorationStyle style = TextDecorationStyle.solid,
+  }) {
+    return copyWith(
+      shadows: [
+        Shadow(
+          color: this.color ?? Colors.black,
+          offset: Offset(0, -distance),
+          blurRadius: 0,
+        )
+      ],
+      color: Colors.transparent,
+      decoration: TextDecoration.lineThrough,
       decorationThickness: thickness,
       decorationColor: color ?? this.color,
       decorationStyle: style,
