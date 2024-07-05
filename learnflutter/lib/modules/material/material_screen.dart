@@ -51,8 +51,8 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
       Routes.materialCard,
       'Cards are versatile containers, holding anything from images to headlines, supporting text, buttons, lists, and other components.',
     ),
-    RoouterMaterialModel('Carousel', Routes.datetimePickerScreen, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
-    RoouterMaterialModel('Checkboxes', Routes.datetimePickerScreen,
+    RoouterMaterialModel('Carousel', Routes.materialCarousel, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
+    RoouterMaterialModel('Checkboxes', Routes.materialCheckbox,
         'Checkboxes allow users to select one or more items from a set and can be used to turn an option on or off. They’re a kind of selection control that helps users make a choice from a set of options.'),
     RoouterMaterialModel('Chips', Routes.datetimePickerScreen, 'Chips help people enter information, make selections, filter content, or trigger actions.'),
     RoouterMaterialModel(

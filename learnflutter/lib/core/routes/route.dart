@@ -11,9 +11,12 @@ import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
 import 'package:learnflutter/modules/material/component/material_button_detail.dart';
+import 'package:learnflutter/modules/material/component/material_checkbox.dart';
+import 'package:learnflutter/modules/material/component/material_checkbox_detail.dart';
 import 'package:learnflutter/modules/material/component/metarial_card/material_card_detail.dart';
 import 'package:learnflutter/modules/material/component/material_date_picker.dart';
 import 'package:learnflutter/modules/material/component/material_slider.dart';
+import 'package:learnflutter/modules/material/component/metarial_carousel/metarial_carousel_detail.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/component/material_time_picker.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
@@ -117,9 +120,11 @@ class Routes {
   static const String materialBottomSheet = 'material_bottom_sheet';
   static const String materialButton = 'material_button_detail';
   static const String materialCard = 'material_card_detail';
+  static const String materialCarousel = 'metarial_carousel_detail';
   static const String materialDatePicker = 'material_date_picker';
   static const String materialTimePicker = 'material_time_picker';
   static const String materialSlider = 'material_slider';
+  static const String materialCheckbox = 'material_checkbox_detail';
   static const String graphicsScreen = 'graphics_screen';
   static const String customPaintScreen = "custom_paint_screen";
   static const String reducerScreen = "reducer_screen";
@@ -434,6 +439,18 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: materialCard),
           builder: (_) => MaterialCardDetail(data: param),
+        );
+      case materialCarousel:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialCarousel),
+          builder: (_) => MaterialCarouselDetail(data: param),
+        );
+      case materialCheckbox:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialCheckbox),
+          builder: (_) => MaterialCheckBoxDetail(data: param),
         );
       case materialDatePicker:
         final param = arguments.data as RoouterMaterialModel;

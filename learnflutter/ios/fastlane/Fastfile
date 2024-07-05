@@ -1,0 +1,77 @@
+# # This file contains the fastlane.tools configuration
+# # You can find the documentation at https://docs.fastlane.tools
+# #
+# # For a list of all available actions, check out
+# #
+# #     https://docs.fastlane.tools/actions
+# #
+# # For a list of all available plugins, check out
+# #
+# #     https://docs.fastlane.tools/plugins/available-plugins
+# #
+
+# # Uncomment the line if you want fastlane to automatically update itself
+# # update_fastlane
+#      default_platform(:ios)
+# platform :ios do
+#   desc "Build iOS IPA with dynamic scheme"
+#   lane :build_ios do |options|
+#     scheme = options[:scheme] || "prod" # Đặt giá trị mặc định của môi trường
+#     bundleID =  options[:bundleID] || "com.fpt.rii.mobimap" # Đặt giá trị mặc định của bundleID
+#     provisioningProfile = options[:provisioningProfile] || "com.fpt.rii.mobimap_DIC" # Đặt giá trị mặc định của profile
+#     output_name = options[:output] || "MobiMapRII_prod.ipa" # Đặt giá trị mặc định của outputo_name
+#     output_directory = "output/#{scheme}"
+#     ipa_path = gym(
+#       scheme: scheme,
+#       workspace: "Runner.xcworkspace",
+#       export_method: "enterprise", # hoặc 'app-store', 'ad-hoc', 'development'
+#       output_directory: output_directory,
+#       output_name: output_name, # Sử dụng biến output_name
+#       clean: true,
+#       export_options: {
+#         method: "enterprise", # hoặc 'development', 'app-store', 'ad-hoc'
+#         provisioningProfiles: {
+#            bundleID => provisioningProfile# Cập nhật cấu hình Provisioning Profile
+#         },
+#         compileBitcode: false
+#       }
+#     )
+#     # In đường dẫn IPA ra terminal
+#     UI.message("Đường dẫn IPA là: #{ipa_path}")
+
+#     # Lưu đường dẫn IPA vào file
+#     File.write('ipa_path.txt', "#{ipa_path}")
+#   end
+# end
+  
+default_platform(:ios)
+
+platform :ios do
+  desc "Build iOS IPA with dynamic scheme and get the IPA path"
+  lane :build_ios do |options|
+    scheme = options[:scheme] || "prod" # Đặt giá trị mặc định là 'prod'
+    output_directory = "output/#{scheme}" # Thư mục output dựa trên scheme
+    output_name = "#{options[:output]}.ipa" # Tên file IPA dựa trên scheme hoặc output
+
+    ipa_path = gym(
+      scheme: scheme,
+      workspace: "Runner.xcworkspace",
+      export_method: "enterprise", # Hoặc 'app-store', 'ad-hoc', 'development'
+      output_directory: output_directory,
+      output_name: output_name, # Sử dụng biến output_name
+      clean: true,
+      export_options: {
+        method: "enterprise", # Hoặc 'development', 'app-store', 'ad-hoc'
+        provisioningProfiles: {
+          "#{options[:bundleID]}" => "#{options[:provisioningProfile]}" # Cập nhật cấu hình Provisioning Profile
+        },
+        compileBitcode: false
+      }
+    )
+
+    # In đường dẫn IPA ra terminal
+    UI.message("Đường dẫn IPA là: #{ipa_path}")
+    # Lưu đường dẫn IPA vào file tạm thời
+    File.open("../ipa_path.txt", "w") { |file| file.write(ipa_path) }
+  end
+end
