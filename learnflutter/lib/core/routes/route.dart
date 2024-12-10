@@ -7,16 +7,23 @@ import 'package:learnflutter/modules/custom_paint/custom_paint_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
 import 'package:learnflutter/modules/graphics/graphics_screen.dart';
+import 'package:learnflutter/modules/log/log_screen.dart';
 import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
 import 'package:learnflutter/modules/material/component/material_button_detail.dart';
-import 'package:learnflutter/modules/material/component/material_checkbox.dart';
-import 'package:learnflutter/modules/material/component/material_checkbox_detail.dart';
+import 'package:learnflutter/modules/material/component/material_checkbox/material_checkbox.dart';
+import 'package:learnflutter/modules/material/component/material_checkbox/material_checkbox_detail.dart';
+import 'package:learnflutter/modules/material/component/material_floating_button.dart';
+import 'package:learnflutter/modules/material/component/material_progress_indicators.dart';
+import 'package:learnflutter/modules/material/component/material_switch.dart';
 import 'package:learnflutter/modules/material/component/metarial_card/material_card_detail.dart';
 import 'package:learnflutter/modules/material/component/material_date_picker.dart';
 import 'package:learnflutter/modules/material/component/material_slider.dart';
 import 'package:learnflutter/modules/material/component/metarial_carousel/metarial_carousel_detail.dart';
+import 'package:learnflutter/modules/material/component/metarial_dialog.dart';
+import 'package:learnflutter/modules/material/component/metarial_divider.dart';
+import 'package:learnflutter/modules/material/component/metarial_textfield_screen.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/component/material_time_picker.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
@@ -40,6 +47,7 @@ import 'package:learnflutter/modules/noti_scroll/notification_scroll_screen.dart
 import 'package:learnflutter/modules/number_formart/number_format_screen.dart';
 import 'package:learnflutter/modules/open_file/open_file_screen.dart';
 import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
+import 'package:learnflutter/modules/pick_file/pick_file_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/modules/reducer/reducer_screen.dart';
@@ -125,11 +133,20 @@ class Routes {
   static const String materialTimePicker = 'material_time_picker';
   static const String materialSlider = 'material_slider';
   static const String materialCheckbox = 'material_checkbox_detail';
+  static const String materialDialog = 'metarial_dialog';
+  static const String materialDivider = 'metarial_divider';
+  static const String materialFloatingButton = 'material_floating_button';
+  static const String materialProgressIndicators = "material_progress_indicators";
+  static const String materialTextField = "metarial_textfield_screen";
+  static const String materialSwitch = "material_switch";
+
   static const String graphicsScreen = 'graphics_screen';
   static const String customPaintScreen = "custom_paint_screen";
   static const String reducerScreen = "reducer_screen";
   static const String notificationScrollScreen = "notification_scroll_screen";
   static const String menu = "menu";
+  static const String log = "log";
+  static const String pickFile = "pick_file_screen";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -176,11 +193,11 @@ class Routes {
           routeSettings: const RouteSettings(name: enlarge),
           builder: (_) => EnlargeStrategyDemo(),
         );
-      case manual:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: manual),
-          builder: (_) => ManuallyControlledSlider(),
-        );
+      // case manual:
+      //   return SlideRightRoute(
+      //     routeSettings: const RouteSettings(name: manual),
+      //     builder: (_) => ManuallyControlledSlider(),
+      //   );
       case noloop:
         return MaterialPageRoute(
           settings: const RouteSettings(name: noloop),
@@ -202,21 +219,21 @@ class Routes {
           routeSettings: const RouteSettings(name: ondemand),
           builder: (_) => OnDemandCarouselDemo(),
         );
-      case indicator:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: indicator),
-          builder: (_) => CarouselWithIndicatorDemo(),
-        );
+      // case indicator:
+      //   return SlideRightRoute(
+      //     routeSettings: const RouteSettings(name: indicator),
+      //     builder: (_) => CarouselWithIndicatorDemo(),
+      //   );
       case prefetch:
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: prefetch),
           builder: (_) => PrefetchImageDemo(),
         );
-      case reason:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: reason),
-          builder: (_) => CarouselChangeReasonDemo(),
-        );
+      // case reason:
+      //   return SlideRightRoute(
+      //     routeSettings: const RouteSettings(name: reason),
+      //     builder: (_) => CarouselChangeReasonDemo(),
+      //   );
       case position:
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: position),
@@ -470,6 +487,42 @@ class Routes {
           routeSettings: const RouteSettings(name: materialSlider),
           builder: (_) => (MaterialSlider(data: param)),
         );
+      case materialDialog:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialDialog),
+          builder: (_) => (MaterialDialog(data: param)),
+        );
+      case materialDivider:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialDivider),
+          builder: (_) => (MaterialDividerDetail(data: param)),
+        );
+      case materialFloatingButton:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialFloatingButton),
+          builder: (_) => (MaterialFloatingButtonDetail(data: param)),
+        );
+      case materialProgressIndicators:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialProgressIndicators),
+          builder: (_) => (MaterialProgressIndicators(data: param)),
+        );
+      case materialTextField:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialTextField),
+          builder: (_) => (MaterialTextFieldScreen(data: param)),
+        );
+      case materialSwitch:
+        final param = arguments.data as RoouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: materialSwitch),
+          builder: (_) => (MaterialSwitch(data: param)),
+        );
       case graphicsScreen:
         return SlideRightRoute(routeSettings: const RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
       case customPaintScreen:
@@ -480,6 +533,10 @@ class Routes {
         return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => NotificationScrollScreen());
       case menu:
         return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => SliverAppMenu());
+      case log:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: reducerScreen), builder: (_) => LogScreen());
+      case pickFile:
+        return SlideRightRoute(routeSettings: const RouteSettings(name: pickFile), builder: (_) => PickFileScreen());
 
       default:
         return SlideRightRoute(routeSettings: const RouteSettings(name: defaultRoute), builder: (_) => const TestScreen());

@@ -9,15 +9,39 @@ class SliderVerticalScreen extends StatefulWidget {
   State<SliderVerticalScreen> createState() => SliderVerticalScreenState();
 }
 
-class SliderVerticalScreenState extends State<SliderVerticalScreen> {
+class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Color?> _colorAnimation;
+  late Animation<double> _sizeAnimation;
   var val = 5;
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      lowerBound: 0.5,
+      duration: Duration(milliseconds: 1500),
+    )..reverse();
+
+    _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_controller);
+
+    _sizeAnimation = TweenSequence(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween(begin: 50, end: 30),
+          weight: 50,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween(begin: 30, end: 50),
+          weight: 50,
+        )
+      ],
+    ).animate(_controller);
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -29,18 +53,23 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> {
       ),
       isLoading: false,
       child: Container(
-        child: Container(
+        child: Transform(
           // Transform
-          // alignment: FractionalOffset.center,
+          alignment: FractionalOffset.center,
           // Rotate sliders by 90 degrees
-          // transform: Matrix4.identity()..rotateZ(90 * 3.1415927 / 180),
+          transform: Matrix4.identity()..rotateZ(90 * 3.1415927 / 180),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ProgressBar(
-                barColor: Colors.blue,
-                thumbColor: Colors.red,
-                thumbSize: 20.0,
+              AnimatedBuilder(
+                animation: CurvedAnimation(parent: _controller, curve: Curves.decelerate),
+                builder: (context, child) {
+                  return ProgressBar(
+                    barColor: Colors.blue,
+                    thumbColor: Colors.red,
+                    thumbSize: 20.0,
+                  );
+                },
               ),
               SizedBox(height: 50),
               Slider(

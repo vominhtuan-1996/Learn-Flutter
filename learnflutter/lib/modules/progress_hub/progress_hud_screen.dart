@@ -5,8 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 class ProgressHubScreenTest extends StatelessWidget {
+  // final result = FilePicker.platform.pickFiles(
+  //   allowMultiple: true,
+  //   type: FileType.custom,
+  //   allowedExtensions: ['jpg', 'pdf', 'doc'],
+  // );
   @override
   Widget build(BuildContext context) {
+    //  final result = await FilePicker.platform.pickFiles(
+    //           allowMultiple: true,
+    //           type: FileType.custom,
+    //           allowedExtensions: ['jpg', 'pdf', 'doc'],
+    //         );
     return Container(
       color: Colors.white,
       child: SafeArea(

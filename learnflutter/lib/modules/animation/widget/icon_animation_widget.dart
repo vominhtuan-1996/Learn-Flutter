@@ -31,7 +31,7 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
       _sizeAnimation = Tween<double>(begin: -0.05, end: 0.05).animate(
         CurvedAnimation(
           parent: _animationController,
-          curve: Curves.easeInOut,
+          curve: Curves.decelerate,
         ),
       );
     } else {

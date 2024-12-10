@@ -12,7 +12,7 @@ class CustomPainterScreen extends StatefulWidget {
   State<CustomPainterScreen> createState() => _CustomPainterScreenState();
 }
 
-class _CustomPainterScreenState extends State<CustomPainterScreen> {
+class _CustomPainterScreenState extends State<CustomPainterScreen> with TickerProviderStateMixin {
   final List<PointDrag> pointsMove = [];
   bool isMove = false;
   Color currentColor = Colors.red;
@@ -63,43 +63,46 @@ class _CustomPainterScreenState extends State<CustomPainterScreen> {
               ),
             ),
           ),
-          Row(
-            children: [
-              BarColorPicker(
-                  initialColor: currentColor,
-                  width: 120,
-                  thumbColor: Colors.white,
-                  cornerRadius: 10,
-                  pickMode: PickMode.Color,
-                  colorListener: (int value) {
-                    setState(() {
-                      currentstrokeWidth = 3;
-                      currentColor = Color(value);
-                    });
-                  }),
-              TextButton(
-                onPressed: () {
-                  pointsMove.clear();
-                  setState(() {});
-                },
-                child: Text('Clear'),
-              ),
-              TextButton(
-                onPressed: () {
-                  currentColor = Colors.white;
-                  currentstrokeWidth = 24;
-                  setState(() {});
-                },
-                child: Icon(Icons.pentagon_rounded),
-              ),
-              TextButton(
-                onPressed: () {
-                  pointsMove.clear();
-                  setState(() {});
-                },
-                child: Icon(Icons.pest_control_rodent),
-              ),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                BarColorPicker(
+                    initialColor: currentColor,
+                    width: 120,
+                    thumbColor: Colors.white,
+                    cornerRadius: 10,
+                    pickMode: PickMode.Color,
+                    colorListener: (int value) {
+                      setState(() {
+                        currentstrokeWidth = 3;
+                        currentColor = Color(value);
+                      });
+                    }),
+                TextButton(
+                  onPressed: () {
+                    pointsMove.clear();
+                    setState(() {});
+                  },
+                  child: Text('Clear'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    currentColor = Colors.white;
+                    currentstrokeWidth = 24;
+                    setState(() {});
+                  },
+                  child: Icon(Icons.pentagon_rounded),
+                ),
+                TextButton(
+                  onPressed: () {
+                    pointsMove.clear();
+                    setState(() {});
+                  },
+                  child: Icon(Icons.pest_control_rodent),
+                ),
+              ],
+            ),
           )
         ],
       ),

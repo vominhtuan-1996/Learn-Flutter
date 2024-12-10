@@ -64,7 +64,7 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
             children: List.generate(
               items.length,
               (index) => ShimmerLoading(
-                isLoading: _isLoading,
+                isLoading: false,
                 child: Container(
                   padding: EdgeInsets.all(10.0 * index),
                   child: Card(

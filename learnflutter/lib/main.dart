@@ -1,63 +1,25 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_import, non_constant_identifier_names, use_full_hex_values_for_flutter_colors, override_on_non_overriding_member, unused_element
-
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
-import 'package:flame/components.dart';
+import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/helpper/define_constraint.dart';
-import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/helpper/hive_demo/model/person.dart';
-import 'package:learnflutter/modules/nested/nested_scroll_screen.dart';
-import 'package:learnflutter/core/notification_center/notification_center.dart';
-import 'package:learnflutter/helpper/tabbar_custom/tabbar_custom.dart';
 import 'package:learnflutter/core/app_theme.dart';
-import 'package:learnflutter/base_loading_screen/page_loading_screen.dart';
-import 'package:learnflutter/modules/bmprogresshud/bmprogresshud_screen.dart';
-import 'package:learnflutter/modules/camera/camera_screen.dart';
 import 'package:learnflutter/core/routes/route.dart';
-import 'package:learnflutter/modules/courasel/courasel_screen.dart';
-import 'package:learnflutter/modules/date_picker/calender.dart';
-import 'package:learnflutter/modules/date_picker/date_picker.dart';
-import 'package:learnflutter/modules/date_picker/date_time_input.dart';
-import 'package:learnflutter/modules/datetime_picker/datetime_picker_screen.dart';
-import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
-import 'package:learnflutter/helpper/hero_animation/hero_animation_screen.dart';
-import 'package:learnflutter/modules/interractive_view/intertiveview_screen.dart';
-import 'package:learnflutter/modules/isolate/isolate_screen.dart';
-import 'package:learnflutter/modules/matix/matix_screen.dart';
-import 'package:learnflutter/modules/open_file/open_file_screen.dart';
-import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
-import 'package:learnflutter/modules/popover/popover_scren.dart';
-import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
-import 'package:learnflutter/helpper/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
-import 'package:learnflutter/src/lib/l10n/tie_picker_localizations.dart';
 import 'package:learnflutter/test_screen/test_screen.dart';
-import 'package:learnflutter/theme/page_theme_screen.dart';
-import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'modules/menu/menu_controller.dart';
 import 'package:workmanager/workmanager.dart';
-import 'package:draggable_fab/draggable_fab.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flame/game.dart';
 
 void main() {
   AppConfig.init(
@@ -66,7 +28,6 @@ void main() {
       await Hive.initFlutter();
       // Registering the adapter
       Hive.registerAdapter(PersonAdapter());
-
       // Opening the box
       await Hive.openBox('peopleBox');
       runApp(MyApp());
@@ -193,17 +154,30 @@ class _MyAppState extends State<MyApp> {
                 GlobalCupertinoLocalizations.delegate,
                 // TiePickerLocalizations.delegate,
               ],
-              supportedLocales: [
+              supportedLocales: const [
                 Locale('vi'),
                 Locale('en'),
               ],
-              // home: Shimmer(linearGradient: ShimmerUtils.shimmerGradient),
+              home: FlutterSplashScreen.gif(
+                duration: Duration(seconds: 5),
+                backgroundColor: Colors.white,
+                onInit: () {
+                  debugPrint("On Init");
+                },
+                onEnd: () {
+                  debugPrint("On End");
+                },
+                gifPath: 'assets/images/laucher_mobimap_rii_2.gif',
+                nextScreen: const TestScreen(),
+                gifWidth: context.mediaQuery.size.width,
+                gifHeight: context.mediaQuery.size.height,
+              ),
               // supportedLocales: [
               //   Locale('vi', 'VN'),
               //   ...TiePickerLocalizations.supportedLocales,
               // ],
               onGenerateRoute: Routes.generateRoute,
-              initialRoute: Routes.testScreen,
+              // initialRoute: Routes.testScreen,
             );
           },
         ),

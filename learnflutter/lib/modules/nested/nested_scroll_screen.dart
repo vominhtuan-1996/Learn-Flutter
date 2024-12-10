@@ -17,6 +17,8 @@ class NestedScrollViewExample extends StatelessWidget {
             SliverAppBar(
               title: Container(
                 color: Colors.red,
+                height: 100,
+                child: Text('title'),
               ),
               floating: true,
               expandedHeight: 360.0,

@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/modules/animation/widget/reload_button_widget.dart';
 import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
 import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
 import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
@@ -53,120 +54,7 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
                 isRotate: true,
               )),
           const RippleAnimationWidget(),
-          Draggable(
-            data: 'colors',
-            feedback: Container(
-              width: context.mediaQuery.size.width / 2,
-              height: 100,
-              color: Colors.red,
-            ),
-            onDragStarted: () {},
-            childWhenDragging: Container(),
-            child: DragTarget(
-              builder: (context, candidateData, rejectedData) {
-                return Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Container(
-                    width: context.mediaQuery.size.width / 2,
-                    height: 100,
-                    color: Colors.red,
-                  ),
-                );
-              },
-              onWillAcceptWithDetails: (details) {
-                return true;
-              },
-              onAcceptWithDetails: (details) {},
-            ),
-          ),
-          Stack(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  print('object');
-                },
-                child: Container(
-                  width: context.mediaQuery.size.width / 2,
-                  height: 100,
-                  color: Colors.yellow,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('object');
-                },
-                child: Container(
-                  width: context.mediaQuery.size.width / 2,
-                  height: 50,
-                  color: Colors.blue,
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                _TransitionListTile(
-                  title: 'Shared axis',
-                  subtitle: 'SharedAxisTransition',
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const SliderVerticalScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                _TransitionListTile(
-                  title: 'Fade through',
-                  subtitle: 'FadeThroughTransition',
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const MaterialSegmentedScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                _TransitionListTile(
-                  title: 'Fade',
-                  subtitle: 'FadeScaleTransition',
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                          return const DraggbleScrollScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 0.0),
-          SafeArea(
-            child: SwitchListTile(
-              value: _slowAnimations,
-              onChanged: (bool value) async {
-                setState(() {
-                  _slowAnimations = value;
-                });
-                // Wait until the Switch is done animating before actually slowing
-                // down time.
-                if (_slowAnimations) {
-                  await Future<void>.delayed(const Duration(milliseconds: 300));
-                }
-                timeDilation = _slowAnimations ? 20.0 : 1.0;
-              },
-              title: const Text('Slow animations'),
-            ),
-          ),
+          ReloadButtonWidget(),
         ],
       ),
     );

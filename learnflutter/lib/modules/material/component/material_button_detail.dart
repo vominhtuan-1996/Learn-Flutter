@@ -5,13 +5,13 @@ import 'package:learnflutter/core/device_dimension.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/helpper/drag.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/material_textfield.dart';
+import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
 import 'package:learnflutter/src/app_colors.dart';
-import 'package:learnflutter/utils_helper/dialog_utils.dart';
+import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 
 class MaterialButtonDetail extends StatefulWidget {
   const MaterialButtonDetail({super.key, required this.data});

@@ -39,4 +39,8 @@ extension ExtensionBuildContext on BuildContext {
   double get textScale {
     return MediaQuery.of(this).textScaleFactor;
   }
+
+  ColorScheme get colorScheme {
+    return Theme.of(this).colorScheme;
+  }
 }

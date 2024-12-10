@@ -11,14 +11,16 @@ class BaseLoading extends StatefulWidget {
   const BaseLoading({
     super.key,
     this.isLoading = false,
-    this.message = 'Đang cập nhật dữ liệu...',
+    this.message = '',
     required this.child,
     this.appBar,
+    this.floatingActionButton,
   });
   final bool isLoading;
   final String? message;
   final Widget child;
   final PreferredSizeWidget? appBar;
+  final Widget? floatingActionButton;
   @override
   State<BaseLoading> createState() => BaseLoadingScreenState();
 }
@@ -40,7 +42,7 @@ class BaseLoadingScreenState extends State<BaseLoading> {
       builder: (context, state) {
         double widthText = getTextWidth(text: state.message ?? "Đang cập nhật dữ liệu...", textStyle: context.textTheme.bodyLarge!.copyWith(color: Colors.white));
         double heightText = getTextHeight(
-          text: state.message ?? "Đang cập nhật dữ liệu...",
+          text: state.message ?? "",
           textStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
           maxWidthOfWidget: context.mediaQuery.size.width - 60,
         );
@@ -54,9 +56,9 @@ class BaseLoadingScreenState extends State<BaseLoading> {
               body: Container(
                 width: context.mediaQuery.size.width,
                 height: context.mediaQuery.size.height,
-                color: Colors.white,
                 child: widget.child,
               ),
+              floatingActionButton: widget.floatingActionButton,
             ),
             Visibility(
               visible: state.isLoading ?? false,
@@ -67,26 +69,39 @@ class BaseLoadingScreenState extends State<BaseLoading> {
                     child: Container(
                   decoration: AppBoxDecoration.boxDecorationBorderRadius(
                     borderRadiusValue: 8.0,
-                    colorBackground: Colors.white.withOpacity(0.8),
+                    colorBackground: Colors.white,
                   ),
                   height: widthText > context.mediaQuery.size.width ? heightText + 100 : heightText + 90,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: heightText > 0 ? 15 : 10),
-                      const Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 3.0,
-                          valueColor: AlwaysStoppedAnimation(Colors.black54),
-                          strokeAlign: 1,
-                          color: Colors.red,
+                      Container(
+                        decoration: AppBoxDecoration.boxDecorationBorderRadius(
+                          borderRadiusValue: 8.0,
+                          colorBackground: Colors.white.withOpacity(0.8),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            width: context.mediaQuery.size.width / 2,
+                            height: heightText + 90,
+                            'assets/images/loading_mobimap_rii.gif',
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                      SizedBox(height: heightText > 0 ? 15 : 10),
+
+                      // const Center(
+                      //   child: CircularProgressIndicator(
+                      //     strokeWidth: 3.0,
+                      //     valueColor: AlwaysStoppedAnimation(Colors.black54),
+                      //     strokeAlign: 1,
+                      //     color: Colors.red,
+                      //   ),
+                      // ),
                       Expanded(
                         child: Center(
                           child: Text(
-                            state.message ?? "Đang cập nhật dữ liệu...",
+                            state.message ?? "",
                             style: context.textTheme.bodyLarge!.copyWith(color: Colors.black54),
                             textAlign: TextAlign.center,
                           ),

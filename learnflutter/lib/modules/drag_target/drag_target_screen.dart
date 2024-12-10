@@ -12,7 +12,9 @@ class DragTargetScreen extends StatefulWidget {
 
 class DragTargetScreenState extends State<DragTargetScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  List colors = [Colors.red, Colors.blue, Colors.yellow, Colors.brown, Colors.deepPurple];
+  List<Color> colors = [Colors.red, Colors.blue, Colors.yellow, Colors.brown, Colors.deepPurple];
+  List<Color> shuffledColors = []; // Tạo bản sao
+
   int indexStarted = 0;
   @override
   void initState() {
@@ -29,53 +31,55 @@ class DragTargetScreenState extends State<DragTargetScreen> {
     return BaseLoading(
       isLoading: false,
       child: SingleChildScrollView(
-        child: Column(
+        child: Row(
           children: List.generate(
             5,
             (index) {
               bool accepted = false;
-              Color color = colors[index];
-              Color colorAccepted = Colors.black;
+              Color color = shuffledColors.isNotEmpty ? shuffledColors[index] : colors[index];
               Offset offset = Offset.zero;
               return Draggable(
                 data: colors,
                 feedback: Container(
-                  width: context.mediaQuery.size.width / 2,
-                  height: 100,
+                  width: 50,
+                  height: 50,
                   color: color,
                 ),
                 onDragStarted: () {
                   indexStarted = index;
+                  shuffledColors = List.from(colors);
                 },
                 childWhenDragging: Container(),
                 child: DragTarget(
                   builder: (context, candidateData, rejectedData) {
-                    return accepted
-                        ? Positioned(
-                            left: offset.dx,
-                            top: offset.dy,
-                            child: Container(
-                              width: context.mediaQuery.size.width / 2,
-                              height: 100,
-                              color: colorAccepted,
-                            ),
-                          )
-                        : Container(
-                            width: context.mediaQuery.size.width / 2,
-                            height: 100,
-                            color: color,
-                          );
+                    if (accepted) {
+                      return Container(
+                        width: 50,
+                        height: 50,
+                        color: shuffledColors[indexStarted],
+                      );
+                    }
+                    return Container(
+                      width: 50,
+                      height: 50,
+                      color: color,
+                    );
                   },
                   onWillAcceptWithDetails: (DragTargetDetails details) {
                     offset = details.offset;
                     return true;
                   },
                   onAcceptWithDetails: (details) {
-                    colorAccepted = (details.data as List)[indexStarted];
+                    Color temp = shuffledColors[index]; // Lưu tạm màu blue
+                    shuffledColors[indexStarted] = shuffledColors[index]; // Hoán đổi blue và deepPurple
+                    shuffledColors[index] = temp; // Gán
+                    print(shuffledColors);
+                    print(colors);
                     print(index);
                     offset = details.offset;
                     print('onAcceptWithDetails ${details.offset.dx}');
                     print('onAcceptWithDetails ${details.offset.dy}');
+                    colors = shuffledColors;
                     accepted = true;
                   },
                 ),

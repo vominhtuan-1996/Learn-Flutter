@@ -17,7 +17,8 @@ class RippleAnimationWidgetState extends State<RippleAnimationWidget> with Singl
       vsync: this,
       lowerBound: 0.5,
       duration: Duration(milliseconds: 1500),
-    )..repeat();
+    );
+    // ..repeat();
 
     _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_controller);
 
@@ -44,7 +45,7 @@ class RippleAnimationWidgetState extends State<RippleAnimationWidget> with Singl
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+      animation: CurvedAnimation(parent: _controller, curve: const Cubic(0.4, 0.0, 0.2, 1.0)),
       builder: (context, child) {
         return Stack(
           alignment: Alignment.center,

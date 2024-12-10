@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,7 @@ import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart'
 import 'package:learnflutter/src/extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// import 'package:file';
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
 
@@ -60,6 +63,18 @@ class _TestScreenState extends State<TestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.pickFile);
+                },
+                child: Text('Pick File'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.log);
+                },
+                child: Text('Log'),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.menu);
@@ -205,14 +220,14 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: Text('Tap to open file'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const QRViewExample(),
-                  ));
-                },
-                child: const Text('qrView'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const QRViewExample(),
+              //     ));
+              //   },
+              //   child: const Text('qrView'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/camera_screen');
@@ -221,7 +236,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/page_loading_screen');
+                  Navigator.of(context).pushNamed(Routes.pageLoadingScreen);
                 },
                 child: const Text('Page Loading Screen'),
               ),
@@ -269,7 +284,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/nested_scroll_screen');
+                  Navigator.of(context).pushNamed(Routes.nesredScroll);
                 },
                 child: const Text('nested_scroll_screen'),
               ),

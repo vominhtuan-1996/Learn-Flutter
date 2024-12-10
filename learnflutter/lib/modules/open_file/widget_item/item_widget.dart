@@ -8,7 +8,7 @@ import 'package:learnflutter/helpper/images/images_helper.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/detail_file_screen.dart';
 import 'package:learnflutter/modules/open_file/widget_item/get_file_screen.dart';
-import 'package:learnflutter/utils_helper/dialog_utils.dart';
+import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:xml/xml.dart';
 
@@ -85,23 +85,6 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
                 context,
                 MaterialPageRoute(builder: (context) => const DetailFileScreen()),
               );
-              // showPopover(
-              //   context: context,
-              //   bodyBuilder: (context) => Container(
-              //     color: Colors.amberAccent,
-              //   ),
-              //   onPop: () => print('Popover was popped!'),
-              //   direction: PopoverDirection.bottom,
-              //   backgroundColor: Colors.amberAccent,
-              //   width: MediaQuery.of(context).size.width / 1.5,
-              //   height: MediaQuery.of(context).size.height / 2,
-              //   arrowDxOffset: (MediaQuery.of(context).size.width / 1.5),
-              // );
-              // if (widget.listFile[widget.index].type == TypeDirectory.Directory.name) {
-              //   widget.listFile[widget.index].absolute!.deleteSync(recursive: true);
-              // } else if (widget.listFile[widget.index].type == TypeDirectory.File.name) {
-              //   await File(widget.listFile[widget.index].path!).delete();
-              // }
             },
             child: Row(
               children: [

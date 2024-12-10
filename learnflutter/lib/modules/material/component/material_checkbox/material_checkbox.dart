@@ -43,11 +43,11 @@ class MaterialCheckBoxState extends State<MaterialCheckBox> {
     super.dispose();
   }
 
-  Color getColor(Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
+  Color getColor(Set<WidgetState> states) {
+    if (states.contains(WidgetState.selected)) {
       return widget.fillColor..withOpacity(widget.disible ? opacityDisible : opacity);
     }
-    if (states.contains(MaterialState.disabled)) {
+    if (states.contains(WidgetState.disabled)) {
       return widget.fillColor.withOpacity(widget.disible ? opacityDisible : opacity);
     }
     return Colors.white.withOpacity(widget.disible ? opacityDisible : opacity);
@@ -84,7 +84,7 @@ class MaterialCheckBoxState extends State<MaterialCheckBox> {
                     width: 0,
                   ),
                   checkColor: widget.checkedColor.withOpacity(widget.disible ? opacityDisible : opacity),
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  fillColor: WidgetStateProperty.resolveWith(getColor),
                   value: widget.isChecked,
                   onChanged: (value) {
                     setState(() {

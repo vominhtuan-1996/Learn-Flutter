@@ -64,39 +64,6 @@ class DialogUtils {
     return temp;
   }
 
-  @pragma('vm:entry-point')
-  static Route<DateTime> _datePickerRoute(
-    BuildContext context,
-    Object? arguments,
-  ) {
-    return DialogRoute<DateTime>(
-      context: context,
-      builder: (BuildContext context) {
-        return DatePickerDialog(
-          restorationId: 'date_picker_dialog',
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(2022),
-        );
-      },
-    );
-  }
-
-  static Future<void> showDatimePicker({void Function(DateTime?)? onComplete}) async {
-    final RestorableDateTime _selectedDate = RestorableDateTime(DateTime(2021, 7, 25));
-    late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture = RestorableRouteFuture<DateTime?>(
-      onComplete: onComplete,
-      onPresent: (NavigatorState navigator, Object? arguments) {
-        return navigator.restorablePush(
-          _datePickerRoute,
-          arguments: _selectedDate.value.millisecondsSinceEpoch,
-        );
-      },
-    );
-    _restorableDatePickerRouteFuture.present();
-  }
-
   static Future<void> dialogBuilder({
     required BuildContext context,
     TypeDialog type = TypeDialog.none,
@@ -148,6 +115,93 @@ class DialogUtils {
                   child: const Text('Enable'),
                   onPressed: () {
                     Navigator.of(context).pop();
+                  },
+                ),
+              ],
+        );
+      },
+    );
+  }
+
+  static Future<void> showBasicDialog({
+    required BuildContext context,
+    String title = 'Basic dialog title',
+    String content = 'Basic dialog content',
+    List<Widget>? actions,
+    Widget? contentWidget,
+  }) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          title: Text(title),
+          content: Column(
+            children: [Text(content), contentWidget ?? Container()],
+          ),
+          actions: actions ??
+              <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: context.textTheme.labelLarge,
+                  ),
+                  child: const Text('Action 1'),
+                  onPressed: () {
+                    dismissPopup(context);
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: context.textTheme.labelLarge,
+                  ),
+                  child: const Text('Action 2'),
+                  onPressed: () {
+                    dismissPopup(context);
+                  },
+                ),
+              ],
+        );
+      },
+    );
+  }
+
+  static Future<void> showDialogWithHeroIcon({
+    required BuildContext context,
+    TypeDialog type = TypeDialog.none,
+    String? title,
+    String content = '',
+    Widget? contentWidget,
+    List<Widget>? actions,
+  }) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 4),
+          scrollable: true,
+          icon: type == TypeDialog.none ? null : widgetIconsDialogWithType(type),
+          title: title != null ? Text(title) : null,
+          content: Column(
+            children: [Text(content), contentWidget ?? Container()],
+          ),
+          actions: actions ??
+              <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: context.textTheme.labelLarge,
+                  ),
+                  child: const Text('Action 1'),
+                  onPressed: () {
+                    dismissPopup(context);
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: context.textTheme.labelLarge,
+                  ),
+                  child: const Text('Action 2'),
+                  onPressed: () {
+                    dismissPopup(context);
                   },
                 ),
               ],

@@ -41,8 +41,16 @@ class ReducerScreen extends HookWidget {
           backgoundColor: Colors.white,
           textAlign: TextAlign.center,
           onTap: () {
-            getLoadingCubit(context).showLoading();
-            counter.dispatch(Actions.add);
+            getLoadingCubit(context).showLoading(
+              func: () {
+                counter.dispatch(Actions.add);
+                return 64;
+              },
+              onSuccess: (e) {
+                print(e);
+              },
+              onFailed: (error) {},
+            );
           },
         ),
         MaterialButton3(
@@ -54,6 +62,14 @@ class ReducerScreen extends HookWidget {
           onTap: () {
             counter.dispatch(Actions.remove);
           },
+        ),
+        MaterialButton3(
+          type: MaterialButtonType.commonbutton,
+          borderRadius: 10,
+          lableText: 'File Picker',
+          backgoundColor: Colors.white,
+          textAlign: TextAlign.center,
+          onTap: () async {},
         )
       ],
     ));

@@ -147,65 +147,65 @@ class RenderTabBar extends RenderBox {
 
     // final point2 = Offset(size.width, size.height / 2);
     // canvas.drawLine(point1, point2, barPaint);
-    // var widthtemp = 45;
-    // final backgroundTriangleLine = Path();
-    // //1
-    // final point1 = Offset.zero;
-    // backgroundTriangleLine.moveTo(point1.dx, point1.dy);
-    // //1+
-    // final point1plus = Offset(point1.dx + widthtemp / 2, -30);
-    // print(point1plus);
+    var widthtemp = 45;
+    final backgroundTriangleLine = Path();
+    //1
+    final point1 = Offset.zero;
+    backgroundTriangleLine.moveTo(point1.dx, point1.dy);
+    //1+
+    final point1plus = Offset(point1.dx + widthtemp / 2, -30);
+    print(point1plus);
 
-    // // backgroundTriangleLine.lineTo(point1plus.dx, point1plus.dy);
-    // //2
-    // final point2 = Offset(point1.dx + widthtemp, point1plus.dy - 30);
-    // print(point2);
-    // // backgroundTriangleLine.lineTo(point2.dx, point2.dy);
-    // //
-    // // 2+
-    // final point2plust = Offset(point2.dx + 40, size.height / 2 - 60);
-    // backgroundTriangleLine.cubicTo(point1.dx, point1.dy, point1plus.dx + 25, point1plus.dy + 25, point2.dx, point2.dy);
-    // // 3
-    // final point3 = Offset(point2.dx + 30, size.height / 2 - 70);
-    // print(point3);
+    // backgroundTriangleLine.lineTo(point1plus.dx, point1plus.dy);
+    //2
+    final point2 = Offset(point1.dx + widthtemp, point1plus.dy - 30);
+    print(point2);
+    backgroundTriangleLine.lineTo(point2.dx, point2.dy);
+    //
+    // 2+
+    final point2plust = Offset(point2.dx + 40, size.height / 2 - 60);
+    backgroundTriangleLine.cubicTo(point1.dx, point1.dy, point1plus.dx + 25, point1plus.dy + 25, point2.dx, point2.dy);
+    // 3
+    final point3 = Offset(point2.dx + 30, size.height / 2 - 70);
+    print(point3);
 
-    // // backgroundTriangleLine.lineTo(point3.dx, point3.dy);
-    // backgroundTriangleLine.cubicTo(point2.dx, point2.dy, point2plust.dx, point2plust.dy, point3.dx, point3.dy);
-    // // 4
-    // final point4 = Offset(point2.dx + widthtemp * 4, point3.dy);
-    // print(point4);
-    // backgroundTriangleLine.lineTo(point4.dx, point4.dy);
-    // // 5
-    // final point5 = Offset(point4.dx, point2.dy);
-    // print(point5);
-    // backgroundTriangleLine.lineTo(point5.dx, point5.dy);
-    // // 5+
-    // final point5plus = Offset(point5.dx + widthtemp / 2, point1plus.dy);
-    // print(point5plus);
-    // backgroundTriangleLine.lineTo(point5plus.dx, point5plus.dy);
-    // //6
-    // final point6 = Offset(point5plus.dx + widthtemp / 2, point1.dy);
-    // print(point6);
-    // backgroundTriangleLine.lineTo(point6.dx, point6.dy);
-    final scale = 2;
-    final pointstart = Offset(0, 0);
-    final pointcurve1 = Offset(52, -43);
-    final pointcurve2 = Offset(88, -43);
-    final pointend = Offset(140, 0);
+    // backgroundTriangleLine.lineTo(point3.dx, point3.dy);
+    backgroundTriangleLine.cubicTo(point2.dx, point2.dy, point2plust.dx, point2plust.dy, point3.dx, point3.dy);
+    // 4
+    final point4 = Offset(point2.dx + widthtemp * 4, point3.dy);
+    print(point4);
+    backgroundTriangleLine.lineTo(point4.dx, point4.dy);
+    // 5
+    final point5 = Offset(point4.dx, point2.dy);
+    print(point5);
+    backgroundTriangleLine.lineTo(point5.dx, point5.dy);
+    // 5+
+    final point5plus = Offset(point5.dx + widthtemp / 2, point1plus.dy);
+    print(point5plus);
+    backgroundTriangleLine.lineTo(point5plus.dx, point5plus.dy);
+    //6
+    final point6 = Offset(point5plus.dx + widthtemp / 2, point1.dy);
+    print(point6);
+    backgroundTriangleLine.lineTo(point6.dx, point6.dy);
+    // final scale = 2;
+    // final pointstart = Offset(0, 0);
+    // final pointcurve1 = Offset(52, -43);
+    // final pointcurve2 = Offset(88, -43);
+    // final pointend = Offset(140, 0);
 
-    // final point2 = Offset(pointend.dx + 30, pointend.dy);
+    // // final point2 = Offset(pointend.dx + 30, pointend.dy);
 
-    final pointendcurve1 = Offset(pointend.dx + 2, pointend.dy - 3);
-    final pointendcurve2 = Offset(pointend.dx + 15, pointend.dy - 2);
-    final pointend2 = Offset(pointendcurve2.dx + 15, pointend.dy - 2);
+    // final pointendcurve1 = Offset(pointend.dx + 2, pointend.dy - 3);
+    // final pointendcurve2 = Offset(pointend.dx + 15, pointend.dy - 2);
+    // final pointend2 = Offset(pointendcurve2.dx + 15, pointend.dy - 2);
 
-    final pointend2curve1 = Offset(pointend2.dx + 6, pointend2.dy - 13);
-    final pointend2curve2 = Offset(pointend2curve1.dx + 4, pointend2curve1.dy - 9);
-    final pointend3 = Offset(pointend2.dx + 40, pointstart.dy);
+    // final pointend2curve1 = Offset(pointend2.dx + 6, pointend2.dy - 13);
+    // final pointend2curve2 = Offset(pointend2curve1.dx + 4, pointend2curve1.dy - 9);
+    // final pointend3 = Offset(pointend2.dx + 40, pointstart.dy);
 
-    final backgroundTriangleLine = Path()
-      ..moveTo(pointstart.dx, pointstart.dy)
-      ..cubicTo(pointcurve1.dx * scale, pointcurve1.dy * scale, pointcurve2.dx * scale, pointcurve2.dy * scale, pointend.dx * scale, pointend.dy * scale);
+    // final backgroundTriangleLine = Path()
+    //   ..moveTo(pointstart.dx, pointstart.dy)
+    //   ..cubicTo(pointcurve1.dx * scale, pointcurve1.dy * scale, pointcurve2.dx * scale, pointcurve2.dy * scale, pointend.dx * scale, pointend.dy * scale);
     // ..cubicTo(pointendcurve1.dx, pointendcurve1.dy, pointendcurve2.dx, pointendcurve2.dy, pointend2.dx, pointend2.dy)
     // ..cubicTo(pointend2curve1.dx * scale, pointend2curve1.dy * scale, pointend2curve2.dx * scale, pointend2curve2.dy * scale, pointend3.dy * scale, 0);
     backgroundTriangleLine.close();

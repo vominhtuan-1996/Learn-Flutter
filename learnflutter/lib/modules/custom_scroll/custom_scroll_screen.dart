@@ -33,23 +33,19 @@ class CustomScrollScreenState extends State<CustomScrollScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CustomSliverPersistentHeaderDelegate()
-              ..setMaxExtent(context.mediaQuery.size.height / 5)
+              ..setMaxExtent(context.mediaQuery.size.height / 10)
               ..setMinExtent(0),
           ),
           SliverToBoxAdapter(
-            child: SizedBox(
-              height: 40 * 30,
-              width: context.mediaQuery.size.width,
-              child: Column(
-                children: List.generate(30, (index) {
-                  return Container(
-                    height: 40,
-                    width: context.mediaQuery.size.width,
-                    color: Colors.amberAccent[100 * (index % 9)], // Colors.amberAccent.withOpacity(1 - (index / 100)),
-                    child: Text(index.toString()),
-                  );
-                }),
-              ),
+            child: Column(
+              children: List.generate(30, (index) {
+                return Container(
+                  height: 40,
+                  width: context.mediaQuery.size.width,
+                  color: Colors.amberAccent[100 * (index % 9)], // Colors.amberAccent.withOpacity(1 - (index / 100)),
+                  child: Text(index.toString()),
+                );
+              }),
             ),
           ),
         ],

@@ -12,9 +12,14 @@ BaseLoadingCubit getLoadingCubit(BuildContext context) {
 }
 
 void showLoading({BuildContext? context, String? message}) {
-  getLoadingCubit(context!).showLoading(message: message);
+  getLoadingCubit(context!).showLoading(
+    message: message,
+    func: () {
+      print('object');
+    },
+  );
 }
 
-void dismissLoading(BuildContext context) {
-  getLoadingCubit(context).dissmissLoading();
+void dismissLoading(BuildContext? context) {
+  getLoadingCubit(context!).dissmissLoading();
 }

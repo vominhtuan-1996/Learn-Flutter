@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:learnflutter/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/extension/extension_context.dart';
 
@@ -32,14 +31,14 @@ class CarouselDemo extends StatelessWidget {
             '/image': (ctx) => ImageSliderDemo(),
             '/complicated': (ctx) => ComplicatedImageDemo(),
             '/enlarge': (ctx) => EnlargeStrategyDemo(),
-            '/manual': (ctx) => ManuallyControlledSlider(),
+            // '/manual': (ctx) => ManuallyControlledSlider(),
             '/noloop': (ctx) => NoonLoopingDemo(),
             '/vertical': (ctx) => VerticalSliderDemo(),
             '/fullscreen': (ctx) => FullscreenSliderDemo(),
             '/ondemand': (ctx) => OnDemandCarouselDemo(),
-            '/indicator': (ctx) => CarouselWithIndicatorDemo(),
+            // '/indicator': (ctx) => CarouselWithIndicatorDemo(),
             '/prefetch': (ctx) => PrefetchImageDemo(),
-            '/reason': (ctx) => CarouselChangeReasonDemo(),
+            // '/reason': (ctx) => CarouselChangeReasonDemo(),
             '/position': (ctx) => KeepPageviewPositionDemo(),
             '/multiple': (ctx) => MultipleItemDemo(),
             '/zoom': (ctx) => EnlargeStrategyZoomDemo(),
@@ -233,63 +232,63 @@ class EnlargeStrategyDemo extends StatelessWidget {
   }
 }
 
-class ManuallyControlledSlider extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _ManuallyControlledSliderState();
-  }
-}
+// class ManuallyControlledSlider extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _ManuallyControlledSliderState();
+//   }
+// }
 
-class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
-  final CarouselController _controller = CarouselController();
+// class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
+//   final CarouselController _controller = CarouselController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Manually controlled slider')),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              CarouselSlider(
-                items: imageSliders,
-                options: CarouselOptions(enlargeCenterPage: true, height: 200),
-                carouselController: _controller,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () => _controller.previousPage(),
-                      child: Text('←'),
-                    ),
-                  ),
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () => _controller.nextPage(),
-                      child: Text('→'),
-                    ),
-                  ),
-                  ...Iterable<int>.generate(imgList.length).map(
-                    (int pageIndex) => Flexible(
-                      child: ElevatedButton(
-                        onPressed: () => _controller.animateToPage(pageIndex),
-                        child: Text("$pageIndex"),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(title: Text('Manually controlled slider')),
+//         body: SingleChildScrollView(
+//           child: Column(
+//             children: <Widget>[
+//               CarouselSlider(
+//                 items: imageSliders,
+//                 options: CarouselOptions(enlargeCenterPage: true, height: 200),
+//                 carouselController: _controller,
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: <Widget>[
+//                   Flexible(
+//                     child: ElevatedButton(
+//                       onPressed: () => _controller.previousPage(),
+//                       child: Text('←'),
+//                     ),
+//                   ),
+//                   Flexible(
+//                     child: ElevatedButton(
+//                       onPressed: () => _controller.nextPage(),
+//                       child: Text('→'),
+//                     ),
+//                   ),
+//                   ...Iterable<int>.generate(imgList.length).map(
+//                     (int pageIndex) => Flexible(
+//                       child: ElevatedButton(
+//                         onPressed: () => _controller.animateToPage(pageIndex),
+//                         child: Text("$pageIndex"),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               )
+//             ],
+//           ),
+//         ));
+//   }
+// }
 
 class NoonLoopingDemo extends StatelessWidget {
   @override
@@ -386,56 +385,56 @@ class OnDemandCarouselDemo extends StatelessWidget {
   }
 }
 
-class CarouselWithIndicatorDemo extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CarouselWithIndicatorState();
-  }
-}
+// class CarouselWithIndicatorDemo extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _CarouselWithIndicatorState();
+//   }
+// }
 
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
+// class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
+//   int _current = 0;
+//   final CarouselController _controller = CarouselController();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Carousel with indicator controller demo')),
-      body: Column(children: [
-        Expanded(
-          child: CarouselSlider(
-            items: imageSliders,
-            carouselController: _controller,
-            options: CarouselOptions(
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                }),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: imgList.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 12.0,
-                height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black).withOpacity(_current == entry.key ? 0.9 : 0.4)),
-              ),
-            );
-          }).toList(),
-        ),
-      ]),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Carousel with indicator controller demo')),
+//       body: Column(children: [
+//         Expanded(
+//           child: CarouselSlider(
+//             items: imageSliders,
+//             carouselController: _controller,
+//             options: CarouselOptions(
+//                 autoPlay: true,
+//                 enlargeCenterPage: true,
+//                 aspectRatio: 2.0,
+//                 onPageChanged: (index, reason) {
+//                   setState(() {
+//                     _current = index;
+//                   });
+//                 }),
+//           ),
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: imgList.asMap().entries.map((entry) {
+//             return GestureDetector(
+//               onTap: () => _controller.animateToPage(entry.key),
+//               child: Container(
+//                 width: 12.0,
+//                 height: 12.0,
+//                 margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+//                 decoration:
+//                     BoxDecoration(shape: BoxShape.circle, color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black).withOpacity(_current == entry.key ? 0.9 : 0.4)),
+//               ),
+//             );
+//           }).toList(),
+//         ),
+//       ]),
+//     );
+//   }
+// }
 
 class PrefetchImageDemo extends StatefulWidget {
   @override
@@ -487,78 +486,78 @@ class _PrefetchImageDemoState extends State<PrefetchImageDemo> {
   }
 }
 
-class CarouselChangeReasonDemo extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CarouselChangeReasonDemoState();
-  }
-}
+// class CarouselChangeReasonDemo extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _CarouselChangeReasonDemoState();
+//   }
+// }
 
-class _CarouselChangeReasonDemoState extends State<CarouselChangeReasonDemo> {
-  String reason = '';
-  final CarouselController _controller = CarouselController();
+// class _CarouselChangeReasonDemoState extends State<CarouselChangeReasonDemo> {
+//   String reason = '';
+//   final CarouselController _controller = CarouselController();
 
-  void onPageChange(int index, CarouselPageChangedReason changeReason) {
-    setState(() {
-      reason = changeReason.toString();
-    });
-  }
+//   void onPageChange(int index, CarouselPageChangedReason changeReason) {
+//     setState(() {
+//       reason = changeReason.toString();
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Change reason demo')),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: CarouselSlider(
-                items: imageSliders,
-                options: CarouselOptions(
-                  enlargeCenterPage: true,
-                  aspectRatio: 16 / 9,
-                  onPageChanged: onPageChange,
-                  autoPlay: true,
-                ),
-                carouselController: _controller,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () => _controller.previousPage(),
-                    child: Text('←'),
-                  ),
-                ),
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () => _controller.nextPage(),
-                    child: Text('→'),
-                  ),
-                ),
-                ...Iterable<int>.generate(imgList.length).map(
-                  (int pageIndex) => Flexible(
-                    child: ElevatedButton(
-                      onPressed: () => _controller.animateToPage(pageIndex),
-                      child: Text("$pageIndex"),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Center(
-              child: Column(
-                children: [
-                  Text('page change reason: '),
-                  Text(reason),
-                ],
-              ),
-            )
-          ],
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(title: Text('Change reason demo')),
+//         body: Column(
+//           children: <Widget>[
+//             Expanded(
+//               child: CarouselSlider(
+//                 items: imageSliders,
+//                 options: CarouselOptions(
+//                   enlargeCenterPage: true,
+//                   aspectRatio: 16 / 9,
+//                   onPageChanged: onPageChange,
+//                   autoPlay: true,
+//                 ),
+//                 carouselController: _controller,
+//               ),
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: <Widget>[
+//                 Flexible(
+//                   child: ElevatedButton(
+//                     onPressed: () => _controller.previousPage(),
+//                     child: Text('←'),
+//                   ),
+//                 ),
+//                 Flexible(
+//                   child: ElevatedButton(
+//                     onPressed: () => _controller.nextPage(),
+//                     child: Text('→'),
+//                   ),
+//                 ),
+//                 ...Iterable<int>.generate(imgList.length).map(
+//                   (int pageIndex) => Flexible(
+//                     child: ElevatedButton(
+//                       onPressed: () => _controller.animateToPage(pageIndex),
+//                       child: Text("$pageIndex"),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             Center(
+//               child: Column(
+//                 children: [
+//                   Text('page change reason: '),
+//                   Text(reason),
+//                 ],
+//               ),
+//             )
+//           ],
+//         ));
+//   }
+// }
 
 class KeepPageviewPositionDemo extends StatelessWidget {
   @override

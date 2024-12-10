@@ -6,7 +6,7 @@ import 'package:learnflutter/core/input_formatter/input_formatter.dart';
 import 'package:learnflutter/core/regex/regex.dart';
 import 'package:learnflutter/custom_widget/custom_textfield.dart';
 import 'package:learnflutter/helpper/datetime_format/datetime_format.dart';
-import 'package:learnflutter/modules/material/component/material_textfield.dart';
+import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/src/app_box_decoration.dart';
 
 class RegexExampleScreen extends StatefulWidget {

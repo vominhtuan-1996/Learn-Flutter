@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnflutter/core/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 
@@ -19,7 +20,7 @@ class _MaterialDatePickerState extends State<MaterialDatePicker> with Restoratio
   @override
   String? get restorationId => widget.restorationId;
 
-  final RestorableDateTime _selectedDate = RestorableDateTime(DateTime(2021, 7, 25));
+  final RestorableDateTime _selectedDate = RestorableDateTime(DateTime.now());
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture = RestorableRouteFuture<DateTime?>(
     onComplete: _selectDate,
     onPresent: (NavigatorState navigator, Object? arguments) {
@@ -42,8 +43,8 @@ class _MaterialDatePickerState extends State<MaterialDatePicker> with Restoratio
           restorationId: 'date_picker_dialog',
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(2022),
+          firstDate: DateTime(1970),
+          lastDate: DateTime(2050),
         );
       },
     );
@@ -60,8 +61,14 @@ class _MaterialDatePickerState extends State<MaterialDatePicker> with Restoratio
       setState(() {
         _selectedDate.value = newSelectedDate;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'),
-        ));
+            action: SnackBarAction(
+              label: 'label',
+              onPressed: () {},
+            ),
+            content: Text(
+              '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
+              style: context.textTheme.bodyMedium?.copyWith(color: Colors.red),
+            )));
       });
     }
   }

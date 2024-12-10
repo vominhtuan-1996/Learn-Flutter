@@ -27,11 +27,6 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BaseLoading(
         isLoading: false,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
@@ -36,7 +38,14 @@ class _PageLoadingScreenState extends State<PageLoadingScreen> {
       child: Center(
         child: ElevatedButton(
             onPressed: () {
-              loadingCubit.showLoading();
+              loadingCubit.showLoading(
+                func: () {
+                  print('object');
+                },
+              );
+              Timer(Duration(seconds: 12), () {
+                loadingCubit.dissmissLoading();
+              });
             },
             child: const Text('Loading')),
       ),
