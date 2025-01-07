@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/device_dimension.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/helpper/drag.dart';
+import 'package:learnflutter/component/drag.dart';
+import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/modules/animation/widget/position_ananimation.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
-import 'package:learnflutter/src/app_colors.dart';
+import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/app/app_colors.dart';
 import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 
 class MaterialBottomSheet extends StatefulWidget {
@@ -48,11 +50,106 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               textAlign: TextAlign.center,
               onTap: () async {
                 DialogUtils.showBottomSheet(
-                    context: context,
-                    height: 200,
-                    contentWidget: Container(
-                      color: Colors.transparent,
-                    ));
+                  context: context,
+                  height: 500,
+                  isDismissible: false,
+                  // isScrollControlled: false,
+                  contentWidget: Wrap(
+                    spacing: DeviceDimension.padding / 2,
+                    runSpacing: DeviceDimension.padding / 2,
+                    children: List.generate(
+                      12,
+                      (index) {
+                        return Card.outlined(
+                          color: Colors.red,
+                          child: FloatingActionButton.large(
+                            onPressed: () async {
+                              DialogUtils.dismissPopup(
+                                context,
+                                complete: () async {
+                                  DialogUtils.showBasicDialog(
+                                    title: 'Basic dialog title',
+                                    context: context,
+                                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                                    contentWidget: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        IconAnimationWidget(),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Success',
+                                          style: context.textTheme.titleLarge?.copyWith(
+                                            color: AppColors.green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Your action was successful!',
+                                          style: context.textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.grey,
+                                          ),
+                                        ),
+                                        IconAnimationWidget(),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Success',
+                                          style: context.textTheme.titleLarge?.copyWith(
+                                            color: AppColors.green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Your action was successful!',
+                                          style: context.textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.grey,
+                                          ),
+                                        ),
+                                        IconAnimationWidget(),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Success',
+                                          style: context.textTheme.titleLarge?.copyWith(
+                                            color: AppColors.green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Your action was successful!',
+                                          style: context.textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.grey,
+                                          ),
+                                        ),
+                                        IconAnimationWidget(),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Success',
+                                          style: context.textTheme.titleLarge?.copyWith(
+                                            color: AppColors.green,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: DeviceDimension.padding),
+                                        Text(
+                                          'Your action was successful!',
+                                          style: context.textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',

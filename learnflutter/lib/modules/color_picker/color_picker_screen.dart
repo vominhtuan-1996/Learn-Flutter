@@ -2,7 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/color_picker/color_picker.dart';
 

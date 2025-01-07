@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/Helpper/hive_demo/model/person.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/core/extension/extension_list.dart';
-import 'package:learnflutter/src/extension.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/db/hive_demo/model/person.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/utils_helper/extension/extension_list.dart';
+import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 
 class NumberFormatterScreen extends StatefulWidget {
   const NumberFormatterScreen({super.key});

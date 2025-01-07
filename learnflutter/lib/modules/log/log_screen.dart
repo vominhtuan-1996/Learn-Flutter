@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:path_provider/path_provider.dart';

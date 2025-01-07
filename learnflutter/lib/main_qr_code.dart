@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:learnflutter/cubit/base_cubit.dart';
+import 'package:learnflutter/core/cubit/base_cubit.dart';
 
 class DropWaterRefreshDemo extends StatefulWidget {
   @override

@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/device_dimension.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/helpper/drag.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/component/drag.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
-import 'package:learnflutter/src/app_colors.dart';
+import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/app/app_colors.dart';
 import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 
 class MaterialButtonDetail extends StatefulWidget {

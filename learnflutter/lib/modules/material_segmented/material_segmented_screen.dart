@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 
 class MaterialSegmentedScreen extends StatefulWidget {
   const MaterialSegmentedScreen({super.key});

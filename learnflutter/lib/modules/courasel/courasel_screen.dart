@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -339,14 +339,13 @@ class FullscreenSliderDemo extends StatelessWidget {
         builder: (context) {
           final double height = MediaQuery.of(context).size.height;
           return CarouselSlider(
-            options: CarouselOptions(
-              height: height,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              // autoPlay: false,
-            ),
+            options: CarouselOptions(height: height * 0.7, viewportFraction: 0.75, enlargeCenterPage: true, aspectRatio: 1 / 1
+
+                // autoPlay: false,
+                ),
             items: imgList
                 .map((item) => Container(
+                      color: Colors.black,
                       child: Center(
                           child: Image.network(
                         item,

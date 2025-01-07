@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/material/graphics_widget.dart';
 

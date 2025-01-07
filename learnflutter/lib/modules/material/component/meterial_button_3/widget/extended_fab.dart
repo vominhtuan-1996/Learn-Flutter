@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/device_dimension.dart';
+import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 
 class ExtendedFAB extends StatelessWidget {
@@ -45,11 +45,11 @@ class ExtendedFAB extends StatelessWidget {
               Container(),
             Expanded(
                 child: Padding(
-              padding: EdgeInsets.all(DeviceDimension.padding / 2),
+              padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
               child: Text(
                 widget.lableText ?? '',
                 style: widget.labelTextStyle,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             )),
           ],

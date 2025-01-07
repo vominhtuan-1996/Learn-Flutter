@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
 class DraggbleScrollScreen extends StatelessWidget {
   const DraggbleScrollScreen({super.key});

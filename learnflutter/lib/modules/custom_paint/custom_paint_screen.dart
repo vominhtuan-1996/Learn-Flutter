@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/color_picker/color_picker.dart';
 import 'package:learnflutter/modules/custom_paint/custom_paint.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';

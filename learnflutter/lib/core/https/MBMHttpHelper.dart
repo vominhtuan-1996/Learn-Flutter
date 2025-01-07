@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/magic_number_test/mime_type.dart';
+import 'package:learnflutter/utils_helper/magic_number_test/mime_type.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
 import 'package:http/http.dart' as http;
 

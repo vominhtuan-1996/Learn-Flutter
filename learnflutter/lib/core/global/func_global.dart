@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
+import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 
 SettingThemeCubit getThemeBloc(BuildContext context) {

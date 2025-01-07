@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/chart/model/sales_data_model.dart';
-import 'package:learnflutter/src/app_colors.dart';
+import 'package:learnflutter/app/app_colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 

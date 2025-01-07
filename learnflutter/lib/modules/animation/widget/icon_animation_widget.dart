@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
 class IconAnimationWidget extends StatefulWidget {
   const IconAnimationWidget({super.key, this.isRotate = false, this.icon = Icons.favorite_sharp});

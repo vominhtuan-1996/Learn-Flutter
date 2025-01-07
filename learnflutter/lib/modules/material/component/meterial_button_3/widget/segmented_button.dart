@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/device_dimension.dart';
+import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/common_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/extended_fab.dart';

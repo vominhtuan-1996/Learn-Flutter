@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/device_dimension.dart';
+import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/common_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/extended_fab.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/fab_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/icon_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/segmented_button.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
+import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/app/app_colors.dart';
 
 enum MaterialButtonType {
   commonbutton,
@@ -58,6 +59,55 @@ class MaterialButton3 extends StatefulWidget {
   final Offset shadowOffset;
   final TextAlign? textAlign;
   final bool disible;
+
+  factory MaterialButton3.iconbutton({
+    required VoidCallback? onPressed,
+    final double borderRadius = 16.0,
+    required final IconData fabIcon,
+    IconAlignment iconAlignment = IconAlignment.start,
+    final Color backgoundColor = AppColors.primary,
+    final Color fabIconColor = AppColors.primaryText,
+    final Color shadowColor = Colors.transparent,
+    final Offset shadowOffset = Offset.zero,
+  }) {
+    return MaterialButton3(
+      type: MaterialButtonType.iconbutton,
+      borderRadius: borderRadius,
+      fabIcon: fabIcon,
+      onTap: onPressed,
+      backgoundColor: backgoundColor,
+      fabIconColor: fabIconColor,
+      shadowColor: shadowColor,
+      shadowOffset: shadowOffset,
+    );
+  }
+
+  factory MaterialButton3.extendedfab({
+    required VoidCallback? onPressed,
+    final double borderRadius = 16.0,
+    required final IconData prefixIcon,
+    final Color prefixColor = AppColors.primaryText,
+    IconAlignment iconAlignment = IconAlignment.start,
+    final Color backgoundColor = AppColors.primary,
+    final Color shadowColor = Colors.transparent,
+    final Offset shadowOffset = Offset.zero,
+    required final String lableText,
+    final TextStyle? labelTextStyle,
+  }) {
+    return MaterialButton3(
+      type: MaterialButtonType.extendedfab,
+      borderRadius: borderRadius,
+      prefixIcon: prefixIcon,
+      prefixColor: prefixColor,
+      onTap: onPressed,
+      backgoundColor: backgoundColor,
+      shadowColor: shadowColor,
+      shadowOffset: shadowOffset,
+      lableText: lableText,
+      labelTextStyle: labelTextStyle,
+    );
+  }
+
   @override
   State<MaterialButton3> createState() => _MaterialButtonState();
 }

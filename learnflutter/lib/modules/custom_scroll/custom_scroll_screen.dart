@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/src/app_colors.dart';
-import 'package:learnflutter/src/extension.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
 
 class CustomScrollScreen extends StatefulWidget {

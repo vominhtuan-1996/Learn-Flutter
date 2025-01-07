@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/slider_vertical/progess_bar_custom.dart';
 import 'package:learnflutter/modules/slider_vertical/tab_render_widget.dart';
 
@@ -68,6 +68,7 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleT
                     barColor: Colors.blue,
                     thumbColor: Colors.red,
                     thumbSize: 20.0,
+                    initValue: _controller.value,
                   );
                 },
               ),

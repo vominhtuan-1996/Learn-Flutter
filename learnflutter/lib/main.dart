@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, library_private_types_in_public_api
+
 import 'dart:async';
 import 'dart:io';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
@@ -5,21 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learnflutter/base_loading_screen/cubit/base_loading_cubit.dart';
-import 'package:learnflutter/core/device_dimension.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/helpper/define_constraint.dart';
-import 'package:learnflutter/helpper/hive_demo/model/person.dart';
-import 'package:learnflutter/core/app_theme.dart';
-import 'package:learnflutter/core/routes/route.dart';
+import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
+import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/db/hive_demo/model/person.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/constraint/define_constraint.dart';
+import 'package:learnflutter/app/app_theme.dart';
+import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
-import 'package:learnflutter/test_screen/test_screen.dart';
+import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
+// import 'package:shorebird/shorebird.dart';
 
 void main() {
   AppConfig.init(
@@ -30,7 +33,10 @@ void main() {
       Hive.registerAdapter(PersonAdapter());
       // Opening the box
       await Hive.openBox('peopleBox');
-      runApp(MyApp());
+      // await ShorebirdSdk.initialize(
+      //   appId: 'YOUR_APP_ID', // Thay thế bằng App ID của bạn
+      // );
+      runApp(const MyApp());
     },
   );
 }
@@ -123,11 +129,27 @@ void callbackDispatcher() {
 // }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  // final updater = ShorebirdCodePush();
+
+  @override
+  void initState() {
+    super.initState();
+    // updater.currentPatchNumber();
+
+    // Get the current patch number and print it to the console.
+    // It will be `null` if no patches are installed.
+    // updater.readCurrentPatch().then((currentPatch) {
+    //   print('The current patch number is: ${currentPatch?.number}');
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Shimmer(

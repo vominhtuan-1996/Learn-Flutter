@@ -3,11 +3,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
-import 'package:learnflutter/helpper/images/images_helper.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/item_widget.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
+import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -95,7 +96,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
   }
 
   void _listofFiles() async {
-    listDirectory = [];
+    final listDirectoryTemp = [];
     listPath = [];
     final directory = (await getApplicationDocumentsDirectory());
     final directorys = (await getTemporaryDirectory());
@@ -106,20 +107,23 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
 
     // listDirectory = Directory("$directory").listSync(); //use your folder name insted of resume.
     for (var element in directory.listSync()) {
-      listDirectory.add(element);
+      listDirectoryTemp.add(element);
     }
     for (var element in directorys.listSync()) {
-      listDirectory.add(element);
+      listDirectoryTemp.add(element);
     }
     for (var element in directoryss.listSync()) {
-      listDirectory.add(element);
+      listDirectoryTemp.add(element);
     }
     for (var element in directorysss.listSync()) {
-      listDirectory.add(element);
+      listDirectoryTemp.add(element);
     }
     for (var element in directoryssss.listSync()) {
-      listDirectory.add(element);
+      listDirectoryTemp.add(element);
     }
+    setState(() {
+      listDirectory = listDirectoryTemp;
+    });
   }
 
   String _pathDirectory(BuildContext context, AsyncSnapshot<Directory?> snapshot) {
@@ -138,10 +142,8 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Test Share file'),
-        ),
+    return BaseLoading(
+        isLoading: false,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
@@ -150,7 +152,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
           },
           child: Icon(Icons.add),
         ),
-        body: Stack(
+        child: Stack(
           children: [
             SafeArea(
               child: Column(
@@ -161,9 +163,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                     child: Text('Tap to get list file'),
                     onPressed: () {
                       UtilsHelper.logDebug(ItemDirectoryModel()..title = '312312312');
-                      setState(() {
-                        _listofFiles();
-                      });
+                      _listofFiles();
                     },
                   ),
                   TextButton(

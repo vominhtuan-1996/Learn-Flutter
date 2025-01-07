@@ -3,7 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/src/extension.dart';
+import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 
 class UtilsHelper {
   UtilsHelper._();
@@ -12,7 +12,8 @@ class UtilsHelper {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   static void pop(BuildContext context, [dynamic result]) {
-    Navigator.pop(context, result);
+    final navigator = Navigator.of(context);
+    navigator.pop(result);
   }
 
   /// Back util [RoutePredicate] is true
@@ -56,6 +57,16 @@ class UtilsHelper {
         break;
       }
     }
+  }
+
+  static Future<T?> pushToController<T>({required BuildContext context, bool useRootNavigator = true, required String route}) {
+    return Navigator.of(context, rootNavigator: useRootNavigator).pushNamed(route);
+  }
+
+  static void popToRootControler({
+    required BuildContext context,
+  }) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   /// Text height

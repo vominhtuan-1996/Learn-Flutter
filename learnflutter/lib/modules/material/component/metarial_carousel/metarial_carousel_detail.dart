@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/device_dimension.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
@@ -245,4 +245,3 @@ class CarouselMultiBrowse extends StatelessWidget {
   }
 }
 // Trong code này:
-

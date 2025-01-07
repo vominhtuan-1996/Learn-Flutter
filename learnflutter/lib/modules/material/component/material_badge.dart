@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
-import 'package:learnflutter/src/app_box_decoration.dart';
+import 'package:learnflutter/app/app_box_decoration.dart';
 
 class MaterialBadge extends StatefulWidget {
   const MaterialBadge({super.key, required this.data});

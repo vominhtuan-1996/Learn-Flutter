@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/device_dimension.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
-import 'package:learnflutter/core/extension/extension_textstyle.dart';
-import 'package:learnflutter/core/routes/argument_screen_model.dart';
-import 'package:learnflutter/core/routes/route.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/utils_helper/extension/extension_textstyle.dart';
+import 'package:learnflutter/component/routes/argument_screen_model.dart';
+import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
-import 'package:learnflutter/src/app_colors.dart';
+import 'package:learnflutter/app/app_colors.dart';
 
 class RoouterMaterialModel {
   RoouterMaterialModel(this.title, this.router, this.description);
@@ -54,7 +54,7 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     RoouterMaterialModel('Carousel', Routes.materialCarousel, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
     RoouterMaterialModel('Checkboxes', Routes.materialCheckbox,
         'Checkboxes allow users to select one or more items from a set and can be used to turn an option on or off. They’re a kind of selection control that helps users make a choice from a set of options.'),
-    RoouterMaterialModel('Chips', Routes.datetimePickerScreen, 'Chips help people enter information, make selections, filter content, or trigger actions.'),
+    RoouterMaterialModel('Chips', Routes.materialChip, 'Chips help people enter information, make selections, filter content, or trigger actions.'),
     RoouterMaterialModel(
       'Date picker',
       Routes.materialDatePicker,
@@ -70,13 +70,13 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
         'Menus display a list of choices on a temporary surface. They appear when users interact with a button, action, or other control.\n For Android the target minimum is always 48dp minimum.'),
     RoouterMaterialModel('Navigation bars', Routes.datetimePickerScreen,
         'Navigation bars offer a persistent, convenient way to switch between primary destinations in an app. 3-5 destinations is the recommended range.'),
-    RoouterMaterialModel('Navigation drawer', Routes.datetimePickerScreen, 'Navigation drawers provide access to destinations in your app.'),
+    RoouterMaterialModel('Navigation drawer', Routes.materialNavigationDrawer, 'Navigation drawers provide access to destinations in your app.'),
     RoouterMaterialModel('Navigation rail', Routes.datetimePickerScreen, 'Navigation rails provide access to primary destinations in your app, particularly in tablet and desktop screens.'),
     RoouterMaterialModel('Progress indicators', Routes.materialProgressIndicators,
         'Progress indicators inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates. They communicate an app’s state and indicate available actions, such as whether users can navigate away from the current screen.'),
     RoouterMaterialModel('Radio buttons', Routes.datetimePickerScreen,
         'Radio buttons allow users to select one option from a set. They’re a selection control that often appears when users are asked to make decisions or select a choice from options.'),
-    RoouterMaterialModel('Search', Routes.datetimePickerScreen, 'Search allows users to enter a keyword or phrase and get relevant information. It’s an alternative to other forms of navigation.'),
+    RoouterMaterialModel('Search', Routes.materialSearchBar, 'Search allows users to enter a keyword or phrase and get relevant information. It’s an alternative to other forms of navigation.'),
     RoouterMaterialModel('Segmented buttons: outlined', Routes.datetimePickerScreen, 'Segmented buttons help people select options, switch views, and sort elements. '),
     RoouterMaterialModel('Side Sheets', Routes.datetimePickerScreen,
         'Side sheets are surfaces containing supplementary content or actions to support tasks as part of a flow. They are typically anchored on the right edge of larger screens like tablets and desktops.'),
@@ -146,8 +146,8 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   type: MaterialButtonType.commonbutton,
                   lableText: model.title,
                   textAlign: TextAlign.left,
-                  labelTextStyle: context.textTheme.bodyLarge?.underlined(
-                    color: Colors.red,
+                  labelTextStyle: context.textTheme.bodyLarge?.centerlined(
+                    color: context.colorScheme.error,
                     distance: 1,
                     thickness: 4,
                     style: TextDecorationStyle.dashed,

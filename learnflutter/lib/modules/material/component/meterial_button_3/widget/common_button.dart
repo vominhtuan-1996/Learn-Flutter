@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/device_dimension.dart';
+import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 
 class CommonButton extends StatelessWidget {
@@ -17,24 +17,24 @@ class CommonButton extends StatelessWidget {
     double opacity = 1;
     return AbsorbPointer(
       absorbing: widget.disible,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          border: Border.all(color: widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity)),
-          boxShadow: [
-            BoxShadow(
-              color: widget.shadowColor.withOpacity(0.3),
-              spreadRadius: (widget.shadowOffset != Offset.zero) ? 1 : 0,
-              blurRadius: (widget.shadowOffset != Offset.zero) ? 2 : 0,
-              offset: widget.shadowOffset,
-            ),
-          ],
-          color: widget.backgoundColor.withOpacity(widget.disible ? opacityDisible : opacity),
-        ),
-        child: GestureDetector(
-          onTap: widget.onTap,
-          onDoubleTap: widget.onDoubleTap,
-          onLongPress: widget.onLongPress,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        onDoubleTap: widget.onDoubleTap,
+        onLongPress: widget.onLongPress,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+            border: Border.all(color: widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity)),
+            boxShadow: [
+              BoxShadow(
+                color: widget.shadowColor.withOpacity(0.3),
+                spreadRadius: (widget.shadowOffset != Offset.zero) ? 1 : 0,
+                blurRadius: (widget.shadowOffset != Offset.zero) ? 2 : 0,
+                offset: widget.shadowOffset,
+              ),
+            ],
+            color: widget.backgoundColor.withOpacity(widget.disible ? opacityDisible : opacity),
+          ),
           child: Row(
             children: [
               (widget.prefixIcon != null)

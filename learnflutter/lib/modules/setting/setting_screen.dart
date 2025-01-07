@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/app_text_style.dart';
-import 'package:learnflutter/core/extension/extension_context.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/app/app_text_style.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';

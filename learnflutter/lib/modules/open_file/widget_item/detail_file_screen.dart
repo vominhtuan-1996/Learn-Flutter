@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/helpper/hero_animation/hero_utils/hero_animation_utils.dart';
+import 'package:learnflutter/component/hero_animation/hero_utils/hero_animation_utils.dart';
 
 class DetailFileScreen extends StatefulWidget {
   const DetailFileScreen({super.key});

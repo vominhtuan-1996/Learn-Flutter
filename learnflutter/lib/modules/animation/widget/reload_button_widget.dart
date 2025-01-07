@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/src/app_colors.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/app/app_colors.dart';
 
 class ReloadButtonWidget extends StatefulWidget {
   ReloadButtonWidget({super.key, this.isRotate = false, this.icon = Icons.favorite_sharp});

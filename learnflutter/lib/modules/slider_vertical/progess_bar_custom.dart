@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:learnflutter/helpper/bitmap_utils.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
 
 class ProgressBar extends LeafRenderObjectWidget {
@@ -20,7 +19,10 @@ class ProgressBar extends LeafRenderObjectWidget {
     this.backGroundLabel = Colors.blue,
     this.onChanged,
     this.showLabel = true,
-  }) : super(key: key);
+    required this.initValue,
+  })  : assert(initValue <= max, 'giá trị ban đầu phải bé hơn giá trị max'),
+        assert(initValue >= min, 'giá trị ban đầu phải lớn hơn giá trị min'),
+        super(key: key);
 
   final Color barColor;
   final Color thumbColor;
@@ -33,6 +35,7 @@ class ProgressBar extends LeafRenderObjectWidget {
   final Color backGroundLabel;
   final ValueChanged<double>? onChanged;
   final bool showLabel;
+  final double initValue;
   @override
   RenderProgressBar createRenderObject(BuildContext context) {
     return RenderProgressBar(
@@ -46,7 +49,8 @@ class ProgressBar extends LeafRenderObjectWidget {
         styleLabel: styleLabel,
         backGroundLabel: backGroundLabel,
         onChanged: onChanged,
-        showLabel: showLabel);
+        showLabel: showLabel,
+        initValue: initValue);
   }
 
   @override
@@ -87,6 +91,7 @@ class RenderProgressBar extends RenderBox {
     required TextStyle styleLabel,
     required Color backGroundLabel,
     required bool showLabel,
+    required double initValue,
     ValueChanged<double>? onChanged,
   })  : _barColor = barColor,
         _thumbColor = thumbColor,
@@ -98,7 +103,8 @@ class RenderProgressBar extends RenderBox {
         _styleLabel = styleLabel,
         _backGroundLabel = backGroundLabel,
         _onChanged = onChanged,
-        _showLabel = showLabel {
+        _showLabel = showLabel,
+        _currentThumbValue = initValue / max {
     // initialize the gesture recognizer
     _drag = HorizontalDragGestureRecognizer()
       ..onStart = (DragStartDetails details) {
@@ -172,6 +178,13 @@ class RenderProgressBar extends RenderBox {
     markNeedsLayout();
   }
 
+  double get initValue => _currentThumbValue;
+  double _currentThumbValue;
+  set initValue(double value) {
+    _currentThumbValue = value / max;
+    markNeedsLayout();
+  }
+
   TextStyle get styleLabel => _styleLabel;
   TextStyle _styleLabel;
   set styleLabel(TextStyle value) {
@@ -242,15 +255,15 @@ class RenderProgressBar extends RenderBox {
     return constraints.constrain(desiredSize);
   }
 
-  double _currentThumbValue = 0.0;
+  // double currentThumbValue = _initValue ??  0.0;
 
   static double widthText = 0;
   @override
   void paint(PaintingContext context, Offset offset) async {
+    // _currentThumbValue = _currentThumbValue * (initValue / max);
     final canvas = context.canvas;
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
-
     String value = _currentThumbValue == 0 ? min.toStringAsFixed(0) : (_currentThumbValue * _max).toStringAsFixed(0);
     widthText = UtilsHelper.getTextWidth(text: value, textStyle: styleLabel);
 

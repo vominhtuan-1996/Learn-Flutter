@@ -3,13 +3,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:learnflutter/constraint/define_constraint.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/custom_widget/custom_snackbar.dart';
-import 'package:learnflutter/helpper/images/images_helper.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/detail_file_screen.dart';
 import 'package:learnflutter/modules/open_file/widget_item/get_file_screen.dart';
 import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
+import 'package:learnflutter/modules/popover/popover_scren.dart';
+import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:open_file_plus/open_file_plus.dart';
+import 'package:popover/popover.dart';
 import 'package:xml/xml.dart';
 
 class ItemOpenFileWidget extends StatefulWidget {
@@ -24,7 +29,6 @@ class ItemOpenFileWidget extends StatefulWidget {
 class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
   @override
   void initState() {
-    widget.listFile = convertListFile(widget.listDirectory);
     super.initState();
   }
 
@@ -51,6 +55,8 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
         totalDistance += haversineDistance(coordinates[i], coordinates[i + 1]);
       }
       showBottomSheet(
+        elevation: 0.3,
+        backgroundColor: AppColors.white,
         context: context,
         builder: (context) {
           return Center(
@@ -71,6 +77,7 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    widget.listFile = convertListFile(widget.listDirectory);
     return Padding(
       padding: EdgeInsets.all(8),
       child: Column(
@@ -81,10 +88,59 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
               openFile(widget.listFile[widget.index]);
             },
             onLongPress: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const DetailFileScreen()),
+              // final snackBar = SnackBar(
+              //   content: Text('This is a SnackBar!'),
+              //   action: SnackBarAction(
+              //     label: 'Undo',
+              //     onPressed: () {
+              //       // Some code to undo the change.
+              //     },
+              //   ),
+              //   backgroundColor: Colors.red,
+              //   elevation: 0,
+              //   padding: EdgeInsets.only(top: 10),
+              // );
+
+              // // Show the SnackBar
+              // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+              // // showPopover(
+              // //   context: context,
+              // //   bodyBuilder: (context) => Container(
+              // //     width: 50,
+              // //     height: 50,
+              // //     color: Colors.amberAccent,
+              // //   ),
+              // //   onPop: () => print('Popover was popped!'),
+              // //   direction: PopoverDirection.bottom,
+              // //   backgroundColor: Colors.transparent,
+              // //   width: 100,
+              // //   height: 100,
+              // //   arrowHeight: 12,
+              // //   arrowWidth: 0,
+              // // );
+              DialogUtils.showDialogWithHeroIcon(
+                context: context,
+                contentWidget: Container(
+                  height: context.mediaQuery.size.height,
+                  width: context.mediaQuery.size.width,
+                  child: ListView.builder(
+                    itemCount: widget.listFile[widget.index].listDirectory != null ? widget.listFile[widget.index].listDirectory!.length : 0,
+                    itemBuilder: (context, index1) {
+                      return GestureDetector(
+                        onTap: () {
+                          openFile(widget.listFile[widget.index].listDirectory![index1]);
+                        },
+                        child: ItemOpenFileWidget(index: index1, listDirectory: widget.listFile[widget.index].listDirectory!),
+                      );
+                    },
+                  ),
+                ),
               );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const DetailFileScreen()),
+              // );
             },
             child: Row(
               children: [
