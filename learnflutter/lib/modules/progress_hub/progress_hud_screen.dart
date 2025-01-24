@@ -1,6 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
@@ -27,21 +26,21 @@ class ProgressHubScreenTest extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ElevatedButton(
-                    child: Text('Show for a second'),
+                    child: const Text('Show for a second'),
                     onPressed: () {
                       final progress = ProgressHUD.of(context);
                       progress?.show();
-                      Future.delayed(Duration(seconds: 1), () {
+                      Future.delayed(const Duration(seconds: 1), () {
                         progress?.dismiss();
                       });
                     },
                   ),
                   ElevatedButton(
-                    child: Text('Show with text'),
+                    child: const Text('Show with text'),
                     onPressed: () {
                       final progress = ProgressHUD.of(context);
                       progress?.showWithText('Loading...');
-                      Future.delayed(Duration(seconds: 1), () {
+                      Future.delayed(const Duration(seconds: 1), () {
                         progress?.dismiss();
                       });
                     },

@@ -35,8 +35,8 @@ class BezierHeader extends RefreshIndicator {
   // container height(not contain bezier)
   final double rectHeight;
 
-  BezierHeader(
-      {this.child = const Text(""),
+  const BezierHeader(
+      {super.key, this.child = const Text(""),
       this.onOffsetChange,
       this.onModeChange,
       this.readyRefresh,
@@ -96,7 +96,7 @@ class _BezierHeaderState extends RefreshIndicatorState<BezierHeader> with Ticker
   Future<void> readyToRefresh() {
     // TODO: implement readyToRefresh
     final Simulation simulation = SpringSimulation(
-        SpringDescription(
+        const SpringDescription(
           mass: 3.4,
           stiffness: 10000.5,
           damping: 6,
@@ -117,7 +117,7 @@ class _BezierHeaderState extends RefreshIndicatorState<BezierHeader> with Ticker
     if (widget.endRefresh != null) {
       await widget.endRefresh!();
     }
-    return _bezierDismissCtl.animateTo(1.0, duration: Duration(milliseconds: 200));
+    return _bezierDismissCtl.animateTo(1.0, duration: const Duration(milliseconds: 200));
   }
 
   @override
@@ -140,34 +140,34 @@ class _BezierHeaderState extends RefreshIndicatorState<BezierHeader> with Ticker
         return Stack(
           children: <Widget>[
             Positioned(
-              child: AnimatedBuilder(
-                builder: (_, __) {
-                  return ClipPath(
-                    child: ClipPath(
-                      child: Container(
-                        height: widget.rectHeight + 30,
-                        color: widget.bezierColor ?? Theme.of(context).primaryColor,
-                      ),
-                      clipper: _BezierPainter(value: _beizerBounceCtl.value, startOffsetY: widget.rectHeight),
-                    ),
-                    clipper: _BezierDismissPainter(value: _bezierDismissCtl.value, dismissType: widget.dismissType),
-                  );
-                },
-                animation: _bezierDismissCtl,
-              ),
               bottom: -50,
               top: 0,
               left: 0,
               right: 0,
+              child: AnimatedBuilder(
+                builder: (_, __) {
+                  return ClipPath(
+                    clipper: _BezierDismissPainter(value: _bezierDismissCtl.value, dismissType: widget.dismissType),
+                    child: ClipPath(
+                      clipper: _BezierPainter(value: _beizerBounceCtl.value, startOffsetY: widget.rectHeight),
+                      child: Container(
+                        height: widget.rectHeight + 30,
+                        color: widget.bezierColor ?? Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  );
+                },
+                animation: _bezierDismissCtl,
+              ),
             ),
             !widget.enableChildOverflow
                 ? ClipRect(
-                    child: Container(
+                    child: SizedBox(
                       height: (_beizerBounceCtl.isAnimating || mode == RefreshStatus.refreshing ? 0 : math.max(0, _beizerBounceCtl.value)) + widget.rectHeight,
                       child: widget.child,
                     ),
                   )
-                : Container(
+                : SizedBox(
                     height: (_beizerBounceCtl.isAnimating || mode == RefreshStatus.refreshing ? 0 : math.max(0, _beizerBounceCtl.value)) + widget.rectHeight,
                     child: widget.child,
                   ),
@@ -211,8 +211,8 @@ class _BezierDismissPainter extends CustomClipper<Path> {
       path2.lineTo(halfWidth + value! * halfWidth, size.height);
       path2.lineTo(size.width, size.height);
       path2.lineTo(size.width, 0);
-      path.addPath(path1, Offset(0, 0));
-      path.addPath(path2, Offset(0, 0));
+      path.addPath(path1, const Offset(0, 0));
+      path.addPath(path2, const Offset(0, 0));
     } else {
       final double maxExtent = math.max(size.width, size.height) * (1.0 - value!);
       final double centerX = size.width / 2;
@@ -282,8 +282,8 @@ class BezierCircleHeader extends StatefulWidget {
 
   final BezierDismissType dismissType;
 
-  BezierCircleHeader(
-      {this.bezierColor,
+  const BezierCircleHeader(
+      {super.key, this.bezierColor,
       this.rectHeight = 70,
       this.circleColor = Colors.white,
       this.enableChildOverflow = false,
@@ -311,9 +311,9 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
     // TODO: implement initState
     _dismissCtrl = AnimationController(vsync: this);
     _childMoveCtl = AnimationController(vsync: this);
-    _radialCtrl = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _radialCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _childMoveTween = AlignmentGeometryTween(begin: Alignment.bottomCenter, end: Alignment.center);
-    _disMissTween = Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(0.0, 1.5));
+    _disMissTween = Tween<Offset>(begin: const Offset(0.0, 0.0), end: const Offset(0.0, 1.5));
     super.initState();
   }
 
@@ -335,7 +335,7 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
       dismissType: widget.dismissType,
       enableChildOverflow: widget.enableChildOverflow,
       readyRefresh: () async {
-        await _childMoveCtl.animateTo(1.0, duration: Duration(milliseconds: 300));
+        await _childMoveCtl.animateTo(1.0, duration: const Duration(milliseconds: 300));
       },
       onResetValue: () {
         _dismissCtrl.value = 0;
@@ -343,18 +343,19 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
       },
       onModeChange: (m) {
         mode = m;
-        if (m == RefreshStatus.refreshing) _radialCtrl.repeat(period: Duration(milliseconds: 500));
+        if (m == RefreshStatus.refreshing) _radialCtrl.repeat(period: const Duration(milliseconds: 500));
         setState(() {});
       },
       endRefresh: () async {
         _radialCtrl.reset();
-        await _dismissCtrl.animateTo(1, duration: Duration(milliseconds: 550));
+        await _dismissCtrl.animateTo(1, duration: const Duration(milliseconds: 550));
       },
       child: SlideTransition(
         position: _disMissTween.animate(_dismissCtrl),
         child: AlignTransition(
+          alignment: _childMoveCtl.drive(_childMoveTween as Animatable<AlignmentGeometry>),
           child: widget.circleType == BezierCircleType.Progress
-              ? Container(
+              ? SizedBox(
                   height: widget.circleRadius * 2 + 5,
                   child: Stack(
                     children: <Widget>[
@@ -366,12 +367,12 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
                       ),
                       Center(
                         child: SizedBox(
-                          child: CircularProgressIndicator(
-                            valueColor: mode == RefreshStatus.refreshing ? AlwaysStoppedAnimation(widget.circleColor) : AlwaysStoppedAnimation(Colors.transparent),
-                            strokeWidth: 2,
-                          ),
                           height: widget.circleRadius * 2 + 5,
                           width: widget.circleRadius * 2 + 5,
+                          child: CircularProgressIndicator(
+                            valueColor: mode == RefreshStatus.refreshing ? AlwaysStoppedAnimation(widget.circleColor) : const AlwaysStoppedAnimation(Colors.transparent),
+                            strokeWidth: 2,
+                          ),
                         ),
                       )
                     ],
@@ -379,7 +380,7 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
                 )
               : AnimatedBuilder(
                   builder: (_, __) {
-                    return Container(
+                    return SizedBox(
                       height: widget.circleRadius * 2,
                       child: CustomPaint(
                         painter: _RaidalPainter(value: _radialCtrl.value, circleColor: widget.circleColor, circleRadius: widget.circleRadius, refreshing: mode == RefreshStatus.refreshing),
@@ -388,7 +389,6 @@ class _BezierCircleHeaderState extends State<BezierCircleHeader> with TickerProv
                   },
                   animation: _radialCtrl,
                 ),
-          alignment: _childMoveCtl.drive(_childMoveTween as Animatable<AlignmentGeometry>),
         ),
       ),
     );
@@ -419,7 +419,7 @@ class _RaidalPainter extends CustomPainter {
     }
     paint.style = PaintingStyle.fill;
     canvas.drawArc(Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: circleRadius!), -math.pi / 2, math.pi * 4, true, paint);
-    paint.color = Color.fromRGBO(233, 233, 233, 0.8);
+    paint.color = const Color.fromRGBO(233, 233, 233, 0.8);
     canvas.drawArc(Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: circleRadius!), -math.pi / 2, math.pi * 4 * value!, true, paint);
     paint.style = PaintingStyle.stroke;
     if (refreshing!) {

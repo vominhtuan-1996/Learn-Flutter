@@ -10,7 +10,7 @@ class MBProgressHUD extends StatefulWidget {
 }
 
 class _MBProgressHUDState extends State<MBProgressHUD> {
-  GlobalKey<ProgressHudState> _hudKey = GlobalKey();
+  final GlobalKey<ProgressHudState> _hudKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,52 +27,52 @@ class _MBProgressHUDState extends State<MBProgressHUD> {
                   onPressed: () {
                     _showLoadingHud(context);
                   },
-                  child: Text("show loading"),
+                  child: const Text("show loading"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     _showSuccessHud(context);
                   },
-                  child: Text("show success"),
+                  child: const Text("show success"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     _showErrorHud(context);
                   },
-                  child: Text("show error"),
+                  child: const Text("show error"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     _showProgressHud(context);
                   },
-                  child: Text("show progress"),
+                  child: const Text("show progress"),
                 ),
-                Divider(height: 50),
+                const Divider(height: 50),
                 ElevatedButton(
                   onPressed: () async {
                     ProgressHud.showLoading();
                     await Future.delayed(const Duration(seconds: 1));
                     ProgressHud.dismiss();
                   },
-                  child: Text("show global loading"),
+                  child: const Text("show global loading"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     ProgressHud.showAndDismiss(ProgressHudType.success, "load success");
                   },
-                  child: Text("show global success"),
+                  child: const Text("show global success"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     ProgressHud.showAndDismiss(ProgressHudType.error, "load fail");
                   },
-                  child: Text("show global error"),
+                  child: const Text("show global error"),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     _showProgressHudGlobal();
                   },
-                  child: Text("show global progress"),
+                  child: const Text("show global progress"),
                 ),
               ],
             );
@@ -102,7 +102,7 @@ _showProgressHud(BuildContext context) {
   hud?.show(ProgressHudType.progress, "loading");
 
   double current = 0;
-  Timer.periodic(Duration(milliseconds: 1000.0 ~/ 60), (timer) {
+  Timer.periodic(const Duration(milliseconds: 1000.0 ~/ 60), (timer) {
     current += 1;
     var progress = current / 100;
     hud?.updateProgress(progress, "loading $current%");
@@ -117,7 +117,7 @@ _showProgressHudGlobal() {
   ProgressHud.show(ProgressHudType.progress, "loading");
 
   double current = 0;
-  Timer.periodic(Duration(milliseconds: 1000.0 ~/ 60), (timer) {
+  Timer.periodic(const Duration(milliseconds: 1000.0 ~/ 60), (timer) {
     current += 1;
     var progress = current / 100;
     ProgressHud.updateProgress(progress, "loading $current%");

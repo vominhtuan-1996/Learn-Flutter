@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/hero_animation/hero_utils/hero_animation_utils.dart';
 
 class DetailFileScreen extends StatefulWidget {
   const DetailFileScreen({super.key});
@@ -21,7 +20,7 @@ class _DetailFileScreenState extends State<DetailFileScreen> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(color: Colors.grey.shade200.withOpacity(0.5)),
-            child: Center(
+            child: const Center(
               child: Text('Frosted'),
             ),
           ),

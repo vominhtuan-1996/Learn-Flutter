@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/app_text_style.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/slider_vertical/tab_render_widget.dart';
@@ -33,68 +32,64 @@ class SettingScreenState extends State<SettingScreen> {
 
     return BaseLoading(
         appBar: AppBar(
-          title: Text('Setting'),
+          title: const Text('Setting'),
         ),
         isLoading: false,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      width: context.mediaQuery.size.width / 3,
-                      child: Text(
-                        '$textScale',
-                        style: context.textTheme.bodySmall,
-                      ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: context.mediaQuery.size.width / 3,
+                    child: Text(
+                      '$textScale',
+                      style: context.textTheme.bodySmall,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Text(
-                              'A',
-                              style: AppTextStyles.themeBodyMedium.copyWith(fontSize: 14),
-                            ),
-                            Slider(
-                              min: 0.824,
-                              max: 1.353,
-                              value: textScale,
-                              onChanged: (value) {
-                                themeBloc.changeScaleText(value);
-                                textScale = value;
-                                print(value);
-                                setState(() {});
-                              },
-                            ),
-                            Text(
-                              'A',
-                              style: AppTextStyles.themeBodyMedium.copyWith(fontSize: 20),
-                            ),
-                          ],
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          'A',
+                          style: AppTextStyles.themeBodyMedium.copyWith(fontSize: 14),
                         ),
-                      ),
+                        Slider(
+                          min: 0.824,
+                          max: 1.353,
+                          value: textScale,
+                          onChanged: (value) {
+                            themeBloc.changeScaleText(value);
+                            textScale = value;
+                            print(value);
+                            setState(() {});
+                          },
+                        ),
+                        Text(
+                          'A',
+                          style: AppTextStyles.themeBodyMedium.copyWith(fontSize: 20),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Text('Mode'),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: const Text('Mode'),
                   ),
                   Transform.scale(
                     scale: 1,
                     child: CupertinoSwitch(
                       // This bool value toggles the switch.
                       value: switchValue,
-                      activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
-                      trackColor: Color(0xFFD9D9D9),
+                      activeTrackColor: const Color(0xFFB6E13D), // CupertinoColors.activeGreen,
+                      inactiveTrackColor: const Color(0xFFD9D9D9),
                       thumbColor: Colors.red,
                       onChanged: (bool? value) {
                         // This is called when the user toggles the switch.
@@ -107,7 +102,7 @@ class SettingScreenState extends State<SettingScreen> {
                   ),
                 ],
               ),
-              TabRenderWidget(tabColor: Colors.red, thumbColor: Colors.blue),
+              const TabRenderWidget(tabColor: Colors.red, thumbColor: Colors.blue),
             ],
           ),
         ));

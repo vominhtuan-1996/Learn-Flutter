@@ -5,7 +5,6 @@
  */
 // ignore_for_file: INVALID_USE_OF_PROTECTED_MEMBER
 // ignore_for_file: INVALID_USE_OF_VISIBLE_FOR_TESTING_MEMBER
-import 'package:flutter/physics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
@@ -38,7 +37,7 @@ class RefreshPhysics extends ScrollPhysics {
 
   /// Creates scroll physics that bounce back from the edge.
   RefreshPhysics(
-      {ScrollPhysics? parent,
+      {super.parent,
       this.updateFlag,
       this.maxUnderScrollExtent,
       this.springDescription,
@@ -48,8 +47,7 @@ class RefreshPhysics extends ScrollPhysics {
       this.bottomHitBoundary,
       this.enableScrollWhenRefreshCompleted,
       this.enableScrollWhenTwoLevel,
-      this.maxOverScrollExtent})
-      : super(parent: parent);
+      this.maxOverScrollExtent});
 
   @override
   RefreshPhysics applyTo(ScrollPhysics? ancestor) {
@@ -197,8 +195,10 @@ class RefreshPhysics extends ScrollPhysics {
         }
       }
     }
-    if (maxOverScrollExtent != double.infinity && value < topBoundary && topBoundary < position.pixels) // hit top edge
+    if (maxOverScrollExtent != double.infinity && value < topBoundary && topBoundary < position.pixels) {
+      // hit top edge
       return value - topBoundary;
+    }
     if (maxUnderScrollExtent != double.infinity && position.pixels < bottomBoundary && bottomBoundary < value) {
       // hit bottom edge
       return value - bottomBoundary;
@@ -206,10 +206,14 @@ class RefreshPhysics extends ScrollPhysics {
 
     // check user is dragging,it is import,some devices may not bounce with different frame and time,bouncing return the different velocity
     if (scrollPosition.activity is DragScrollActivity) {
-      if (maxOverScrollExtent != double.infinity && value < position.pixels && position.pixels <= topBoundary) // underscroll
+      if (maxOverScrollExtent != double.infinity && value < position.pixels && position.pixels <= topBoundary) {
+        // underscroll
         return value - position.pixels;
-      if (maxUnderScrollExtent != double.infinity && bottomBoundary <= position.pixels && position.pixels < value) // overscroll
+      }
+      if (maxUnderScrollExtent != double.infinity && bottomBoundary <= position.pixels && position.pixels < value) {
+        // overscroll
         return value - position.pixels;
+      }
     }
     return 0.0;
   }

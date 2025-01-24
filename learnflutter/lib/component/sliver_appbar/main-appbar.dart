@@ -6,19 +6,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
-import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
 import 'package:learnflutter/utils_helper/bitmap_utils.dart';
 import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
 import 'package:learnflutter/component/sliver_appbar/action_and_balance_card.dart';
 import 'package:learnflutter/component/sliver_appbar/balance_bar.dart';
 import 'package:learnflutter/component/sliver_appbar/icon_img_button.dart';
 import 'package:learnflutter/component/sliver_appbar/notification_handler.dart';
 import 'package:learnflutter/component/sliver_appbar/search_area.dart';
-import 'package:learnflutter/app/app_colors.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SliverAppMenu extends StatefulWidget {
@@ -33,7 +29,7 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
   late double minExtent;
   late double maxExtent;
   final ScrollController scrollController = ScrollController();
-  ItemScrollController _controllerScrollView = ItemScrollController();
+  final ItemScrollController _controllerScrollView = ItemScrollController();
   ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
   List categories = [];
   List menus = [];
@@ -71,17 +67,16 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
         children: <Widget>[
           Container(
               height: 50,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFFFDA758).withOpacity(0.2)),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: const Color(0xFFFDA758).withValues(alpha: 0.2)),
               child: Center(
                 child: Image.asset(loadImageWithImageName(data.iconChildMenu, TypeImage.png)),
               )),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
-          Container(
-              child: Center(
-            child: Text(data.titleChildMenu, textAlign: TextAlign.center, style: textStyleManrope(Color(0xFF795675), 12, FontWeight.normal)),
-          ))
+          Center(
+            child: Text(data.titleChildMenu, textAlign: TextAlign.center, style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal)),
+          )
         ],
       ),
     );
@@ -91,7 +86,7 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
     return ScrollablePositionedList.builder(
       itemScrollController: _controllerScrollView,
       itemPositionsListener: itemPositionsListener,
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       scrollDirection: Axis.vertical,
       itemCount: menus.length,
       reverse: false,
@@ -100,12 +95,12 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
         return Container(
             alignment: Alignment.center,
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-              Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), 14, FontWeight.w600)),
-              SizedBox(height: 10),
-              Container(
+              Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(const Color(0xFF795675), 14, FontWeight.w600)),
+              const SizedBox(height: 10),
+              SizedBox(
                 height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
                 child: SliverGrid.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
                   itemBuilder: (BuildContext ctxt, int index) {
                     ChildMenusModel childMenusModel = item.childMenus[index];
                     return childMenusCell(childMenusModel, false);
@@ -142,7 +137,7 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
               itemBuilder: (BuildContext ctxt, int index) {
                 // ChildMenusModel childMenusModel = item.childMenus[index];
-                return Text('childMenusModel.titleChildMenu', textAlign: TextAlign.center, style: textStyleManrope(Color(0xFF795675), 12, FontWeight.normal));
+                return Text('childMenusModel.titleChildMenu', textAlign: TextAlign.center, style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal));
               },
               itemCount: 50,
             ),
@@ -344,12 +339,12 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                     10,
                     (index) {
                       return Padding(
-                        padding: EdgeInsets.only(right: 16),
+                        padding: const EdgeInsets.only(right: 16),
                         child: Container(
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             height: 40,
                             width: 100,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.0), color: Color(0xFFFDA758)),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.0), color: const Color(0xFFFDA758)),
                             child: const Center(
                               child: Text(
                                 'Nghiệm Thu',
@@ -447,7 +442,7 @@ class FloatingBalanceBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       child: isShowWhen
           ? BalanceBar(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),

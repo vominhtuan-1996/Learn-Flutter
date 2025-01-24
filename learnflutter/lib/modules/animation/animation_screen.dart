@@ -2,26 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/animation/widget/reload_button_widget.dart';
 import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
-import 'package:learnflutter/modules/draggbel_scroll/draggel_scroll_screen.dart';
-import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
-import 'package:learnflutter/modules/number_formart/number_format_screen.dart';
-import 'package:learnflutter/modules/slider_vertical/slider_vertical_screen.dart';
 
 class TransitionsHomePage extends StatefulWidget {
+  const TransitionsHomePage({super.key});
+
   @override
   TransitionsHomePageState createState() => TransitionsHomePageState();
 }
 
 class TransitionsHomePageState extends State<TransitionsHomePage> {
-  bool _slowAnimations = false;
   double turns = 0.0;
 
   void _changeRotation() {
@@ -63,9 +56,9 @@ class TransitionsHomePageState extends State<TransitionsHomePage> {
 
 class _TransitionListTile extends StatelessWidget {
   const _TransitionListTile({
-    this.onTap,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   final GestureTapCallback? onTap;

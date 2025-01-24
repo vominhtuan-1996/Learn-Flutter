@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 class DateTimeInputScreen extends StatefulWidget {
   const DateTimeInputScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DateTimeInputScreen> createState() => _DateTimeInputState();

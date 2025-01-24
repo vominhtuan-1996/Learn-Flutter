@@ -19,13 +19,7 @@ class BaseLoadingCubit extends BaseCubit<BaseLoadingState> {
       await Future.delayed(const Duration(seconds: 4));
       dissmissLoading();
       if (onSuccess != null) onSuccess(result);
-    } catch (e) {
-      Future<void> onFail(error) async {
-        if (onFailed != null) {
-          await onFailed(error);
-        }
-      }
-    }
+    } catch (e) {}
   }
 
   void dissmissLoading() {

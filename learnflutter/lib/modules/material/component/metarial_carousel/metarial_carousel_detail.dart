@@ -1,18 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
-import 'package:learnflutter/modules/animation/widget/ripple_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/material_carousel.dart';
-import 'package:learnflutter/modules/material/component/metarial_card/horizontal_card_widget.dart';
+import 'package:learnflutter/modules/material/component/metarial_carousel/material_carousel.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 
 class MaterialCarouselDetail extends StatefulWidget {
   const MaterialCarouselDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialCarouselDetail> createState() => _MaterialCarouselDetailState();
 }
@@ -44,7 +40,7 @@ class _MaterialCarouselDetailState extends State<MaterialCarouselDetail> with Co
                 style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
+            SizedBox(
               height: 100,
               child: M3Carousel(
                 visible: 4,
@@ -90,7 +86,7 @@ class _MaterialCarouselDetailState extends State<MaterialCarouselDetail> with Co
                 style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
+            SizedBox(
               height: 100,
               child: M3Carousel(
                 visible: 3,
@@ -152,6 +148,8 @@ class CarouselTemp extends StatelessWidget {
     viewportFraction: 0.65,
   );
 
+  CarouselTemp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
@@ -178,7 +176,7 @@ class CarouselTemp extends StatelessWidget {
             );
           },
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10), // Tuỳ chỉnh lại margi
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10), // Tuỳ chỉnh lại margi
             decoration: BoxDecoration(
               color: Colors.grey[300],
               borderRadius: BorderRadius.circular(20),
@@ -186,7 +184,7 @@ class CarouselTemp extends StatelessWidget {
             child: Center(
               child: Text(
                 'Page ${index + 1}',
-                style: TextStyle(fontSize: 24, color: Colors.white),
+                style: const TextStyle(fontSize: 24, color: Colors.white),
               ),
             ),
           ),
@@ -201,6 +199,8 @@ class CarouselMultiBrowse extends StatelessWidget {
     viewportFraction: 0.9, // Giúp nhìn thấy một phần của trang kế bên
   );
 
+  CarouselMultiBrowse({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
@@ -213,7 +213,7 @@ class CarouselMultiBrowse extends StatelessWidget {
             return child!;
           },
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.grey[300],
               borderRadius: BorderRadius.circular(20),
@@ -224,7 +224,7 @@ class CarouselMultiBrowse extends StatelessWidget {
                 return Container(
                   width: (MediaQuery.of(context).size.width * 0.25) - 10,
                   height: 100,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(10),
@@ -232,7 +232,7 @@ class CarouselMultiBrowse extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Item ${index * 3 + itemIndex + 1}',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 );

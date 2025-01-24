@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
 class RoundedWithCustomCursor extends StatefulWidget {
-  const RoundedWithCustomCursor({Key? key}) : super(key: key);
+  const RoundedWithCustomCursor({super.key});
 
   @override
   _RoundedWithCustomCursorState createState() => _RoundedWithCustomCursorState();

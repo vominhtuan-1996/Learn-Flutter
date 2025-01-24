@@ -5,6 +5,8 @@ import 'package:learnflutter/custom_widget/custom_shape/custom_shape.dart';
 import 'package:learnflutter/component/hero_animation/hero_utils/hero_animation_utils.dart';
 
 class Page1 extends StatelessWidget {
+  const Page1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +30,8 @@ class Page1 extends StatelessWidget {
 }
 
 class Page2 extends StatelessWidget {
+  const Page2({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +49,8 @@ class Page2 extends StatelessWidget {
         decoration: ShapeDecoration(
           shape: CustomShapeBorder(),
           //color: Colors.orange,
-          gradient: LinearGradient(colors: [Colors.blue, Colors.orange]),
-          shadows: [
+          gradient: LinearGradient(colors: const [Colors.blue, Colors.orange]),
+          shadows: const [
             BoxShadow(color: Colors.black, offset: Offset(3, -3), blurRadius: 3),
           ],
         ),

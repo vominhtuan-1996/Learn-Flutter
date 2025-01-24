@@ -40,7 +40,7 @@ class _PageLoadingScreenState extends State<PageLoadingScreen> {
                   print('object');
                 },
               );
-              Timer(Duration(seconds: 12), () {
+              Timer(const Duration(seconds: 12), () {
                 loadingCubit.dissmissLoading();
               });
             },

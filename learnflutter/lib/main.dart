@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/component/search_bar/cubit/search_bar_cubit.dart';
 import 'package:learnflutter/db/hive_demo/model/person.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/constraint/define_constraint.dart';
@@ -152,56 +153,64 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer(
-      linearGradient: ShimmerUtils.shimmerGradient,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => SettingThemeCubit(),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Shimmer(
+        linearGradient: ShimmerUtils.shimmerGradient,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => SettingThemeCubit(),
+            ),
+            BlocProvider(
+              create: (context) => BaseLoadingCubit(),
+            ),
+            BlocProvider(
+              create: (context) => SearchCubit(),
+            ),
+          ],
+          child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
+            builder: (context, state) {
+              DeviceDimension().initValue(context);
+              return MaterialApp(
+                theme: AppThemes.primaryTheme(context, state),
+                locale: const Locale('vi'),
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  // TiePickerLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('vi'),
+                  Locale('en'),
+                ],
+                home: FlutterSplashScreen.gif(
+                  duration: const Duration(seconds: 5),
+                  backgroundColor: Colors.white,
+                  onInit: () async {
+                    debugPrint("On Init");
+                  },
+                  onEnd: () {
+                    debugPrint("On End");
+                  },
+                  gifPath: 'assets/images/laucher_mobimap_rii_2.gif',
+                  nextScreen: const TestScreen(),
+                  gifWidth: context.mediaQuery.size.width,
+                  gifHeight: context.mediaQuery.size.height,
+                ),
+                // supportedLocales: [
+                //   Locale('vi', 'VN'),
+                //   ...TiePickerLocalizations.supportedLocales,
+                // ],
+                onGenerateRoute: Routes.generateRoute,
+                // initialRoute: Routes.testScreen,
+              );
+            },
           ),
-          BlocProvider(
-            create: (context) => BaseLoadingCubit(),
-          ),
-        ],
-        child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
-          builder: (context, state) {
-            DeviceDimension().initValue(context);
-            return MaterialApp(
-              theme: AppThemes.primaryTheme(context, state),
-              locale: Locale('vi'),
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                // TiePickerLocalizations.delegate,
-              ],
-              supportedLocales: const [
-                Locale('vi'),
-                Locale('en'),
-              ],
-              home: FlutterSplashScreen.gif(
-                duration: Duration(seconds: 5),
-                backgroundColor: Colors.white,
-                onInit: () {
-                  debugPrint("On Init");
-                },
-                onEnd: () {
-                  debugPrint("On End");
-                },
-                gifPath: 'assets/images/laucher_mobimap_rii_2.gif',
-                nextScreen: const TestScreen(),
-                gifWidth: context.mediaQuery.size.width,
-                gifHeight: context.mediaQuery.size.height,
-              ),
-              // supportedLocales: [
-              //   Locale('vi', 'VN'),
-              //   ...TiePickerLocalizations.supportedLocales,
-              // ],
-              onGenerateRoute: Routes.generateRoute,
-              // initialRoute: Routes.testScreen,
-            );
-          },
         ),
       ),
     );

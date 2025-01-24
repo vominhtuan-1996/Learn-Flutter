@@ -1,8 +1,6 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 
 class DragTargetScreen extends StatefulWidget {
   const DragTargetScreen({super.key});

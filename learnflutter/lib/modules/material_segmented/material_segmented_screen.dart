@@ -29,70 +29,72 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
-        isLoading: false,
-        child: DefaultTabController(
-          initialIndex: 0,
-          length: 3,
-          child: Scaffold(
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  Container(
-                    height: 50,
-                    padding: EdgeInsets.zero,
-                    child: SegmentedTabControl(
-                        controller: tabController,
-                        // Customization of widget
-                        // radius: const Radius.circular(8),
-                        // backgroundColor: Colors.grey.shade200,
-                        // indicatorColor: colors[tabController.index],
-                        tabTextColor: Colors.black45,
-                        selectedTabTextColor: Colors.white,
-                        squeezeIntensity: 2,
-                        height: 45,
-                        tabPadding: const EdgeInsets.symmetric(horizontal: 8),
-                        textStyle: context.textTheme.bodyMedium,
-                        selectedTextStyle: context.textTheme.bodyMedium,
-                        // Options for selection
-                        // All specified values will override the [SegmentedTabControl] setting
-                        tabs: List.generate(
-                          tabController.length,
-                          (index) {
-                            return SegmentTab(
-                              label: title[index],
-                              color: colors[index],
-                            );
-                          },
-                        )),
+      isLoading: false,
+      child: DefaultTabController(
+        initialIndex: 0,
+        length: 3,
+        child: Scaffold(
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Container(
+                  height: 50,
+                  padding: EdgeInsets.zero,
+                  child: SegmentedTabControl(
+                    controller: tabController,
+                    // Customization of widget
+                    // radius: const Radius.circular(8),
+                    // backgroundColor: Colors.grey.shade200,
+                    // indicatorColor: colors[tabController.index],
+                    tabTextColor: Colors.black45,
+                    selectedTabTextColor: Colors.white,
+                    squeezeIntensity: 2,
+                    height: 45,
+                    tabPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    textStyle: context.textTheme.bodyMedium,
+                    selectedTextStyle: context.textTheme.bodyMedium,
+                    // Options for selection
+                    // All specified values will override the [SegmentedTabControl] setting
+                    tabs: List.generate(
+                      tabController.length,
+                      (index) {
+                        return SegmentTab(
+                          label: title[index],
+                          color: colors[index],
+                        );
+                      },
+                    ),
                   ),
-                  // Sample pages
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: TabBarView(
-                        physics: const BouncingScrollPhysics(),
-                        controller: tabController,
-                        children: List.generate(
-                          tabController.length,
-                          (index) {
-                            return SampleWidget(
-                              label: title[index],
-                              color: colors[index],
-                            );
-                          },
-                        )),
-                  ),
-                ],
-              ),
+                ),
+                // Sample pages
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: TabBarView(
+                      physics: const BouncingScrollPhysics(),
+                      controller: tabController,
+                      children: List.generate(
+                        tabController.length,
+                        (index) {
+                          return SampleWidget(
+                            label: title[index],
+                            color: colors[index],
+                          );
+                        },
+                      )),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  Map<int, Widget> _children = {0: Text('Flutter'), 1: Text('Dart'), 2: Text('Desktop'), 3: Text('Mobile'), 4: Text('Web')};
+  final Map<int, Widget> _children = {0: const Text('Flutter'), 1: const Text('Dart'), 2: const Text('Desktop'), 3: const Text('Mobile'), 4: const Text('Web')};
 
   // Holds all indices of children to be disabled.
   // Set this list either null or empty to have no children disabled.
-  List<int> _disabledIndices = [];
+  final List<int> _disabledIndices = [];
 
   int _randomInt() {
     return Random.secure().nextInt(_children.length);
@@ -101,10 +103,10 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
 
 class SampleWidget extends StatelessWidget {
   const SampleWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.color,
-  }) : super(key: key);
+  });
 
   final String label;
   final Color color;

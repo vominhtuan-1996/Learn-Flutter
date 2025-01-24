@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/modules/slider_vertical/progess_bar_custom.dart';
-import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialSlider extends StatefulWidget {
   const MaterialSlider({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialSlider> createState() => _MaterialSliderState();
 }
@@ -37,13 +34,13 @@ class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialD
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 100),
+              padding: const EdgeInsets.only(left: 100),
               child: SizedBox(
                 width: 200,
                 height: 50,
                 child: ProgressBar(
-                  barColor: Color(0xFF6750A4),
-                  thumbColor: Color(0xFF6750A4),
+                  barColor: const Color(0xFF6750A4),
+                  thumbColor: const Color(0xFF6750A4),
                   thumbSize: 30.0,
                   strokeWidth: 10,
                   strokeCap: StrokeCap.round,
@@ -62,8 +59,8 @@ class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialD
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
               child: ProgressBar(
-                barColor: Color(0xFF6750A4),
-                thumbColor: Color(0xFF6750A4),
+                barColor: const Color(0xFF6750A4),
+                thumbColor: const Color(0xFF6750A4),
                 thumbSize: 30.0,
                 strokeWidth: 10,
                 strokeCap: StrokeCap.round,
@@ -81,8 +78,8 @@ class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialD
             Padding(
               padding: EdgeInsets.all(DeviceDimension.padding),
               child: ProgressBar(
-                barColor: Color(0xFF6750A4),
-                thumbColor: Color(0xFF6750A4),
+                barColor: const Color(0xFF6750A4),
+                thumbColor: const Color(0xFF6750A4),
                 thumbSize: 30.0,
                 strokeWidth: 10,
                 strokeCap: StrokeCap.round,

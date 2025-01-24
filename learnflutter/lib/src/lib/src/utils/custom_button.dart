@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
   final double minSize;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.label,
     this.minSize = 48,
@@ -25,11 +25,10 @@ class CustomButton extends StatelessWidget {
   })  : outline = false,
         icon = false,
         alt = false,
-        dialog = false,
-        super(key: key);
+        dialog = false;
 
   const CustomButton.outline({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.label,
     this.minSize = 52,
@@ -38,11 +37,10 @@ class CustomButton extends StatelessWidget {
   })  : outline = true,
         icon = false,
         alt = false,
-        dialog = false,
-        super(key: key);
+        dialog = false;
 
   const CustomButton.alt({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.label,
     this.minSize = 52,
@@ -51,11 +49,10 @@ class CustomButton extends StatelessWidget {
   })  : outline = false,
         icon = false,
         alt = true,
-        dialog = false,
-        super(key: key);
+        dialog = false;
 
   const CustomButton.icon({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.label,
     required this.iconData,
@@ -64,11 +61,10 @@ class CustomButton extends StatelessWidget {
   })  : outline = false,
         icon = true,
         alt = false,
-        dialog = false,
-        super(key: key);
+        dialog = false;
 
   const CustomButton.dialog({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.label,
     this.iconData,
@@ -77,8 +73,7 @@ class CustomButton extends StatelessWidget {
   })  : outline = false,
         icon = false,
         alt = false,
-        dialog = true,
-        super(key: key);
+        dialog = true;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +103,7 @@ class CustomButton extends StatelessWidget {
     }
     if (alt) {
       return GestureDetector(
+        onTap: onTap,
         child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -138,11 +134,11 @@ class CustomButton extends StatelessWidget {
             ],
           ),
         ),
-        onTap: onTap,
       );
     }
     if (icon) {
       return GestureDetector(
+        onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
@@ -173,12 +169,12 @@ class CustomButton extends StatelessWidget {
             ],
           ),
         ),
-        onTap: onTap,
       );
     }
     if (outline) {
       return CupertinoButton(
         padding: EdgeInsets.zero,
+        onPressed: onTap,
         child: Container(
           height: minSize,
           decoration: BoxDecoration(
@@ -199,7 +195,6 @@ class CustomButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: onTap,
       );
     }
     return GestureDetector(

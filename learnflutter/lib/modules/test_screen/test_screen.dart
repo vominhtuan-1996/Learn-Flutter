@@ -4,13 +4,18 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/tap_builder/tap_animated_button_builder.dart';
+import 'package:learnflutter/component/tap_builder/tap_delayed_pressed_button_builder.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/l10n/helper.dart';
+import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/component/attribute_string/attribute_string_widget.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +36,23 @@ class _TestScreenState extends State<TestScreen> {
     }
   }
 
+  List uploadList = [
+    RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: '2'),
+    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: '4'),
+    RadioItemModel(id: 'id', title: '5'),
+    RadioItemModel(
+        id: 'id',
+        title:
+            'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: '7'),
+    RadioItemModel(id: 'id', title: '8'),
+    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: '10'),
+    RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+  ];
+
   void splitCodeString() {
     var value =
         'https://ip.fpt.vn/keycloak/callback?session_state=99b4a2fe-3ba2-41d4-97a8-b4c0031b038f&code=66d06447-8e2d-4914-807f-52d26f65c120.99b4a2fe-3ba2-41d4-97a8-b4c0031b038f.ab352c75-07da-4d36-9912-09e722986f3d';
@@ -44,18 +66,6 @@ class _TestScreenState extends State<TestScreen> {
     print(map['code']);
   }
 
-  Future<String> downLoadFolder() async {
-    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
-    String appDocumentsPath = appDocumentsDirectory.path; // 2
-    String filePath = '$appDocumentsPath/DownLoadFile'; // 3
-    Directory(filePath).create(recursive: true).then(
-      (value) {
-        print(value.path);
-      },
-    );
-    return filePath;
-  }
-
   bool switchValue = true;
   @override
   Widget build(BuildContext context) {
@@ -64,41 +74,62 @@ class _TestScreenState extends State<TestScreen> {
       appBar: AppBar(
         title: Text(DemoLocalizations.of(context).title),
       ),
-      floatingActionButton: FloatingActionButton.large(
-        onPressed: () async {
-          // final updater = ShorebirdCodePush();
-          // print(await updater.currentPatchNumber());
-
-          // updater.downloadUpdateIfAvailable();
-        },
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () async {},
       ),
       child: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              TextButton(
-                onPressed: () async {
-                  DialogUtils.showDownload(
-                    contextDialog: context,
-                    title: 'Thông báo',
-                    savePath: await downLoadFolder(),
-                  );
+              AnimatedTapButtonBuilder(
+                child: Text('AnimatedTapButtonBuilder'),
+                onTap: () {
+                  print('object');
                 },
-                child: Text('show Dialog Download'),
               ),
+              TapDelayedPressedButton(
+                padding: EdgeInsets.all(DeviceDimension.padding / 2),
+                minPressedDuration: Duration(milliseconds: 200),
+                inactiveColor: Colors.red,
+                pressedColor: Colors.blue,
+                child: Text('TapDelayedPressedButton'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.draggableExampleScreen);
+                },
+                child: Text('FloatingDraggableWidget'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.treeScreen);
+                },
+                child: Text('Tree Node'),
+              ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.balanceBar);
+                },
+                child: Text('balanceBar'),
+              ),
+
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.segmented);
                 },
                 child: Text('get point into file svg'),
               ),
-              MaterialButton3.iconbutton(
+              MaterialButton3.icon(
                 fabIcon: Icons.close,
                 onPressed: () {},
               ),
-              MaterialButton3.extendedfab(
-                onPressed: () {},
+              MaterialButton3.extended(
+                onPressed: () async {
+                  DialogUtils.showLoadingAnimation(contextDialog: context, savePath: await downLoadFolder());
+                },
                 prefixIcon: Icons.abc,
                 lableText: 'Test',
               ),
@@ -359,7 +390,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/intertiveview_screen');
+                  Navigator.of(context).pushNamed(Routes.intertiveviewScreen);
                 },
                 child: const Text('InteractiveViewer'),
               ),
@@ -368,8 +399,8 @@ class _TestScreenState extends State<TestScreen> {
                 child: CupertinoSwitch(
                   // This bool value toggles the switch.
                   value: switchValue,
-                  activeColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
-                  trackColor: Color(0xFFD9D9D9),
+                  activeTrackColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
+                  inactiveTrackColor: Color(0xFFD9D9D9),
                   thumbColor: Colors.red,
                   onChanged: (bool? value) {
                     // This is called when the user toggles the switch.
@@ -411,8 +442,7 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: const Text('calender'),
               ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedChar,
+              AttributedStringWidget.charecter(
                 message: 'Tuan IOS Su12',
                 charHighlight: 'U',
                 style: TextStyle(
@@ -428,8 +458,7 @@ class _TestScreenState extends State<TestScreen> {
                 highlightColor: Colors.red,
                 ignoreCase: true,
               ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedText,
+              AttributedStringWidget.text(
                 message: 'Tuan IOS Su12',
                 texthighlight: 'Su',
                 style: TextStyle(
@@ -445,8 +474,7 @@ class _TestScreenState extends State<TestScreen> {
                 highlightColor: Colors.red,
                 ignoreCase: true,
               ),
-              AttriButedSringWidget(
-                typeAttriButed: AttriButedSring.attriButedRange,
+              AttributedStringWidget.range(
                 message: 'Tuan IOS Su12',
                 start: 0,
                 end: 12,
@@ -463,38 +491,6 @@ class _TestScreenState extends State<TestScreen> {
                 highlightColor: Colors.red,
                 ignoreCase: true,
               ),
-              // ShimmerLoading(
-              //   isLoading: true,
-              //   child: AttriButedSringWidget(
-              //     typeAttriButed: AttriButedSring.attriButedCustom,
-              //     listAttributedCustom: [
-              //       TextSpan(
-              //         text: 'Tuan',
-              //         style: TextStyle(
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.red,
-              //           fontSize: 20,
-              //         ),
-              //       ),
-              //       TextSpan(
-              //         text: 'IOS',
-              //         style: TextStyle(
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.blue,
-              //           fontSize: 12,
-              //         ),
-              //       ),
-              //       TextSpan(
-              //         text: 'Su12',
-              //         style: TextStyle(
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.amber,
-              //           fontSize: 36,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -586,7 +582,7 @@ void _showAlertDialog(BuildContext context) {
 }
 
 class ListItems extends StatelessWidget {
-  const ListItems({Key? key}) : super(key: key);
+  const ListItems({super.key});
 
   @override
   Widget build(BuildContext context) {

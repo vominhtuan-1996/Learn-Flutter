@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:learnflutter/db/hive_demo/model/person.dart';
 
 class AddPersonForm extends StatefulWidget {
-  const AddPersonForm({Key? key}) : super(key: key);
+  const AddPersonForm({super.key});
 
   @override
   _AddPersonFormState createState() => _AddPersonFormState();
@@ -48,21 +48,21 @@ class _AddPersonFormState extends State<AddPersonForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Name'),
+          const Text('Name'),
           TextFormField(
             controller: _nameController,
             validator: _fieldValidator,
           ),
-          SizedBox(height: 24.0),
-          Text('Home Country'),
+          const SizedBox(height: 24.0),
+          const Text('Home Country'),
           TextFormField(
             controller: _countryController,
             validator: _fieldValidator,
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 24.0),
-            child: Container(
+            child: SizedBox(
               width: double.maxFinite,
               height: 50,
               child: ElevatedButton(
@@ -72,7 +72,7 @@ class _AddPersonFormState extends State<AddPersonForm> {
                     Navigator.of(context).pop();
                   }
                 },
-                child: Text('Add'),
+                child: const Text('Add'),
               ),
             ),
           ),

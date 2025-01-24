@@ -1,13 +1,11 @@
-import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class GraphicsWidget extends LeafRenderObjectWidget {
-  GraphicsWidget({
-    Key? key,
+  const GraphicsWidget({
+    super.key,
     required this.barColor,
     required this.thumbColor,
     this.thumbSize = 20.0,
@@ -19,7 +17,7 @@ class GraphicsWidget extends LeafRenderObjectWidget {
     this.backGroundLabel = Colors.blue,
     this.onChanged,
     this.showLabel = true,
-  }) : super(key: key);
+  });
 
   final Color barColor;
   final Color thumbColor;

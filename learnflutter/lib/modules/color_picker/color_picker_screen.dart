@@ -1,5 +1,4 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
@@ -34,7 +33,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CircleColorPicker(
                 initialColor: currentColor,
                 thumbRadius: 10,
@@ -46,7 +45,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                   });
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               BarColorPicker(
                   initialColor: currentColor,
                   width: 300,
@@ -59,7 +58,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                       currentColor = Color(value);
                     });
                   }),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               BarColorPicker(
                   initialColor: currentColor,
                   cornerRadius: 10,
@@ -70,7 +69,7 @@ class ColorPickerScreenState extends State<ColorPickerScreen> {
                       currentColor = Color(value);
                     });
                   }),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               GestureDetector(
                 onTap: () async {
                   Clipboard.setData(ClipboardData(text: currentColor.value.toRadixString(16))).then(

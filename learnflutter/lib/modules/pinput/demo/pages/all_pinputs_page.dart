@@ -5,7 +5,7 @@ class AllPinputs extends StatefulWidget {
   final List<Widget> pinPuts;
   final List<List<Color>> colors;
 
-  const AllPinputs(this.pinPuts, this.colors, {Key? key}) : super(key: key);
+  const AllPinputs(this.pinPuts, this.colors, {super.key});
 
   @override
   _AllPinputsState createState() => _AllPinputsState();
@@ -33,10 +33,10 @@ class _AllPinputsState extends State<AllPinputs> with AutomaticKeepAliveClientMi
             );
           }),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: TextField(
-              autofillHints: [AutofillHints.oneTimeCode],
-              decoration: InputDecoration(
+              autofillHints: const [AutofillHints.oneTimeCode],
+              decoration: const InputDecoration(
                 labelText: 'Standard TextField for Testing',
                 border: OutlineInputBorder(),
               ),

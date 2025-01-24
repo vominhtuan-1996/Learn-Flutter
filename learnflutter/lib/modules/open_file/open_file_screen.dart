@@ -8,7 +8,6 @@ import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/item_widget.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,7 +32,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
   void createFolder(String folderName) async {
     Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
     String appDocumentsPath = appDocumentsDirectory.path; // 2
-    String filePath = '$appDocumentsPath/${folderName}'; // 3
+    String filePath = '$appDocumentsPath/$folderName'; // 3
     Directory(filePath).create(recursive: true).then(
       (value) {
         print(value.path);
@@ -89,7 +88,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
   }
 
   Future<void> openFile(String path) async {
-    final result = await OpenFile.open('${path}');
+    final result = await OpenFile.open(path);
     setState(() {
       _openResult = "type=${result.type}  message=${result.message}";
     });
@@ -150,7 +149,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
               widget.isVisible = !widget.isVisible;
             });
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         child: Stack(
           children: [
@@ -160,14 +159,14 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                 children: <Widget>[
                   Text('open result: $_openResult\n'),
                   TextButton(
-                    child: Text('Tap to get list file'),
+                    child: const Text('Tap to get list file'),
                     onPressed: () {
                       UtilsHelper.logDebug(ItemDirectoryModel()..title = '312312312');
                       _listofFiles();
                     },
                   ),
                   TextButton(
-                    child: Text('Tap to save file'),
+                    child: const Text('Tap to save file'),
                     onPressed: () {
                       createFolder('downLoadFile');
                     },
@@ -182,7 +181,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                         final path = await downloadFile(link, await downLoadFolder());
                         await OpenFile.open(path);
                       },
-                      child: Text('DownLoad File')),
+                      child: const Text('DownLoad File')),
                   Expanded(
                     child: ListView.builder(
                       itemCount: listDirectory.length,
@@ -202,12 +201,12 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
               child: Container(
                 color: Colors.grey.withOpacity(0.6),
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     height: double.infinity,
                     child: Column(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: SizedBox.shrink(),
                         ),
                         Expanded(

@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
 
 class ProgressBar extends LeafRenderObjectWidget {
-  ProgressBar({
-    Key? key,
+  const ProgressBar({
+    super.key,
     required this.barColor,
     required this.thumbColor,
     this.thumbSize = 20.0,
@@ -21,8 +20,7 @@ class ProgressBar extends LeafRenderObjectWidget {
     this.showLabel = true,
     required this.initValue,
   })  : assert(initValue <= max, 'giá trị ban đầu phải bé hơn giá trị max'),
-        assert(initValue >= min, 'giá trị ban đầu phải lớn hơn giá trị min'),
-        super(key: key);
+        assert(initValue >= min, 'giá trị ban đầu phải lớn hơn giá trị min');
 
   final Color barColor;
   final Color thumbColor;

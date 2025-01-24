@@ -29,15 +29,17 @@ class DragWidgetPainter extends CustomPainter {
       if (pointsMove[i].isMove == true) {
         final path = Path()
           ..moveTo(pointsMove[i].offset!.dx + 5, pointsMove[i].offset!.dy + 5)
-          ..lineTo(pointsMove[i + 1].offset!.dx + 5, pointsMove[i].offset!.dy + 5);
-        canvas.drawShadow(path, Colors.grey, 2.0, false);
+          ..cubicTo(
+            pointsMove[i].offset!.dx + 5,
+            pointsMove[i].offset!.dy + 5,
+            pointsMove[i + 1].offset!.dx - 5,
+            pointsMove[i + 1].offset!.dy - 5,
+            pointsMove[i + 1].offset!.dx,
+            pointsMove[i + 1].offset!.dy,
+          );
         canvas.drawLine(pointsMove[i].offset!, pointsMove[i + 1].offset!, barPaint);
       }
     }
-    // for (var element in pointsMove) {
-    //   canvas.drawLine(point1, element, barPaint);
-    //   point1 = element;
-    // }
     canvas.restore();
   }
 

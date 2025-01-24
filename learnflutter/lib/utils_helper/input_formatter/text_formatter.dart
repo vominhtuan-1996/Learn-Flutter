@@ -9,9 +9,9 @@ class TextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.length < maxLenght) {
-      return TextEditingValue().copyWith(text: newValue.text);
+      return const TextEditingValue().copyWith(text: newValue.text);
     } else {
-      return TextEditingValue().copyWith(text: oldValue.text);
+      return const TextEditingValue().copyWith(text: oldValue.text);
     }
   }
 }

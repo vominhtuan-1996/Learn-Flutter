@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/common_button.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/widget/extended_fab.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/widget/fab_button.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/widget/icon_button.dart';
 
 class SegmentedButton3 extends StatelessWidget {
   // Segmented buttons help people select options, switch views, or sort elements

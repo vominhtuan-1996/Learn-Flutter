@@ -3,25 +3,27 @@
 
 import 'package:flutter/material.dart';
 
-enum AttriButedSring {
+/// param bắt buộc :
+///
+enum AttriButedString {
   attriButedChar,
   attriButedText,
   attriButedRange,
   attriButedCustom,
 }
 
-// param bắt buộc :
 /// type[attriButedChar] {[messagem],[charHighlight],[ignoreCase]}
 /// type[attriButedText] {[messagem],[texthighlight],[ignoreCase]}
 /// type[attriButedRange] {[messagem],[start],[end]}
 /// type[attriButedCustom] {[listAttributedCustom]}
-class AttriButedSringWidget extends StatelessWidget {
-  const AttriButedSringWidget({
+///
+class AttributedStringWidget extends StatelessWidget {
+  const AttributedStringWidget({
     super.key,
     this.listAttributedCustom,
     this.texthighlight,
     this.message,
-    required this.typeAttriButed,
+    this.typeAttriButed = AttriButedString.attriButedChar,
     this.charHighlight,
     this.style,
     this.highlightStyle,
@@ -32,7 +34,7 @@ class AttriButedSringWidget extends StatelessWidget {
   });
   final String? message;
   final bool? ignoreCase;
-  final AttriButedSring typeAttriButed;
+  final AttriButedString typeAttriButed;
   final TextStyle? style;
   final TextStyle? highlightStyle;
   final Color highlightColor;
@@ -49,6 +51,68 @@ class AttriButedSringWidget extends StatelessWidget {
 
   // Custom
   final List<InlineSpan>? listAttributedCustom;
+
+  factory AttributedStringWidget.charecter({
+    required String message,
+    required String charHighlight,
+    TextStyle? style,
+    TextStyle? highlightStyle,
+    Color highlightColor = Colors.black,
+    bool ignoreCase = true,
+  }) {
+    AttributedStringWidget widget = AttributedStringWidget(
+      message: message,
+      charHighlight: charHighlight,
+      typeAttriButed: AttriButedString.attriButedChar,
+      style: style,
+      highlightStyle: highlightStyle,
+      highlightColor: highlightColor,
+      ignoreCase: ignoreCase,
+    );
+    return widget;
+  }
+
+  factory AttributedStringWidget.text({
+    required String message,
+    required String texthighlight,
+    TextStyle? style,
+    TextStyle? highlightStyle,
+    Color highlightColor = Colors.black,
+    bool ignoreCase = true,
+  }) {
+    AttributedStringWidget widget = AttributedStringWidget(
+      message: message,
+      texthighlight: texthighlight,
+      typeAttriButed: AttriButedString.attriButedText,
+      style: style,
+      highlightStyle: highlightStyle,
+      highlightColor: highlightColor,
+      ignoreCase: ignoreCase,
+    );
+    return widget;
+  }
+
+  factory AttributedStringWidget.range({
+    required String message,
+    required int start,
+    required int end,
+    TextStyle? style,
+    TextStyle? highlightStyle,
+    Color highlightColor = Colors.black,
+    bool ignoreCase = true,
+  }) {
+    AttributedStringWidget widget = AttributedStringWidget(
+      message: message,
+      start: start,
+      end: end,
+      typeAttriButed: AttriButedString.attriButedRange,
+      style: style,
+      highlightStyle: highlightStyle,
+      highlightColor: highlightColor,
+      ignoreCase: ignoreCase,
+    );
+    return widget;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +132,7 @@ class AttriButedSringWidget extends StatelessWidget {
 }
 
 Widget widgetAttriButedWithType({
-  required AttriButedSring type,
+  required AttriButedString type,
   required String message,
   required String charHighlight,
   required String textHighlight,
@@ -82,7 +146,7 @@ Widget widgetAttriButedWithType({
 }) {
   Widget attriButedWiget;
   switch (type) {
-    case AttriButedSring.attriButedChar:
+    case AttriButedString.attriButedChar:
       attriButedWiget = HighlightAtributedChar(
         charHighlight: charHighlight,
         highlightColor: highlightColor,
@@ -92,7 +156,7 @@ Widget widgetAttriButedWithType({
         style: style,
       );
       break;
-    case AttriButedSring.attriButedText:
+    case AttriButedString.attriButedText:
       attriButedWiget = HighlightAttriButedText(
         texthighlight: textHighlight,
         highlightColor: highlightColor,
@@ -102,7 +166,7 @@ Widget widgetAttriButedWithType({
         style: style,
       );
       break;
-    case AttriButedSring.attriButedRange:
+    case AttriButedString.attriButedRange:
       attriButedWiget = HighlightAttriButedRange(
         start: start,
         end: end,
@@ -113,13 +177,11 @@ Widget widgetAttriButedWithType({
         style: style,
       );
       break;
-    case AttriButedSring.attriButedCustom:
+    case AttriButedString.attriButedCustom:
       attriButedWiget = HighlightAttriButedCustom(
         listAttributed: listAttributedCustom!,
       );
       break;
-    default:
-      attriButedWiget = Container();
   }
   return attriButedWiget;
 }

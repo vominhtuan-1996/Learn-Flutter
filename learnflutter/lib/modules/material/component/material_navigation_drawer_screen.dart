@@ -1,18 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/modules/slider_vertical/progess_bar_custom.dart';
-import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialNavigationDrawerScreen extends StatefulWidget {
   const MaterialNavigationDrawerScreen({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialNavigationDrawerScreen> createState() => _MaterialProgressIndicatorsState();
 }
@@ -40,7 +34,7 @@ class _MaterialProgressIndicatorsState extends State<MaterialNavigationDrawerScr
               20,
               (index) {
                 return FloatingActionButton.extended(
-                  label: Text('Label'),
+                  label: const Text('Label'),
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);

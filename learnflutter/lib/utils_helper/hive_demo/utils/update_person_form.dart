@@ -6,7 +6,7 @@ class UpdatePersonForm extends StatefulWidget {
   final int index;
   final Person person;
 
-  const UpdatePersonForm({
+  const UpdatePersonForm({super.key, 
     required this.index,
     required this.person,
   });
@@ -57,21 +57,21 @@ class _UpdatePersonFormState extends State<UpdatePersonForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Name'),
+          const Text('Name'),
           TextFormField(
             controller: _nameController,
             validator: _fieldValidator,
           ),
-          SizedBox(height: 24.0),
-          Text('Home Country'),
+          const SizedBox(height: 24.0),
+          const Text('Home Country'),
           TextFormField(
             controller: _countryController,
             validator: _fieldValidator,
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 24.0),
-            child: Container(
+            child: SizedBox(
               width: double.maxFinite,
               height: 50,
               child: ElevatedButton(
@@ -81,7 +81,7 @@ class _UpdatePersonFormState extends State<UpdatePersonForm> {
                     Navigator.of(context).pop();
                   }
                 },
-                child: Text('Update'),
+                child: const Text('Update'),
               ),
             ),
           ),

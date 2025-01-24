@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/component/base_loading_screen/state/base_loading_state.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
@@ -16,6 +17,8 @@ class BaseLoading extends StatefulWidget {
     this.appBar,
     this.floatingActionButton,
     this.drawer,
+    this.bottomNavigationBar,
+    this.floatingActionButtonLocation,
   });
   final bool isLoading;
   final String? message;
@@ -23,6 +26,8 @@ class BaseLoading extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final Widget? floatingActionButton;
   final Widget? drawer;
+  final Widget? bottomNavigationBar;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
   @override
   State<BaseLoading> createState() => BaseLoadingScreenState();
 }
@@ -50,12 +55,25 @@ class BaseLoadingScreenState extends State<BaseLoading> {
         );
         widthText = widthText > context.mediaQuery.size.width ? context.mediaQuery.size.width - DeviceDimension.padding : widthText;
         return Stack(
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.none,
           children: [
             Scaffold(
-              // extendBody: false,
-              appBar: widget.appBar ?? AppBar(),
-              body: Container(
+              extendBody: true,
+              appBar: widget.appBar ??
+                  AppBar(
+                    leading: Builder(
+                      builder: (BuildContext context) {
+                        return IconButton(
+                          icon: const Icon(Icons.arrow_back_ios),
+                          onPressed: () {
+                            DialogUtils.dismissPopup(context);
+                          },
+                          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                        );
+                      },
+                    ),
+                  ),
+              body: SizedBox(
                 width: context.mediaQuery.size.width,
                 height: context.mediaQuery.size.height,
                 child: widget.child,
@@ -63,6 +81,8 @@ class BaseLoadingScreenState extends State<BaseLoading> {
               floatingActionButton: widget.floatingActionButton,
               drawer: widget.drawer,
               extendBodyBehindAppBar: false,
+              bottomNavigationBar: widget.bottomNavigationBar,
+              floatingActionButtonLocation: widget.floatingActionButtonLocation,
             ),
             Visibility(
               visible: state.isLoading ?? false,

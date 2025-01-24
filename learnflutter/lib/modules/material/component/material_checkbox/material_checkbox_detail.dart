@@ -1,18 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/material_checkbox/material_checkbox.dart';
-import 'package:learnflutter/modules/material/component/metarial_card/horizontal_card_widget.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialCheckBoxDetail extends StatefulWidget {
   const MaterialCheckBoxDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialCheckBoxDetail> createState() => _MaterialCheckBoxDetailState();
 }

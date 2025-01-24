@@ -15,7 +15,7 @@ class NumericalRangeFormatter extends TextInputFormatter {
     if (newValue.text == '' || newValue.text == '-') {
       return newValue;
     } else if (double.parse(newString) < min) {
-      return TextEditingValue().copyWith(text: min.toStringAsFixed(1));
+      return const TextEditingValue().copyWith(text: min.toStringAsFixed(1));
     } else {
       if (isShowSnackbar && double.parse(newString) > max) {
         CustomSnackBar.topWarning.show(message: message ?? "");
@@ -38,7 +38,7 @@ class NumericalRangeFormatterNegative extends TextInputFormatter {
     if (newValue.text == '' || newValue.text == '-') {
       return newValue;
     } else if (double.parse(newString) < min) {
-      return TextEditingValue().copyWith(text: oldValue.text.toString());
+      return const TextEditingValue().copyWith(text: oldValue.text.toString());
     } else {
       if (isShowSnackbar && double.parse(newString) > max) {
         CustomSnackBar.topWarning.show(message: message ?? "");
@@ -61,7 +61,7 @@ class NumericalIntegerRangeFormatter extends TextInputFormatter {
     if (newValue.text == '' || newValue.text == '-') {
       return newValue;
     } else if (int.parse(newString) < min) {
-      return TextEditingValue().copyWith(text: min.toString());
+      return const TextEditingValue().copyWith(text: min.toString());
     } else {
       if (isShowSnackbar && int.parse(newString) > max) {
         CustomSnackBar.topWarning.show(message: message ?? "");
@@ -77,9 +77,9 @@ class PhoneNumbberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (ConstantsRegex.regexPhoneNumbber.hasMatch(newValue.text)) {
-      return TextEditingValue().copyWith(text: newValue.text.toString());
+      return const TextEditingValue().copyWith(text: newValue.text.toString());
     } else {
-      return TextEditingValue().copyWith(text: oldValue.text.toString());
+      return const TextEditingValue().copyWith(text: oldValue.text.toString());
     }
   }
 }

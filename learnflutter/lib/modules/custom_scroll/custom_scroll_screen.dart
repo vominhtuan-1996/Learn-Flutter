@@ -3,9 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/app/app_colors.dart';
-import 'package:learnflutter/utils_helper/extension/extension_string.dart';
-import 'package:learnflutter/utils_helper/utils_helper.dart';
 
 class CustomScrollScreen extends StatefulWidget {
   const CustomScrollScreen({super.key});
@@ -33,8 +30,14 @@ class CustomScrollScreenState extends State<CustomScrollScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CustomSliverPersistentHeaderDelegate()
-              ..setMaxExtent(context.mediaQuery.size.height / 10)
-              ..setMinExtent(0),
+              ..setMaxExtent(context.mediaQuery.size.height / 4)
+              ..setMinExtent(0)
+              ..setChild(
+                Text(
+                  'class CustomSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate',
+                  style: context.textTheme.headlineLarge,
+                ),
+              ),
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -42,7 +45,7 @@ class CustomScrollScreenState extends State<CustomScrollScreen> {
                 return Container(
                   height: 40,
                   width: context.mediaQuery.size.width,
-                  color: Colors.amberAccent[100 * (index % 9)], // Colors.amberAccent.withOpacity(1 - (index / 100)),
+                  color: Colors.primaries[index % Colors.primaries.length],
                   child: Text(index.toString()),
                 );
               }),
@@ -72,61 +75,15 @@ class CustomSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegat
             itemMaxHeight: maxExtent,
             itemMaxWidth: itemMaxWidth,
             t: t,
-            child: Text(
-              'CustomSliverPersistent',
-              style: context.textTheme.headlineLarge,
-            ),
+            child: child,
           ),
         ),
       );
-      // return SizedBox(
-      //   height: maxExtent,
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       children: List.generate(50, (index) {
-      //         return Container(
-      //           width: double.infinity,
-      //           child: Align(
-      //             alignment: Alignment.lerp(Alignment.center, Alignment(xFactor, -.2), t)!..x,
-      //             child: buildRow(color: Colors.red[100 * (index % 9)] ?? Colors.blue, itemMaxWidth: itemMaxWidth, t: t),
-      //           ),
-      //         );
-      //       }),
-      //     ),
-      //   ),
-      // );
-      // return ColoredBox(
-      //   color: Colors.cyanAccent.withOpacity(.3),
-      //   child: Stack(
-      //     children: [
-      //       Align(
-      //         alignment: Alignment.lerp(Alignment.center, Alignment(xFactor, -.2), t)!..x,
-      //         child: buildRow(color: Colors.black, itemMaxWidth: itemMaxWidth, t: t),
-      //       ),
-      //       Align(
-      //         alignment: Alignment.lerp(Alignment.centerRight, Alignment(xFactor, -1), t)!,
-      //         child: buildRow(color: Colors.red, itemMaxWidth: itemMaxWidth, t: t),
-      //       ),
-      //       Align(
-      //         alignment: Alignment.lerp(Alignment.centerLeft, Alignment(xFactor, -.30), t)!,
-      //         child: buildRow(color: Colors.amber, itemMaxWidth: itemMaxWidth, t: t),
-      //       ),
-      //       // Align(
-      //       //   alignment: Alignment.lerp(Alignment.centerLeft, Alignment(xFactor, .1), t)!,
-      //       //   child: buildRow(color: Colors.greenAccent, itemMaxWidth: itemMaxWidth, t: t),
-      //       // ),
-      //       Align(
-      //         alignment: Alignment.lerp(Alignment.centerLeft, Alignment(xFactor, .2), t)!,
-      //         child: buildRow(color: Colors.deepPurple, itemMaxWidth: itemMaxWidth, t: t),
-      //       ),
-      //     ],
-      //   ),
-      // );
     });
   }
 
-  Container buildRow({required double itemMaxWidth, required double itemMaxHeight, required double t, required Widget child}) {
-    return Container(
+  SizedBox buildRow({required double itemMaxWidth, required double itemMaxHeight, required double t, required Widget child}) {
+    return SizedBox(
       width: lerpDouble(itemMaxWidth, itemMaxWidth * .3, t),
       height: lerpDouble(itemMaxHeight, itemMaxHeight * .3, t),
       child: child,
@@ -140,6 +97,12 @@ class CustomSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegat
   void setMinExtent(double min) {
     minExtent = min;
   }
+
+  void setChild(Widget newChild) {
+    child = newChild;
+  }
+
+  Widget child = Container();
 
   @override
   double maxExtent = 0;

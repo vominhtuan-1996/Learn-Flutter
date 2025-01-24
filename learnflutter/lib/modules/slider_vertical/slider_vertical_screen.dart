@@ -20,7 +20,7 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleT
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.5,
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     )..reverse();
 
     _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_controller);
@@ -49,7 +49,7 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleT
   Widget build(BuildContext context) {
     return BaseLoading(
       appBar: AppBar(
-        title: Text('Slider Vertical'),
+        title: const Text('Slider Vertical'),
       ),
       isLoading: false,
       child: Container(
@@ -72,7 +72,7 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleT
                   );
                 },
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Slider(
                 value: val.toDouble(),
                 min: 1.0,

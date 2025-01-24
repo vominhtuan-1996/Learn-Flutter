@@ -86,7 +86,7 @@ class LogScreenState extends State<LogScreen> {
                 log = await readCounter();
                 setState(() {});
               },
-              child: Text('Print Log'),
+              child: const Text('Print Log'),
             ),
             MaterialTextField(
               hintText: 'write log',
@@ -98,7 +98,7 @@ class LogScreenState extends State<LogScreen> {
               onPressed: () async {
                 await writeCounter(controller.text);
               },
-              child: Text('Write text into log file json'),
+              child: const Text('Write text into log file json'),
             ),
             TextButton(
               onPressed: () async {
@@ -106,7 +106,7 @@ class LogScreenState extends State<LogScreen> {
                 log = await readCounter();
                 setState(() {});
               },
-              child: Text('Clear Log'),
+              child: const Text('Clear Log'),
             ),
             Text(log)
           ],

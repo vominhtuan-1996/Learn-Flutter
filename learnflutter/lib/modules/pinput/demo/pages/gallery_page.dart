@@ -9,7 +9,7 @@ import 'package:learnflutter/modules/pinput/demo/pinput_templates/rounded_with_c
 import 'package:learnflutter/modules/pinput/demo/pinput_templates/rounded_with_shadow.dart';
 
 class GalleryPage extends StatefulWidget {
-  const GalleryPage({Key? key}) : super(key: key);
+  const GalleryPage({super.key});
 
   @override
   GalleryPageState createState() => GalleryPageState();

@@ -1,18 +1,13 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialDividerDetail extends StatefulWidget {
   const MaterialDividerDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialDividerDetail> createState() => _MaterialDividerDetailState();
 }
@@ -50,7 +45,7 @@ class _MaterialDividerDetailState extends State<MaterialDividerDetail> with Comp
               children: List.generate(
                 4,
                 (index) {
-                  return Divider();
+                  return const Divider();
                 },
               ),
             ),
@@ -67,7 +62,7 @@ class _MaterialDividerDetailState extends State<MaterialDividerDetail> with Comp
             Container(
               width: context.mediaQuery.size.width,
               height: 100,
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(

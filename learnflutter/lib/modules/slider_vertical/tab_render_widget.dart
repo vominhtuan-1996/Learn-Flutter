@@ -1,17 +1,15 @@
-import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:math' as math;
 
 class TabRenderWidget extends LeafRenderObjectWidget {
   const TabRenderWidget({
-    Key? key,
+    super.key,
     required this.tabColor,
     required this.thumbColor,
     this.thumbSize = 20.0,
-  }) : super(key: key);
+  });
 
   final Color tabColor;
   final Color thumbColor;
@@ -150,7 +148,7 @@ class RenderTabBar extends RenderBox {
     var widthtemp = 45;
     final backgroundTriangleLine = Path();
     //1
-    final point1 = Offset.zero;
+    const point1 = Offset.zero;
     backgroundTriangleLine.moveTo(point1.dx, point1.dy);
     //1+
     final point1plus = Offset(point1.dx + widthtemp / 2, -30);

@@ -28,7 +28,7 @@ class HozizantalCardWidget extends StatelessWidget {
             style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
-          trailing: Icon(Icons.more_vert_sharp),
+          trailing: const Icon(Icons.more_vert_sharp),
         ),
       ),
     );

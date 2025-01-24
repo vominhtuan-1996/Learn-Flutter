@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/color_picker/color_picker.dart';
 import 'package:learnflutter/modules/custom_paint/custom_paint.dart';
-import 'package:learnflutter/modules/popover/popover_scren.dart';
 
 class CustomPainterScreen extends StatefulWidget {
   const CustomPainterScreen({super.key});
@@ -40,7 +38,7 @@ class _CustomPainterScreenState extends State<CustomPainterScreen> with TickerPr
               },
               onPanUpdate: (details) {
                 pointsMove.add(PointDrag()
-                  ..offset = details.globalPosition
+                  ..offset = details.localPosition
                   ..strokeWidth = currentstrokeWidth
                   ..color = currentColor
                   ..isMove = true);
@@ -84,7 +82,7 @@ class _CustomPainterScreenState extends State<CustomPainterScreen> with TickerPr
                     pointsMove.clear();
                     setState(() {});
                   },
-                  child: Text('Clear'),
+                  child: const Text('Clear'),
                 ),
                 TextButton(
                   onPressed: () {
@@ -92,14 +90,14 @@ class _CustomPainterScreenState extends State<CustomPainterScreen> with TickerPr
                     currentstrokeWidth = 24;
                     setState(() {});
                   },
-                  child: Icon(Icons.pentagon_rounded),
+                  child: const Icon(Icons.pentagon_rounded),
                 ),
                 TextButton(
                   onPressed: () {
                     pointsMove.clear();
                     setState(() {});
                   },
-                  child: Icon(Icons.pest_control_rodent),
+                  child: const Icon(Icons.pest_control_rodent),
                 ),
               ],
             ),

@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 
 /// Flutter code sample for [CupertinoDatePicker].
 

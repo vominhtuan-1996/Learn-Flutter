@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/common_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/extended_fab.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/fab_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/icon_button.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/widget/segmented_button.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/app/app_colors.dart';
 
 enum MaterialButtonType {
@@ -60,7 +58,7 @@ class MaterialButton3 extends StatefulWidget {
   final TextAlign? textAlign;
   final bool disible;
 
-  factory MaterialButton3.iconbutton({
+  factory MaterialButton3.icon({
     required VoidCallback? onPressed,
     final double borderRadius = 16.0,
     required final IconData fabIcon,
@@ -82,7 +80,7 @@ class MaterialButton3 extends StatefulWidget {
     );
   }
 
-  factory MaterialButton3.extendedfab({
+  factory MaterialButton3.extended({
     required VoidCallback? onPressed,
     final double borderRadius = 16.0,
     required final IconData prefixIcon,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/app_colors.dart';
 
 class ReloadButtonWidget extends StatefulWidget {
@@ -18,7 +17,7 @@ class ReloadButtonWidgetState extends State<ReloadButtonWidget> with SingleTicke
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -44,7 +43,7 @@ class ReloadButtonWidgetState extends State<ReloadButtonWidget> with SingleTicke
   Widget build(BuildContext context) {
     if (widget.isRotate) {
       _animationController.repeat(reverse: true);
-      _animationController.duration = Duration(milliseconds: 600);
+      _animationController.duration = const Duration(milliseconds: 600);
     }
 
     _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);

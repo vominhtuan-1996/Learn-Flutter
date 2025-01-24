@@ -13,7 +13,7 @@ class BitmapUtils {
 
   Future<ByteData?> generateSquareWithText(String text) async {
     final recorder = PictureRecorder();
-    final canvas = Canvas(recorder, Rect.fromPoints(Offset(0.0, 0.0), Offset(300.0, 100.0)));
+    final canvas = Canvas(recorder, Rect.fromPoints(const Offset(0.0, 0.0), const Offset(300.0, 100.0)));
 
     final stroke = Paint()
       ..color = Colors.grey
@@ -132,7 +132,7 @@ class MyCustomPainter extends CustomPainter {
 
 // To use your custom painter as a Paint object, simply create an instance of your custom painter and pass it to the Paint constructor.
 
-final myPaint = Paint()..shader = LinearGradient(colors: [Colors.red, Colors.yellow]).createShader(Rect.fromLTRB(0, 0, 100, 100));
+final myPaint = Paint()..shader = const LinearGradient(colors: [Colors.red, Colors.yellow]).createShader(const Rect.fromLTRB(0, 0, 100, 100));
 
 final myCustomPainter = MyCustomPainter();
 
@@ -150,8 +150,8 @@ void paint(Canvas canvas, Size size) {
   canvas.drawCircle(const Offset(150, 150), 50, myCustomPainter as Paint);
 
   // Use additional paints.
-  canvas.drawCircle(Offset(300, 300), 50, myPaint);
-  canvas.drawRect(Rect.fromLTWH(250, 100, 100, 50), myPaint2);
+  canvas.drawCircle(const Offset(300, 300), 50, myPaint);
+  canvas.drawRect(const Rect.fromLTWH(250, 100, 100, 50), myPaint2);
 }
 
 // WidgetTextNumberRatingComponent(MTCpTextNumberRatingCriteria textNumberatingComponentModel) {

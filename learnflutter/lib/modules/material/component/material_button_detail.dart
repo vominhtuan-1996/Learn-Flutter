@@ -1,21 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/component/drag.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/app/app_colors.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 
 class MaterialButtonDetail extends StatefulWidget {
   const MaterialButtonDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialButtonDetail> createState() => _MaterialButtonDetailState();
 }
@@ -42,7 +36,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Filled buttons'),
+              child: const Text('Filled buttons'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -101,7 +95,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Outlined buttons'),
+              child: const Text('Outlined buttons'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -162,7 +156,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Text buttons'),
+              child: const Text('Text buttons'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -223,7 +217,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Elevated buttons'),
+              child: const Text('Elevated buttons'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -236,7 +230,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
                     borderColor: Colors.grey,
                     borderRadius: DeviceDimension.padding,
                     shadowColor: AppColors.grey,
-                    shadowOffset: Offset(0.6, 2.3),
+                    shadowOffset: const Offset(0.6, 2.3),
                     textAlign: TextAlign.center,
                     onTap: () async {
                       print('object');
@@ -268,7 +262,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
                         shadowColor: AppColors.grey,
                         textAlign: TextAlign.left,
                         prefixIcon: Icons.add,
-                        shadowOffset: Offset(1.6, 2.3),
+                        shadowOffset: const Offset(1.6, 2.3),
                         prefixColor: Colors.white,
                         onTap: () async {
                           print('object');
@@ -284,7 +278,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Tonal buttons'),
+              child: const Text('Tonal buttons'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -297,7 +291,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
                     borderColor: Colors.grey,
                     borderRadius: DeviceDimension.padding,
                     shadowColor: AppColors.grey,
-                    shadowOffset: Offset(0.6, 2.3),
+                    shadowOffset: const Offset(0.6, 2.3),
                     textAlign: TextAlign.center,
                     onTap: () async {
                       print('object');
@@ -329,7 +323,7 @@ class _MaterialButtonDetailState extends State<MaterialButtonDetail> with Compon
                         shadowColor: AppColors.grey,
                         textAlign: TextAlign.left,
                         prefixIcon: Icons.add,
-                        shadowOffset: Offset(1.6, 2.3),
+                        shadowOffset: const Offset(1.6, 2.3),
                         prefixColor: Colors.white,
                         onTap: () async {
                           print('object');

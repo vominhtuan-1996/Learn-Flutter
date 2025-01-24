@@ -48,8 +48,8 @@ class BarColorPicker extends StatefulWidget {
   /// initial color of this color picker.
   final Color initialColor;
 
-  BarColorPicker({
-    Key? key,
+  const BarColorPicker({
+    super.key,
     this.pickMode = PickMode.Color,
     this.horizontal = true,
     this.width = 200,
@@ -58,13 +58,7 @@ class BarColorPicker extends StatefulWidget {
     this.initialColor = const Color(0xffff0000),
     this.thumbColor = Colors.black,
     required this.colorListener,
-  })  : assert(pickMode != null),
-        assert(horizontal != null),
-        assert(width != null),
-        assert(cornerRadius != null),
-        assert(colorListener != null),
-        assert(initialColor != null),
-        super(key: key);
+  });
 
   @override
   _BarColorPickerState createState() => _BarColorPickerState();
@@ -209,11 +203,7 @@ class CircleColorPicker extends StatefulWidget {
   /// initial color of this color picker.
   final Color initialColor;
 
-  CircleColorPicker({Key? key, this.radius = 120, this.initialColor = const Color(0xffff0000), this.thumbColor = Colors.black, this.thumbRadius = 8, required this.colorListener})
-      : assert(radius != null),
-        assert(thumbColor != null),
-        assert(colorListener != null),
-        super(key: key);
+  const CircleColorPicker({super.key, this.radius = 120, this.initialColor = const Color(0xffff0000), this.thumbColor = Colors.black, this.thumbRadius = 8, required this.colorListener});
 
   @override
   State<CircleColorPicker> createState() {
@@ -273,7 +263,7 @@ class _CircleColorPickerState extends State<CircleColorPicker> {
               child: Container(
                 width: radius * 2,
                 height: radius * 2,
-                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(radius)), gradient: SweepGradient(colors: colors)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(radius)), gradient: const SweepGradient(colors: colors)),
               ),
             ),
             thumb

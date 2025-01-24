@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/component/sliver_appbar/icon_img_button.dart';
 
 class SearchArea extends StatefulWidget {
-  SearchArea({
+  const SearchArea({
     super.key,
     required this.appBarContentWidth,
     required this.appBarSpace,
@@ -19,7 +17,7 @@ class SearchArea extends StatefulWidget {
 }
 
 class _SearchAreaState extends State<SearchArea> {
-  TextEditingController _controllerTextField = TextEditingController();
+  final TextEditingController _controllerTextField = TextEditingController();
   bool isSearch = false;
   @override
   void initState() {
@@ -56,7 +54,7 @@ class _SearchAreaState extends State<SearchArea> {
       autofocus: false,
       style: const TextStyle(
         fontSize: 14, //fontSizeSearchView,
-        color: const Color(0xFFFDA758),
+        color: Color(0xFFFDA758),
       ),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),

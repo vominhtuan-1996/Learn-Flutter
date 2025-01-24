@@ -1,24 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/component/drag.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
-import 'package:learnflutter/modules/animation/widget/position_ananimation.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
 import 'package:learnflutter/app/app_colors.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 
 class MaterialBottomSheet extends StatefulWidget {
   const MaterialBottomSheet({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialBottomSheet> createState() => _MaterialBottomSheetState();
 }
@@ -37,11 +30,11 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
   @override
   Widget build(BuildContext context) {
     return MaterialScreenDetail(
-        title: widget.data.title,
-        description: widget.data.description,
-        contentWidget: Container(
-          color: context.theme.colorScheme.onSecondaryContainer,
-          child: SizedBox(
+      title: widget.data.title,
+      description: widget.data.description,
+      contentWidget: Column(
+        children: [
+          SizedBox(
             child: MaterialButton3(
               backgoundColor: AppColors.green,
               borderColor: AppColors.green,
@@ -74,7 +67,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                     contentWidget: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        IconAnimationWidget(),
+                                        const IconAnimationWidget(),
                                         SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
@@ -90,7 +83,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                             color: AppColors.grey,
                                           ),
                                         ),
-                                        IconAnimationWidget(),
+                                        const IconAnimationWidget(),
                                         SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
@@ -106,7 +99,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                             color: AppColors.grey,
                                           ),
                                         ),
-                                        IconAnimationWidget(),
+                                        const IconAnimationWidget(),
                                         SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
@@ -122,7 +115,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                             color: AppColors.grey,
                                           ),
                                         ),
-                                        IconAnimationWidget(),
+                                        const IconAnimationWidget(),
                                         SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
@@ -156,6 +149,69 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
-        ));
+          SizedBox(
+            child: MaterialButton3(
+              backgoundColor: AppColors.green,
+              borderColor: AppColors.green,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                DialogUtils.openDraggableBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.white,
+                  initialSize: 0.5,
+                  maxSize: 0.9,
+                  // isScrollControlled: false,
+                  child: PageView.builder(
+                    physics: NoBounceScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        child: Container(
+                          color: Colors.primaries[index % Colors.primaries.length],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'Bottom Action Sheet Draggable',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(
+            child: MaterialButton3(
+              backgoundColor: AppColors.green,
+              borderColor: AppColors.green,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                DialogUtils.showCustomModalBottomSheet(
+                  context: context,
+                  initialSize: 0.75,
+                  child: PageView.builder(
+                    physics: NoBounceScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        child: Container(
+                          color: Colors.primaries[index % Colors.primaries.length],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: ' custom Bottom Action Sheet Draggable',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

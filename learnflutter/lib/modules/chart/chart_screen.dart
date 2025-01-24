@@ -44,14 +44,14 @@ class ChartScreenState extends State<ChartScreen> {
           child: Column(
             children: [
               SfCartesianChart(
-                title: ChartTitle(text: 'Flutter Chart'),
+                title: const ChartTitle(text: 'Flutter Chart'),
                 legend: const Legend(isVisible: true),
                 series: getDefaultData(),
                 tooltipBehavior: _tooltipBehavior,
               ),
               SfCircularChart(
-                title: ChartTitle(text: 'Sales by sales person'),
-                legend: Legend(isVisible: true),
+                title: const ChartTitle(text: 'Sales by sales person'),
+                legend: const Legend(isVisible: true),
                 series: <PieSeries<_PieData, String>>[
                   PieSeries<_PieData, String>(
                     explode: true,
@@ -60,15 +60,15 @@ class ChartScreenState extends State<ChartScreen> {
                     xValueMapper: (_PieData data, _) => data.xData,
                     yValueMapper: (_PieData data, _) => data.yData,
                     dataLabelMapper: (_PieData data, _) => data.text,
-                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
                   ),
                 ],
               ),
               SfSparkLineChart(
-                data: <double>[1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3],
+                data: const <double>[1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3],
               ),
               SfPyramidChart(
-                title: ChartTitle(text: 'SfPyramidChart'),
+                title: const ChartTitle(text: 'SfPyramidChart'),
                 legend: const Legend(isVisible: true),
                 palette: const [
                   AppColors.backButtonColor,
@@ -87,7 +87,7 @@ class ChartScreenState extends State<ChartScreen> {
                 ),
               ),
               SfFunnelChart(
-                title: ChartTitle(text: 'SfFunnelChart'),
+                title: const ChartTitle(text: 'SfFunnelChart'),
                 legend: const Legend(isVisible: true),
                 series: FunnelSeries<_PieData, String>(
                   explode: true,
@@ -338,7 +338,7 @@ class ChartScreenState extends State<ChartScreen> {
                 data: const <double>[1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3],
               ),
               SfCircularChart(
-                title: ChartTitle(text: 'Sales by sales person'),
+                title: const ChartTitle(text: 'Sales by sales person'),
                 legend: const Legend(isVisible: true),
                 series: <CircularSeries<_PieData, String>>[
                   DoughnutSeries<_PieData, String>(
@@ -353,7 +353,7 @@ class ChartScreenState extends State<ChartScreen> {
                 ],
               ),
               SfCircularChart(
-                title: ChartTitle(text: 'Sales by sales person'),
+                title: const ChartTitle(text: 'Sales by sales person'),
                 legend: const Legend(isVisible: true),
                 series: <CircularSeries>[
                   PieSeries<_PieData, String>(
@@ -374,7 +374,7 @@ class ChartScreenState extends State<ChartScreen> {
 }
 
 class _PieData {
-  _PieData(this.xData, this.yData, [this.text]);
+  _PieData(this.xData, this.yData);
   final String xData;
   final num yData;
   String? text;

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -9,7 +8,7 @@ import 'package:learnflutter/modules/material/material_screen_detail.dart';
 
 class MaterialChipScreen extends StatefulWidget {
   const MaterialChipScreen({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialChipScreen> createState() => _MaterialChipScreenState();
 }
@@ -60,7 +59,7 @@ class _MaterialChipScreenState extends State<MaterialChipScreen> with ComponentM
                         4,
                         (index) {
                           return ChoiceChip.elevated(
-                            label: Text('label'),
+                            label: const Text('label'),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             selected: surfaceChoiceChip[index],
                             tooltip: 'tooltip',
@@ -89,7 +88,7 @@ class _MaterialChipScreenState extends State<MaterialChipScreen> with ComponentM
                         4,
                         (index) {
                           return ChoiceChip.elevated(
-                            label: Text('label'),
+                            label: const Text('label'),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             selected: primaryChoiceChip[index],
                             tooltip: 'tooltip',
@@ -117,7 +116,7 @@ class _MaterialChipScreenState extends State<MaterialChipScreen> with ComponentM
                         4,
                         (index) {
                           return ChoiceChip(
-                            label: Text('label'),
+                            label: const Text('label'),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             selected: secondaryChoiceChip[index],
                             tooltip: 'tooltip',
@@ -145,7 +144,7 @@ class _MaterialChipScreenState extends State<MaterialChipScreen> with ComponentM
                         4,
                         (index) {
                           return ChoiceChip(
-                            label: Text('label'),
+                            label: const Text('label'),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             selected: tertiaryChoiceChip[index],
                             tooltip: 'tooltip',

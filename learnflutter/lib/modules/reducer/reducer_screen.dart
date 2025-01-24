@@ -31,7 +31,7 @@ class ReducerScreen extends HookWidget {
         Center(
           child: Text(
             "Count: ${counter.state}",
-            style: TextStyle(fontSize: 24),
+            style: const TextStyle(fontSize: 24),
           ),
         ),
         MaterialButton3(

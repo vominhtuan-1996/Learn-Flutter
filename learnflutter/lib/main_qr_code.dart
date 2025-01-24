@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:learnflutter/core/cubit/base_cubit.dart';
 
 class DropWaterRefreshDemo extends StatefulWidget {
+  const DropWaterRefreshDemo({super.key});
+
   @override
   _DropWaterRefreshDemoState createState() => _DropWaterRefreshDemoState();
 }
@@ -43,12 +44,12 @@ class _DropWaterRefreshDemoState extends State<DropWaterRefreshDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Drop Water Refresh Demo'),
+        title: const Text('Drop Water Refresh Demo'),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : CustomScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               slivers: <Widget>[
                 SliverOverlapAbsorber(
                   handle: SliverOverlapAbsorberHandle(),
@@ -67,7 +68,7 @@ class _DropWaterRefreshDemoState extends State<DropWaterRefreshDemo> {
                           ),
                         );
                       } else if (refreshState == RefreshIndicatorMode.refresh) {
-                        return Center(
+                        return const Center(
                           child: SpinKitRipple(
                             color: Colors.blue,
                             size: 50,
@@ -96,7 +97,7 @@ class _DropWaterRefreshDemoState extends State<DropWaterRefreshDemo> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: DropWaterRefreshDemo(),
   ));
 }
@@ -112,7 +113,7 @@ class SliverRefreshControl extends StatelessWidget {
   final RefreshCallback onRefresh;
   final Widget Function(BuildContext, RefreshIndicatorMode, double, double, double) indicatorBuilder;
 
-  const SliverRefreshControl({
+  const SliverRefreshControl({super.key, 
     required this.onRefresh,
     required this.indicatorBuilder,
   });

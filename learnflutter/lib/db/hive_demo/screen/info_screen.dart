@@ -4,6 +4,8 @@ import 'package:learnflutter/db/hive_demo/screen/add_screen.dart';
 import 'package:learnflutter/db/hive_demo/screen/update_screen.dart';
 
 class InfoScreen extends StatefulWidget {
+  const InfoScreen({super.key});
+
   @override
   _InfoScreenState createState() => _InfoScreenState();
 }
@@ -29,21 +31,21 @@ class _InfoScreenState extends State<InfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('People Info'),
+        title: const Text('People Info'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => AddScreen(),
+            builder: (context) => const AddScreen(),
           ),
         ),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: ValueListenableBuilder(
         valueListenable: contactBox.listenable(),
         builder: (context, Box box, widget) {
           if (box.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('Empty'),
             );
           } else {
@@ -67,7 +69,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     subtitle: Text(personData.country),
                     trailing: IconButton(
                       onPressed: () => _deleteInfo(index),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.delete,
                         color: Colors.red,
                       ),

@@ -1,17 +1,16 @@
 import 'package:flutter/widgets.dart';
-import 'package:learnflutter/app/device_dimension.dart';
 
 class SegmentedWidget extends LeafRenderObjectWidget {
   final double splitRatio; // Tỷ lệ phân chia
   final Color color1;
   final Color color2;
 
-  SegmentedWidget({
-    Key? key,
+  const SegmentedWidget({
+    super.key,
     required this.splitRatio,
     required this.color1,
     required this.color2,
-  }) : super(key: key);
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -81,10 +80,10 @@ class SegmentedRenderBox extends RenderBox {
     final Paint paint1 = Paint()..color = _color1;
     final Paint paint2 = Paint()..color = _color2;
     Path path1 = Path();
-    final pointstart = Offset(0, 0);
-    final pointcurve1 = Offset(52, -43);
-    final pointcurve2 = Offset(88, -43);
-    final pointend = Offset(140, 0);
+    const pointstart = Offset(0, 0);
+    const pointcurve1 = Offset(52, -43);
+    const pointcurve2 = Offset(88, -43);
+    const pointend = Offset(140, 0);
     final pointendcurve1 = Offset(pointend.dx + 2, pointend.dy - 3);
     final pointendcurve2 = Offset(pointend.dx + 15, pointend.dy - 2);
     final pointend2 = Offset(pointendcurve2.dx + 15, pointend.dy - 2);

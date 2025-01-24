@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class _DragWidgetState extends State<DragWidget> {
             () => AllowMultipleHorizontalDragGestureRecognizer(),
             (AllowMultipleHorizontalDragGestureRecognizer instance) {
               instance
-                ..onUpdate = (details) {
+                .onUpdate = (details) {
                   x += details.delta.dx;
                   setState(() {});
                 };
@@ -36,7 +35,7 @@ class _DragWidgetState extends State<DragWidget> {
               () => AllowMultipleVerticalDragGestureRecognizer(),
               (AllowMultipleVerticalDragGestureRecognizer instance) {
                 instance
-                  ..onUpdate = (details) {
+                  .onUpdate = (details) {
                     y += details.delta.dy;
                     setState(() {});
                   };
@@ -47,7 +46,7 @@ class _DragWidgetState extends State<DragWidget> {
             width: 100,
             height: 100,
             color: Colors.lightBlue,
-            child: Icon(
+            child: const Icon(
               Icons.games,
               color: Colors.white,
               size: 30,

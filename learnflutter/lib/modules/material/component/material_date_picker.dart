@@ -5,7 +5,7 @@ import 'package:learnflutter/modules/material/material_screen_detail.dart';
 
 class MaterialDatePicker extends StatefulWidget {
   const MaterialDatePicker({super.key, this.restorationId, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
 
   final String? restorationId;
 

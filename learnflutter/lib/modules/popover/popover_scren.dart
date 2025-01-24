@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:popover/popover.dart';
 
 class PopoverExample extends StatelessWidget {
+  const PopoverExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +53,7 @@ class PopoverExample extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  const Button({Key? key}) : super(key: key);
+  const Button({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,7 @@ class Button extends StatelessWidget {
 }
 
 class ListItems extends StatelessWidget {
-  const ListItems({Key? key}) : super(key: key);
+  const ListItems({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,7 @@ class ListItems extends StatelessWidget {
                 ..pop()
                 ..push(
                   MaterialPageRoute<SecondRoute>(
-                    builder: (context) => SecondRoute(),
+                    builder: (context) => const SecondRoute(),
                   ),
                 );
             },
@@ -150,6 +152,8 @@ class ListItems extends StatelessWidget {
 }
 
 class SecondRoute extends StatelessWidget {
+  const SecondRoute({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

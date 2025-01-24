@@ -23,7 +23,7 @@ class FormValidationWidget extends StatelessWidget {
         return LayoutBuilder(
           builder: (context, constraints) {
             return Container(
-              margin: EdgeInsets.only(bottom: 6.0),
+              margin: const EdgeInsets.only(bottom: 6.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class FormValidationWidget extends StatelessWidget {
                   Visibility(
                     visible: listenable.getError(keyListenable) != null && required,
                     child: Container(
-                        padding: EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.only(top: 8),
                         width: double.infinity,
                         child: Text(
                           listenable.getError(keyListenable).toString(),

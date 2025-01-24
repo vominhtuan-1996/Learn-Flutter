@@ -109,13 +109,13 @@ class SharedPreferenceUtils {
 
   static Future<Future<bool>?> putObjectList(String key, List<Object> list) async {
     if (prefs == null) return null;
-    List<String> _dataList = list.map((value) {
+    List<String> dataList = list.map((value) {
       return json.encode(value);
     }).toList();
-    return prefs.setStringList(key, _dataList);
+    return prefs.setStringList(key, dataList);
   }
 
-  static List<T>? getObjList<T>(String key, T f(Map v), {List<T> defValue = const []}) {
+  static List<T>? getObjList<T>(String key, T Function(Map v) f, {List<T> defValue = const []}) {
     if (prefs == null) return null;
     List<Map>? dataList = getObjectList(key);
     List<T> list = dataList!.map((value) {
@@ -130,9 +130,9 @@ class SharedPreferenceUtils {
     if (dataList == null) {
       return [];
     }
-    return dataList?.map((value) {
-      Map _dataMap = json.decode(value);
-      return _dataMap;
+    return dataList.map((value) {
+      Map dataMap = json.decode(value);
+      return dataMap;
     }).toList();
   }
 }

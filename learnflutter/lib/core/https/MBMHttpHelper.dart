@@ -117,7 +117,7 @@ Future downloadFile(
       final temp = getBase64FileExtension(result);
       await file.writeAsBytes(response.bodyBytes);
     } else {
-      filePath = 'Error code: ' + response.statusCode.toString();
+      filePath = 'Error code: ${response.statusCode}';
     }
   } catch (ex) {
     filePath = 'Can not fetch url';

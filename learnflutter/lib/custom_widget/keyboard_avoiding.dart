@@ -6,7 +6,7 @@ class KeyboardAvoiding extends StatelessWidget {
   final Duration duration;
   final double kFactor;
 
-  const KeyboardAvoiding({
+  const KeyboardAvoiding({super.key, 
     required this.child,
     this.curve = Curves.easeInOut,
     this.duration = const Duration(milliseconds: 200),

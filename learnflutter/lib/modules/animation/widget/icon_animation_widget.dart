@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
 class IconAnimationWidget extends StatefulWidget {
   const IconAnimationWidget({super.key, this.isRotate = false, this.icon = Icons.favorite_sharp});
@@ -18,11 +17,11 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
     if (widget.isRotate) {
       _animationController.repeat(reverse: true);
-      _animationController.duration = Duration(milliseconds: 600);
+      _animationController.duration = const Duration(milliseconds: 600);
     }
 
     _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);
@@ -76,7 +75,7 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
             child: RotationTransition(
               turns: _sizeAnimation,
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.notifications_on_rounded,
                   size: 60,
                   color: Colors.red,

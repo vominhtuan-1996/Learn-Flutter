@@ -90,11 +90,11 @@ extension DateCopyWith on DateTime {
   // ignore: unused_element
 
   String weekdayFormat(BuildContext context) {
-    final _weekDayformat = DateFormat(
+    final weekDayformat = DateFormat(
       'E',
       Localizations.localeOf(context).languageCode,
     );
-    return _weekDayformat.format(this).capitalize.replaceAll('.', '');
+    return weekDayformat.format(this).capitalize.replaceAll('.', '');
   }
 
   DateTime copyWith({

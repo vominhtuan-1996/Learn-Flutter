@@ -39,7 +39,7 @@ class AppColors {
   static const Color colorButtonGetPassword = Color(0xFFf5c697);
 
   static const Color primary = Color(0xFFFDA758);
-  static Color primaryLight = Color(0xFFFDA758).withOpacity(0.2);
+  static Color primaryLight = const Color(0xFFFDA758).withOpacity(0.2);
   static const Color primaryText = Color(0xFF795675);
   static const Color secondaryDark = Color(0xFF0D1748);
   static const Color defaultBackground = Color(0xFFFFF3E9);

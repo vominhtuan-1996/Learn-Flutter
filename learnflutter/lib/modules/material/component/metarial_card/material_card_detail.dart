@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/component/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/metarial_card/horizontal_card_widget.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialCardDetail extends StatefulWidget {
   const MaterialCardDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialCardDetail> createState() => _MaterialCardDetailState();
 }
@@ -43,118 +42,120 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                 children: List.generate(
                   3,
                   (index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.purple, width: 2.0),
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFCFD4FF).withOpacity(0.06),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(-3, 3),
-                          ),
-                        ],
-                      ),
-                      width: context.mediaQuery.size.width - DeviceDimension.padding * 2,
-                      // height: context.mediaQuery.size.width - DeviceDimension.padding * 2,
-                      child: Column(
-                        children: [
-                          Container(
-                            color: Colors.white,
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
-                              leading: const CircleAvatar(
-                                backgroundColor: Colors.purple,
-                                child: Text(
-                                  'A',
-                                  style: TextStyle(color: Colors.white),
+                    return AnimatedTapButtonBuilder(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.purple, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFCFD4FF).withOpacity(0.06),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(-3, 3),
+                            ),
+                          ],
+                        ),
+                        width: context.mediaQuery.size.width - DeviceDimension.padding * 2,
+                        // height: context.mediaQuery.size.width - DeviceDimension.padding * 2,
+                        child: Column(
+                          children: [
+                            Container(
+                              color: Colors.white,
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                                leading: const CircleAvatar(
+                                  backgroundColor: Colors.purple,
+                                  child: Text(
+                                    'A',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
+                                title: Text(
+                                  'Header',
+                                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
+                                trailing: const Icon(Icons.more_vert_sharp),
                               ),
-                              title: Text(
-                                'Header',
-                                style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFCFD4FF).withOpacity(0.06),
+                                    spreadRadius: 2,
+                                    blurRadius: 2,
+                                    offset: const Offset(-3, 3),
+                                  ),
+                                ],
                               ),
-                              subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
-                              trailing: Icon(Icons.more_vert_sharp),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFFCFD4FF).withOpacity(0.06),
-                                  spreadRadius: 2,
-                                  blurRadius: 2,
-                                  offset: const Offset(-3, 3),
-                                ),
-                              ],
-                            ),
-                            child: SizedBox(
-                              width: context.mediaQuery.size.width - DeviceDimension.padding * 2,
-                              height: context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
-                            ),
-                          ),
-                          Container(
-                            color: Colors.white,
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
-                              title: Text(
-                                'Title',
-                                style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                              child: SizedBox(
+                                width: context.mediaQuery.size.width - DeviceDimension.padding * 2,
+                                height: context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
                               ),
-                              subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
-                            color: Colors.white,
-                            child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                MaterialButton3(
-                                  disible: false,
-                                  backgoundColor: Colors.white,
-                                  borderColor: Colors.grey,
-                                  borderRadius: DeviceDimension.padding,
-                                  shadowColor: AppColors.grey,
-                                  shadowOffset: Offset.zero,
-                                  textAlign: TextAlign.center,
-                                  onTap: () async {
-                                    print('object');
-                                  },
-                                  type: MaterialButtonType.commonbutton,
-                                  lableText: 'Enabled',
-                                  labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                            Container(
+                              color: Colors.white,
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                                title: Text(
+                                  'Title',
+                                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
-                                  width: DeviceDimension.padding,
-                                ),
-                                MaterialButton3(
-                                  disible: false,
-                                  backgoundColor: Colors.purple,
-                                  borderColor: Colors.grey,
-                                  borderRadius: DeviceDimension.padding,
-                                  shadowColor: AppColors.grey,
-                                  shadowOffset: Offset.zero,
-                                  textAlign: TextAlign.center,
-                                  onTap: () async {
-                                    print('object');
-                                  },
-                                  type: MaterialButtonType.commonbutton,
-                                  lableText: 'Enabled',
-                                  labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.primary),
-                                ),
-                              ],
+                                subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
+                              ),
                             ),
-                          )
-                        ],
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                              color: Colors.white,
+                              child: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  MaterialButton3(
+                                    disible: false,
+                                    backgoundColor: Colors.white,
+                                    borderColor: Colors.grey,
+                                    borderRadius: DeviceDimension.padding,
+                                    shadowColor: AppColors.grey,
+                                    shadowOffset: Offset.zero,
+                                    textAlign: TextAlign.center,
+                                    onTap: () async {
+                                      print('object');
+                                    },
+                                    type: MaterialButtonType.commonbutton,
+                                    lableText: 'Enabled',
+                                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                                  ),
+                                  SizedBox(
+                                    width: DeviceDimension.padding,
+                                  ),
+                                  MaterialButton3(
+                                    disible: false,
+                                    backgoundColor: Colors.purple,
+                                    borderColor: Colors.grey,
+                                    borderRadius: DeviceDimension.padding,
+                                    shadowColor: AppColors.grey,
+                                    shadowOffset: Offset.zero,
+                                    textAlign: TextAlign.center,
+                                    onTap: () async {
+                                      print('object');
+                                    },
+                                    type: MaterialButtonType.commonbutton,
+                                    lableText: 'Enabled',
+                                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.primary),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -167,7 +168,7 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                 children: List.generate(
                   3,
                   (index) {
-                    return HozizantalCardWidget();
+                    return const HozizantalCardWidget();
                   },
                 ),
               ),
@@ -177,7 +178,7 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding / 2),
-              child: Text('Building blocks'),
+              child: const Text('Building blocks'),
             ),
             SizedBox(
               height: context.mediaQuery.size.height / 2,

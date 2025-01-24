@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
@@ -10,7 +8,7 @@ import 'package:learnflutter/app/app_box_decoration.dart';
 
 class MaterialBottomAppBar extends StatefulWidget {
   const MaterialBottomAppBar({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialBottomAppBar> createState() => _MaterialBottomAppBarState();
 }
@@ -65,7 +63,7 @@ class _MaterialBottomAppBarState extends State<MaterialBottomAppBar> with Compon
                             height: 32,
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           right: 0,
                           top: 0,
                           child: Badge(
@@ -98,7 +96,7 @@ class _MaterialBottomAppBarState extends State<MaterialBottomAppBar> with Compon
                             height: 32,
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           right: 0,
                           top: 0,
                           child: Badge(
@@ -131,7 +129,7 @@ class _MaterialBottomAppBarState extends State<MaterialBottomAppBar> with Compon
                             height: 32,
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           right: 0,
                           top: 0,
                           child: Badge(
@@ -164,7 +162,7 @@ class _MaterialBottomAppBarState extends State<MaterialBottomAppBar> with Compon
                             height: 32,
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           right: 0,
                           top: 0,
                           child: Badge(

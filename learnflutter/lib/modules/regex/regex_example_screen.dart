@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/utils_helper/input_formatter/input_formatter.dart';
-import 'package:learnflutter/utils_helper/regex/regex.dart';
-import 'package:learnflutter/custom_widget/custom_textfield.dart';
-import 'package:learnflutter/utils_helper/datetime_utils.dart';
 import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
 
 class RegexExampleScreen extends StatefulWidget {
   const RegexExampleScreen({super.key});

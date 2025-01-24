@@ -8,11 +8,11 @@ class ItemWidget extends StatelessWidget {
   final VoidCallback onTap;
   final bool selected;
   const ItemWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.onTap,
     required this.selected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

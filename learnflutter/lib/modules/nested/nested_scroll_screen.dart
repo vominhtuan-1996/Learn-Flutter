@@ -18,7 +18,7 @@ class NestedScrollViewExample extends StatelessWidget {
               title: Container(
                 color: Colors.red,
                 height: 100,
-                child: Text('title'),
+                child: const Text('title'),
               ),
               floating: true,
               expandedHeight: 360.0,

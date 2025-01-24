@@ -1,8 +1,9 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 
 class UtilsHelper {
@@ -80,5 +81,27 @@ class UtilsHelper {
   static double getTextWidth({required String text, required TextStyle textStyle}) {
     final textPainter = TextPainter(textAlign: TextAlign.center, textDirection: TextDirection.ltr, text: TextSpan(text: text, style: textStyle))..layout();
     return textPainter.size.width;
+  }
+
+  static Future<String> downloadFile(String savePath, StreamController<double> stream) async {
+    String path = '$savePath/${DateTime.now().millisecondsSinceEpoch}.png';
+    try {
+      final resut = await dio.download(
+        'https://sampletestfile.com/wp-content/uploads/2023/08/11.5-MB.png',
+        path,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            stream.sink.add((received / total));
+          }
+        },
+      );
+      if (resut.statusCode == 0) {
+        stream.close();
+        return path;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return path;
   }
 }

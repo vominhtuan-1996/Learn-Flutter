@@ -1,12 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
-import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
 import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
 
 class SmartRefreshScreen extends StatefulWidget {
   const SmartRefreshScreen({super.key});
@@ -27,7 +22,7 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
   }
 
   List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     setState(() {

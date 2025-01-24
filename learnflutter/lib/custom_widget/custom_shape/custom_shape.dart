@@ -26,12 +26,12 @@ class CustomShapeBorder extends ShapeBorder {
 
   @override
   EdgeInsetsGeometry get dimensions {
-    return EdgeInsets.all(0);
+    return const EdgeInsets.all(0);
   }
 
   @override
   ShapeBorder scale(double t) {
-    return CustomShapeBorder();
+    return const CustomShapeBorder();
   }
 
   @override

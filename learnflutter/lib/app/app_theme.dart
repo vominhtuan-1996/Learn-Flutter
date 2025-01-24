@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/app_text_style.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/main.dart';
-import 'package:learnflutter/modules/material/component/material_navigation_drawer_screen.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
 import 'package:learnflutter/app/app_colors.dart';
 
@@ -76,18 +74,18 @@ class AppThemes {
   static OutlinedBorder? shapeBorderSearchBar(Set<WidgetState> states) {
     if (states.contains(WidgetState.focused)) {
       return RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         side: const BorderSide(
           color: AppColors.primary,
-          width: 1,
+          width: 1.6,
         ),
       );
     }
     return RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       side: const BorderSide(
-        color: AppColors.white,
-        width: 1,
+        color: AppColors.lightGrey,
+        width: 1.6,
       ),
     );
   }
@@ -322,7 +320,7 @@ class AppThemes {
           color: WidgetStateProperty.resolveWith(chipThemeColor),
           deleteIconColor: AppColors.red,
           disabledColor: AppColors.red.lighter,
-          labelPadding: EdgeInsets.symmetric(horizontal: 8),
+          labelPadding: const EdgeInsets.symmetric(horizontal: 8),
           labelStyle: AppTextStyles.themeBodyMedium,
           shape: shapeBorderChipThemer(),
           side: const BorderSide(width: 2, color: AppColors.primary),
@@ -349,11 +347,11 @@ class AppThemes {
           onPrimary: AppColors.primaryText, //Màu sắc Văn bản và biểu tượng
           primaryContainer: AppColors.yellowBackground, // Màu tô nổi bật trên bề mặt, dành cho các thành phần chính
           onPrimaryContainer: AppColors.grey, //Văn bản và biểu tượng đối với thành phần chính
-          secondary: Color(0xFF1D192B), //Màu sắc ít nổi bật hơn trên bề mặt
+          secondary: const Color(0xFF1D192B), //Màu sắc ít nổi bật hơn trên bề mặt
           onSecondary: AppColors.blue.withOpacity(0.8), //Màu sắc Văn bản và biểu tượng
           secondaryContainer: AppColors.blue.withOpacity(0.6), // Màu tô ít nổi bật trên bề mặt, dành cho các thành phần chính
           onSecondaryContainer: AppColors.blue.withOpacity(0.4), //Văn bản và biểu tượng đối với thành phần chính
-          tertiary: Color(0xFFFFD8E4), // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
+          tertiary: const Color(0xFFFFD8E4), // Màu sắc thứ 3 được nhấn mạnh trên bề mặt
           onTertiary: AppColors.blue.withOpacity(0.8), //Màu sắc Văn bản và biểu tượng
           tertiaryContainer: AppColors.blue.withOpacity(0.6), // Màu tô ít nổi bật thứ 3 trên bề mặt, dành cho các thành phần chính
           onTertiaryContainer: AppColors.blue.withOpacity(0.4), //Màu sắc Văn bản và biểu tượng
@@ -520,7 +518,7 @@ class AppThemes {
         ),
         drawerTheme: DrawerThemeData(
           backgroundColor: AppColors.backgroundGrey,
-          surfaceTintColor: Color(0xFF6750A4),
+          surfaceTintColor: const Color(0xFF6750A4),
           width: context.mediaQuery.size.width * 0.7,
         ),
         searchViewTheme: const SearchViewThemeData(

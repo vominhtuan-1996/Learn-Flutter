@@ -6,13 +6,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart' hide RefreshIndicatorState, RefreshIndicator;
-import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
-import '../internals/indicator_wrap.dart';
 import 'package:flutter/cupertino.dart';
-import '../smart_refresher.dart';
 
 /// QQ ios refresh  header effect
 class WaterDropHeader extends RefreshIndicator {
@@ -32,10 +29,10 @@ class WaterDropHeader extends RefreshIndicator {
   final Color waterDropColor;
 
   const WaterDropHeader({
-    Key? key,
+    super.key,
     this.refresh,
     this.complete,
-    Duration completeDuration = const Duration(milliseconds: 200),
+    super.completeDuration = const Duration(milliseconds: 200),
     this.failed,
     this.waterDropColor = Colors.grey,
     this.idleIcon = const Icon(
@@ -43,7 +40,7 @@ class WaterDropHeader extends RefreshIndicator {
       size: 15,
       color: Colors.white,
     ),
-  }) : super(key: key, height: 60.0, completeDuration: completeDuration, refreshStyle: RefreshStyle.UnFollow);
+  }) : super(height: 60.0, refreshStyle: RefreshStyle.UnFollow);
 
   @override
   State<StatefulWidget> createState() {
@@ -128,7 +125,7 @@ class _WaterDropHeaderState extends RefreshIndicatorState<WaterDropHeader> with 
               Container(
                 width: 15.0,
               ),
-              Text((RefreshLocalizations.of(context)?.currentLocalization ?? EnRefreshString()).refreshFailedText!, style: TextStyle(color: Colors.grey))
+              Text((RefreshLocalizations.of(context)?.currentLocalization ?? EnRefreshString()).refreshFailedText!, style: const TextStyle(color: Colors.grey))
             ],
           );
     } else if (mode == RefreshStatus.idle || mode == RefreshStatus.canRefresh) {
@@ -194,12 +191,12 @@ class _QqPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double originH = 20.0;
+    const double originH = 20.0;
     final double middleW = size.width / 2;
 
-    final double circleSize = 12.0;
+    const double circleSize = 12.0;
 
-    final double scaleRatio = 0.1;
+    const double scaleRatio = 0.1;
 
     final double offset = value;
 
@@ -215,7 +212,7 @@ class _QqPainter extends CustomPainter {
     path.cubicTo(middleW + circleSize - value * scaleRatio * 2, originH + offset, middleW + circleSize - value * scaleRatio, originH + offset / 5, middleW + circleSize, originH);
     //draw upper circle
     path.moveTo(middleW - circleSize, originH);
-    path.arcToPoint(Offset(middleW + circleSize, originH), radius: Radius.circular(circleSize));
+    path.arcToPoint(Offset(middleW + circleSize, originH), radius: const Radius.circular(circleSize));
 
     //draw lowwer circle
     path.moveTo(middleW + circleSize - value * scaleRatio * 2, originH + offset);

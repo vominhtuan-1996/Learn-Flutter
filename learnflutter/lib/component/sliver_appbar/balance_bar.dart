@@ -7,7 +7,7 @@ class BalanceBar extends StatelessWidget {
   final AlignmentGeometry? contentAlignment;
   final EdgeInsetsGeometry? contentPadding;
 
-  static const double height = 35;
+  static const double height = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -16,26 +16,33 @@ class BalanceBar extends StatelessWidget {
       alignment: contentAlignment,
       padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 8),
       decoration: decoration,
-      child: const Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(Icons.remove_red_eye_outlined, size: 16),
-          SizedBox(width: 8),
-          Text(
-            '9.999VND',
-            style: TextStyle(fontWeight: FontWeight.w800),
-          ),
-          Spacer(),
-          Text(
-            'Funds',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(width: 8),
-          Icon(Icons.account_balance_rounded, size: 14),
-          SizedBox(width: 4),
-          Icon(Icons.arrow_forward_ios_rounded, size: 12),
-        ],
-      ),
+      child: Text('data'),
+      //  Row(
+      //     crossAxisAlignment: CrossAxisAlignment.center,
+      //     children: List.generate(2, (index) {
+      //       return Text(
+      //         '9.999VND',
+      //         style: TextStyle(fontWeight: FontWeight.w800),
+      //       );
+      //     }))
+      // [
+      //   Icon(Icons.remove_red_eye_outlined, size: 16),
+      //   SizedBox(width: 8),
+      //   Text(
+      //     '9.999VND',
+      //     style: TextStyle(fontWeight: FontWeight.w800),
+      //   ),
+      //   Spacer(),
+      //   Text(
+      //     'Funds',
+      //     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+      //   ),
+      //   SizedBox(width: 8),
+      //   Icon(Icons.account_balance_rounded, size: 14),
+      //   SizedBox(width: 4),
+      //   Icon(Icons.arrow_forward_ios_rounded, size: 12),
+      // ],
+      // ),
     );
   }
 }

@@ -12,7 +12,7 @@ class _NotificationScrollScreenState extends State<NotificationScrollScreen> {
   void _scrollToTop() {
     widget._scrollController.animateTo(
       0.0, // Vị trí đầu danh sách
-      duration: Duration(milliseconds: 500), // Thời gian cuộn
+      duration: const Duration(milliseconds: 500), // Thời gian cuộn
       curve: Curves.easeInOut, // Hiệu ứng cuộn
     );
   }
@@ -42,9 +42,7 @@ class _NotificationScrollScreenState extends State<NotificationScrollScreen> {
             child: ListView.builder(
               controller: widget._scrollController,
               itemBuilder: (context, index) {
-                return Container(
-                  child: Text(index.toString()),
-                );
+                return Text(index.toString());
               },
               itemCount: 500,
             ),
@@ -52,6 +50,5 @@ class _NotificationScrollScreenState extends State<NotificationScrollScreen> {
         },
       ),
     );
-    ;
   }
 }

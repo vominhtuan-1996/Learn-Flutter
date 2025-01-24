@@ -12,14 +12,13 @@ import '../smart_refresher.dart';
 ///  Render header sliver widget
 class SliverRefresh extends SingleChildRenderObjectWidget {
   const SliverRefresh({
-    Key? key,
+    super.key,
     this.paintOffsetY,
     this.refreshIndicatorLayoutExtent = 0.0,
     this.floating = false,
-    Widget? child,
+    super.child,
     this.refreshStyle,
-  })  : assert(refreshIndicatorLayoutExtent >= 0.0),
-        super(key: key, child: child);
+  })  : assert(refreshIndicatorLayoutExtent >= 0.0);
 
   /// The amount of space the indicator should occupy in the sliver in a
   /// resting state when in the refreshing mode.
@@ -182,7 +181,7 @@ class RenderSliverRefresh extends RenderSliverSingleBoxAdapter {
     if (_updateFlag) {
       // ignore_for_file: INVALID_USE_OF_PROTECTED_MEMBER
       // ignore_for_file: INVALID_USE_OF_VISIBLE_FOR_TESTING_MEMBER
-      Scrollable.of(context)!.position.activity!.applyNewDimensions();
+      Scrollable.of(context).position.activity!.applyNewDimensions();
       _updateFlag = false;
     }
     // The new layout extent this sliver should now have.
@@ -210,11 +209,12 @@ class RenderSliverRefresh extends RenderSliverSingleBoxAdapter {
             maxExtent: Math.max(0, overscrolledExtent + layoutExtent)),
         parentUsesSize: true,
       );
-    } else
+    } else {
       child!.layout(
         constraints.asBoxConstraints(),
         parentUsesSize: true,
       );
+    }
     final double boxExtent = (constraints.axisDirection == AxisDirection.up ||
             constraints.axisDirection == AxisDirection.down)
         ? child!.size.height
@@ -313,15 +313,15 @@ class SliverLoading extends SingleChildRenderObjectWidget {
   /// when not full one page,whether it should follow content
   final bool? shouldFollowContent;
 
-  SliverLoading({
-    Key? key,
+  const SliverLoading({
+    super.key,
     this.mode,
     this.floating,
     this.shouldFollowContent,
     this.layoutExtent,
     this.hideWhenNotFull,
-    Widget? child,
-  }) : super(key: key, child: child);
+    super.child,
+  });
 
   @override
   RenderSliverLoading createRenderObject(BuildContext context) {
@@ -506,9 +506,9 @@ class RenderSliverLoading extends RenderSliverSingleBoxAdapter {
 class SliverRefreshBody extends SingleChildRenderObjectWidget {
   /// Creates a sliver that contains a single box widget.
   const SliverRefreshBody({
-    Key? key,
-    Widget? child,
-  }) : super(key: key, child: child);
+    super.key,
+    super.child,
+  });
 
   @override
   RenderSliverRefreshBody createRenderObject(BuildContext context) =>
@@ -518,8 +518,8 @@ class SliverRefreshBody extends SingleChildRenderObjectWidget {
 class RenderSliverRefreshBody extends RenderSliverSingleBoxAdapter {
   /// Creates a [RenderSliver] that wraps a [RenderBox].
   RenderSliverRefreshBody({
-    RenderBox? child,
-  }) : super(child: child);
+    super.child,
+  });
 
   @override
   void performLayout() {

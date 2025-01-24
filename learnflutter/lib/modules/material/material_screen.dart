@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/app/device_dimension.dart';
@@ -9,8 +8,8 @@ import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/app/app_colors.dart';
 
-class RoouterMaterialModel {
-  RoouterMaterialModel(this.title, this.router, this.description);
+class RouterMaterialModel {
+  RouterMaterialModel(this.title, this.router, this.description);
 
   final String title;
   final String description;
@@ -26,82 +25,77 @@ class MaterialScreen extends StatefulWidget {
 class MaterialScreenState extends State<MaterialScreen> with TickerProviderStateMixin {
   DateTime selectedDate = DateTime.now();
   List components = [
-    RoouterMaterialModel(
+    RouterMaterialModel(
       'Badges',
       Routes.materialBadge,
       'Badges are used to convey dynamic information, such as a count or status. A badge can include text, labels, or numbers. ',
     ),
-    RoouterMaterialModel(
+    RouterMaterialModel(
       'Bottom app bars',
       Routes.materialBottomAppbar,
       'Bottom app bars display navigation and key actions at the bottom of a screen.',
     ),
-    RoouterMaterialModel(
+    RouterMaterialModel(
       'Bottom sheets',
       Routes.materialBottomSheet,
       'Bottom sheets are surfaces containing supplementary content, anchored to the bottom of the screen.',
     ),
-    RoouterMaterialModel(
+    RouterMaterialModel(
       'Buttons',
       Routes.materialButton,
       'Buttons help people take actions, such as sending an email, sharing a document, or liking a comment.',
     ),
-    RoouterMaterialModel(
+    RouterMaterialModel(
       'Cards',
       Routes.materialCard,
       'Cards are versatile containers, holding anything from images to headlines, supporting text, buttons, lists, and other components.',
     ),
-    RoouterMaterialModel('Carousel', Routes.materialCarousel, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
-    RoouterMaterialModel('Checkboxes', Routes.materialCheckbox,
+    RouterMaterialModel('Carousel', Routes.materialCarousel, 'Carousels contains a collection of items that can be scrolled on and off the screen.'),
+    RouterMaterialModel('Checkboxes', Routes.materialCheckbox,
         'Checkboxes allow users to select one or more items from a set and can be used to turn an option on or off. They’re a kind of selection control that helps users make a choice from a set of options.'),
-    RoouterMaterialModel('Chips', Routes.materialChip, 'Chips help people enter information, make selections, filter content, or trigger actions.'),
-    RoouterMaterialModel(
+    RouterMaterialModel('Chips', Routes.materialChip, 'Chips help people enter information, make selections, filter content, or trigger actions.'),
+    RouterMaterialModel(
       'Date picker',
       Routes.materialDatePicker,
       'Date pickers let users select a date, or a range of dates.',
     ),
-    RoouterMaterialModel('Dialogs', Routes.materialDialog,
+    RouterMaterialModel('Dialogs', Routes.materialDialog,
         'Dialogs provide important prompts in a user flow. They can require an action, communicate information for making decisions, or help users accomplish a focused task.'),
-    RoouterMaterialModel('Dividers', Routes.materialDivider, 'A divider is a thin line used to group content in lists and layouts.'),
-    RoouterMaterialModel('Floating action buttons (FAB)', Routes.materialFloatingButton, 'FABs help people take primary actions. They’re used to represent the most important action on a screen.'),
-    RoouterMaterialModel('Icon buttons', Routes.datetimePickerScreen, 'Icon buttons help people take supplementary actions with a single tap.'),
-    RoouterMaterialModel('Lists', Routes.datetimePickerScreen, 'Lists are continuous, vertical indexes of text and images.'),
-    RoouterMaterialModel('Menus', Routes.datetimePickerScreen,
+    RouterMaterialModel('Dividers', Routes.materialDivider, 'A divider is a thin line used to group content in lists and layouts.'),
+    RouterMaterialModel('Floating action buttons (FAB)', Routes.materialFloatingButton, 'FABs help people take primary actions. They’re used to represent the most important action on a screen.'),
+    RouterMaterialModel('Icon buttons', Routes.datetimePickerScreen, 'Icon buttons help people take supplementary actions with a single tap.'),
+    RouterMaterialModel('Lists', Routes.datetimePickerScreen, 'Lists are continuous, vertical indexes of text and images.'),
+    RouterMaterialModel('Menus', Routes.materialMenu,
         'Menus display a list of choices on a temporary surface. They appear when users interact with a button, action, or other control.\n For Android the target minimum is always 48dp minimum.'),
-    RoouterMaterialModel('Navigation bars', Routes.datetimePickerScreen,
+    RouterMaterialModel('Navigation bars', Routes.datetimePickerScreen,
         'Navigation bars offer a persistent, convenient way to switch between primary destinations in an app. 3-5 destinations is the recommended range.'),
-    RoouterMaterialModel('Navigation drawer', Routes.materialNavigationDrawer, 'Navigation drawers provide access to destinations in your app.'),
-    RoouterMaterialModel('Navigation rail', Routes.datetimePickerScreen, 'Navigation rails provide access to primary destinations in your app, particularly in tablet and desktop screens.'),
-    RoouterMaterialModel('Progress indicators', Routes.materialProgressIndicators,
+    RouterMaterialModel('Navigation drawer', Routes.materialNavigationDrawer, 'Navigation drawers provide access to destinations in your app.'),
+    RouterMaterialModel('Navigation rail', Routes.datetimePickerScreen, 'Navigation rails provide access to primary destinations in your app, particularly in tablet and desktop screens.'),
+    RouterMaterialModel('Progress indicators', Routes.materialProgressIndicators,
         'Progress indicators inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates. They communicate an app’s state and indicate available actions, such as whether users can navigate away from the current screen.'),
-    RoouterMaterialModel('Radio buttons', Routes.datetimePickerScreen,
+    RouterMaterialModel('Radio buttons', Routes.materialRadioButton,
         'Radio buttons allow users to select one option from a set. They’re a selection control that often appears when users are asked to make decisions or select a choice from options.'),
-    RoouterMaterialModel('Search', Routes.materialSearchBar, 'Search allows users to enter a keyword or phrase and get relevant information. It’s an alternative to other forms of navigation.'),
-    RoouterMaterialModel('Segmented buttons: outlined', Routes.datetimePickerScreen, 'Segmented buttons help people select options, switch views, and sort elements. '),
-    RoouterMaterialModel('Side Sheets', Routes.datetimePickerScreen,
+    RouterMaterialModel('Search', Routes.materialSearchBar, 'Search allows users to enter a keyword or phrase and get relevant information. It’s an alternative to other forms of navigation.'),
+    RouterMaterialModel('Segmented buttons: outlined', Routes.datetimePickerScreen, 'Segmented buttons help people select options, switch views, and sort elements. '),
+    RouterMaterialModel('Side Sheets', Routes.datetimePickerScreen,
         'Side sheets are surfaces containing supplementary content or actions to support tasks as part of a flow. They are typically anchored on the right edge of larger screens like tablets and desktops.'),
-    RoouterMaterialModel('Sliders', Routes.materialSlider, 'Sliders allow users to make selections from a range of values.'),
-    RoouterMaterialModel('Snackbars', Routes.datetimePickerScreen, 'Snackbars provide brief messages about app processes at the bottom of the screen.'),
-    RoouterMaterialModel('Switch', Routes.materialSwitch, 'Switches toggle the state of a single item on or off.'),
-    RoouterMaterialModel('Tabs', Routes.datetimePickerScreen, 'Tabs organize and support navigation between groups of related content at the same level of hierarchy.'),
-    RoouterMaterialModel('Text fields', Routes.materialTextField, 'Text fields allow users to enter text into a UI. They typically appear in forms and dialogs.'),
-    RoouterMaterialModel(
+    RouterMaterialModel('Sliders', Routes.materialSlider, 'Sliders allow users to make selections from a range of values.'),
+    RouterMaterialModel('Snackbars', Routes.datetimePickerScreen, 'Snackbars provide brief messages about app processes at the bottom of the screen.'),
+    RouterMaterialModel('Switch', Routes.materialSwitch, 'Switches toggle the state of a single item on or off.'),
+    RouterMaterialModel('Tabs', Routes.datetimePickerScreen, 'Tabs organize and support navigation between groups of related content at the same level of hierarchy.'),
+    RouterMaterialModel('Text fields', Routes.materialTextField, 'Text fields allow users to enter text into a UI. They typically appear in forms and dialogs.'),
+    RouterMaterialModel(
       'Time picker',
       Routes.materialTimePicker,
       'Time pickers help users select and set a specific time.',
     ),
-    RoouterMaterialModel('Tooltips', Routes.datetimePickerScreen, 'Tooltips are informative, specific, and action-oriented text labels that provide contextual support'),
-    RoouterMaterialModel('Top app bars', Routes.datetimePickerScreen, 'Top app bars display information and actions at the top of a screen, such as the page title and shortcuts to actions.'),
+    RouterMaterialModel('Tooltips', Routes.datetimePickerScreen, 'Tooltips are informative, specific, and action-oriented text labels that provide contextual support'),
+    RouterMaterialModel('Top app bars', Routes.datetimePickerScreen, 'Top app bars display information and actions at the top of a screen, such as the page title and shortcuts to actions.'),
   ];
   bool light = true;
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -131,7 +125,7 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
             children: List.generate(
               components.length,
               (index) {
-                RoouterMaterialModel model = components[index];
+                RouterMaterialModel model = components[index];
                 return MaterialButton3(
                   backgoundColor: AppColors.white,
                   borderColor: AppColors.white,

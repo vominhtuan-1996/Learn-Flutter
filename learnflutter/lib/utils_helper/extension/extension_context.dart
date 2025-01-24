@@ -42,4 +42,14 @@ extension ExtensionBuildContext on BuildContext {
   ColorScheme get colorScheme {
     return Theme.of(this).colorScheme;
   }
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(this).removeCurrentSnackBar();
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 }

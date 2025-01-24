@@ -3,10 +3,12 @@ import 'package:learnflutter/modules/form_validation/manager/form_validation_man
 import 'package:learnflutter/modules/form_validation/widget/form_validation_widget.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -99,7 +101,7 @@ class FormValidationDemo2State extends State<FormValidationDemo2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Form Validation Demo 2'),
+        title: const Text('Form Validation Demo 2'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -166,7 +168,7 @@ class FormValidationDemo2State extends State<FormValidationDemo2> {
                 keyListenable: 'accImaes',
                 required: true,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ListenableBuilder(
                 listenable: validationManager,
                 builder: (context, _) {
@@ -176,7 +178,7 @@ class FormValidationDemo2State extends State<FormValidationDemo2> {
                         // _submitForm();
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   );
                 },
               ),
@@ -192,7 +194,7 @@ class FormValidationDemo extends StatelessWidget {
   final FormValidationManager validationManager = FormValidationManager();
   List? listImage = [];
   List? listSelected = [];
-  FormValidationDemo() {
+  FormValidationDemo({super.key}) {
     List.generate(
       5,
       (index) {
@@ -284,7 +286,7 @@ class FormValidationDemo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Form Validation Demo'),
+        title: const Text('Form Validation Demo'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -362,7 +364,7 @@ class FormValidationDemo extends StatelessWidget {
                   title: "selected",
                   required: true,
                   keyListenable: 'selected'),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ListenableBuilder(
                 listenable: validationManager,
                 builder: (context, _) {
@@ -372,7 +374,7 @@ class FormValidationDemo extends StatelessWidget {
                         _submitForm();
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   );
                 },
               ),

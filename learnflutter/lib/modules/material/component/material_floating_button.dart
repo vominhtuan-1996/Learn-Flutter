@@ -1,18 +1,13 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
 
 class MaterialFloatingButtonDetail extends StatefulWidget {
   const MaterialFloatingButtonDetail({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialFloatingButtonDetail> createState() => _MaterialFloatingButtonDetailState();
 }
@@ -64,11 +59,12 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            mini: true,
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
+                            // mini: true,
                             backgroundColor: context.colorScheme.onSurface,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -87,11 +83,12 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            mini: true,
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
+                            // mini: true,
                             backgroundColor: context.colorScheme.primary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -110,11 +107,12 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            mini: true,
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
+                            // mini: true,
                             backgroundColor: context.colorScheme.secondary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -133,11 +131,12 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            mini: true,
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
+                            // mini: true,
                             backgroundColor: context.colorScheme.tertiary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -173,10 +172,11 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
                             backgroundColor: context.colorScheme.onSurface,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -195,10 +195,11 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
                             backgroundColor: context.colorScheme.primary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -217,10 +218,11 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                       children: List.generate(
                         4,
                         (index) {
-                          return FloatingActionButton(
-                            child: Icon(Icons.edit),
+                          return FloatingActionButton.small(
                             backgroundColor: context.colorScheme.secondary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -240,9 +242,10 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton(
-                            child: Icon(Icons.edit),
                             backgroundColor: context.colorScheme.tertiary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -279,9 +282,10 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.large(
-                            child: Icon(Icons.edit),
                             backgroundColor: context.colorScheme.onSurface,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -301,9 +305,10 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.large(
-                            child: Icon(Icons.edit),
                             backgroundColor: context.colorScheme.primary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -323,9 +328,10 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.large(
-                            child: Icon(Icons.edit),
                             backgroundColor: context.colorScheme.secondary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -345,9 +351,10 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.large(
-                            child: Icon(Icons.edit),
                             backgroundColor: context.colorScheme.tertiary,
                             onPressed: () {},
+                            heroTag: DateTime.timestamp(),
+                            child: const Icon(Icons.edit),
                           );
                         },
                       ),
@@ -384,8 +391,9 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.extended(
-                            label: Text('Label'),
-                            icon: Icon(Icons.edit),
+                            label: const Text('Label'),
+                            icon: const Icon(Icons.edit),
+                            heroTag: DateTime.timestamp(),
                             backgroundColor: context.colorScheme.onSurface,
                             onPressed: () {},
                           );
@@ -407,8 +415,9 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.extended(
-                            label: Text('Label'),
-                            icon: Icon(Icons.edit),
+                            label: const Text('Label'),
+                            icon: const Icon(Icons.edit),
+                            heroTag: DateTime.timestamp(),
                             backgroundColor: context.colorScheme.primary,
                             onPressed: () {},
                           );
@@ -430,8 +439,9 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.extended(
-                            label: Text('Label'),
-                            icon: Icon(Icons.edit),
+                            label: const Text('Label'),
+                            icon: const Icon(Icons.edit),
+                            heroTag: DateTime.timestamp(),
                             backgroundColor: context.colorScheme.secondary,
                             onPressed: () {},
                           );
@@ -453,8 +463,9 @@ class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDet
                         4,
                         (index) {
                           return FloatingActionButton.extended(
-                            label: Text('Label'),
-                            icon: Icon(Icons.edit),
+                            label: const Text('Label'),
+                            icon: const Icon(Icons.edit),
+                            heroTag: DateTime.timestamp(),
                             backgroundColor: context.colorScheme.tertiary,
                             onPressed: () {},
                           );

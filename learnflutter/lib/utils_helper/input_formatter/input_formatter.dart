@@ -43,7 +43,7 @@ class InputFormattersHelper {
     ];
   }
 
-  // số thập phân có 2 số nguyên âm sau dấu ","
+  /// hàm format số thập phân âm có 2 số nguyên  sau dấu ","
   static List<TextInputFormatter> inputFormatterNegativeDecimal({
     required double min,
     required double max,
@@ -63,7 +63,7 @@ class InputFormattersHelper {
     ];
   }
 
-  // số thập phân có 2 số nguyên sau dấu ","
+  /// số thập phân có 2 số nguyên sau dấu ","
   static List<TextInputFormatter> inputFormatterDecimal({
     required double min,
     required double max,

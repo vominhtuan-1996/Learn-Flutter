@@ -5,16 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/custom_widget/custom_snackbar.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
-import 'package:learnflutter/modules/open_file/widget_item/detail_file_screen.dart';
 import 'package:learnflutter/modules/open_file/widget_item/get_file_screen.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
-import 'package:learnflutter/modules/popover/popover_scren.dart';
+import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/app/app_colors.dart';
-import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:popover/popover.dart';
 import 'package:xml/xml.dart';
 
 class ItemOpenFileWidget extends StatefulWidget {
@@ -60,7 +55,7 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
         context: context,
         builder: (context) {
           return Center(
-            child: Text('Quãng đường chạy được là: ${totalDistance} km'),
+            child: Text('Quãng đường chạy được là: $totalDistance km'),
           );
         },
       );
@@ -79,7 +74,7 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
   Widget build(BuildContext context) {
     widget.listFile = convertListFile(widget.listDirectory);
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
           GestureDetector(
@@ -121,7 +116,7 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
               // // );
               DialogUtils.showDialogWithHeroIcon(
                 context: context,
-                contentWidget: Container(
+                contentWidget: SizedBox(
                   height: context.mediaQuery.size.height,
                   width: context.mediaQuery.size.width,
                   child: ListView.builder(

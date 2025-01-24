@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
-import 'package:learnflutter/modules/material/component/material_textfield/material_textfield.dart';
-import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
-import 'package:learnflutter/modules/material/component/metarial_dialog/dialog_utils.dart';
 
 class MaterialTextFieldScreen extends StatefulWidget {
   const MaterialTextFieldScreen({super.key, required this.data});
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   @override
   State<MaterialTextFieldScreen> createState() => _MaterialTextFieldScreenState();
 }
@@ -46,7 +39,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
           children: [
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   controller: _textFieldController,
                   enabled: true,
@@ -62,7 +55,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                         'Reloaded 1 of 2275 libraries in 2,537ms (compile: 20 ms, reload: 1441 ms, reassemble: 992 ms).Reloaded 1 of 2275 libraries in 2,537ms (compile: 20 ms, reload: 1441 ms, reassemble: 992 ms).',
                     labelText: 'Nhập công suất',
                     hintText: 'Nhập công suất',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     suffixIcon: _textFieldController.text.isNotEmpty
                         ? GestureDetector(
                             onTap: () {
@@ -70,7 +63,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                                 _textFieldController.clear();
                               });
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.close_sharp,
                             ),
                           )
@@ -82,7 +75,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
             ),
             Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   controller: _textFieldController,
                   enabled: false,
@@ -98,7 +91,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                         'Reloaded 1 of 2275 libraries in 2,537ms (compile: 20 ms, reload: 1441 ms, reassemble: 992 ms).Reloaded 1 of 2275 libraries in 2,537ms (compile: 20 ms, reload: 1441 ms, reassemble: 992 ms).',
                     labelText: 'Nhập công suất',
                     hintText: 'Nhập công suất',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     suffixIcon: _textFieldController.text.isNotEmpty
                         ? GestureDetector(
                             onTap: () {
@@ -106,7 +99,7 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                                 _textFieldController.clear();
                               });
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.close_sharp,
                             ),
                           )

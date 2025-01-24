@@ -8,7 +8,7 @@ import 'package:popover/popover.dart';
 final today = DateUtils.dateOnly(DateTime.now());
 
 class CalenderScreen extends StatefulWidget {
-  const CalenderScreen({Key? key, required this.title}) : super(key: key);
+  const CalenderScreen({super.key, required this.title});
 
   final String title;
 
@@ -21,7 +21,7 @@ class _CalenderState extends State<CalenderScreen> {
     DateTime(2021, 8, 10),
     DateTime(2021, 8, 13),
   ];
-  List<DateTime?> _singleDatePickerValueWithDefaultValue = [
+  final List<DateTime?> _singleDatePickerValueWithDefaultValue = [
     DateTime.now(),
   ];
   List<DateTime?> _multiDatePickerValueWithDefaultValue = [
@@ -49,7 +49,7 @@ class _CalenderState extends State<CalenderScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -403,7 +403,7 @@ class _CalenderState extends State<CalenderScreen> {
 }
 
 class ShowCalender extends StatelessWidget {
-  ShowCalender({Key? key}) : super(key: key);
+  ShowCalender({super.key});
   List<DateTime?> _singleDatePickerValueWithDefaultValue = [
     DateTime.now(),
   ];

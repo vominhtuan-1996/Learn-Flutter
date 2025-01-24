@@ -12,7 +12,7 @@ class MaterialTimePicker extends StatefulWidget {
     required this.data,
   });
 
-  final RoouterMaterialModel data;
+  final RouterMaterialModel data;
   ThemeMode themeMode;
   bool useMaterial3;
   @override

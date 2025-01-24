@@ -1,27 +1,31 @@
 // ignore_for_file: prefer_equal_for_default_values, file_names, prefer_const_constructors, avoid_unnecessary_containerport, avoid_print, unused_element, avoid_unnecessary_containers, non_constant_identifier_names, sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, sort_child_properties_last, division_optimization, unused_import, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, prefer_is_empty, prefer_final_fields, duplicate_import, unnecessary_cast, use_build_context_synchronously
 
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
 import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/component/notification_center/notification_center.dart';
 import 'package:learnflutter/utils_helper/bitmap_utils.dart';
+import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class Menu_Controller extends StatefulWidget {
-  const Menu_Controller({super.key});
+class HomeMenuController extends StatefulWidget {
+  const HomeMenuController({super.key});
   // NotificationCenter().sub
   // .subscribe('updateCounter' {});
   @override
-  State<Menu_Controller> createState() => MenuControllerWidgetState();
+  State<HomeMenuController> createState() => HomeMenuControllerWidgetStateState();
 }
 
-class MenuControllerWidgetState extends State<Menu_Controller> {
+class HomeMenuControllerWidgetStateState extends State<HomeMenuController> with TickerProviderStateMixin {
   bool isLoading = false;
   TextEditingController _controllerTextField = TextEditingController();
   ItemScrollController _controllerScrollView = ItemScrollController();
@@ -34,13 +38,63 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
   List menusSearch = [];
   List recentlyUsed = [];
   bool isSearch = false;
+  // final autoSizeGroup = AutoSizeGroup();
+  var _bottomNavIndex = 0; //default index of a first screen
+
+  late AnimationController _fabAnimationController;
+  late AnimationController _borderRadiusAnimationController;
+  late Animation<double> fabAnimation;
+  late Animation<double> borderRadiusAnimation;
+  late CurvedAnimation fabCurve;
+  late CurvedAnimation borderRadiusCurve;
+  late AnimationController _hideBottomBarAnimationController;
+
+  final iconList = <IconData>[
+    Icons.brightness_5,
+    Icons.brightness_4,
+    Icons.brightness_6,
+    Icons.brightness_7,
+  ];
 
   @override
   void initState() {
-    SVProgressHUD.show(status: 'Loadding......');
-    getListCategories();
-    recentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
     super.initState();
+
+    _fabAnimationController = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _borderRadiusAnimationController = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+    fabCurve = CurvedAnimation(
+      parent: _fabAnimationController,
+      curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+    );
+    borderRadiusCurve = CurvedAnimation(
+      parent: _borderRadiusAnimationController,
+      curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+    );
+
+    fabAnimation = Tween<double>(begin: 0, end: 1).animate(fabCurve);
+    borderRadiusAnimation = Tween<double>(begin: 0, end: 1).animate(
+      borderRadiusCurve,
+    );
+
+    _hideBottomBarAnimationController = AnimationController(
+      duration: Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    Future.delayed(
+      Duration(seconds: 1),
+      () => _fabAnimationController.forward(),
+    );
+    Future.delayed(
+      Duration(seconds: 1),
+      () => _borderRadiusAnimationController.forward(),
+    );
   }
 
   void getListCategories() {
@@ -350,71 +404,215 @@ class MenuControllerWidgetState extends State<Menu_Controller> {
     print(routeName);
   }
 
+  bool onScrollNotification(ScrollNotification notification) {
+    if (notification is UserScrollNotification && notification.metrics.axis == Axis.vertical) {
+      switch (notification.direction) {
+        case ScrollDirection.forward:
+          _hideBottomBarAnimationController.reverse();
+          _fabAnimationController.forward(from: 0);
+          break;
+        case ScrollDirection.reverse:
+          _hideBottomBarAnimationController.forward();
+          _fabAnimationController.reverse(from: 1);
+          break;
+        case ScrollDirection.idle:
+          break;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFFF3E9),
-      body: SafeArea(
-          child: NestedScrollView(
-        // Setting floatHeaderSlivers to true is required in order to float
-        // the outer slivers over the inner scrollable.
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              floating: true,
-              expandedHeight: 260,
-              forceElevated: innerBoxIsScrolled,
-              leading: const BackButton(color: Colors.transparent),
-              leadingWidth: 0,
-              backgroundColor: const Color(0xFFFFF3E9),
-              flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsets.only(top: 0),
-                collapseMode: CollapseMode.pin,
-                background: Column(
-                  children: [
-                    initUISearchView(),
-                    initUICategories(),
-                    initUIToolRecentlyUsed(),
-                  ],
-                ),
+    return BaseLoading(
+      child: NotificationListener<ScrollNotification>(
+          onNotification: onScrollNotification,
+          child: NavigationScreen(
+            iconList[_bottomNavIndex],
+          )
+          //  NestedScrollView(
+          //   // Setting floatHeaderSlivers to true is required in order to float
+          //   // the outer slivers over the inner scrollable.
+          //   floatHeaderSlivers: true,
+          //   headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          //     return <Widget>[
+          //       SliverAppBar(
+          //         floating: true,
+          //         expandedHeight: 260,
+          //         forceElevated: innerBoxIsScrolled,
+          //         // leading: const BackButton(color: Colors.transparent),
+          //         // leadingWidth: 0,
+          //         backgroundColor: const Color(0xFFFFF3E9),
+          //         flexibleSpace: FlexibleSpaceBar(
+          //           titlePadding: EdgeInsets.only(top: 0),
+          //           collapseMode: CollapseMode.pin,
+          //           background: Column(
+          //             children: [
+          //               initUISearchView(),
+          //               initUICategories(),
+          //               initUIToolRecentlyUsed(),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ];
+          //   },
+          //   body: NavigationScreen(
+          //     iconList[0],
+          //   ),
+          //   //     ListView.builder(
+          //   //   padding: const EdgeInsets.all(8),
+          //   //   itemCount: 30,
+          //   //   itemBuilder: (BuildContext context, int index) {
+          //   //     return SizedBox(
+          //   //       height: 50,
+          //   //       child: Center(child: Text('Item $index')),
+          //   //     );
+          //   //   },
+          //   // ),
+          // ),
+          ),
+      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+        itemCount: iconList.length,
+        tabBuilder: (int index, bool isActive) {
+          final color = isActive ? context.colorScheme.primary : context.colorScheme.secondary;
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                iconList[index],
+                size: 24,
+                color: color,
               ),
-            ),
-          ];
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  "brightness $index",
+                  maxLines: 1,
+                  style: TextStyle(color: color),
+                ),
+              )
+            ],
+          );
         },
-        body: initUIMenus(),
-        //     ListView.builder(
-        //   padding: const EdgeInsets.all(8),
-        //   itemCount: 30,
-        //   itemBuilder: (BuildContext context, int index) {
-        //     return SizedBox(
-        //       height: 50,
-        //       child: Center(child: Text('Item $index')),
-        //     );
-        //   },
-        // ),
-      )),
+        backgroundColor: context.colorScheme.inversePrimary,
+        activeIndex: _bottomNavIndex,
+        // splashColor: context.colorScheme.inversePrimary,
+        notchAndCornersAnimation: borderRadiusAnimation,
+        // splashSpeedInMilliseconds: 300,
+        notchSmoothness: NotchSmoothness.softEdge,
+        gapLocation: GapLocation.center,
+        leftCornerRadius: 24,
+        rightCornerRadius: 24,
+        onTap: (index) => setState(() => _bottomNavIndex = index),
+        hideAnimationController: _hideBottomBarAnimationController,
+
+        shadow: BoxShadow(
+          offset: Offset(0, 1),
+          blurRadius: 12,
+          spreadRadius: 0.5,
+          color: context.colorScheme.inversePrimary,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        child: Icon(
+          Icons.brightness_3,
+          color: context.colorScheme.tertiaryContainer,
+        ),
+        onPressed: () {
+          _fabAnimationController.reset();
+          _borderRadiusAnimationController.reset();
+          _borderRadiusAnimationController.forward();
+          _fabAnimationController.forward();
+        },
+      ),
     );
   }
 }
 
- 
-// SafeArea(
-//         child: Container(
-//           child: GestureDetector(
-//             onTap: () {
-//               dismissKeyboard();
-//             },
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.stretch,
-//               children: <Widget>[
-//                 initUISearchView(),
-//                 initUICategories(),
-//                 initUIToolRecentlyUsed(),
-//                 SizedBox(height: 20),
-//                 initUIMenus(),
-//               ],
-//             ),
-//           ),
-//         ),
-//       )
+class NavigationScreen extends StatefulWidget {
+  final IconData iconData;
+
+  NavigationScreen(this.iconData) : super();
+
+  @override
+  _NavigationScreenState createState() => _NavigationScreenState();
+}
+
+class _NavigationScreenState extends State<NavigationScreen> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> animation;
+
+  @override
+  void didUpdateWidget(NavigationScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.iconData != widget.iconData) {
+      _startAnimation();
+    }
+  }
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1000),
+    );
+    animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+    _controller.forward();
+    super.initState();
+  }
+
+  _startAnimation() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1000),
+    );
+    animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: ListView(
+        children: [
+          SizedBox(height: 64),
+          Center(
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: Offset(0, 1),
+                end: Offset.zero,
+              ).animate(animation),
+
+              // animation: animation,
+              // centerOffset: Offset(80, 80),
+              // maxRadius: MediaQuery.of(context).size.longestSide * 1.1,
+              child: Icon(
+                widget.iconData,
+                color: context.colorScheme.primaryContainer,
+                size: 160,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

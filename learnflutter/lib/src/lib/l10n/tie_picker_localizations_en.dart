@@ -2,7 +2,7 @@ import 'tie_picker_localizations.dart';
 
 /// The translations for English (`en`).
 class TiePickerLocalizationsEn extends TiePickerLocalizations {
-  TiePickerLocalizationsEn([String locale = 'en']) : super(locale);
+  TiePickerLocalizationsEn([super.locale = 'en']);
 
   @override
   String get calendarTitle => 'Calendar';

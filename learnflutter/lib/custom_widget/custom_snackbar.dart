@@ -63,7 +63,7 @@ class CustomSnackBar {
     if (position == SnackBarPosition.bottom) {
       final content = SnackBar(
         elevation: 0,
-        duration: duration ?? Duration(milliseconds: 10000),
+        duration: duration ?? const Duration(milliseconds: 10000),
         behavior: behavior,
         clipBehavior: Clip.none,
         backgroundColor: Colors.transparent,
@@ -85,7 +85,7 @@ class CustomSnackBar {
     } else {
       final content = SnackBar(
         elevation: 0,
-        duration: duration ?? Duration(seconds: 2),
+        duration: duration ?? const Duration(seconds: 2),
         backgroundColor: Colors.transparent,
         dismissDirection: DismissDirection.up,
         behavior: SnackBarBehavior.floating,
@@ -105,7 +105,7 @@ class CustomSnackBar {
               onTap: onTap,
               onClose: ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!).hideCurrentSnackBar,
             ),
-            SizedBox.shrink(),
+            const SizedBox.shrink(),
           ],
         ),
       );
@@ -171,7 +171,7 @@ class SnackBarContent extends StatelessWidget {
     final iconTypeBackgroundSize = DeviceDimension.screenHeight * 0.06;
     final leftSpace = DeviceDimension.screenWidth * 0.12;
 
-    final colorLight = this.color ?? contentType.color;
+    final colorLight = color ?? contentType.color;
     // final color = colorLight.darker;
 
     return GestureDetector(
@@ -179,7 +179,7 @@ class SnackBarContent extends StatelessWidget {
       child: Container(
         decoration: AppBoxDecoration.boxDecorationRadius(borderRadius, colorLight),
         constraints: BoxConstraints(minHeight: minHeight),
-        child: Stack(
+        child: const Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [

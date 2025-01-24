@@ -6,7 +6,7 @@ class UpdateScreen extends StatefulWidget {
   final int index;
   final Person person;
 
-  const UpdateScreen({
+  const UpdateScreen({super.key, 
     required this.index,
     required this.person,
   });
@@ -21,7 +21,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Update Info'),
+        title: const Text('Update Info'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

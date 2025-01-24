@@ -43,7 +43,7 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
   Widget build(BuildContext context) {
     return BaseLoading(
         appBar: AppBar(
-          title: Text('Number Formatter'),
+          title: const Text('Number Formatter'),
         ),
         isLoading: false,
         child: SingleChildScrollView(
@@ -63,7 +63,7 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                     FocusManager.instance.primaryFocus?.unfocus();
                   }
                 },
-                inputFormatters: [],
+                inputFormatters: const [],
               ),
               ElevatedButton(
                 onPressed: () {
@@ -72,7 +72,7 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                     rebuild = !rebuild;
                   });
                 },
-                child: Text('Replace Object'),
+                child: const Text('Replace Object'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -84,7 +84,7 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                 onLongPress: () {
                   print('onLongPress');
                 },
-                child: Text('Update Object'),
+                child: const Text('Update Object'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -96,7 +96,7 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
                     rebuild = !rebuild;
                   });
                 },
-                child: Text('min max list '),
+                child: const Text('min max list '),
               ),
               SizedBox(
                 height: 200,

@@ -3,7 +3,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
 class AweseomSnackBarExample extends StatelessWidget {
-  const AweseomSnackBarExample({Key? key}) : super(key: key);
+  const AweseomSnackBarExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class AweseomSnackBarExample extends StatelessWidget {
                   behavior: SnackBarBehavior.fixed,
                   backgroundColor: Colors.transparent,
 
-                  content: AwesomeSnackbarContent(
+                  content: const AwesomeSnackbarContent(
                     title: 'Thông báo!',
                     message: ' change contentType to ContentType.success, ContentType.warning or ContentType.help for variants body of snackbar!',
                     color: Colors.red,
@@ -47,7 +47,7 @@ class AweseomSnackBarExample extends StatelessWidget {
             ElevatedButton(
               child: const Text('Show Awesome SnackBar floating'),
               onPressed: () {
-                final snackBar = SnackBar(
+                const snackBar = SnackBar(
                   /// need to set following properties for best effect of awesome_snackbar_content
                   elevation: 0,
                   behavior: SnackBarBehavior.floating,
@@ -70,7 +70,7 @@ class AweseomSnackBarExample extends StatelessWidget {
             ElevatedButton(
               child: const Text('Show Awesome Material Banner'),
               onPressed: () {
-                final materialBanner = MaterialBanner(
+                const materialBanner = MaterialBanner(
                   /// need to set following properties for best effect of awesome_snackbar_content
                   elevation: 0,
                   backgroundColor: Colors.transparent,
@@ -84,7 +84,7 @@ class AweseomSnackBarExample extends StatelessWidget {
                     // to configure for material banner
                     inMaterialBanner: true,
                   ),
-                  actions: const [SizedBox.shrink()],
+                  actions: [SizedBox.shrink()],
                 );
 
                 ScaffoldMessenger.of(context)
