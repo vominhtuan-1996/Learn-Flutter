@@ -221,6 +221,16 @@ class AppThemes {
                 return AppTextStyles.themeBodyMedium.copyWith(fontSize: state.scaleText! * 12);
               },
             ),
+            padding: WidgetStateProperty.resolveWith(
+              (states) {
+                return EdgeInsets.symmetric(horizontal: 8);
+              },
+            ),
+            overlayColor: WidgetStateProperty.resolveWith(
+              (states) {
+                return AppColors.primary.withOpacity(0.2);
+              },
+            ),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -256,20 +266,23 @@ class AppThemes {
           ),
         ),
         iconButtonTheme: IconButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-              (Set<WidgetState> states) {
-                if (states.contains(WidgetState.focused)) return Colors.transparent;
-                return Colors.transparent; // Defer to the widget's default.
-              },
-            ),
-            iconColor: WidgetStateProperty.resolveWith<Color?>(
-              (Set<WidgetState> states) {
-                if (states.contains(WidgetState.focused)) return AppColors.black;
-                return state.light ?? false ? AppColors.black : AppColors.white; // Defer to the widget's default.
-              },
-            ),
-          ),
+          style: ButtonStyle(backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.focused)) return Colors.transparent;
+              return Colors.transparent; // Defer to the widget's default.
+            },
+          ), iconColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.focused)) return AppColors.black;
+              return state.light ?? false ? AppColors.black : AppColors.white; // Defer to the widget's default.
+            },
+          ), shape: WidgetStateProperty.resolveWith(
+            (states) {
+              return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              );
+            },
+          )),
         ),
         searchBarTheme: SearchBarThemeData(
           backgroundColor: WidgetStateProperty.resolveWith<Color?>(backGroundColorSearchbar),
@@ -307,7 +320,7 @@ class AppThemes {
           backgroundColor: AppColors.white,
           elevation: 1,
           titleTextStyle: AppTextStyles.themeTitleLarge,
-          actionsPadding: const EdgeInsets.all(8),
+          actionsPadding: EdgeInsets.zero,
           contentTextStyle: AppTextStyles.themeBodyMedium,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -525,6 +538,30 @@ class AppThemes {
           backgroundColor: Colors.white,
           dividerColor: Colors.grey,
           constraints: BoxConstraints(minHeight: 60),
+        ),
+        cardTheme: CardTheme(
+          color: AppColors.white,
+          shadowColor: AppColors.grey,
+          elevation: 1,
+          margin: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: const {
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+          },
+        ),
+        popupMenuTheme: const PopupMenuThemeData(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
         ),
       );
 }

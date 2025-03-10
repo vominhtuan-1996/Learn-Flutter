@@ -73,7 +73,9 @@ class BaseLoadingScreenState extends State<BaseLoading> {
                       },
                     ),
                   ),
-              body: SizedBox(
+              body:
+                  // widget.child,
+                  SizedBox(
                 width: context.mediaQuery.size.width,
                 height: context.mediaQuery.size.height,
                 child: widget.child,

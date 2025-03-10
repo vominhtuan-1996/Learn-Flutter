@@ -106,6 +106,28 @@ class MaterialButton3 extends StatefulWidget {
     );
   }
 
+  factory MaterialButton3.common({
+    required VoidCallback? onPressed,
+    final double borderRadius = 16.0,
+    required final IconData prefixIcon,
+    final Color backgoundColor = AppColors.primary,
+    final Color shadowColor = Colors.transparent,
+    final Offset shadowOffset = Offset.zero,
+    required final String lableText,
+    final TextStyle? labelTextStyle,
+  }) {
+    return MaterialButton3(
+      type: MaterialButtonType.commonbutton,
+      borderRadius: borderRadius,
+      onTap: onPressed,
+      backgoundColor: backgoundColor,
+      shadowColor: shadowColor,
+      shadowOffset: shadowOffset,
+      lableText: lableText,
+      labelTextStyle: labelTextStyle,
+    );
+  }
+
   @override
   State<MaterialButton3> createState() => _MaterialButtonState();
 }

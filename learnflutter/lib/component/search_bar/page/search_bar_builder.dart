@@ -5,6 +5,7 @@ import 'package:learnflutter/app/app_colors.dart';
 import 'package:learnflutter/component/search_bar/cubit/search_bar_cubit.dart';
 import 'package:learnflutter/component/search_bar/state/search_bar_state.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/utils_helper/utils_helper.dart';
 
 class SearchBarBuilder extends StatefulWidget {
   final SearchController? searchController;
@@ -15,8 +16,10 @@ class SearchBarBuilder extends StatefulWidget {
   final String hintSearchFocus;
   final String hintSearchUnfocus;
   final BoxConstraints? viewConstraints;
-  final void Function()? onTapChildBuilder;
-
+  final void Function(dynamic value)? onTapChildBuilder;
+  final void Function(String value)? onChanged;
+  final void Function(String value)? onSubmitted;
+  final Future<List<dynamic>> Function(String query) getSuggestions;
   const SearchBarBuilder({
     super.key,
     this.searchController,
@@ -28,6 +31,9 @@ class SearchBarBuilder extends StatefulWidget {
     this.hintSearchUnfocus = '',
     this.viewConstraints,
     this.onTapChildBuilder,
+    this.onChanged,
+    this.onSubmitted,
+    required this.getSuggestions,
   });
 
   @override
@@ -67,100 +73,75 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        return SearchAnchor.bar(
-          searchController: widget.searchController ?? SearchController(),
-          suggestionsBuilder: (context, controller) {
-            return [
-              BlocBuilder<SearchCubit, SearchState>(
-                builder: (context, state) {
-                  if (state is SearchLoading) {
-                    return widget.builderWaiting?.call(context) ??
-                        Center(
-                          child: Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CupertinoActivityIndicator()),
-                        );
-                  } else if (state is SearchError) {
-                    return widget.builderError?.call(context) ?? Text('Error fetching suggestions');
-                  } else if (state is SearchLoaded) {
-                    return Builder(
-                      builder: (context) => SingleChildScrollView(
-                        child: Column(
-                          children: List.generate(
-                            state.suggestions.length,
-                            (index) => GestureDetector(
-                              onTap: () {
-                                controller.text = state.suggestions[index];
-                                widget.onTapChildBuilder?.call();
-                              },
-                              child: widget.childBuilder(context, state.suggestions[index]),
+        return Container(
+          height: 50,
+          width: 250,
+          child: SearchAnchor.bar(
+            searchController: widget.searchController ?? SearchController(),
+            suggestionsBuilder: (context, controller) {
+              return [
+                BlocBuilder<SearchCubit, SearchState>(
+                  builder: (context, state) {
+                    if (state is SearchLoading) {
+                      return widget.builderWaiting?.call(context) ??
+                          Center(
+                            child: Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CupertinoActivityIndicator()),
+                          );
+                    } else if (state is SearchError) {
+                      return widget.builderError?.call(context) ?? Text('Error fetching suggestions');
+                    } else if (state is SearchLoaded) {
+                      return Builder(
+                        builder: (context) => SingleChildScrollView(
+                          child: Column(
+                            children: List.generate(
+                              state.suggestions.length,
+                              (index) => GestureDetector(
+                                onTap: () {
+                                  controller.text = state.suggestions[index];
+                                  UtilsHelper.pop(context);
+                                  widget.onTapChildBuilder?.call(state.suggestions[index]);
+                                },
+                                child: widget.childBuilder(context, state.suggestions[index]),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ];
-          },
-          isFullScreen: widget.isFullScreen,
-          viewHintText: widget.hintSearchFocus,
-          barHintText: widget.hintSearchUnfocus,
-          viewConstraints: boxConstraints(state),
-          dividerColor: Colors.transparent,
-          barBackgroundColor: WidgetStateProperty.resolveWith<Color>(
-            (states) {
-              if (states.contains(WidgetState.selected)) {
-                return Colors.red;
-              }
-              return Colors.blue;
-            },
-          ),
-          viewBackgroundColor: Colors.white,
-          onChanged: (value) {
-            context.read<SearchCubit>().fetchSuggestions(value);
-          },
-          onSubmitted: (value) {
-            print('onSubmitted');
-          },
-          onTap: () {
-            print('onTap');
-          },
-          barShape: WidgetStateProperty.resolveWith<OutlinedBorder>(
-            (states) {
-              if (states.contains(WidgetState.selected)) {
-                return RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                  side: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1.6,
-                  ),
-                );
-              }
-              return RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
-                side: const BorderSide(
-                  color: Colors.transparent,
-                  width: 1.6,
+                      );
+                    }
+                    return Container();
+                  },
                 ),
-              );
+              ];
             },
-          ),
-          viewShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            side: const BorderSide(
-              color: Colors.transparent,
-              width: 1.6,
+            isFullScreen: widget.isFullScreen,
+            viewHintText: widget.hintSearchFocus,
+            barHintText: widget.hintSearchUnfocus,
+            viewConstraints: boxConstraints(state),
+            dividerColor: Colors.transparent,
+            barBackgroundColor: context.searchBarTheme.backgroundColor,
+            viewBackgroundColor: Colors.white,
+            onChanged: (value) {
+              context.read<SearchCubit>().fetchSuggestions(
+                value,
+                (query) async {
+                  return await widget.getSuggestions(query);
+                },
+              );
+              widget.onChanged?.call(value);
+            },
+            onSubmitted: widget.onSubmitted,
+            onTap: () {
+              print('onTap');
+            },
+            barShape: context.searchBarTheme.shape,
+            viewShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+              side: const BorderSide(
+                color: Colors.transparent,
+                width: 1.6,
+              ),
             ),
           ),
-          // barPadding: WidgetStateProperty.resolveWith<EdgeInsetsGeometry>(
-          //   (states) {
-          //     if (states.contains(WidgetState.selected)) {
-          //       return const EdgeInsets.all(8);
-          //     }
-          //     return EdgeInsets.zero;
-          //   },
-          // ),
         );
       },
     );

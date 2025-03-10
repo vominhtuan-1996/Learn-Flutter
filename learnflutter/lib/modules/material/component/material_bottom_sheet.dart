@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';

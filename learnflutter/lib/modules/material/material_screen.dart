@@ -140,11 +140,11 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   type: MaterialButtonType.commonbutton,
                   lableText: model.title,
                   textAlign: TextAlign.left,
-                  labelTextStyle: context.textTheme.bodyLarge?.centerlined(
+                  labelTextStyle: context.textTheme.bodyLarge?.underlined(
                     color: context.colorScheme.error,
                     distance: 1,
                     thickness: 4,
-                    style: TextDecorationStyle.dashed,
+                    style: TextDecorationStyle.solid,
                   ),
                 );
               },

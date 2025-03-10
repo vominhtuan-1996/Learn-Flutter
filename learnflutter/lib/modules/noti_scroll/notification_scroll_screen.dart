@@ -28,6 +28,7 @@ class _NotificationScrollScreenState extends State<NotificationScrollScreen> {
                 // ... Xử lý khi bắt đầu cuộn
                 print('start');
               } else if (scrollNotification is ScrollUpdateNotification) {
+                print(scrollNotification.metrics.pixels);
                 if (scrollNotification.metrics.pixels == scrollNotification.metrics.maxScrollExtent) {
                   _scrollToTop();
                 }

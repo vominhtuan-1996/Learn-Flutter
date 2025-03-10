@@ -70,7 +70,12 @@ import 'package:learnflutter/modules/smart_refresh/smart_refresh_screen.dart';
 import 'package:learnflutter/component/sliver_appbar/main-appbar.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:learnflutter/modules/theme/page_theme_screen.dart';
+import 'package:learnflutter/modules/trouble_shooting/trouble_shooting_screen.dart';
 import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
+import 'package:learnflutter/src/lib/story_router/story_button.dart';
+import 'package:learnflutter/src/lib/story_router/story_page_container_builder.dart';
+import 'package:learnflutter/src/lib/story_router/story_page_transform.dart.dart';
+import 'package:learnflutter/src/lib/story_router/story_route.dart';
 
 class Routes {
   Routes._();
@@ -166,6 +171,7 @@ class Routes {
   static const String balanceBar = 'balanece_bar';
   static const String treeScreen = 'tree_view_screen';
   static const String draggableExampleScreen = 'draggable_example_screen';
+  static const String troubleShootingScreen = 'trouble_shooting_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -614,6 +620,11 @@ class Routes {
           routeSettings: RouteSettings(name: draggableExampleScreen),
           builder: (_) => DraggableExampleScreen(),
         );
+      case troubleShootingScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: troubleShootingScreen),
+          builder: (_) => TroubleShootingScreen(),
+        );
       default:
         return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());
     }
@@ -641,6 +652,33 @@ class SlideRightRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) {
+            // const begin = Offset(1.0, 0.0);
+            // const end = Offset.zero;
+            // const curve = Curves.ease;
+
+            // var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            // var offsetAnimation = animation.drive(tween);
+
+            // return SlideTransition(
+            //   position: offsetAnimation,
+            //   child: child,
+            // );
+            // return StoryPageContainerBuilder(
+            //   animation: animation,
+            //   settings: StoryContainerSettings(
+            //       buttonData: StoryButtonData(
+            //           storyId: '2',
+            //           storyPages: [builder(context)],
+            //           child: child,
+            //           segmentDuration: [
+            //             Duration(milliseconds: 600),
+            //           ]),
+            //       allButtonDatas: [],
+            //       tapPosition: Offset.zero,
+            //       storyListScrollController: ScrollController()),
+            //   // settings: storyContainerSettings,
+            // );
+            // return StoryPage3DTransform().transform(context, child, animation, child);
             return SlideTransition(
               position: Tween<Offset>(
                 begin: vertical ? Offset(0.0, 1.0) : Offset(1.0, 0.0),
@@ -655,4 +693,44 @@ class SlideRightRoute extends PageRouteBuilder {
             );
           },
         );
+}
+
+class StoryRoute extends ModalRoute {
+  final Duration? duration;
+  final StoryContainerSettings storyContainerSettings;
+
+  StoryRoute({
+    this.duration,
+    required this.storyContainerSettings,
+  });
+
+  @override
+  Color? get barrierColor => Colors.transparent;
+
+  @override
+  String? get barrierLabel => null;
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return StoryPageContainerBuilder(
+      animation: animation,
+      settings: storyContainerSettings,
+    );
+  }
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Duration get transitionDuration => duration ?? kThemeAnimationDuration;
+
+  @override
+  bool get barrierDismissible => false;
+
+  @override
+  bool get opaque => false;
 }

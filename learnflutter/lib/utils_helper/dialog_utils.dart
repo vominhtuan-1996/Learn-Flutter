@@ -2,21 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
-import 'package:learnflutter/component/base_loading_screen/state/base_loading_state.dart';
 import 'package:learnflutter/component/bottom_sheet/cubit/bottom_sheet_cubit.dart';
 import 'package:learnflutter/component/bottom_sheet/page/bottom_sheet.dart';
 import 'package:learnflutter/component/bottom_sheet/state/bottom_sheet_state.dart';
+import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/core/debound.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/custom_widget/keyboard_avoiding.dart';
 import 'package:learnflutter/utils_helper/image_helper.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
@@ -152,8 +148,12 @@ class DialogUtils {
           child: ScaleTransition(
             scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
             child: AlertDialog(
+              insetPadding: EdgeInsets.zero,
+              contentPadding: EdgeInsets.zero,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              // contentPadding: EdgeInsets.zero,
               scrollable: true,
-              title: Text(title),
+              // title: Text(title),
               content: Column(
                 children: [Text(content), contentWidget ?? Container()],
               ),
@@ -179,6 +179,64 @@ class DialogUtils {
                     ),
                   ],
             ),
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300), // DURATION FOR ANIMATION
+      barrierDismissible: true,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const Text('');
+      },
+    );
+  }
+
+  static Future<void> showFullDialog({
+    required BuildContext context,
+    String title = 'Basic dialog title',
+    String content = 'Basic dialog content',
+    List<Widget>? actions,
+    Widget? contentWidget,
+  }) {
+    return showGeneralDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      barrierLabel: 'Label',
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return Center(
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
+            child: AlertDialog(
+                insetPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                // contentPadding: EdgeInsets.zero,
+                scrollable: true,
+                // title: Text(title),
+                content: Column(
+                  children: [contentWidget ?? Container()],
+                ),
+                actions: actions
+                // <Widget>[
+                //   TextButton(
+                //     style: TextButton.styleFrom(
+                //       textStyle: context.textTheme.labelLarge,
+                //     ),
+                //     child: const Text('Action 1'),
+                //     onPressed: () {
+                //       dismissPopup(context);
+                //     },
+                //   ),
+                //   TextButton(
+                //     style: TextButton.styleFrom(
+                //       textStyle: context.textTheme.labelLarge,
+                //     ),
+                //     child: const Text('Action 2'),
+                //     onPressed: () {
+                //       dismissPopup(context);
+                //     },
+                //   ),
+                // ],
+                ),
           ),
         );
       },
@@ -828,25 +886,5 @@ class DialogUtils {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
-  }
-}
-
-class NoBounceScrollPhysics extends ScrollPhysics {
-  const NoBounceScrollPhysics({ScrollPhysics? parent}) : super(parent: parent);
-
-  @override
-  NoBounceScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return NoBounceScrollPhysics(parent: buildParent(ancestor));
-  }
-
-  @override
-  double applyBoundaryConditions(ScrollMetrics position, double value) {
-    // If the scrolling is outside the bounds, prevent it (no bounce effect)
-    if (value < position.minScrollExtent) {
-      return value - position.minScrollExtent;
-    } else if (value > position.maxScrollExtent) {
-      return value - position.maxScrollExtent;
-    }
-    return 0.0;
   }
 }

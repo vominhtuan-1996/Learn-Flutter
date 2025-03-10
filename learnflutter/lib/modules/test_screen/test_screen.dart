@@ -98,6 +98,12 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.troubleShootingScreen);
+                },
+                child: Text('TroubleShootingScreen'),
+              ),
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(Routes.draggableExampleScreen);
                 },
                 child: Text('FloatingDraggableWidget'),
