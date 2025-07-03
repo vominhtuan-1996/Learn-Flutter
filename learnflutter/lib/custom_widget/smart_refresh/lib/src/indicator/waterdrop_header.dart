@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:math' as math;
 
 /// QQ ios refresh  header effect
 class WaterDropHeader extends RefreshIndicator {
@@ -225,5 +226,49 @@ class _QqPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     // TODO: implement shouldRepaint
     return oldDelegate != this;
+  }
+}
+
+class _RefreshPainter extends CustomPainter {
+  final double? progress; // null nghĩa là đang refreshing
+  final double animationValue;
+  final bool refreshing;
+
+  _RefreshPainter({required this.progress, required this.animationValue, required this.refreshing});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..color = Colors.blue
+      ..strokeWidth = 3
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    if (!refreshing && progress != null) {
+      // Vẽ mũi tên kéo xuống theo progress
+      final arrowLength = 20.0 * progress!;
+      final arrowPath = Path();
+      arrowPath.moveTo(center.dx, center.dy - arrowLength);
+      arrowPath.lineTo(center.dx, center.dy + arrowLength);
+      arrowPath.moveTo(center.dx - 7 * progress!, center.dy + arrowLength - 7 * progress!);
+      arrowPath.lineTo(center.dx, center.dy + arrowLength);
+      arrowPath.lineTo(center.dx + 7 * progress!, center.dy + arrowLength - 7 * progress!);
+
+      canvas.drawPath(arrowPath, paint);
+    } else {
+      // Đang refresh -> vẽ vòng tròn quay
+      final radius = 15.0;
+      final startAngle = animationValue * 2 * math.pi;
+      final sweepAngle = math.pi * 1.5;
+
+      paint.style = PaintingStyle.stroke;
+      canvas.drawArc(Rect.fromCircle(center: center, radius: radius), startAngle, sweepAngle, false, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _RefreshPainter oldDelegate) {
+    return oldDelegate.progress != progress || oldDelegate.animationValue != animationValue || oldDelegate.refreshing != refreshing;
   }
 }

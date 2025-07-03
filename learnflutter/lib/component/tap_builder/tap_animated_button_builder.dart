@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/src/lib/tap_builder/src/animated_tap_builder.dart';
 import 'package:learnflutter/src/lib/tap_builder/src/tap_state.dart';
@@ -12,14 +13,14 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
     this.padding,
     this.onLongPress,
     this.isEnabled = true,
-    this.backGround,
+    this.background,
   });
   final Widget? child;
   final void Function()? onTap;
   final void Function()? onLongPress;
   final EdgeInsetsGeometry? padding;
   final bool isEnabled;
-  final Color? backGround;
+  final Color? background;
   @override
   Widget build(BuildContext context) {
     return AbsorbPointer(
@@ -27,10 +28,13 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
       child: AnimatedTapBuilder(
         onLongPress: onLongPress,
         onTap: () {
+          HapticFeedback.mediumImpact();
           onTap?.call();
         },
         builder: (context, state, isFocused, cursorLocation, cursorAlignment) {
-          cursorAlignment = state == TapState.pressed ? Alignment(-cursorAlignment.x, -cursorAlignment.y) : Alignment.center;
+          cursorAlignment = state == TapState.pressed
+              ? Alignment(-cursorAlignment.x, -cursorAlignment.y)
+              : Alignment.center;
           return AnimatedContainer(
             transformAlignment: Alignment.center,
             transform: Matrix4.rotationX(-cursorAlignment.y * 0.2)
@@ -41,7 +45,7 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: backGround ?? context.colorScheme.primaryContainer,
+              color: background ?? context.colorScheme.primaryContainer,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
@@ -58,7 +62,8 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
                     Positioned.fill(
                       child: AnimatedAlign(
                         duration: const Duration(milliseconds: 200),
-                        alignment: Alignment(-cursorAlignment.x, -cursorAlignment.y),
+                        alignment:
+                            Alignment(-cursorAlignment.x, -cursorAlignment.y),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           width: 10,
@@ -67,7 +72,8 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
                             color: Colors.white.withOpacity(0.01),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.white.withOpacity(state == TapState.pressed ? 0.5 : 0.0),
+                                color: context.theme.primaryColor.withOpacity(
+                                    state == TapState.pressed ? 0.5 : 0.0),
                                 blurRadius: 200,
                                 spreadRadius: 130,
                               ),

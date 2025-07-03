@@ -1,0 +1,105 @@
+###
+POST http://172.27.9.25:11434/api/generate
+Content-Type: application/json
+
+{"model": "mistral", "prompt": "thời tiết thành phố hồ chí minh hôm nay thế nào?", "stream": false} 
+
+###
+
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+  }' \
+  https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ
+
+###
+
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+  "cardsV2": [
+    {
+      "cardId": "curlCard",
+      "card": {
+        "header": {
+          "title": "📤 Lệnh CURL gửi API",
+          "subtitle": "Gửi kiểm tra dữ liệu từ hệ thống",
+          "imageUrl": "https://www.curl.se/logo/curl-symbol-transparent.png",
+          "imageType": "CIRCLE"
+        },
+        "sections": [
+          {
+            "header": "Chi tiết CURL",
+            "widgets": [
+              {
+                "textParagraph": {
+                  "text": "curl -i \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer [TOKEN_BI_AN]\" \\\n  -d '{\"usedDate\": \"2025/05/27\", \"usedMonth\": \"2025/Q2\", ...}' \\\n  \"https://apis.fpt.vn/.../checkExist\"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+' \
+  https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ
+
+###
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"message" : {
+      "sections": [
+        {
+          "header": "Section Header",
+          "collapsible": true,
+          "uncollapsibleWidgetsCount": 1,
+          "widgets": [
+            {
+              "columns": {
+                "columnItems": [
+                  {"horizontalSizeStyle": "FILL_AVAILABLE_SPACE", "horizontalAlignment": "CENTER", "verticalAlignment": "CENTER", "widgets": []},
+                  {"widgets": []}
+                ]
+              }
+            },
+            {
+              "selectionInput": {
+                "name": "size",
+                "label": "Size",
+                "type": "SWITCH",
+                "items": [
+                  {"text": "S", "value": "small", "selected": false},
+                  {"text": "M", "value": "medium", "selected": true},
+                  {"text": "L", "value": "large", "selected": false},
+                  {"text": "XL", "value": "extra_large", "selected": false}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }} ' \
+  https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ
+
+###
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "```
+      curl -i 
+            	-X POST 
+            	-H \"Content-Type: application/json\" 
+            	-H \"Access-Control_Allow_Origin: *\" 
+            	-H \"Accept: application/json\" 
+            	-H \"Connection: keep-alive\" 
+            	-H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyLWVtYWlsIjoiSHV5TlExMjVAZnB0LmNvbSIsImp0aSI6IjgxMDY0OTkzLTZjMjgtNGNiZi1iYzM3LWEyNWRmNGNkY2FlMCIsImV4cCI6MTc0NzkzMTM2MywiaXNzIjoiaHR0cHM6Ly95b3VyLWlkZW50aXR5LXNlcnZlciIsImF1ZCI6Ik15QXBwVXNlcnMifQ.8ZLqSfqza_cTrMHkN3hfsPAdf4G6hwvkLrKX0gJuKWo\" 
+            	-H \"content-length: 52\" 
+            	-d \"{\"userName\":\"Huynq125@fpt.com \",\"password\":\"123456\"}\" 
+            	\"https://apis.fpt.vn/pms/api/m/v1/users/loginxxx\"
+      ```"
+}' \
+  https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ
+
+

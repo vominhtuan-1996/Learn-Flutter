@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/component/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_widget.dart';
 
 class ExampleUiLoadingAnimation extends StatefulWidget {
   const ExampleUiLoadingAnimation({

@@ -90,7 +90,9 @@ class TreeViewScreenState extends State<TreeViewScreen> {
                 _controller?.expandAllChildren(sampleTree);
               }
             },
-            label: isExpanded ? const Text("Collapse all") : const Text("Expand all"),
+            label: isExpanded
+                ? const Text("Collapse all")
+                : const Text("Expand all"),
           );
         },
       ),
@@ -110,7 +112,8 @@ class TreeViewScreenState extends State<TreeViewScreen> {
         //   // color: Colors.blue[700],
         //   padding: EdgeInsets.all(8),
         // ),
-        indentation: Indentation(style: IndentStyle.roundJoint, thickness: 2, color: Colors.red),
+        indentation: Indentation(
+            style: IndentStyle.roundJoint, thickness: 2, color: Colors.red),
         onItemTap: (item) {
           if (kDebugMode) print("Item tapped: ${item.key}");
 
@@ -128,7 +131,7 @@ class TreeViewScreenState extends State<TreeViewScreen> {
           if (expandChildrenOnReady) controller.expandAllChildren(sampleTree);
         },
         builder: (context, node) => AnimatedTapButtonBuilder(
-          backGround: Colors.white,
+          background: Colors.white,
           padding: EdgeInsets.zero,
           child: Card(
             color: Colors.grey,

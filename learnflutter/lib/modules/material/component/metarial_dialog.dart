@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/component/mt_progress_hub/mt_progess_hub.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -309,6 +310,40 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog upload File',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                DialogUtils.showLoadingAnimation(
+                  contextDialog: context,
+                  content: 'Đang lấy thông tin ấn phẩm',
+                );
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'Đang lấy thông tin ấn phẩm',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                MTProgressHub.show(context);
+                await Future.delayed(const Duration(seconds: 2), () {});
+                // Simulate a network call or some processing
+                MTProgressHub.hide();
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'Đang lấy thông tin ấn phẩm',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ],

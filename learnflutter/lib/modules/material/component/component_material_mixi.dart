@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
 
 mixin ComponentMaterialDetail {
   Widget headerContentView({

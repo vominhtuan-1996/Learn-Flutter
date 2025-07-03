@@ -2,16 +2,19 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
 import 'package:learnflutter/component/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
 import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/utils_helper/datetime_utils.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
@@ -60,11 +63,29 @@ TextStyle textStyleManrope(Color color, double fontSize, FontWeight fontWe) {
 
 class AppConfig {
   static Future init(VoidCallback callback) async {
+    final tamperDetector = ClockTamperDetector()..startMonitoring();
+
+// Sau vài phút, check:
+    if (tamperDetector.isTamperedOffline()) {
+      log("⚠️ Phát hiện người dùng chỉnh giờ thủ công!");
+    }
+
+// Hoặc check online:
+    final onlineTampered = await tamperDetector.isTamperedOnline();
+    if (onlineTampered) {
+      log("⚠️ Giờ hệ thống lệch nhiều so với NTP!");
+    }
     // SystemChrome.setSystemUIOverlayStyle(AppBoxDecoration.statusBarStyle);
     WidgetsFlutterBinding.ensureInitialized();
+    await FlutterLocalization.instance.ensureInitialized();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     await SharedPreferenceUtils.init();
-    NotificationCenter().subscribe("updateCounter", _updateCounter);
+    NotificationCenter().subscribe(
+      "updateCounter",
+      (p0) {
+        _updateCounter();
+      },
+    );
     Workmanager().initialize(
       callbackDispatcher, // The top level function, aka callbackDispatcher
       isInDebugMode: true, // If enabled it will post a notification whenever the task is running. Handy for debugging tasks

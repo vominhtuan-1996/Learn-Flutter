@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/component/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
 
 class Shimmer extends StatefulWidget {
   static ShimmerState? of(BuildContext context) {
@@ -57,6 +58,10 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child ?? const SizedBox();
+    return ShimmerLoading(
+      isLoading: true ,
+      child:widget.child ?? const SizedBox() ,
+    );
+      
   }
 }

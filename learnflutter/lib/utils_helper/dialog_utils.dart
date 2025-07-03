@@ -16,6 +16,7 @@ import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/custom_widget/keyboard_avoiding.dart';
 import 'package:learnflutter/utils_helper/image_helper.dart';
 import 'package:learnflutter/utils_helper/utils_helper.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -714,13 +715,12 @@ class DialogUtils {
     String content = 'Basic dialog content',
     List<Widget>? actions,
     Widget? contentWidget,
-    required String savePath,
   }) async {
     StreamController<double> stream = StreamController();
-    late Future<String?> future = UtilsHelper.downloadFile(savePath, stream);
+    late Future<void> future = Future.delayed(Duration(seconds: 10));
     await showGeneralDialog(
       context: contextDialog,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withOpacity(0.7),
       barrierLabel: 'Label',
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         child = FutureBuilder(
@@ -729,12 +729,10 @@ class DialogUtils {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) async {
                   await Future.delayed(
-                    const Duration(seconds: 3),
+                    const Duration(milliseconds: 500),
                     () {
                       if (context.mounted) {
-                        dismissPopup(context, complete: () {
-                          OpenFile.open(snapshot.data as String);
-                        });
+                        dismissPopup(context, complete: () {});
                       }
                     },
                   );
@@ -749,6 +747,7 @@ class DialogUtils {
                   initialData: 0.0,
                   builder: (context, snapshot) {
                     return AlertDialog(
+                      backgroundColor: Colors.transparent,
                       scrollable: true,
                       content: Column(
                         children: [
@@ -763,10 +762,9 @@ class DialogUtils {
                                     padding: EdgeInsets.symmetric(
                                       vertical: DeviceDimension.padding / 2,
                                     ),
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 5,
-                                      value: snapshot.data,
-                                      semanticsLabel: 'Linear',
+                                    child: LoadingAnimationWidget.fourRotatingDots(
+                                      color: Colors.white,
+                                      size: 40,
                                     ),
                                   )
                                 : Padding(
@@ -780,7 +778,10 @@ class DialogUtils {
                                     ),
                                   ),
                           ),
-                          Text('${((snapshot.data ?? 0.0) * 100).toStringAsFixed(0)} %'),
+                          Text(
+                            content,
+                            style: context.textStyleBodyMedium.copyWith(color: Colors.white),
+                          ),
                         ],
                       ),
                     );

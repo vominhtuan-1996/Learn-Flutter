@@ -5,8 +5,9 @@ import 'dart:io';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:learnflutter/app/app_local_translate.dart';
 import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/component/search_bar/cubit/search_bar_cubit.dart';
@@ -17,8 +18,8 @@ import 'package:learnflutter/app/app_theme.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
-import 'package:learnflutter/modules/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/component/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +31,7 @@ void main() {
     () async {
       // Initialize hive
       await Hive.initFlutter();
-      // Registering the adapter
+      // Registering the adapte
       Hive.registerAdapter(PersonAdapter());
       // Opening the box
       await Hive.openBox('peopleBox');
@@ -138,17 +139,45 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // final updater = ShorebirdCodePush();
-
+  final FlutterLocalization _localization = FlutterLocalization.instance;
+  @override
   @override
   void initState() {
+    _localization.init(
+      mapLocales: [
+        const MapLocale(
+          'en',
+          AppLocaleTranslate.EN,
+          countryCode: 'US',
+          fontFamily: 'Font EN',
+        ),
+        const MapLocale(
+          'km',
+          AppLocaleTranslate.KM,
+          countryCode: 'KH',
+          fontFamily: 'Font KM',
+        ),
+        const MapLocale(
+          'ja',
+          AppLocaleTranslate.JA,
+          countryCode: 'JP',
+          fontFamily: 'Font JA',
+        ),
+        const MapLocale(
+          'vi',
+          AppLocaleTranslate.VI,
+          countryCode: 'VI',
+          fontFamily: 'Font JA',
+        ),
+      ],
+      initLanguageCode: 'en',
+    );
+    _localization.onTranslatedLanguage = _onTranslatedLanguage;
     super.initState();
-    // updater.currentPatchNumber();
+  }
 
-    // Get the current patch number and print it to the console.
-    // It will be `null` if no patches are installed.
-    // updater.readCurrentPatch().then((currentPatch) {
-    //   print('The current patch number is: ${currentPatch?.number}');
-    // });
+  void _onTranslatedLanguage(Locale? locale) {
+    setState(() {});
   }
 
   @override
@@ -175,21 +204,13 @@ class _MyAppState extends State<MyApp> {
             builder: (context, state) {
               DeviceDimension().initValue(context);
               return MaterialApp(
+                supportedLocales: _localization.supportedLocales,
+                localizationsDelegates: _localization.localizationsDelegates,
                 theme: AppThemes.primaryTheme(context, state),
-                locale: const Locale('vi'),
+                // locale: const Locale('vi'),
                 debugShowCheckedModeBanner: false,
-                localizationsDelegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  // TiePickerLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('vi'),
-                  Locale('en'),
-                ],
                 home: FlutterSplashScreen.gif(
-                  duration: const Duration(seconds: 5),
+                  duration: const Duration(seconds: 8),
                   backgroundColor: Colors.white,
                   onInit: () async {
                     debugPrint("On Init");

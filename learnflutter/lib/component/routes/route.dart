@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/balance_bar/balance_bar.dart';
 import 'package:learnflutter/component/base_loading_draggable/draggable_example_screen.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/component/tree_view/tree_view_screen.dart';
 import 'package:learnflutter/db/hive_demo/screen/info_screen.dart';
+import 'package:learnflutter/main_isolate.dart';
 import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/balance_bar_screen/balance_bar_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
+import 'package:learnflutter/modules/chat/chat_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
 import 'package:learnflutter/modules/custom_paint/custom_paint_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
+import 'package:learnflutter/modules/drop_refresh_control/drop_refresh_screen.dart';
 import 'package:learnflutter/modules/graphics/graphics_screen.dart';
 import 'package:learnflutter/modules/log/log_screen.dart';
+import 'package:learnflutter/modules/map/map_screen.dart';
 import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_sheet.dart';
@@ -21,10 +24,13 @@ import 'package:learnflutter/modules/material/component/material_button_detail.d
 import 'package:learnflutter/modules/material/component/material_checkbox/material_checkbox_detail.dart';
 import 'package:learnflutter/modules/material/component/material_chip_screen.dart';
 import 'package:learnflutter/modules/material/component/material_floating_button.dart';
+import 'package:learnflutter/modules/material/component/material_icon_button_screen.dart';
 import 'package:learnflutter/modules/material/component/material_menus_detail.dart';
 import 'package:learnflutter/modules/material/component/material_navigation_drawer_screen.dart';
+import 'package:learnflutter/modules/material/component/material_navigation_rail_screen.dart';
 import 'package:learnflutter/modules/material/component/material_progress_indicators.dart';
 import 'package:learnflutter/modules/material/component/material_searchbar.dart';
+import 'package:learnflutter/modules/material/component/material_side_sheet_screen.dart';
 import 'package:learnflutter/modules/material/component/material_switch.dart';
 import 'package:learnflutter/modules/material/component/metarial_card/material_card_detail.dart';
 import 'package:learnflutter/modules/material/component/material_date_picker.dart';
@@ -33,11 +39,12 @@ import 'package:learnflutter/modules/material/component/metarial_carousel/metari
 import 'package:learnflutter/modules/material/component/metarial_dialog.dart';
 import 'package:learnflutter/modules/material/component/metarial_divider.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button_screen.dart';
+import 'package:learnflutter/modules/material/component/metarial_snackbar_screen.dart';
 import 'package:learnflutter/modules/material/component/metarial_textfield_screen.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/component/material_time_picker.dart';
-import 'package:learnflutter/modules/material_segmented/material_segmented_screen.dart';
-import 'package:learnflutter/modules/material_segmented/segmented_widget.dart';
+import 'package:learnflutter/modules/material/component/material_segmented/material_segmented_screen.dart';
+import 'package:learnflutter/modules/material/component/material_segmented/segmented_widget.dart';
 import 'package:learnflutter/modules/menu/menu_controller.dart';
 import 'package:learnflutter/modules/nested/nested_scroll_screen.dart';
 import 'package:learnflutter/component/base_loading_screen/page_loading_screen.dart';
@@ -59,6 +66,7 @@ import 'package:learnflutter/modules/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/modules/pick_file/pick_file_screen.dart';
 import 'package:learnflutter/modules/popover/popover_scren.dart';
 import 'package:learnflutter/modules/progress_hub/progress_hud_screen.dart';
+import 'package:learnflutter/modules/qr_code_example/qr_code_screen.dart';
 import 'package:learnflutter/modules/reducer/reducer_screen.dart';
 import 'package:learnflutter/modules/regex/regex_example_screen.dart';
 import 'package:learnflutter/modules/scan/scan_screen.dart';
@@ -66,15 +74,14 @@ import 'package:learnflutter/modules/setting/setting_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/component/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/modules/slider_vertical/slider_vertical_screen.dart';
+import 'package:learnflutter/modules/smart_loadmore_screen/smart_loadmore_screen.dart';
 import 'package:learnflutter/modules/smart_refresh/smart_refresh_screen.dart';
 import 'package:learnflutter/component/sliver_appbar/main-appbar.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:learnflutter/modules/theme/page_theme_screen.dart';
 import 'package:learnflutter/modules/trouble_shooting/trouble_shooting_screen.dart';
-import 'package:learnflutter/modules/web_browser/web_browser_screen.dart';
-import 'package:learnflutter/src/lib/story_router/story_button.dart';
+import 'package:learnflutter/modules/web_view/web_view_screen.dart';
 import 'package:learnflutter/src/lib/story_router/story_page_container_builder.dart';
-import 'package:learnflutter/src/lib/story_router/story_page_transform.dart.dart';
 import 'package:learnflutter/src/lib/story_router/story_route.dart';
 
 class Routes {
@@ -159,6 +166,10 @@ class Routes {
   static const String materialChip = 'material_chip_screen';
   static const String materialRadioButton = 'metarial_radio_button_screen';
   static const String materialMenu = 'material_menus_detail';
+  static const String materialSnackbar = 'metarial_snackbar_screen';
+  static const String materialNavigationRail = "material_navigation_rail_screen";
+  static const String materialSideSheetScreen = "material_side_sheet_screen";
+  static const String materialIConButton = "material_icon_button_screen";
   static const String graphicsScreen = 'graphics_screen';
   static const String customPaintScreen = "custom_paint_screen";
   static const String reducerScreen = "reducer_screen";
@@ -172,6 +183,13 @@ class Routes {
   static const String treeScreen = 'tree_view_screen';
   static const String draggableExampleScreen = 'draggable_example_screen';
   static const String troubleShootingScreen = 'trouble_shooting_screen';
+  static const String chatScreen = 'chat_screen';
+  static const String dropRefresh = 'drop_refresh_screen';
+  static const String mapScreen = 'map_screen';
+  static const String isolateParseScreen = 'isolate_parse_screen';
+  static const String smartLoadmoreScreen = "smart_loadmore_screen";
+  static const String webViewScreen = "web_view_screen";
+  static const String qrScreen = 'qr_code_screen';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -364,11 +382,11 @@ class Routes {
           builder: (_) => PathProviderScreen(title: 'PathProviderScreen'),
         );
 
-      case webBrowserScreen:
-        return SlideRightRoute(
-          routeSettings: RouteSettings(name: webBrowserScreen),
-          builder: (_) => WebViewExample(),
-        );
+      // case webBrowserScreen:
+      //   return SlideRightRoute(
+      //     routeSettings: RouteSettings(name: webBrowserScreen),
+      //     builder: (_) => WebViewExample(),
+      //   );
 
       case draggelScrollScreen:
         return SlideRightRoute(
@@ -573,7 +591,31 @@ class Routes {
           routeSettings: RouteSettings(name: materialMenu),
           builder: (_) => (MaterialMenuDetailScreen(data: param)),
         );
+      case materialSnackbar:
+        final param = arguments.data as RouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: materialSnackbar),
+          builder: (_) => (MaterialSnackbarScreen(data: param)),
+        );
+      case materialNavigationRail:
+        final param = arguments.data as RouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: materialNavigationRail),
+          builder: (_) => (MaterialNavigationRailScreen(data: param)),
+        );
 
+      case materialSideSheetScreen:
+        final param = arguments.data as RouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: materialSideSheetScreen),
+          builder: (_) => (MaterialSideSheetScreen(data: param)),
+        );
+      case materialIConButton:
+        final param = arguments.data as RouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: materialIConButton),
+          builder: (_) => (MaterialIconButtonScreen(data: param)),
+        );
       case graphicsScreen:
         return SlideRightRoute(routeSettings: RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
       case customPaintScreen:
@@ -624,6 +666,36 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: troubleShootingScreen),
           builder: (_) => TroubleShootingScreen(),
+        );
+      case chatScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: chatScreen),
+          builder: (_) => ChatScreen(),
+        );
+      case dropRefresh:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: dropRefresh),
+          builder: (_) => DropRefreshScreen(),
+        );
+      case mapScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: mapScreen),
+          builder: (_) => VietnamMapScreen(),
+        );
+      case isolateParseScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: isolateParseScreen),
+          builder: (_) => IsolateJsonParsingScreen(),
+        );
+      case smartLoadmoreScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: smartLoadmoreScreen),
+          builder: (_) => SmartLoadmoreScreen(),
+        );
+      case qrScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: webViewScreen),
+          builder: (_) => QRViewExample(),
         );
       default:
         return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());

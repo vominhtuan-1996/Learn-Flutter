@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/modules/animation/widget/list_view_animation.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 
 class MaterialSegmentedScreen extends StatefulWidget {
@@ -113,12 +114,20 @@ class SampleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color,
+    return ListViewAnimated(
+      fullData: List.generate(
+        10,
+        (index) {},
       ),
-      child: Text(label),
+      itemBuilder: (context, index, animation) {
+        return Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: color,
+          ),
+          child: Text(label),
+        );
+      },
     );
   }
 }

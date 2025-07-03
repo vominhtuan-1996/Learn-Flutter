@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/component/search_bar/page/search_bar_builder.dart';
 import 'package:learnflutter/component/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/component/tap_builder/tap_delayed_pressed_button_builder.dart';
 import 'package:learnflutter/core/global/func_global.dart';
@@ -17,8 +18,8 @@ import 'package:learnflutter/component/attribute_string/attribute_string_widget.
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 // import 'package:file';
 class TestScreen extends StatefulWidget {
@@ -29,11 +30,19 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  SearchController searchControler = SearchController();
   _launchURL() async {
     final Uri url = Uri.parse('https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  Future<List<dynamic>> fetchSuggestions(String query) async {
+    // Thực hiện yêu cầu đến API tìm kiếm sản phẩm
+    // For demonstration, returning a dummy list
+    await Future.delayed(Duration(seconds: 1)); // Simulate network delay
+    return List<String>.generate(10, (index) => 'Suggestion123 $index for $query');
   }
 
   List uploadList = [
@@ -66,6 +75,13 @@ class _TestScreenState extends State<TestScreen> {
     print(map['code']);
   }
 
+  String convertCurlToMarkdown(String curlInput) {
+    // Loại bỏ khoảng trắng đầu cuối và escape các ký tự đặc biệt
+    final escapedCurl = curlInput.trim().replaceAll(r'\', r'\\').replaceAll('"', r'\"');
+    // Đưa vào code block markdown
+    return '```\n$escapedCurl\n```';
+  }
+
   bool switchValue = true;
   @override
   Widget build(BuildContext context) {
@@ -83,9 +99,90 @@ class _TestScreenState extends State<TestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.qrScreen);
+                },
+                child: Text('QR Lazer Overlay'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.webViewScreen);
+                },
+                child: Text('Open WebView'),
+              ),
+              TextButton(
+                onPressed: () {
+                  String curl = '''"curl -i \
+      	-X POST \
+      	-H "Content-Type: application/json" \
+      	-H "Access-Control_Allow_Origin: *" \
+      	-H "Accept: application/json" \
+      	-H "Connection: keep-alive" \
+      	-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyLWVtYWlsIjoiSHV5TlExMjVAZnB0LmNvbSIsImp0aSI6IjgxMDY0OTkzLTZjMjgtNGNiZi1iYzM3LWEyNWRmNGNkY2FlMCIsImV4cCI6MTc0NzkzMTM2MywiaXNzIjoiaHR0cHM6Ly95b3VyLWlkZW50aXR5LXNlcnZlciIsImF1ZCI6Ik15QXBwVXNlcnMifQ.8ZLqSfqza_cTrMHkN3hfsPAdf4G6hwvkLrKX0gJuKWo" \
+      	-H "content-length: 52" \
+      	-d "{\"userName\":\"Huynq125@fpt.com \",\"password\":\"123456\"}" \
+      	"https://apis.fpt.vn/pms/api/m/v1/users/loginxxx""''';
+
+                  String markdown = convertCurlToMarkdown(curl);
+                  log(markdown);
+                },
+                child: Text("send log to google chat"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.smartLoadmoreScreen);
+                },
+                child: Text("smartLoadmoreScreen"),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
+                  .animate() // this wraps the previous Animate in another Animate
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.isolateParseScreen);
+                },
+                child: Text('test parse data isolate'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
+                  .animate() // this wraps the previous Animate in another Animate
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.mapScreen);
+                },
+                child: Text('VietNam Map'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
+                  .animate() // this wraps the previous Animate in another Animate
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
               AnimatedTapButtonBuilder(
+                background: context.colorScheme.primaryContainer,
+                child: Text('Drop Refresh Control'),
+                onTap: () {
+                  // Hapit
+                  Navigator.of(context).pushNamed(Routes.dropRefresh);
+                },
+              ),
+              AnimatedTapButtonBuilder(
+                background: context.colorScheme.primaryContainer,
+                child: Text('chat Screen'),
+                onTap: () {
+                  // Hapit
+                  Navigator.of(context).pushNamed(Routes.chatScreen);
+                },
+              ),
+              AnimatedTapButtonBuilder(
+                background: context.colorScheme.primaryContainer,
                 child: Text('AnimatedTapButtonBuilder'),
                 onTap: () {
+                  // Hapit
                   print('object');
                 },
               ),
@@ -132,13 +229,7 @@ class _TestScreenState extends State<TestScreen> {
                 fabIcon: Icons.close,
                 onPressed: () {},
               ),
-              MaterialButton3.extended(
-                onPressed: () async {
-                  DialogUtils.showLoadingAnimation(contextDialog: context, savePath: await downLoadFolder());
-                },
-                prefixIcon: Icons.abc,
-                lableText: 'Test',
-              ),
+
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.segmented);
@@ -241,6 +332,36 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.of(context).pushNamed(Routes.arkit);
                 },
                 child: Text('AR Kit Screen'),
+              ),
+              SearchBarBuilder(
+                searchController: searchControler,
+                childBuilder: (context, data) {
+                  return ListTile(
+                    title: Text(data),
+                  );
+                  // Row(
+                  //   children: [
+                  //     // Text(data),
+                  //     ListTile(
+                  //       title: Text(data),
+                  //     ),
+                  //     // Icon(Icons.access_alarm),
+                  //   ],
+                  // );
+                },
+                onSubmitted: (value) {
+                  print(value);
+                },
+                onTapChildBuilder: (value) {
+                  print(value);
+                },
+                // onTapChildBuilder: (va) {
+                //   print('Tapped');
+                // },
+                getSuggestions: fetchSuggestions,
+                onChanged: (value) {
+                  print(value);
+                },
               ),
               TextButton(
                 onPressed: () {

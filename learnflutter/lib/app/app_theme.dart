@@ -358,7 +358,7 @@ class AppThemes {
           brightness: state.light ?? false ? Brightness.light : Brightness.dark,
           primary: const Color(0xFF21005D), // Màu sắc chính được nhấn mạnh trên bề mặt,
           onPrimary: AppColors.primaryText, //Màu sắc Văn bản và biểu tượng
-          primaryContainer: AppColors.yellowBackground, // Màu tô nổi bật trên bề mặt, dành cho các thành phần chính
+          primaryContainer: AppColors.primary, // Màu tô nổi bật trên bề mặt, dành cho các thành phần chính
           onPrimaryContainer: AppColors.grey, //Văn bản và biểu tượng đối với thành phần chính
           secondary: const Color(0xFF1D192B), //Màu sắc ít nổi bật hơn trên bề mặt
           onSecondary: AppColors.blue.withOpacity(0.8), //Màu sắc Văn bản và biểu tượng

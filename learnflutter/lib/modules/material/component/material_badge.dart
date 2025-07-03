@@ -3,7 +3,7 @@ import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
 import 'package:learnflutter/app/app_box_decoration.dart';
 
 class MaterialBadge extends StatefulWidget {

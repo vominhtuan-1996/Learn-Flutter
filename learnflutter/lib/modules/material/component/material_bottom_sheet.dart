@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
+import 'package:learnflutter/modules/animation/widget/scale_translate.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
@@ -17,7 +18,8 @@ class MaterialBottomSheet extends StatefulWidget {
   State<MaterialBottomSheet> createState() => _MaterialBottomSheetState();
 }
 
-class _MaterialBottomSheetState extends State<MaterialBottomSheet> with ComponentMaterialDetail {
+class _MaterialBottomSheetState extends State<MaterialBottomSheet>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();
@@ -64,71 +66,89 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                   DialogUtils.showBasicDialog(
                                     title: 'Basic dialog title',
                                     context: context,
-                                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                                    content:
+                                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                                     contentWidget: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
@@ -147,7 +167,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -170,7 +191,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         child: Container(
-                          color: Colors.primaries[index % Colors.primaries.length],
+                          color:
+                              Colors.primaries[index % Colors.primaries.length],
                         ),
                       );
                     },
@@ -179,7 +201,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -197,9 +220,14 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                     physics: NoBounceScrollPhysics(),
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        child: Container(
-                          color: Colors.primaries[index % Colors.primaries.length],
+                      return ScaleTranslateBuilder(
+                        index: index,
+                        pageController: PageController(viewportFraction: 0.8),
+                        child: GestureDetector(
+                          child: Container(
+                            color: Colors
+                                .primaries[index % Colors.primaries.length],
+                          ),
                         ),
                       );
                     },
@@ -208,7 +236,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: ' custom Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
         ],

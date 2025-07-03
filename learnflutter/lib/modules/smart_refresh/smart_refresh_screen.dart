@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
-import 'package:learnflutter/modules/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
 
 class SmartRefreshScreen extends StatefulWidget {
   const SmartRefreshScreen({super.key});
@@ -49,17 +49,15 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
   Widget build(BuildContext context) {
     return BaseLoading(
       child: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: SingleChildScrollView(
-          child: Column(
-            children: List.generate(
-              items.length,
-              (index) => ShimmerLoading(
-                isLoading: false,
+          enablePullDown: true,
+          enablePullUp: true,
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return ShimmerLoading(
+                isLoading: _isLoading,
                 child: Container(
                   padding: EdgeInsets.all(10.0 * index),
                   child: Card(
@@ -68,11 +66,30 @@ class SmartRefreshScreenState extends State<SmartRefreshScreen> {
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
+            itemCount: items.length,
+          )
+          // SingleChildScrollView(
+          //   child:
+          //   Column(
+          //     children: List.generate(
+          //       items.length,
+          //       (index) => ShimmerLoading(
+          //         isLoading: false,
+          //         child: Container(
+          //           padding: EdgeInsets.all(10.0 * index),
+          //           child: Card(
+          //             child: Center(
+          //               child: Text(items[index]),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           ),
-        ),
-      ),
     );
   }
 }
