@@ -18,6 +18,7 @@ import 'package:learnflutter/component/attribute_string/attribute_string_widget.
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -101,34 +102,76 @@ class _TestScreenState extends State<TestScreen> {
             children: <Widget>[
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.scrollPhysicScreen);
+                },
+                child: Text('scrollPhysic Screen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.indicatorExampleScreen);
+                },
+                child: Text('Indicator Example'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.pmsSDKLogin);
+                },
+                child: Text('Plugin Nghiệm thu'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.flutter3dScreen);
+                },
+                child: Text('flutter3dScreen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.visibilityDetectorExample);
+                },
+                child: Text('visibilityDetectorExample'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.login);
+                },
+                child: Text('Login'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.excellScreen);
+                },
+                child: Text('Work Excell File'),
+              ),
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(Routes.qrScreen);
                 },
                 child: Text('QR Lazer Overlay'),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.webViewScreen);
-                },
-                child: Text('Open WebView'),
-              ),
-              TextButton(
-                onPressed: () {
-                  String curl = '''"curl -i \
-      	-X POST \
-      	-H "Content-Type: application/json" \
-      	-H "Access-Control_Allow_Origin: *" \
-      	-H "Accept: application/json" \
-      	-H "Connection: keep-alive" \
-      	-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyLWVtYWlsIjoiSHV5TlExMjVAZnB0LmNvbSIsImp0aSI6IjgxMDY0OTkzLTZjMjgtNGNiZi1iYzM3LWEyNWRmNGNkY2FlMCIsImV4cCI6MTc0NzkzMTM2MywiaXNzIjoiaHR0cHM6Ly95b3VyLWlkZW50aXR5LXNlcnZlciIsImF1ZCI6Ik15QXBwVXNlcnMifQ.8ZLqSfqza_cTrMHkN3hfsPAdf4G6hwvkLrKX0gJuKWo" \
-      	-H "content-length: 52" \
-      	-d "{\"userName\":\"Huynq125@fpt.com \",\"password\":\"123456\"}" \
-      	"https://apis.fpt.vn/pms/api/m/v1/users/loginxxx""''';
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.of(context).pushNamed(Routes.webViewScreen);
+              //         },
+              //         child: Text('Open WebView'),
+              //       ),
+              //       TextButton(
+              //         onPressed: () {
+              //           String curl = '''"curl -i \
+              // -X POST \
+              // -H "Content-Type: application/json" \
+              // -H "Access-Control_Allow_Origin: *" \
+              // -H "Accept: application/json" \
+              // -H "Connection: keep-alive" \
+              // -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyLWVtYWlsIjoiSHV5TlExMjVAZnB0LmNvbSIsImp0aSI6IjgxMDY0OTkzLTZjMjgtNGNiZi1iYzM3LWEyNWRmNGNkY2FlMCIsImV4cCI6MTc0NzkzMTM2MywiaXNzIjoiaHR0cHM6Ly95b3VyLWlkZW50aXR5LXNlcnZlciIsImF1ZCI6Ik15QXBwVXNlcnMifQ.8ZLqSfqza_cTrMHkN3hfsPAdf4G6hwvkLrKX0gJuKWo" \
+              // -H "content-length: 52" \
+              // -d "{\"userName\":\"Huynq125@fpt.com \",\"password\":\"123456\"}" \
+              // "https://apis.fpt.vn/pms/api/m/v1/users/loginxxx""''';
 
-                  String markdown = convertCurlToMarkdown(curl);
-                  log(markdown);
-                },
-                child: Text("send log to google chat"),
-              ),
+              //           String markdown = convertCurlToMarkdown(curl);
+              //           log(markdown);
+              //         },
+              //         child: Text("send log to google chat"),
+              //       ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.smartLoadmoreScreen);
@@ -193,11 +236,14 @@ class _TestScreenState extends State<TestScreen> {
                 pressedColor: Colors.blue,
                 child: Text('TapDelayedPressedButton'),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.troubleShootingScreen);
-                },
-                child: Text('TroubleShootingScreen'),
+              Skeletonizer(
+                enabled: true,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.troubleShootingScreen);
+                  },
+                  child: Text('TroubleShootingScreen'),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -413,7 +459,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/draggel_scroll_screen');
+                  Navigator.of(context).pushNamed(Routes.draggelScrollScreen);
                 },
                 child: Text('Test draggel_scroll_screen'),
               ),

@@ -70,7 +70,7 @@ class CustomSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegat
       return SizedBox(
         height: maxExtent,
         child: Align(
-          alignment: Alignment.lerp(Alignment.centerLeft, Alignment(xFactor, .0), t)!..x,
+          alignment: Alignment.lerp(Alignment.center, Alignment(xFactor, .0), t)!..x,
           child: buildRow(
             itemMaxHeight: maxExtent,
             itemMaxWidth: itemMaxWidth,

@@ -266,19 +266,31 @@ class HighlightAttriButedText extends StatelessWidget {
   Widget build(BuildContext context) {
     List<InlineSpan> listAttributed = [];
     List parts = [];
+
+    // Example styles
+    final TextStyle style = TextStyle(color: Colors.black);
+    final TextStyle highlightStyle = TextStyle(
+      color: Colors.black,
+      backgroundColor: Colors.yellow, // Set background color for highlight
+    );
+
     if (message != null && texthighlight != null) {
       int idx = message.indexOf(texthighlight);
       if (idx >= 0) {
-        parts = [message.substring(0, idx), texthighlight, message.substring(idx + texthighlight.length)];
-        List.generate(
-          parts.length,
-          (index) {
-            final text = TextSpan(text: parts[index], style: parts[index] == texthighlight ? highlightStyle : style);
-            listAttributed.add(text);
-          },
-        );
+        parts = [
+          message.substring(0, idx),
+          texthighlight,
+          message.substring(idx + texthighlight.length),
+        ];
+        for (var index = 0; index < parts.length; index++) {
+          final text = TextSpan(
+            text: parts[index],
+            style: parts[index] == texthighlight ? highlightStyle : style,
+          );
+          listAttributed.add(text);
+        }
       } else {
-        print('faild');
+        print('failed');
       }
     }
     return Text.rich(TextSpan(children: listAttributed));

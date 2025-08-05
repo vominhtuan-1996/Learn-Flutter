@@ -33,58 +33,58 @@ class DraggbleScrollScreen extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: DraggableScrollableActuator(
-              child: Container(
-                color: Colors.blue[500],
-                child: ListView.builder(
-                  itemCount: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text('Item $index'));
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: DraggableScrollableActuator(
-              child: Container(
-                color: Colors.red[500],
-                child: ListView.builder(
-                  itemCount: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text('Item $index'));
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: DraggableScrollableActuator(
-              child: Container(
-                color: Colors.white,
-                child: ListView.builder(
-                  itemCount: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text('Item $index'));
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: DraggableScrollableActuator(
-              child: Container(
-                color: Colors.yellow[500],
-                child: ListView.builder(
-                  itemCount: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text('Item $index'));
-                  },
-                ),
-              ),
-            ),
-          )
+          // Expanded(
+          //   child: DraggableScrollableActuator(
+          //     child: Container(
+          //       color: Colors.blue[500],
+          //       child: ListView.builder(
+          //         itemCount: 25,
+          //         itemBuilder: (BuildContext context, int index) {
+          //           return ListTile(title: Text('Item $index'));
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Expanded(
+          //   child: DraggableScrollableActuator(
+          //     child: Container(
+          //       color: Colors.red[500],
+          //       child: ListView.builder(
+          //         itemCount: 25,
+          //         itemBuilder: (BuildContext context, int index) {
+          //           return ListTile(title: Text('Item $index'));
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Expanded(
+          //   child: DraggableScrollableActuator(
+          //     child: Container(
+          //       color: Colors.white,
+          //       child: ListView.builder(
+          //         itemCount: 25,
+          //         itemBuilder: (BuildContext context, int index) {
+          //           return ListTile(title: Text('Item $index'));
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Expanded(
+          //   child: DraggableScrollableActuator(
+          //     child: Container(
+          //       color: Colors.yellow[500],
+          //       child: ListView.builder(
+          //         itemCount: 25,
+          //         itemBuilder: (BuildContext context, int index) {
+          //           return ListTile(title: Text('Item $index'));
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:learnflutter/utils_helper/regex/regex.dart';
+import 'package:learnflutter/core/regex/regex.dart';
 import 'package:learnflutter/custom_widget/custom_snackbar.dart';
 
 class NumericalRangeFormatter extends TextInputFormatter {

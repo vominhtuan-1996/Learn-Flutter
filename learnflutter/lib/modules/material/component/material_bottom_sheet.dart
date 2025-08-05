@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
-import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
+import 'package:learnflutter/component/bottom_sheet/overlay_bottom_sheet.dart';
+import 'package:learnflutter/custom_widget/advanced_bottom_sheet.dart';
+import 'package:learnflutter/modules/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/modules/animation/widget/scale_translate.dart';
+import 'package:learnflutter/modules/material/component/metarial_radio_button/metarial_radio_button.dart';
+import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
@@ -18,8 +22,7 @@ class MaterialBottomSheet extends StatefulWidget {
   State<MaterialBottomSheet> createState() => _MaterialBottomSheetState();
 }
 
-class _MaterialBottomSheetState extends State<MaterialBottomSheet>
-    with ComponentMaterialDetail {
+class _MaterialBottomSheetState extends State<MaterialBottomSheet> with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();
@@ -66,89 +69,71 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet>
                                   DialogUtils.showBasicDialog(
                                     title: 'Basic dialog title',
                                     context: context,
-                                    content:
-                                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                                     contentWidget: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         const IconAnimationWidget(),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge
-                                              ?.copyWith(
+                                          style: context.textTheme.titleLarge?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium
-                                              ?.copyWith(
+                                          style: context.textTheme.bodyMedium?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge
-                                              ?.copyWith(
+                                          style: context.textTheme.titleLarge?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium
-                                              ?.copyWith(
+                                          style: context.textTheme.bodyMedium?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge
-                                              ?.copyWith(
+                                          style: context.textTheme.titleLarge?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium
-                                              ?.copyWith(
+                                          style: context.textTheme.bodyMedium?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge
-                                              ?.copyWith(
+                                          style: context.textTheme.titleLarge?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
-                                            height: DeviceDimension.padding),
+                                        SizedBox(height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium
-                                              ?.copyWith(
+                                          style: context.textTheme.bodyMedium?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
@@ -167,8 +152,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -191,8 +175,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet>
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         child: Container(
-                          color:
-                              Colors.primaries[index % Colors.primaries.length],
+                          color: Colors.primaries[index % Colors.primaries.length],
                         ),
                       );
                     },
@@ -201,8 +184,7 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet Draggable',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -213,31 +195,79 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet>
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                DialogUtils.showCustomModalBottomSheet(
+                showModalBottomSheet(
                   context: context,
-                  initialSize: 0.75,
-                  child: PageView.builder(
-                    physics: NoBounceScrollPhysics(),
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return ScaleTranslateBuilder(
-                        index: index,
-                        pageController: PageController(viewportFraction: 0.8),
-                        child: GestureDetector(
-                          child: Container(
-                            color: Colors
-                                .primaries[index % Colors.primaries.length],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) => const AdvancedBottomSheet(),
                 );
               },
               type: MaterialButtonType.commonbutton,
               lableText: ' custom Bottom Action Sheet Draggable',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ),
+          ),
+          SizedBox(
+            child: MaterialButton3(
+              backgoundColor: AppColors.green,
+              borderColor: AppColors.green,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                BottomSheetOverlay.show(
+                  context,
+                  minHeight: 80,
+                  initialHeight: 300,
+                  maxHeight: context.mediaQuery.size.height * 0.9,
+                  barrierDismissible: false,
+                  builder: () {
+                    return Column(
+                      children: [
+                        MetarialRadioButton.single(
+                          enable: true,
+                          data: [
+                            RadioItemModel(title: "Radio 1", id: "1", isSelected: true),
+                            RadioItemModel(title: "Radio 2", id: "2", isSelected: false),
+                            RadioItemModel(title: "Radio 3", id: "3", isSelected: false),
+                            RadioItemModel(title: "Radio 4", id: "4", isSelected: false),
+                            RadioItemModel(title: "Radio 5", id: "5", isSelected: false),
+                            RadioItemModel(title: "Radio 6", id: "6", isSelected: false),
+                            RadioItemModel(title: "Radio 7", id: "7", isSelected: false),
+                            RadioItemModel(title: "Radio 8", id: "8", isSelected: false),
+                            RadioItemModel(title: "Radio 9", id: "9", isSelected: false),
+                            RadioItemModel(title: "Radio 10", id: "10", isSelected: false),
+                          ],
+                          onChangeValue: (value) {
+                            print(value?.title ?? "");
+                          },
+                        ),
+                        MetarialRadioButton.single(
+                          enable: true,
+                          data: [
+                            RadioItemModel(title: "Radio 1", id: "1", isSelected: true),
+                            RadioItemModel(title: "Radio 2", id: "2", isSelected: false),
+                            RadioItemModel(title: "Radio 3", id: "3", isSelected: false),
+                            RadioItemModel(title: "Radio 4", id: "4", isSelected: false),
+                            RadioItemModel(title: "Radio 5", id: "5", isSelected: false),
+                            RadioItemModel(title: "Radio 6", id: "6", isSelected: false),
+                            RadioItemModel(title: "Radio 7", id: "7", isSelected: false),
+                            RadioItemModel(title: "Radio 8", id: "8", isSelected: false),
+                            RadioItemModel(title: "Radio 9", id: "9", isSelected: false),
+                            RadioItemModel(title: "Radio 10", id: "10", isSelected: false),
+                          ],
+                          onChangeValue: (value) {
+                            print(value?.title ?? "");
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'BottomSheet overlay builder',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
         ],

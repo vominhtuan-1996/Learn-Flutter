@@ -58,10 +58,7 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ShimmerLoading(
-      isLoading: true ,
-      child:widget.child ?? const SizedBox() ,
-    );
+    return widget.child ?? const SizedBox() ;
       
   }
 }

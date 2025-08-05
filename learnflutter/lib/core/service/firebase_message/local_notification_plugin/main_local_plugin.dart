@@ -1201,6 +1201,7 @@ class _HomePageState extends State<HomePage> {
                     android: AndroidNotificationDetails('full screen channel id', 'full screen channel name',
                         channelDescription: 'full screen channel description', priority: Priority.high, importance: Importance.high, fullScreenIntent: true)),
                 androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+                uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
               );
 
               Navigator.pop(context);
@@ -1304,6 +1305,7 @@ class _HomePageState extends State<HomePage> {
       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       const NotificationDetails(android: AndroidNotificationDetails('your channel id', 'your channel name', channelDescription: 'your channel description')),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
@@ -1315,6 +1317,7 @@ class _HomePageState extends State<HomePage> {
       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       const NotificationDetails(android: AndroidNotificationDetails('alarm_clock_channel', 'Alarm Clock Channel', channelDescription: 'Alarm Clock Notification')),
       androidScheduleMode: AndroidScheduleMode.alarmClock,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

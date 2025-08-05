@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QRScanLaserOverlay extends StatefulWidget {
-  final double size;
+  final Size size;
 
   const QRScanLaserOverlay({super.key, required this.size});
 
@@ -21,7 +21,7 @@ class QRScanLaserOverlayState extends State<QRScanLaserOverlay> with SingleTicke
       duration: const Duration(seconds: 3),
     )..repeat();
 
-    _animation = Tween<double>(begin: 0, end: widget.size).animate(
+    _animation = Tween<double>(begin: 0, end: widget.size.height).animate(
       CurvedAnimation(parent: _controller, curve: Curves.linear),
     );
   }
@@ -42,20 +42,16 @@ class QRScanLaserOverlayState extends State<QRScanLaserOverlay> with SingleTicke
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Center(
-        child: SizedBox(
-          width: widget.size,
-          height: widget.size,
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: _LaserPainter(animationValue: _animation.value),
-              );
-            },
-          ),
-        ),
+    return SizedBox(
+      width: widget.size.width,
+      height: widget.size.height,
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: _LaserPainter(animationValue: _animation.value),
+          );
+        },
       ),
     );
   }
@@ -72,7 +68,7 @@ class _LaserPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final laserY = animationValue;
 
-    final laserHeight = 1.0;
+    final laserHeight = 8.0;
     final shadowHeight = 16.0; // shadow dài hơn laser, mờ hơn
     final laserRect = Rect.fromLTWH(0, laserY, size.width, laserHeight);
 
@@ -112,7 +108,7 @@ class _LaserPainter extends CustomPainter {
     final borderPaint = Paint()
       ..color = Colors.transparent
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = 16;
     canvas.drawRect(Offset.zero & size, borderPaint);
   }
 

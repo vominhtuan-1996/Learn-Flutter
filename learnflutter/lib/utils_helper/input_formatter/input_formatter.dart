@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:learnflutter/utils_helper/input_formatter/input_date_formatter.dart';
 import 'package:learnflutter/utils_helper/input_formatter/input_numerical_range_formatter.dart';
 import 'package:learnflutter/utils_helper/input_formatter/text_formatter.dart';
-import 'package:learnflutter/utils_helper/regex/regex.dart';
+import 'package:learnflutter/core/regex/regex.dart';
 
 class InputFormattersHelper {
   InputFormattersHelper._();

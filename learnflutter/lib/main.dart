@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/app/app_local_translate.dart';
+import 'package:learnflutter/component/app_dialog/app_dialog_manager.dart';
 import 'package:learnflutter/component/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/component/search_bar/cubit/search_bar_cubit.dart';
@@ -18,10 +19,12 @@ import 'package:learnflutter/app/app_theme.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/modules/setting/state/setting_state.dart';
-import 'package:learnflutter/component/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/component/shimmer/widget/shimmer_widget.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
+import 'package:learnflutter/utils_helper/utils_helper.dart';
 import 'package:notification_center/notification_center.dart';
+import 'package:sdk_pms/core/config/env.dart';
+import 'package:sdk_pms/core/rest_api/rest_client/pms_rest_client.dart';
+import 'package:sdk_pms/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 // import 'package:shorebird/shorebird.dart';
@@ -33,6 +36,9 @@ void main() {
       await Hive.initFlutter();
       // Registering the adapte
       Hive.registerAdapter(PersonAdapter());
+      await init();
+      var pmsService = sl<PmsRestClient>();
+      pmsService.initDefaultService(envName: ENV.STAGING.name);
       // Opening the box
       await Hive.openBox('peopleBox');
       // await ShorebirdSdk.initialize(
@@ -43,19 +49,6 @@ void main() {
   );
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//   MyApp setState() => MyApp();
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       // home: MenuController(),
-//       home: TabbarMobiMapCustom(),
-//     );
-//   }
-// }
-
 const simpleTaskKey = "be.tramckrijte.workmanagerExample.simpleTask";
 const rescheduledTaskKey = "be.tramckrijte.workmanagerExample.rescheduledTask";
 const failedTaskKey = "be.tramckrijte.workmanagerExample.failedTask";
@@ -64,17 +57,6 @@ const simplePeriodicTask = "be.tramckrijte.workmanagerExample.simplePeriodicTask
 const simplePeriodic1HourTask = "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask";
 
 @pragma('vm:entry-point')
-// void callbackDispatcher() {
-//   Workmanager().executeTask((task, inputData) {
-//     switch (task) {
-//       case Workmanager.iOSBackgroundTask:
-//         stderr.writeln("The iOS background fetch was triggered");
-//         break;
-//     }
-//     bool success = true;
-//     return Future.value(success);
-//   });
-// }
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     switch (task) {
@@ -116,19 +98,6 @@ void callbackDispatcher() {
     return Future.value(true);
   });
 }
-
-// @pragma('vm:entry-point')
-// void callbackDispatcher() {
-//   Workmanager().executeTask((task, inputData) {
-//     switch (task) {
-//       case Workmanager.iOSBackgroundTask:
-//         stderr.writeln("The iOS background fetch was triggered");
-//         break;
-//     }
-//     bool success = true;
-//     return Future.value(success);
-//   });
-// }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -186,52 +155,50 @@ class _MyAppState extends State<MyApp> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Shimmer(
-        linearGradient: ShimmerUtils.shimmerGradient,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => SettingThemeCubit(),
-            ),
-            BlocProvider(
-              create: (context) => BaseLoadingCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SearchCubit(),
-            ),
-          ],
-          child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
-            builder: (context, state) {
-              DeviceDimension().initValue(context);
-              return MaterialApp(
-                supportedLocales: _localization.supportedLocales,
-                localizationsDelegates: _localization.localizationsDelegates,
-                theme: AppThemes.primaryTheme(context, state),
-                // locale: const Locale('vi'),
-                debugShowCheckedModeBanner: false,
-                home: FlutterSplashScreen.gif(
-                  duration: const Duration(seconds: 8),
-                  backgroundColor: Colors.white,
-                  onInit: () async {
-                    debugPrint("On Init");
-                  },
-                  onEnd: () {
-                    debugPrint("On End");
-                  },
-                  gifPath: 'assets/images/laucher_mobimap_rii_2.gif',
-                  nextScreen: const TestScreen(),
-                  gifWidth: context.mediaQuery.size.width,
-                  gifHeight: context.mediaQuery.size.height,
-                ),
-                // supportedLocales: [
-                //   Locale('vi', 'VN'),
-                //   ...TiePickerLocalizations.supportedLocales,
-                // ],
-                onGenerateRoute: Routes.generateRoute,
-                // initialRoute: Routes.testScreen,
-              );
-            },
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SettingThemeCubit(),
           ),
+          BlocProvider(
+            create: (context) => BaseLoadingCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SearchCubit(),
+          ),
+        ],
+        child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
+          builder: (context, state) {
+            DeviceDimension().initValue(context);
+            return MaterialApp(
+              navigatorKey: UtilsHelper.navigatorKey,
+              // supportedLocales: _localization.supportedLocales,
+              // localizationsDelegates: _localization.localizationsDelegates,
+              theme: AppThemes.primaryTheme(context, state),
+              // locale: const Locale('vi'),
+              debugShowCheckedModeBanner: false,
+              home: FlutterSplashScreen.gif(
+                duration: const Duration(seconds: 8),
+                backgroundColor: Colors.white,
+                onInit: () async {
+                  debugPrint("On Init");
+                },
+                onEnd: () {
+                  debugPrint("On End");
+                },
+                gifPath: 'assets/images/laucher_mobimap_rii_2.gif',
+                nextScreen: const TestScreen(),
+                gifWidth: context.mediaQuery.size.width,
+                gifHeight: context.mediaQuery.size.height,
+              ),
+              // supportedLocales: [
+              //   Locale('vi', 'VN'),
+              //   ...TiePickerLocalizations.supportedLocales,
+              // ],
+              onGenerateRoute: Routes.generateRoute,
+              // initialRoute: Routes.testScreen,
+            );
+          },
         ),
       ),
     );

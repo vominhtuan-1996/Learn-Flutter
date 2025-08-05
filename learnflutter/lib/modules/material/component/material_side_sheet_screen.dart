@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
-import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
+import 'package:learnflutter/modules/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/modules/animation/widget/scale_translate.dart';
 import 'package:learnflutter/modules/material/component/material_side_sheet/material_side_sheet.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';

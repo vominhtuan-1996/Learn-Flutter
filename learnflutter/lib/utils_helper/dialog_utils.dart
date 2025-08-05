@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learnflutter/app/app_colors.dart';
 import 'package:learnflutter/component/bottom_sheet/cubit/bottom_sheet_cubit.dart';
 import 'package:learnflutter/component/bottom_sheet/page/bottom_sheet.dart';
 import 'package:learnflutter/component/bottom_sheet/state/bottom_sheet_state.dart';
-import 'package:learnflutter/component/scroll_physics/nobounce_scroll_physics.dart';
+import 'package:learnflutter/modules/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/core/debound.dart';
 import 'package:learnflutter/app/device_dimension.dart';
 import 'package:learnflutter/core/global/func_global.dart';
@@ -887,5 +888,41 @@ class DialogUtils {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
+  }
+
+  static Future<void> showContentDialog({
+    required BuildContext context,
+    List<Widget>? actions,
+    Widget? contentWidget,
+    bool barrierDismissible = true,
+  }) {
+    return showGeneralDialog(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      barrierLabel: "title",
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return Center(
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
+            child: AlertDialog(
+                backgroundColor: AppColors.greyBlue,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(DeviceDimension.padding / 2))),
+                insetPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                scrollable: true,
+                content: Column(
+                  children: [contentWidget ?? Container()],
+                ),
+                actions: actions),
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300), // DURATION FOR ANIMATION
+      barrierDismissible: barrierDismissible,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const Text('');
+      },
+    );
   }
 }

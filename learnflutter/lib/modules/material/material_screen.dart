@@ -92,7 +92,7 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     ),
     RouterMaterialModel(
       'Lists',
-      Routes.smartLoadmoreScreen,
+      Routes.materialLists,
       'Lists are continuous, vertical indexes of text and images.',
     ),
     RouterMaterialModel(

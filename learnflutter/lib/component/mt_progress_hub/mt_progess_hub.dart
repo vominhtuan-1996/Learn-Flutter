@@ -8,7 +8,6 @@ class MTProgressHub {
     if (_currentOverlay != null) return;
 
     final overlay = Overlay.of(context);
-    if (overlay == null) return;
 
     _currentOverlay = OverlayEntry(
       builder: (_) => Stack(

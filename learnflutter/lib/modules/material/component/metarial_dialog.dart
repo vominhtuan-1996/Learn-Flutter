@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/component/app_dialog/app_dialog_manager.dart';
+import 'package:learnflutter/component/attribute_string/highlighted_text.dart';
 import 'package:learnflutter/component/mt_progress_hub/mt_progess_hub.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
@@ -11,6 +13,7 @@ import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/app/app_colors.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
+import 'package:learnflutter/utils_helper/extension/extension_widget.dart';
 
 class MaterialDialog extends StatefulWidget {
   const MaterialDialog({super.key, required this.data});
@@ -56,7 +59,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Basic dialog title',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -143,7 +146,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'dialog Title',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -161,7 +164,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog with hero icon',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -249,7 +252,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog with hero icon',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -266,7 +269,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog Download File',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -311,7 +314,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog upload File',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -328,7 +331,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Đang lấy thông tin ấn phẩm',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
               backgoundColor: context.theme.colorScheme.onPrimary,
@@ -345,7 +348,63 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               type: MaterialButtonType.commonbutton,
               lableText: 'Đang lấy thông tin ấn phẩm',
               labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            ),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                AppDialogManager.success('Đã lưu thành công!');
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'AppDialogManager success',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                AppDialogManager.info('Đã lưu thành công!');
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'AppDialogManager info ',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                AppDialogManager.error('Đã lưu thành công!');
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'AppDialogManager error',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
+                AppDialogManager.info('Đã lưu thành công!');
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'AppDialogManager info',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
           ],
         ),
       ),

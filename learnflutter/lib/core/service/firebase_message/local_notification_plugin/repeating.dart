@@ -79,6 +79,7 @@ Future<void> _scheduleDailyTenAMLastYearNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.time,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
@@ -93,6 +94,7 @@ Future<void> _scheduleWeeklyTenAMNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
@@ -107,6 +109,7 @@ Future<void> _scheduleWeeklyMondayTenAMNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
@@ -121,6 +124,7 @@ Future<void> _scheduleMonthlyMondayTenAMNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
@@ -135,6 +139,7 @@ Future<void> _scheduleYearlyMondayTenAMNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dateAndTime,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
@@ -175,6 +180,7 @@ Future<void> _scheduleDailyTenAMNotification() async {
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.time,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 

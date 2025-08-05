@@ -8,14 +8,27 @@ import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/balance_bar_screen/balance_bar_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
+import 'package:learnflutter/modules/chart/pages/sf_cartesian_chart_page.dart';
+import 'package:learnflutter/modules/chart/pages/sf_circular_chart_page.dart';
+import 'package:learnflutter/modules/chart/pages/sf_pyramid_chart_page.dart';
+import 'package:learnflutter/modules/chart/pages/sf_spark_bar_chart_page.dart';
 import 'package:learnflutter/modules/chat/chat_screen.dart';
 import 'package:learnflutter/modules/color_picker/color_picker_screen.dart';
 import 'package:learnflutter/modules/custom_paint/custom_paint_screen.dart';
 import 'package:learnflutter/modules/custom_scroll/custom_scroll_screen.dart';
 import 'package:learnflutter/modules/drag_target/drag_target_screen.dart';
 import 'package:learnflutter/modules/drop_refresh_control/drop_refresh_screen.dart';
+import 'package:learnflutter/modules/excel/excel_screen.dart';
 import 'package:learnflutter/modules/graphics/graphics_screen.dart';
+import 'package:learnflutter/modules/indicator/indicator_example_screen.dart';
+import 'package:learnflutter/modules/indicator/pages/arrow_down_indicator_page.dart';
+import 'package:learnflutter/modules/indicator/pages/drop_water_indicator.dart';
+import 'package:learnflutter/modules/indicator/pages/drop_water_lottie_refresh_indicator_page.dart';
+import 'package:learnflutter/modules/indicator/pages/fetch_more_indicator_page.dart';
+import 'package:learnflutter/modules/indicator/pages/home_refresh_indicator_page.dart';
+import 'package:learnflutter/modules/indicator/pages/ice_cream_indicator.dart';
 import 'package:learnflutter/modules/log/log_screen.dart';
+import 'package:learnflutter/modules/login/page/login_screen.dart';
 import 'package:learnflutter/modules/map/map_screen.dart';
 import 'package:learnflutter/modules/material/component/material_badge.dart';
 import 'package:learnflutter/modules/material/component/material_bottom_app_bar.dart';
@@ -25,6 +38,23 @@ import 'package:learnflutter/modules/material/component/material_checkbox/materi
 import 'package:learnflutter/modules/material/component/material_chip_screen.dart';
 import 'package:learnflutter/modules/material/component/material_floating_button.dart';
 import 'package:learnflutter/modules/material/component/material_icon_button_screen.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/fade_search_header_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/header_animation_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/masonry_sliver_grid_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/scroll_spy_sliver_view_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_animation_list_wrapper_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_collapse_FAB_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_effects_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_empty_state.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_map_preview_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_onboarding_with_content_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_parallax_sticky_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_pull_torefresh_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sliver_timeline_page.dart';
+import 'package:learnflutter/modules/material/component/material_lists/example/sticky_header_example.dart';
+import 'package:learnflutter/modules/material/component/material_lists/widgets/sliver_appbar_collapsing_header_hero.dart';
+import 'package:learnflutter/modules/material/component/material_lists/widgets/sliver_appbar_persistent_header_tabbar.dart';
+import 'package:learnflutter/modules/material/component/material_lists_screen.dart';
 import 'package:learnflutter/modules/material/component/material_menus_detail.dart';
 import 'package:learnflutter/modules/material/component/material_navigation_drawer_screen.dart';
 import 'package:learnflutter/modules/material/component/material_navigation_rail_screen.dart';
@@ -70,6 +100,15 @@ import 'package:learnflutter/modules/qr_code_example/qr_code_screen.dart';
 import 'package:learnflutter/modules/reducer/reducer_screen.dart';
 import 'package:learnflutter/modules/regex/regex_example_screen.dart';
 import 'package:learnflutter/modules/scan/scan_screen.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/always_bounce_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/no_scroll_physic_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/nobounce_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/reversed_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/rubber_band_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/rubber_spring_back_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/slow_down_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/pages/snapping_scroll_physics_example.dart';
+import 'package:learnflutter/modules/scroll_physic/scroll_physic_screen.dart';
 import 'package:learnflutter/modules/setting/setting_screen.dart';
 import 'package:learnflutter/modules/shimmer/shimmer_widget.dart';
 import 'package:learnflutter/component/snack_bar/snack_bar_screen.dart';
@@ -80,9 +119,14 @@ import 'package:learnflutter/component/sliver_appbar/main-appbar.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:learnflutter/modules/theme/page_theme_screen.dart';
 import 'package:learnflutter/modules/trouble_shooting/trouble_shooting_screen.dart';
+import 'package:learnflutter/modules/visibility_detector_demo/visibility_detector_example.dart';
 import 'package:learnflutter/modules/web_view/web_view_screen.dart';
 import 'package:learnflutter/src/lib/story_router/story_page_container_builder.dart';
 import 'package:learnflutter/src/lib/story_router/story_route.dart';
+import 'package:sdk_pms/modules/login/login_screen.dart';
+import 'package:sdk_pms/routes/page_routes.dart';
+
+import '../../modules/flutter_3d/pages/flutter_3d_screen.dart';
 
 class Routes {
   Routes._();
@@ -170,6 +214,7 @@ class Routes {
   static const String materialNavigationRail = "material_navigation_rail_screen";
   static const String materialSideSheetScreen = "material_side_sheet_screen";
   static const String materialIConButton = "material_icon_button_screen";
+  static const String materialLists = "material_lists_screen";
   static const String graphicsScreen = 'graphics_screen';
   static const String customPaintScreen = "custom_paint_screen";
   static const String reducerScreen = "reducer_screen";
@@ -190,6 +235,63 @@ class Routes {
   static const String smartLoadmoreScreen = "smart_loadmore_screen";
   static const String webViewScreen = "web_view_screen";
   static const String qrScreen = 'qr_code_screen';
+  static const String excellScreen = 'excel_screen';
+  static const String login = "login_screen";
+
+  //*regions Sliver
+  static const String sliverAppbarCollapsingHeaderHero = "sliver_appbar_collapsing_header_hero";
+  static const String sliverAppbarPersistentHeaderTabbar = "sliver_appbar_persistent_header_tabbar";
+  static const String sliverAnimationListWrapperExample = "sliver_animation_list_wrapper_example";
+  static const String sliverParalaxSticky = "sliver_parallax_sticky_page";
+  static const String sliverMasonryGrid = "masonry_sliver_grid_page";
+  static const String sliverEmptyState = "sliver_empty_state";
+  static const String sliverHeaderAnimationPage = "header_animation_page";
+  static const String sliverEffects = "sliver_effects_page";
+  static const String sliverCollapseToFAB = "sliver_collapse_FAB_example";
+  static const String sliverPullToRefreshPage = "sliver_pull_torefresh_page";
+  static const String sliverTimeLinePage = "sliver_timeline_page";
+  static const String scrollSpySliverViewExample = "scroll_spy_sliver_view_example";
+  static const String stickyHeaderExample = "sticky_header_example";
+  static const String sliverOnboardingWithContentExample = "sliver_onboarding_with_content_example";
+  static const String sliverMapPreviewExample = "sliver_map_preview_example";
+  static const String sliverFadeSearchHeaderExample = "fade_search_header_example";
+  //*regions Sliver
+
+  static const String visibilityDetectorExample = "visibility_detector_example";
+  static const String flutter3dScreen = "flutter_3d_screen";
+
+  //*regions Chart
+  static const String sfCartesianChartPage = "sf_cartesian_chart_page";
+  static const String sfSparkBarChartPage = "sf_spark_bar_chart_page";
+  static const String sfCircularChartPage = "sf_circular_chart_page";
+  static const String sfPyramidChartPage = "sf_pyramid_chart_page";
+
+  //*regions Chart
+
+  //*regions Indicator
+  static const String indicatorExampleScreen = "indicator_example_screen";
+
+  static const String dropWaterIndicator = "drop_water_indicator";
+  static const String iceCreamIndicator = "ice_cream_indicator";
+  static const String fetchMoreIndicator = "fetch_more_indicator_page";
+  static const String dropWaterLottieRefreshIndicator = "drop_water_lottie_refresh_indicator_page";
+  static const String arrowDownIndicator = "arrow_down_indicator_page";
+  static const String homeRefreshIndicator = "home_refresh_indicator_page";
+
+  //*regions Indicator
+
+  //* regions ScrollPhysic
+  static const String scrollPhysicScreen = "scroll_physic_screen";
+  static const String alwaysBounceScrollPhysicsExample = "always_bounce_scroll_physics_example";
+  static const String noScrollPhysicExample = "no_scroll_physics_example";
+  static const String noBounceScrollPhysicsExample = "no_bounce_scroll_physics_example";
+  static const String reversedScrollPhysicsExample = "reversed_scroll_physics_example";
+  static const String rubberBandScrollPhysicsExample = "rubber_band_scroll_physics_example";
+  static const String slowDownScrollPhysicsExample = "slow_down_scroll_physics_example";
+  static const String snappingScrollPhysicsExample = "snapping_scroll_physics_example";
+  static const String rubberSpringBackPhysicsExample = "rubber_spring_back_physics_example";
+  //* regions ScrollPhysic
+  static const String pmsSDKLogin = "pms_login";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -616,6 +718,12 @@ class Routes {
           routeSettings: RouteSettings(name: materialIConButton),
           builder: (_) => (MaterialIconButtonScreen(data: param)),
         );
+      case materialLists:
+        final param = arguments.data as RouterMaterialModel;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: materialLists),
+          builder: (_) => (MaterialListsDetail(data: param)),
+        );
       case graphicsScreen:
         return SlideRightRoute(routeSettings: RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
       case customPaintScreen:
@@ -694,8 +802,228 @@ class Routes {
         );
       case qrScreen:
         return SlideRightRoute(
-          routeSettings: RouteSettings(name: webViewScreen),
+          routeSettings: RouteSettings(name: qrScreen),
           builder: (_) => QRViewExample(),
+        );
+      case webViewScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: webViewScreen),
+          builder: (_) => WebViewScreen(),
+        );
+      case excellScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: excellScreen),
+          builder: (_) => AutoFormulaExcelViewer(),
+        );
+      case login:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: login),
+          builder: (_) => LoginScreen(),
+        );
+      // Sliver Appbar
+      case sliverAppbarCollapsingHeaderHero:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverAppbarCollapsingHeaderHero),
+          builder: (_) => CollapsingHeaderPage(),
+        );
+      case sliverAppbarPersistentHeaderTabbar:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverAppbarPersistentHeaderTabbar),
+          builder: (_) => SliverAppbarPersistentHeaderTabbar(),
+        );
+      case sliverAnimationListWrapperExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverAnimationListWrapperExample),
+          builder: (_) => SliverAnimationListWrapperExample(),
+        );
+      case sliverParalaxSticky:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverParalaxSticky),
+          builder: (_) => SliverParallaxStickyPage(),
+        );
+      case sliverMasonryGrid:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverMasonryGrid),
+          builder: (_) => MasonrySliverGridPage(),
+        );
+      case sliverEmptyState:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverEmptyState),
+          builder: (_) => SliverEmptyStatePage(),
+        );
+      case sliverHeaderAnimationPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverHeaderAnimationPage),
+          builder: (_) => HeaderAnimationPage(),
+        );
+      case sliverEffects:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverEffects),
+          builder: (_) => SliverEffectsPage(),
+        );
+      case sliverCollapseToFAB:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverCollapseToFAB),
+          builder: (_) => SliverCollapseToFABExample(),
+        );
+      case sliverPullToRefreshPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverPullToRefreshPage),
+          builder: (_) => SliverPullToRefreshPage(),
+        );
+      case sliverTimeLinePage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverTimeLinePage),
+          builder: (_) => SliverTimelinePage(),
+        );
+      case scrollSpySliverViewExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: scrollSpySliverViewExample),
+          builder: (_) => ScrollSpySliverViewExample(),
+        );
+      case stickyHeaderExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: stickyHeaderExample),
+          builder: (_) => StickyHeaderExample(),
+        );
+      case sliverOnboardingWithContentExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverOnboardingWithContentExample),
+          builder: (_) => SliverOnboardingWithContentExample(),
+        );
+      case sliverMapPreviewExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverMapPreviewExample),
+          builder: (_) => SliverMapPreviewExample(),
+        );
+      case sliverFadeSearchHeaderExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sliverFadeSearchHeaderExample),
+          builder: (_) => FadeSearchBarSliverExample(),
+        );
+      case visibilityDetectorExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: visibilityDetectorExample),
+          builder: (_) => VisibilityDetectorDemo(),
+        );
+      case sfCartesianChartPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sfCartesianChartPage),
+          builder: (_) => SFCartesianChartPage(),
+        );
+      case sfSparkBarChartPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sfSparkBarChartPage),
+          builder: (_) => SFSparkBarChartPage(),
+        );
+      case sfCircularChartPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sfCircularChartPage),
+          builder: (_) => SFCircularChartPage(),
+        );
+      case sfPyramidChartPage:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: sfPyramidChartPage),
+          builder: (_) => SFPyramidChartPage(),
+        );
+      case flutter3dScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: flutter3dScreen),
+          builder: (_) => Flutter3dScreen(),
+        );
+      case pmsSDKLogin:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: pmsSDKLogin),
+          builder: (_) => LoginScreen(),
+        );
+      case indicatorExampleScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: indicatorExampleScreen),
+          builder: (_) => IndicatorExampleScreen(),
+        );
+      case dropWaterIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: dropWaterIndicator),
+          builder: (_) => DropWaterIndicatorScreen(),
+        );
+      case iceCreamIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: iceCreamIndicator),
+          builder: (_) => IceCreamIndicatorScreen(
+            child: ListView(
+              children: List.generate(
+                20,
+                (index) => ListTile(
+                  title: Text('Item $index'),
+                ),
+              ),
+            ),
+          ),
+        );
+      case fetchMoreIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: fetchMoreIndicator),
+          builder: (_) => FetchMoreIndicatorPage(),
+        );
+      case dropWaterLottieRefreshIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: dropWaterLottieRefreshIndicator),
+          builder: (_) => DropWaterLottieRefreshIndicatorPage(),
+        );
+      case arrowDownIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: arrowDownIndicator),
+          builder: (_) => ArrowDownIndicatorPage(),
+        );
+      case homeRefreshIndicator:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: homeRefreshIndicator),
+          builder: (_) => HomeRefreshIndicatorPage(),
+        );
+      case scrollPhysicScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: scrollPhysicScreen),
+          builder: (_) => ScrollPhysicScreen(),
+        );
+      case alwaysBounceScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: alwaysBounceScrollPhysicsExample),
+          builder: (_) => AlwaysBounceScrollPhysicsExample(),
+        );
+      case noScrollPhysicExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: noScrollPhysicExample),
+          builder: (_) => NoScrollPhysicExample(),
+        );
+      case noBounceScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: noBounceScrollPhysicsExample),
+          builder: (_) => NoBounceScrollPhysicsExample(),
+        );
+      case reversedScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: reversedScrollPhysicsExample),
+          builder: (_) => ReversedScrollPhysicsExample(),
+        );
+      case rubberBandScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: rubberBandScrollPhysicsExample),
+          builder: (_) => RubberBandScrollPhysicsExample(),
+        );
+      case slowDownScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: slowDownScrollPhysicsExample),
+          builder: (_) => SlowDownScrollPhysicsExample(),
+        );
+      case snappingScrollPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: snappingScrollPhysicsExample),
+          builder: (_) => SnappingScrollPhysicsExample(),
+        );
+      case rubberSpringBackPhysicsExample:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: rubberSpringBackPhysicsExample),
+          builder: (_) => RubberSpringBackPhysicsExample(),
         );
       default:
         return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());
@@ -724,6 +1052,9 @@ class SlideRightRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) {
+            final offsetAnimation = Tween<Offset>(begin: Offset(0.0, 0.1), end: Offset.zero).chain(CurveTween(curve: Curves.easeOut)).animate(animation);
+
+            final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeOut)).animate(animation);
             // const begin = Offset(1.0, 0.0);
             // const end = Offset.zero;
             // const curve = Curves.ease;
@@ -751,6 +1082,13 @@ class SlideRightRoute extends PageRouteBuilder {
             //   // settings: storyContainerSettings,
             // );
             // return StoryPage3DTransform().transform(context, child, animation, child);
+            // return SlideTransition(
+            //   position: offsetAnimation,
+            //   child: FadeTransition(
+            //     opacity: opacityAnimation,
+            //     child: child,
+            //   ),
+            // );
             return SlideTransition(
               position: Tween<Offset>(
                 begin: vertical ? Offset(0.0, 1.0) : Offset(1.0, 0.0),

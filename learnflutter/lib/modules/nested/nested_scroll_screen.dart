@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnflutter/utils_helper/extension/extension_widget.dart';
 
 /// Flutter code sample for [NestedScrollView].
 
@@ -21,7 +22,7 @@ class NestedScrollViewExample extends StatelessWidget {
                 child: const Text('title'),
               ),
               floating: true,
-              expandedHeight: 360.0,
+              expandedHeight: 120.0,
               forceElevated: innerBoxIsScrolled,
               leading: const BackButton(color: Colors.transparent),
             ),
@@ -34,7 +35,16 @@ class NestedScrollViewExample extends StatelessWidget {
             return SizedBox(
               height: 50,
               child: Center(child: Text('Item $index')),
-            );
+            )
+                .padding(
+                  EdgeInsets.all(3),
+                )
+                .annotateRegion(
+                  context,
+                )
+                .background(
+                  Colors.red,
+                );
           },
         ),
       ),

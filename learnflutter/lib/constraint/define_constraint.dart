@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -86,6 +87,7 @@ class AppConfig {
         _updateCounter();
       },
     );
+    // Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
     Workmanager().initialize(
       callbackDispatcher, // The top level function, aka callbackDispatcher
       isInDebugMode: true, // If enabled it will post a notification whenever the task is running. Handy for debugging tasks

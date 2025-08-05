@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:learnflutter/utils_helper/path_drawing/src/parse_path.dart';
 import 'package:xml/xml.dart';
 
 class SvgElement {
@@ -202,5 +204,19 @@ class SvgUtilsHelper {
 
   static List<double> parsePoints(String points) {
     return points.split(RegExp(r'\s+|,')).map(double.parse).toList();
+  }
+
+  static Future<String> loadSvgPathFromAsset(String assetPath) async {
+    final svgString = await rootBundle.loadString(assetPath);
+
+    // Tìm tất cả path từ thuộc tính `d="..."` trong SVG
+    final pathRegExp = RegExp(r'd="([^"]+)"');
+    final matches = pathRegExp.allMatches(svgString);
+    String d = "";
+    for (final match in matches) {
+      d = match.group(1) ?? "";
+    }
+
+    return d;
   }
 }

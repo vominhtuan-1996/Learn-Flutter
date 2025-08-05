@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 
 /// Displays a Material Design 3 side sheet as a general dialog.
 ///
@@ -201,7 +202,7 @@ class SideSheetMaterial3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size * 0.9;
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 

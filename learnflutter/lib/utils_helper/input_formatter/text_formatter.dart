@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:learnflutter/utils_helper/regex/regex.dart';
+import 'package:learnflutter/core/regex/regex.dart';
 
 class TextFormatter extends TextInputFormatter {
   final int maxLenght;
