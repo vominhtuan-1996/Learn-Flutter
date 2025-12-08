@@ -7,7 +7,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart' hide RefreshIndicatorState, RefreshIndicator;
 import 'package:flutter/foundation.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/custom_widget/smart_refresh/lib/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:math' as math;

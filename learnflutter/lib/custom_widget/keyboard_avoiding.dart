@@ -6,7 +6,8 @@ class KeyboardAvoiding extends StatelessWidget {
   final Duration duration;
   final double kFactor;
 
-  const KeyboardAvoiding({super.key, 
+  const KeyboardAvoiding({
+    super.key,
     required this.child,
     this.curve = Curves.easeInOut,
     this.duration = const Duration(milliseconds: 200),
@@ -24,6 +25,24 @@ class KeyboardAvoiding extends StatelessWidget {
         0.0,
         verticalOffset,
         0.0,
+      ),
+      child: child,
+    );
+  }
+}
+
+class KeyboardAvoider extends StatelessWidget {
+  final Widget child;
+
+  const KeyboardAvoider({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+      padding: EdgeInsets.only(
+        bottom: View.of(context).viewInsets.bottom,
       ),
       child: child,
     );

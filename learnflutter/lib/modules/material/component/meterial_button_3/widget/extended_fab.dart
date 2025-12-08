@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 
 class ExtendedFAB extends StatelessWidget {

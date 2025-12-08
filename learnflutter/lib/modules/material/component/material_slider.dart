@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/modules/slider_vertical/progess_bar_custom.dart';
+import 'package:learnflutter/modules/slider_vertical/slider_liquid_glass.dart';
+import 'package:learnflutter/utils_helper/extension/extension_widget.dart';
 
 class MaterialSlider extends StatefulWidget {
   const MaterialSlider({super.key, required this.data});
@@ -14,6 +16,7 @@ class MaterialSlider extends StatefulWidget {
 
 class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialDetail {
   double valueSlider = 50;
+  double sliderValue = 50;
   @override
   void initState() {
     super.initState();
@@ -98,6 +101,15 @@ class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialD
                 },
               ),
             ),
+            CustomSoftSlider(
+              value: sliderValue,
+              onChanged: (value) {
+                sliderValue = value;
+              },
+              enableHaptic: true,
+              showLabel: true,
+              useGradientTrack: true,
+            ).paddingAll(DeviceDimension.padding),
           ],
         ),
       ),

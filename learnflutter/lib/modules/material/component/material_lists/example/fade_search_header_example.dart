@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/material_lists/widgets/sliver_fade_search_header.dart';
 
 class FadeSearchBarSliverExample extends StatefulWidget {

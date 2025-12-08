@@ -26,7 +26,7 @@ class TabbarMobiMapCustomWidgetState extends State<TabbarMobiMapCustom> with Sin
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeMenuController(),
-    ARKitScreen(),
+    // ARKitScreen(),
     Center(
       child: Text(
         'Index 2: School',

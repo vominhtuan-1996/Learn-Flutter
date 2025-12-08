@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:sdk_pms/widgets/loading_animation/loading_animation.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class IceCreamIndicatorScreen extends StatefulWidget {
   final Widget child;

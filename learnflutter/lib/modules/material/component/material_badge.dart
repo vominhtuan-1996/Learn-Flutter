@@ -4,7 +4,7 @@ import 'package:learnflutter/modules/material/component/component_material_mixi.
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
 import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/core/app/app_box_decoration.dart';
 
 class MaterialBadge extends StatefulWidget {
   const MaterialBadge({super.key, required this.data});

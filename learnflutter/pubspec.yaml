@@ -15,10 +15,13 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.2+1
 
 environment:
-   sdk: '>=3.1.2 <4.0.0'
+   sdk: ">=3.0.0 <4.0.0"
+platforms:
+  ios:
+  android:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -38,14 +41,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   dio: ^5.1.1
-  google_fonts: ^5.0.0
+  google_fonts: ^4.0.4
   flutter_svprogresshud: ^1.0.0
   bmprogresshud: ^1.0.1
   shared_preferences: ^2.1.0
   scrollable_positioned_list: ^0.3.8
-  arkit_plugin: ^1.0.6
+  # arkit_plugin: ^1.0.6
   workmanager: ^0.5.1
-  flutter_local_notifications: ^8.2.0
+  flutter_local_notifications: ^17.2.2
   notification_center: ^0.0.3
   draggable_fab: ^0.1.4
   flutter_isolate: ^2.0.4
@@ -53,53 +56,59 @@ dependencies:
   carousel_slider: any
   # shimmer: any
   curl_logger_dio_interceptor: ^1.0.0
-  flutter_curl: ^0.3.0
-  popover: ^0.2.8+2
-  intl: 0.19.0
-  calendar_date_picker2: ^0.5.2
+  flutter_curl: ^0.5.1
+  popover: ^0.3.1
+  # intl: 0.20.2
+  calendar_date_picker2: ^2.0.0
   # tie_picker: any
   flutter_progress_hud: ^2.0.2
   flutter_bloc: ^8.0.1
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ^3.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   awesome_snackbar_content: any
-  # qr_code_scanner: ^1.0.1
-  camera: ^0.10.5
+  qr_code_scanner: ^1.0.1
+  camera: ^0.11.0+1
   video_player: ^2.7.2
   open_file_plus: ^3.4.1
   path_provider: ^2.1.1
-  docscan: ^1.1.6
-  webview_flutter: ^4.4.1
+  # docscan: ^1.1.6
+  webview_flutter: ^4.7.0
   url_launcher: ^6.1.14
-  two_dimensional_scrollables: ^0.0.4
+  two_dimensional_scrollables: ^0.3.3
   mime: any
   flutter_screenutil: any
   animated_segmented_tab_control: any
   rxdart: any
   # pull_to_refresh: ^2.0.0
-  syncfusion_flutter_charts: any
+  syncfusion_flutter_charts: ^29.1.38
   flame: ^1.15.0
-  bloc: ^8.1.4
-  flutter_hooks: ^0.20.5
+  flutter_hooks: ^0.21.2
   flutter_dotenv: ^5.1.0
   # flutter_app_name: any
   # xml: ^6.5.0
   another_flutter_splash_screen: ^1.2.1
   hooks_riverpod: ^2.5.1
-  mobile_scanner: ^5.1.1
+  mobile_scanner: ^6.0.0
   # firebase_core: any
   # cloud_firestore: ^4.0.0
   sqflite: ^2.2.8+4
   path: ^1.8.3
   flutter_spinkit: ^5.2.1
-  file_picker: ^8.1.4
+  file_picker: ^10.0.0
   pdf_render: ^1.4.12
-  permission_handler: ^11.1.0
-  shorebird_code_push: any
+  permission_handler: ^12.0.0
+  shorebird_code_push: ^2.0.4
   pinput: ^5.0.0
-  flutter_svg: ^2.0.2
+  flutter_svg: ^2.0.10+1
   xml: ^6.0.1
+  ntp: ^2.0.0
+
+
+  # firebase_crashlytics: ^4.3.4
+  # firebase_core: ^3.12.1
+  # firebase_core_platform_interface: 5.4.0
+  # firebase_messaging: ^15.2.4
   # syncfusion_flutter_pdfviewer: ^24.2.8
 
   # animations: ^2.0.11
@@ -107,17 +116,55 @@ dependencies:
   # keyboard_overlay: ^1.0.0
   http: any
   provider: any
-  webview_flutter_android: any
-  webview_flutter_wkwebview: any
+  # webview_flutter_android: any
+  # webview_flutter_wkwebview: any
   vector_math: any
   animated_tree_view: ^2.3.0
   animated_bottom_navigation_bar: ^1.3.3
   pie_menu: ^3.2.7
+  flutter_chat_ui: ^1.6.15
+  flutter_chat_types: ^3.6.2
+  uuid: ^4.5.1
+  flutter_map: ^8.1.1
+  latlong2: ^0.9.0
+  flutter_localization: ^0.3.2
+  flutter_animate: ^4.5.2
+  loading_animation_widget: ^1.3.0
+  flutter_riverpod: ^2.6.1
+  image_picker: ^1.1.0
+  qr_code_tools: ^0.2.0
+  excel: ^4.0.2
+  expressions: ^0.2.5
+  skeletonizer: ^1.4.3
+  flutter_staggered_grid_view: ^0.7.0
+  google_maps_flutter: ^2.6.0
+  visibility_detector: ^0.4.0
+  pretty_qr_code: ^3.4.0
+  image_gallery_saver: ^2.0.3
+  flutter_3d_controller: ^2.2.0
+  custom_refresh_indicator: ^4.0.1
+  lottie: ^3.0.0
+  path_drawing: ^1.0.0
+  input_history_text_field: ^0.4.0
+  # mobimap_module:
+  #      path: /Users/tuanios_su12/mobimap_module
+  geolocator: ^13.0.4
+  camerawesome: ^2.5.0
+  cross_file: ^0.3.3+6
+  # flutter_map_tappable_polygon:
+  #   git:
+  #     url: https://github.com/fleaflet/flutter_map
+  #     path: packages/flutter_map_tappable_polygon
+
+dependencies_overrides:
+  flutter_bloc: ^9.1.1
+  bloc: ^9.0.0
+ 
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  freezed: ^2.4.7
+  freezed: ^3.0.0-0.0.dev
   hive_generator: ^2.0.1
   build_runner: ^2.4.6  
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -125,7 +172,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -144,6 +191,14 @@ flutter:
     - assets/images/test.svg
     - assets/icons/
     - shorebird.yaml
+    - assets/json/vietnam.geo.json
+    - assets/json/vietname_praraces_islands.geo.json
+    - assets/json/vietname_spratly_islands.geo.json
+    - assets/3d/business_man.glb
+    - assets/lottie/refresh_water_drop.json
+    - assets/sound/sound_effect_refreshing.wav
+
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -165,17 +220,22 @@ flutter:
   #         style: italic
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-environments:
-  development:
-    app_id: 'com.isc.mobimap.mobimapFlutter'
-    # base_url: 'https://dev.api.example.com'
-    auto_update: true
-  staging:
-    app_id: 'com.isc.mobimap.mobimapFlutter'
-    #  base_url: 'https://dev.api.example.com'
-    auto_update: true
-  production:
-    app_id: 'com.isc.mobimap.mobimapFlutter'
-    # base_url: 'https://dev.api.example.com'
-    auto_update: true
+# environments:
+#   development:
+#     app_id: 'com.isc.mobimap.mobimapFlutter'
+#     # base_url: 'https://dev.api.example.com'
+#     auto_update: true
+#   staging:
+#     app_id: 'com.isc.mobimap.mobimapFlutter'
+#     #  base_url: 'https://dev.api.example.com'
+#     auto_update: true
+#   production:
+#     app_id: 'com.isc.mobimap.mobimapFlutter'
+#     # base_url: 'https://dev.api.example.com'
+#     auto_update: true
+
+  # module:
+  #   androidX: true
+  #   androidPackage: com.fpt.isc.pms.sdk_pms
+  #   iosBundleIdentifier: com.isc.mobimap.mobimapFlutter
     

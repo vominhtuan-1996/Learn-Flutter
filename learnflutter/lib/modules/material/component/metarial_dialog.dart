@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/component/app_dialog/app_dialog_manager.dart';
 import 'package:learnflutter/component/attribute_string/highlighted_text.dart';
 import 'package:learnflutter/component/mt_progress_hub/mt_progess_hub.dart';
@@ -11,7 +11,7 @@ import 'package:learnflutter/modules/material/component/component_material_mixi.
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/utils_helper/extension/extension_widget.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
 class AlwaysBounceScrollPhysicsExample extends StatefulWidget {

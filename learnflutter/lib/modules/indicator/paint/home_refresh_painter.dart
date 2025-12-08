@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:learnflutter/utils_helper/path_drawing/src/parse_path.dart';
-import 'package:sdk_pms/general_import.dart';
 
 class HomeRefreshPainter extends CustomPainter {
   final double progress;

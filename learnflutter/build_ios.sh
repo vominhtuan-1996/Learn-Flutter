@@ -32,6 +32,21 @@ send_telegram_notification() {
     -d text="${message}" \
     -d parse_mode="Markdown"
 }
+
+
+function run_with_timer() {
+    local task="$1"
+    local message="$2"
+    local start_time=$(date +%s.%N)
+
+    $task
+    local end_time=$(date +%s.%N)
+    local elapsed_time=$(echo "$end_time - $start_time" | bc)
+
+    echo -e $message $BLUE ${elapsed_time}s.
+}
+
+
 # Hàm tạo shortlink
 create_short_link_tinyurl() {
   local long_url=$1
@@ -47,8 +62,8 @@ build_and_push() {
   local target_dir=$5
   local environmentGithub=$6
   log "${BLUE}🔨 Building for ${scheme}...${RESET}"
-  flutter build ios --flavor ${scheme} -t lib/main_${scheme}.dart
-  log "${BLUE}✔️  Building for ${scheme} done...${RESET}"
+  run_with_timer "flutter build ios lib/main.dart" "${BLUE}✔️  Building for ${scheme} done...${RESET}"
+  # log "${BLUE}✔️  Building for ${scheme} done...${RESET}"
   cd ios
   log "${BLUE}🔨 Building for ${scheme} file IPA...${RESET}"
   if fastlane build_ios scheme:"${scheme}" output:"${output}" provisioningProfile:"${provisioningProfile}" bundleID:"${bundleID}"; then

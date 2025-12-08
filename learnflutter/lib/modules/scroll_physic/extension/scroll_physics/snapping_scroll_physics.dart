@@ -1,4 +1,4 @@
-import 'package:sdk_pms/general_import.dart';
+import 'package:flutter/material.dart';
 
 class SnappingScrollPhysics extends ClampingScrollPhysics {
   final double itemDimension;

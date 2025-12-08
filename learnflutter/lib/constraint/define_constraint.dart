@@ -14,7 +14,7 @@ import 'package:learnflutter/core/https/MBMHttpHelper.dart';
 import 'package:learnflutter/modules/menu/model/model_menu.dart';
 import 'package:learnflutter/component/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
-import 'package:learnflutter/app/app_box_decoration.dart';
+import 'package:learnflutter/core/app/app_box_decoration.dart';
 import 'package:learnflutter/utils_helper/datetime_utils.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';

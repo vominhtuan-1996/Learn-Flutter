@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 
 class ScaleTranslateBuilder extends StatefulWidget {
-  const ScaleTranslateBuilder(
-      {super.key,
-      required this.index,
-      required this.pageController,
-      required this.child});
+  const ScaleTranslateBuilder({super.key, required this.index, required this.pageController, required this.child});
   final int index;
   final PageController pageController;
   final Widget child;

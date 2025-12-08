@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/modules/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/modules/animation/widget/scale_translate.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -8,7 +8,7 @@ import 'package:learnflutter/modules/material/component/component_material_mixi.
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 
 class MaterialRefreshScreen extends StatefulWidget {

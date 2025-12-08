@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/chart/model/sales_data_model.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 import 'package:learnflutter/modules/map/map_screen.dart';
 import 'package:learnflutter/modules/material/component/material_side_sheet/material_side_sheet.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';

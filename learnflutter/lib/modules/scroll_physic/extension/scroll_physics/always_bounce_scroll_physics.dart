@@ -1,4 +1,4 @@
-import 'package:sdk_pms/general_import.dart';
+import 'package:flutter/material.dart';
 
 class AlwaysBounceScrollPhysics extends BouncingScrollPhysics {
   /// Luôn bật bounce kể cả khi không cần thiết

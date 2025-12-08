@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 
 class VMTBottomSheet extends StatefulWidget {
   const VMTBottomSheet({super.key, required this.child, this.heightBottomSheet = 0.86});

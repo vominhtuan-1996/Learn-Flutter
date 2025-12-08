@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/metarial_radio_button.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';

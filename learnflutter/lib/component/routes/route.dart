@@ -7,6 +7,7 @@ import 'package:learnflutter/main_isolate.dart';
 import 'package:learnflutter/modules/animation/animation_screen.dart';
 import 'package:learnflutter/modules/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/modules/balance_bar_screen/balance_bar_screen.dart';
+import 'package:learnflutter/modules/camera_wesome/camera_wesome_screen.dart';
 import 'package:learnflutter/modules/chart/chart_screen.dart';
 import 'package:learnflutter/modules/chart/pages/sf_cartesian_chart_page.dart';
 import 'package:learnflutter/modules/chart/pages/sf_circular_chart_page.dart';
@@ -123,8 +124,6 @@ import 'package:learnflutter/modules/visibility_detector_demo/visibility_detecto
 import 'package:learnflutter/modules/web_view/web_view_screen.dart';
 import 'package:learnflutter/src/lib/story_router/story_page_container_builder.dart';
 import 'package:learnflutter/src/lib/story_router/story_route.dart';
-import 'package:sdk_pms/modules/login/login_screen.dart';
-import 'package:sdk_pms/routes/page_routes.dart';
 
 import '../../modules/flutter_3d/pages/flutter_3d_screen.dart';
 
@@ -292,6 +291,11 @@ class Routes {
   static const String rubberSpringBackPhysicsExample = "rubber_spring_back_physics_example";
   //* regions ScrollPhysic
   static const String pmsSDKLogin = "pms_login";
+
+  // mobimap_module
+  static const String mobimapModule = "mobimap_module_app";
+
+  static const String camerawesome = "camera_wesome_screen";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -525,11 +529,11 @@ class Routes {
           routeSettings: RouteSettings(name: setting),
           builder: (_) => SettingScreen(),
         );
-      case arkit:
-        return SlideRightRoute(
-          routeSettings: RouteSettings(name: arkit),
-          builder: (_) => ARKitScreen(),
-        );
+      // case arkit:
+      //   return SlideRightRoute(
+      //     routeSettings: RouteSettings(name: arkit),
+      //     builder: (_) => ARKitScreen(),
+      //   );
       case colorPicker:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: colorPicker),
@@ -815,11 +819,7 @@ class Routes {
           routeSettings: RouteSettings(name: excellScreen),
           builder: (_) => AutoFormulaExcelViewer(),
         );
-      case login:
-        return SlideRightRoute(
-          routeSettings: RouteSettings(name: login),
-          builder: (_) => LoginScreen(),
-        );
+
       // Sliver Appbar
       case sliverAppbarCollapsingHeaderHero:
         return SlideRightRoute(
@@ -931,11 +931,7 @@ class Routes {
           routeSettings: RouteSettings(name: flutter3dScreen),
           builder: (_) => Flutter3dScreen(),
         );
-      case pmsSDKLogin:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: pmsSDKLogin),
-          builder: (_) => LoginScreen(),
-        );
+
       case indicatorExampleScreen:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: indicatorExampleScreen),
@@ -1025,6 +1021,17 @@ class Routes {
           routeSettings: RouteSettings(name: rubberSpringBackPhysicsExample),
           builder: (_) => RubberSpringBackPhysicsExample(),
         );
+      case camerawesome:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: camerawesome),
+          builder: (_) => CameraWeSomeScreen(),
+        );
+      case login:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: login),
+          builder: (_) => LoginScreenTemp(),
+        );
+
       default:
         return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());
     }

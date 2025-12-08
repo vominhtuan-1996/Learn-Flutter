@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 import 'package:learnflutter/component/search_bar/cubit/search_bar_cubit.dart';
 import 'package:learnflutter/component/search_bar/state/search_bar_state.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -54,20 +54,13 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
 
   BoxConstraints boxConstraints(SearchState state) {
     if (state is SearchLoading) {
-      return widget.viewConstraints ??
-          BoxConstraints(maxHeight: context.mediaQuery.size.height / 6);
+      return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 6);
     } else if (state is SearchError) {
-      return widget.viewConstraints ??
-          BoxConstraints(maxHeight: context.mediaQuery.size.height / 3);
+      return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 3);
     } else if (state is SearchLoaded) {
-      return widget.viewConstraints ??
-          BoxConstraints(
-              maxHeight: state.suggestions.isNotEmpty
-                  ? context.mediaQuery.size.height / 2
-                  : context.mediaQuery.size.height / 3);
+      return widget.viewConstraints ?? BoxConstraints(maxHeight: state.suggestions.isNotEmpty ? context.mediaQuery.size.height / 2 : context.mediaQuery.size.height / 3);
     }
-    return widget.viewConstraints ??
-        BoxConstraints(maxHeight: context.mediaQuery.size.height / 2);
+    return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 2);
   }
 
   @override
@@ -89,13 +82,10 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                   if (state is SearchLoading) {
                     return widget.builderWaiting?.call(context) ??
                         Center(
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              child: CupertinoActivityIndicator()),
+                          child: Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CupertinoActivityIndicator()),
                         );
                   } else if (state is SearchError) {
-                    return widget.builderError?.call(context) ??
-                        Text('Error fetching suggestions');
+                    return widget.builderError?.call(context) ?? Text('Error fetching suggestions');
                   } else if (state is SearchLoaded) {
                     return Builder(
                       builder: (context) => SingleChildScrollView(
@@ -106,11 +96,9 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                               onTap: () {
                                 controller.text = state.suggestions[index];
                                 UtilsHelper.pop(context);
-                                widget.onTapChildBuilder
-                                    ?.call(state.suggestions[index]);
+                                widget.onTapChildBuilder?.call(state.suggestions[index]);
                               },
-                              child: widget.childBuilder(
-                                  context, state.suggestions[index]),
+                              child: widget.childBuilder(context, state.suggestions[index]),
                             ),
                           ),
                         ),

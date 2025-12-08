@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/component/sliver_appbar/notification_handler.dart';
 import 'package:learnflutter/custom_widget/sliver_appbar_delegate.dart';
+import 'package:learnflutter/src/lib/src/utils/utils.dart';
 
 class LoginScreenTemp extends StatefulWidget {
   const LoginScreenTemp({super.key});
@@ -48,11 +49,15 @@ class _LoginScreenTempState extends State<LoginScreenTemp> {
                         DeviceDimension.horizontalSize(50),
                       ),
                     ),
-                    color: Colors.red,
+                    color: Colors.lightGreen,
                   ),
-                  child: Center(
-                    child: Text('cc'),
-                  )),
+                  child: Column(
+                    children: [
+                      TextField().paddingSymmetric(vertical: DeviceDimension.padding),
+                      TextField().paddingSymmetric(vertical: DeviceDimension.padding),
+                      TextField().paddingSymmetric(vertical: DeviceDimension.padding),
+                    ],
+                  ).paddingOnly(top: DeviceDimension.padding * 4)),
             )
           ],
         ),

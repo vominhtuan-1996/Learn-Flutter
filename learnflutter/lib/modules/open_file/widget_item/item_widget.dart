@@ -8,7 +8,7 @@ import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/modules/open_file/widget_item/get_file_screen.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:xml/xml.dart';
 

@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/app_text_style.dart';
+import 'package:learnflutter/core/app/app_text_style.dart';
 import 'package:learnflutter/modules/form_validation/manager/form_validation_manager.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 
 class FormValidationWidget extends StatelessWidget {
   const FormValidationWidget(

@@ -4,7 +4,8 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:input_history_text_field/input_history_text_field.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/component/search_bar/page/search_bar_builder.dart';
 import 'package:learnflutter/component/tap_builder/tap_animated_button_builder.dart';
@@ -18,6 +19,9 @@ import 'package:learnflutter/component/attribute_string/attribute_string_widget.
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
+// import 'package:mobimap_module/bridge/mobimap_module.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
+
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -84,6 +88,179 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   bool switchValue = true;
+
+  final _updater = ShorebirdUpdater();
+  late final bool _isUpdaterAvailable;
+  var _currentTrack = UpdateTrack.stable;
+  var _isCheckingForUpdates = false;
+  Patch? _currentPatch;
+
+  Future<void> _checkForUpdate() async {
+    if (_isCheckingForUpdates) return;
+
+    try {
+      setState(() => _isCheckingForUpdates = true);
+      // Check if there's an update available.
+      final status = await _updater.checkForUpdate(track: _currentTrack);
+      _updater.readCurrentPatch().then((currentPatch) {
+        debugPrint('Error reading current patch: $currentPatch');
+        setState(() => _currentPatch = currentPatch);
+      }).catchError((Object error) {
+        // If an error occurs, we log it for now.
+        debugPrint('Error reading current patch: $error');
+      });
+      if (!mounted) return;
+      // If there is an update available, show a banner.
+      switch (status) {
+        case UpdateStatus.upToDate:
+          _showNoUpdateAvailableBanner();
+        case UpdateStatus.outdated:
+          _showUpdateAvailableBanner();
+        case UpdateStatus.restartRequired:
+          _showRestartBanner();
+        case UpdateStatus.unavailable:
+        // Do nothing, there is already a warning displayed at the top of the
+        // screen.
+      }
+    } catch (error) {
+      // If an error occurs, we log it for now.
+      debugPrint('Error checking for update: $error');
+    } finally {
+      setState(() => _isCheckingForUpdates = false);
+    }
+  }
+
+  void _showDownloadingBanner() {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(
+        const MaterialBanner(
+          content: Text('Downloading...'),
+          actions: [
+            SizedBox(
+              height: 14,
+              width: 14,
+              child: CircularProgressIndicator(),
+            ),
+          ],
+        ),
+      );
+  }
+
+  void _showUpdateAvailableBanner() {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(
+        MaterialBanner(
+          content: Text(
+            'Update available for the ${_currentTrack.name} track.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                await _downloadUpdate();
+                if (!mounted) return;
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('Download'),
+            ),
+          ],
+        ),
+      );
+  }
+
+  void _showNoUpdateAvailableBanner() {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(
+        MaterialBanner(
+          content: Text(
+            'No update available on the ${_currentTrack.name} track.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('Dismiss'),
+            ),
+          ],
+        ),
+      );
+  }
+
+  void _showRestartBanner() {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(
+        MaterialBanner(
+          content: const Text('A new patch is ready! Please restart your app.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('Dismiss'),
+            ),
+          ],
+        ),
+      );
+  }
+
+  void _showErrorBanner(Object error) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(
+        MaterialBanner(
+          content: Text(
+            'An error occurred while downloading the update: $error.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text('Dismiss'),
+            ),
+          ],
+        ),
+      );
+  }
+
+  Future<void> _downloadUpdate() async {
+    _showDownloadingBanner();
+    try {
+      // Perform the update (e.g download the latest patch on [_currentTrack]).
+      // Note that [track] is optional. Not passing it will default to the
+      // stable track.
+      await _updater.update(track: _currentTrack);
+      if (!mounted) return;
+      // Show a banner to inform the user that the update is ready and that they
+      // need to restart the app.
+      _showRestartBanner();
+    } on UpdateException catch (error) {
+      // If an error occurs, we show a banner with the error message.
+      _showErrorBanner(error.message);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Check whether Shorebird is available.
+    setState(() => _isUpdaterAvailable = _updater.isAvailable);
+
+    // Read the current patch (if there is one.)
+    // `currentPatch` will be `null` if no patch is installed.
+    _updater.readCurrentPatch().then((currentPatch) {
+      setState(() => _currentPatch = currentPatch);
+    }).catchError((Object error) {
+      // If an error occurs, we log it for now.
+      debugPrint('Error reading current patch: $error');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
@@ -100,6 +277,50 @@ class _TestScreenState extends State<TestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.login);
+                },
+                child: Text('Test GlobalNoKeyboardRebuild'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.camerawesome);
+                },
+                child: Text('Camera wesome'),
+              ),
+              TextButton(
+                onPressed: () {
+                  _checkForUpdate();
+                },
+                child: Text('Code Push patch'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // MobiMapModule.open(
+                  //   context,
+                  //   token: "123",
+                  //   empCode: "mobix",
+                  //   initialRoute: '/m_progress_image_checklist',
+                  //   username: "x",
+                  //   env: "STAGING",
+                  // );
+                },
+                child: Text('Mobimap Module'),
+              ),
+              InputHistoryTextField(
+                historyKey: 'search',
+                lockItems: ['Flutter', 'React'],
+                enableHistory: true,
+                enableSave: true,
+                showHistoryList: true,
+                hasFocusExpand: true,
+                decoration: InputDecoration(
+                  hintText: 'Nhập từ khóa...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.scrollPhysicScreen);

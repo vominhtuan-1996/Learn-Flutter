@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/app/app_text_style.dart';
+import 'package:learnflutter/core/app/app_text_style.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/cubit/metarial_radio_button_cubit.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/state/metarial_radio_buton_state.dart';

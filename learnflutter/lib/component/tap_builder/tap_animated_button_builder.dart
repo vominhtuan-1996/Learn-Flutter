@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/src/lib/tap_builder/src/animated_tap_builder.dart';
 import 'package:learnflutter/src/lib/tap_builder/src/tap_state.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -32,9 +32,7 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
           onTap?.call();
         },
         builder: (context, state, isFocused, cursorLocation, cursorAlignment) {
-          cursorAlignment = state == TapState.pressed
-              ? Alignment(-cursorAlignment.x, -cursorAlignment.y)
-              : Alignment.center;
+          cursorAlignment = state == TapState.pressed ? Alignment(-cursorAlignment.x, -cursorAlignment.y) : Alignment.center;
           return AnimatedContainer(
             transformAlignment: Alignment.center,
             transform: Matrix4.rotationX(-cursorAlignment.y * 0.2)
@@ -62,8 +60,7 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
                     Positioned.fill(
                       child: AnimatedAlign(
                         duration: const Duration(milliseconds: 200),
-                        alignment:
-                            Alignment(-cursorAlignment.x, -cursorAlignment.y),
+                        alignment: Alignment(-cursorAlignment.x, -cursorAlignment.y),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           width: 10,
@@ -72,8 +69,7 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
                             color: Colors.white.withOpacity(0.01),
                             boxShadow: [
                               BoxShadow(
-                                color: context.theme.primaryColor.withOpacity(
-                                    state == TapState.pressed ? 0.5 : 0.0),
+                                color: context.theme.primaryColor.withOpacity(state == TapState.pressed ? 0.5 : 0.0),
                                 blurRadius: 200,
                                 spreadRadius: 130,
                               ),

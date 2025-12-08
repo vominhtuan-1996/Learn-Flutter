@@ -24,7 +24,7 @@ class HighlightedText extends StatelessWidget {
 
     if (message.isNotEmpty && texthighlight.isNotEmpty) {
       String lowerMessage = message.toLowerCase();
-      String lowerHighlight = texthighlight.toLowerCase();
+      String lowerHighlight = texthighlight.toLowerCase(); 
       int idx = lowerMessage.indexOf(lowerHighlight);
 
       if (idx >= 0 && lowerMessage != lowerHighlight) {

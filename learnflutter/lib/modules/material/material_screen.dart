@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/utils_helper/extension/extension_textstyle.dart';
 import 'package:learnflutter/component/routes/argument_screen_model.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
-import 'package:learnflutter/app/app_colors.dart';
+import 'package:learnflutter/core/app/app_colors.dart';
 
 class RouterMaterialModel {
   RouterMaterialModel(this.title, this.router, this.description);

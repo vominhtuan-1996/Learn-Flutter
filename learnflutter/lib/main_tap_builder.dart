@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/app/device_dimension.dart';
+import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/src/lib/tap_builder/src/animated_tap_builder.dart';
 
 import 'package:learnflutter/src/lib/tap_builder/src/tap_builder.dart';
