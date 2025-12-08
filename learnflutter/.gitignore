@@ -54,6 +54,13 @@ linux/
 macos/
 windows/
 web/
-
+android_bak
+release
+.fvm
+.env
+.ios
+.android
+.vscode
+lib/l10n
 
 .metadata
