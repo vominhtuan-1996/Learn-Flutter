@@ -30,7 +30,8 @@ class _FadeSearchBarSliverExampleState extends State<FadeSearchBarSliverExample>
       _forceShowSearchBar = !_forceShowSearchBar;
       if (_forceShowSearchBar) {
         _showSearchIcon = false;
-        _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        _scrollController.animateTo(0,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
       }
     });
   }
@@ -50,7 +51,11 @@ class _FadeSearchBarSliverExampleState extends State<FadeSearchBarSliverExample>
 
   @override
   Widget build(BuildContext context) {
-    final opacity = _forceShowSearchBar ? 1.0 : (_scrollController.hasClients ? (1.0 - (_scrollController.offset / 100)).clamp(0.0, 1.0) : 1.0);
+    final opacity = _forceShowSearchBar
+        ? 1.0
+        : (_scrollController.hasClients
+            ? (1.0 - (_scrollController.offset / 100)).clamp(0.0, 1.0)
+            : 1.0);
     final FocusNode _focusNode = FocusNode();
     final TextEditingController _textController = TextEditingController();
     return Scaffold(

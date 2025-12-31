@@ -38,7 +38,8 @@ class _AppBarScrollHandlerState extends State<AppBarScrollHandler> {
   }
 
   void animateTo(double offset) {
-    widget.controller.animateTo(offset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    widget.controller
+        .animateTo(offset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   void reverseDirectionHandler() {

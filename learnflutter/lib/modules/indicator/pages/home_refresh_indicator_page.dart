@@ -17,7 +17,8 @@ class HomeRefreshIndicatorPage extends StatefulWidget {
   State<HomeRefreshIndicatorPage> createState() => _HomeRefreshIndicatorPageState();
 }
 
-class _HomeRefreshIndicatorPageState extends State<HomeRefreshIndicatorPage> with TickerProviderStateMixin {
+class _HomeRefreshIndicatorPageState extends State<HomeRefreshIndicatorPage>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();

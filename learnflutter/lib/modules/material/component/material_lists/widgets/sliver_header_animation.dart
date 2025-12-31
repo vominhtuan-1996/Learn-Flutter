@@ -24,5 +24,8 @@ class SliverHeaderAnimation extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(covariant SliverHeaderAnimation oldDelegate) => oldDelegate.maxHeight != maxHeight || oldDelegate.minHeight != minHeight || oldDelegate.builder != builder;
+  bool shouldRebuild(covariant SliverHeaderAnimation oldDelegate) =>
+      oldDelegate.maxHeight != maxHeight ||
+      oldDelegate.minHeight != minHeight ||
+      oldDelegate.builder != builder;
 }

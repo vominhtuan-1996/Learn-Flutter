@@ -86,7 +86,8 @@ class MetarialRadioButtonState<M extends RadioItemModel> extends State<MetarialR
                         child: GestureDetector(
                           onTap: () async {
                             await cubit.toggleValue(state.listData?[index].id ?? "");
-                            widget.onToggleValue?.call(state.listData?.where((element) => element.isSelected).toList());
+                            widget.onToggleValue?.call(
+                                state.listData?.where((element) => element.isSelected).toList());
                             widget.onChangeValue?.call(state.listData?[index]);
                           },
                           child: Row(
@@ -96,7 +97,9 @@ class MetarialRadioButtonState<M extends RadioItemModel> extends State<MetarialR
                                 groupValue: true,
                                 onChanged: (value) async {
                                   await cubit.toggleValue(state.listData?[index].id ?? "");
-                                  widget.onToggleValue?.call(state.listData?.where((element) => element.isSelected).toList());
+                                  widget.onToggleValue?.call(state.listData
+                                      ?.where((element) => element.isSelected)
+                                      .toList());
                                   widget.onChangeValue?.call(state.listData?[index]);
                                 },
                               ),
@@ -138,7 +141,8 @@ class MetarialRadioButtonState<M extends RadioItemModel> extends State<MetarialR
                         child: GestureDetector(
                           onTap: () async {
                             await cubit.toggleValue(state.listData?[index].id ?? "");
-                            widget.onToggleValue?.call(state.listData?.where((element) => element.isSelected).toList());
+                            widget.onToggleValue?.call(
+                                state.listData?.where((element) => element.isSelected).toList());
                             widget.onChangeValue?.call(state.listData?[index]);
                           },
                           child: Row(
@@ -148,7 +152,9 @@ class MetarialRadioButtonState<M extends RadioItemModel> extends State<MetarialR
                                 groupValue: true,
                                 onChanged: (value) async {
                                   await cubit.toggleValue(state.listData?[index].id ?? "");
-                                  widget.onToggleValue?.call(state.listData?.where((element) => element.isSelected).toList());
+                                  widget.onToggleValue?.call(state.listData
+                                      ?.where((element) => element.isSelected)
+                                      .toList());
                                   widget.onChangeValue?.call(state.listData?[index]);
                                 },
                               ),

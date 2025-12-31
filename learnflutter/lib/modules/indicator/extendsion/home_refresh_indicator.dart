@@ -34,8 +34,6 @@ class _HomeRefreshIndicatorState extends State<HomeRefreshIndicator> with Ticker
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-
-
   }
 
   @override
@@ -69,10 +67,12 @@ class _HomeRefreshIndicatorState extends State<HomeRefreshIndicator> with Ticker
                         child: AnimatedBuilder(
                           animation: controller,
                           builder: (context, _) {
-                            final progress = Curves.easeOut.transform(controller.value.clamp(0.0, 1.0));
+                            final progress =
+                                Curves.easeOut.transform(controller.value.clamp(0.0, 1.0));
                             final state = controller.state;
                             double arrowProgress = progress;
-                            if (controller.state == IndicatorState.idle && controller.value == 0.0) {
+                            if (controller.state == IndicatorState.idle &&
+                                controller.value == 0.0) {
                               _bounceController.forward(from: 0.0);
                             }
                             return HomeRefreshShape(

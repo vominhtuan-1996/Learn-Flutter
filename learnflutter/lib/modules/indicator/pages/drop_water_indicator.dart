@@ -85,5 +85,6 @@ class _DropWaterPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _DropWaterPainter oldDelegate) => oldDelegate.progress != progress || oldDelegate.color != color;
+  bool shouldRepaint(covariant _DropWaterPainter oldDelegate) =>
+      oldDelegate.progress != progress || oldDelegate.color != color;
 }

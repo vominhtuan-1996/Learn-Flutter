@@ -115,7 +115,8 @@ class _MaterialToolTipState extends State<MaterialToolTip> with ComponentMateria
                     },
                     type: MaterialButtonType.commonbutton,
                     lableText: 'Label',
-                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                    labelTextStyle: context.textTheme.bodyMedium
+                        ?.copyWith(color: context.theme.colorScheme.onPrimary),
                   );
                 },
               ),
@@ -147,7 +148,8 @@ class _MaterialToolTipState extends State<MaterialToolTip> with ComponentMateria
                         },
                         type: MaterialButtonType.commonbutton,
                         lableText: 'Label',
-                        labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                        labelTextStyle: context.textTheme.bodyMedium
+                            ?.copyWith(color: context.theme.colorScheme.onPrimary),
                       ),
                     ),
                   );
@@ -176,7 +178,8 @@ class _MaterialToolTipState extends State<MaterialToolTip> with ComponentMateria
                     },
                     type: MaterialButtonType.commonbutton,
                     lableText: 'Label',
-                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                    labelTextStyle: context.textTheme.bodyMedium
+                        ?.copyWith(color: context.theme.colorScheme.onPrimary),
                   );
                 },
               ),
@@ -208,7 +211,8 @@ class _MaterialToolTipState extends State<MaterialToolTip> with ComponentMateria
                         },
                         type: MaterialButtonType.commonbutton,
                         lableText: 'Label',
-                        labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                        labelTextStyle: context.textTheme.bodyMedium
+                            ?.copyWith(color: context.theme.colorScheme.onPrimary),
                       ),
                     ),
                   );

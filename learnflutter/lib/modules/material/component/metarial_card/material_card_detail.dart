@@ -64,7 +64,9 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                             Container(
                               color: Colors.white,
                               child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: DeviceDimension.padding,
+                                    vertical: DeviceDimension.padding / 2),
                                 leading: const CircleAvatar(
                                   backgroundColor: Colors.purple,
                                   child: Text(
@@ -74,7 +76,8 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                                 ),
                                 title: Text(
                                   'Header',
-                                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
                                 trailing: const Icon(Icons.more_vert_sharp),
@@ -94,27 +97,36 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                               ),
                               child: SizedBox(
                                 width: context.mediaQuery.size.width - DeviceDimension.padding * 2,
-                                height: context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
+                                height:
+                                    context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
                               ),
                             ),
                             Container(
                               color: Colors.white,
                               child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: DeviceDimension.padding,
+                                    vertical: DeviceDimension.padding / 2),
                                 title: Text(
                                   'Title',
-                                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text('Subhead', style: context.textTheme.bodyMedium),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: DeviceDimension.padding,
+                                  vertical: DeviceDimension.padding / 2),
                               color: Colors.white,
-                              child: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
+                              child: const Text(
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: DeviceDimension.padding,
+                                  vertical: DeviceDimension.padding / 2),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -131,7 +143,8 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                                     },
                                     type: MaterialButtonType.commonbutton,
                                     lableText: 'Enabled',
-                                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.onPrimary),
+                                    labelTextStyle: context.textTheme.bodyMedium
+                                        ?.copyWith(color: context.theme.colorScheme.onPrimary),
                                   ),
                                   SizedBox(
                                     width: DeviceDimension.padding,
@@ -149,7 +162,8 @@ class _MaterialCardDetailState extends State<MaterialCardDetail> with ComponentM
                                     },
                                     type: MaterialButtonType.commonbutton,
                                     lableText: 'Enabled',
-                                    labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: context.theme.colorScheme.primary),
+                                    labelTextStyle: context.textTheme.bodyMedium
+                                        ?.copyWith(color: context.theme.colorScheme.primary),
                                   ),
                                 ],
                               ),

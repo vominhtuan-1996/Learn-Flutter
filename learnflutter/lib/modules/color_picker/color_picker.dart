@@ -9,7 +9,7 @@ enum PickMode {
 
 /// A listener which receives an color in int representation. as used
 /// by [BarColorPicker.colorListener] and [CircleColorPicker.colorListener].
-typedef ColorListener = void Function(int value);
+typedef ColorListener = void Function(Color value);
 
 /// Constant color of thumb shadow
 const _kThumbShadowColor = Color(0x44000000);
@@ -18,7 +18,8 @@ const _kThumbShadowColor = Color(0x44000000);
 const _kBarPadding = 4;
 
 /// Base64 encoded image for alpha picker background
-const _kAlphaTexture = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==";
+const _kAlphaTexture =
+    "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==";
 
 /// A bar color picker
 class BarColorPicker extends StatefulWidget {
@@ -81,7 +82,15 @@ class _BarColorPickerState extends State<BarColorPicker> {
     }
     switch (widget.pickMode) {
       case PickMode.Color:
-        colors = const [Color(0xffff0000), Color(0xffffff00), Color(0xff00ff00), Color(0xff00ffff), Color(0xff0000ff), Color(0xffff00ff), Color(0xffff0000)];
+        colors = const [
+          Color(0xffff0000),
+          Color(0xffffff00),
+          Color(0xff00ff00),
+          Color(0xff00ffff),
+          Color(0xff0000ff),
+          Color(0xffff00ff),
+          Color(0xffff0000)
+        ];
         break;
       case PickMode.Grey:
         colors = const [Color(0xff000000), Color(0xffffffff)];
@@ -108,13 +117,16 @@ class _BarColorPickerState extends State<BarColorPicker> {
         child: Container(
           width: thumbRadius * 2,
           height: thumbRadius * 2,
-          decoration: BoxDecoration(boxShadow: const [
-            BoxShadow(
-              color: _kThumbShadowColor,
-              spreadRadius: 2,
-              blurRadius: 3,
-            )
-          ], color: widget.thumbColor, borderRadius: BorderRadius.all(Radius.circular(thumbRadius))),
+          decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: _kThumbShadowColor,
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                )
+              ],
+              color: widget.thumbColor,
+              borderRadius: BorderRadius.all(Radius.circular(thumbRadius))),
         ));
 
     // build frame
@@ -136,7 +148,8 @@ class _BarColorPickerState extends State<BarColorPicker> {
       left = thumbRadius;
       top = (thumbRadius * 2 - barHeight) / 2;
     } else {
-      gradient = LinearGradient(colors: colors, begin: Alignment.topCenter, end: Alignment.bottomCenter);
+      gradient =
+          LinearGradient(colors: colors, begin: Alignment.topCenter, end: Alignment.bottomCenter);
       left = (thumbRadius * 2 - barWidth) / 2;
       top = thumbRadius;
     }
@@ -146,7 +159,9 @@ class _BarColorPickerState extends State<BarColorPicker> {
       child: Container(
         width: barWidth,
         height: barHeight,
-        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(widget.cornerRadius)), gradient: gradient),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(widget.cornerRadius)),
+            gradient: gradient),
       ),
     );
 
@@ -175,11 +190,11 @@ class _BarColorPickerState extends State<BarColorPicker> {
     switch (widget.pickMode) {
       case PickMode.Color:
         Color color = HSVColor.fromAHSV(1.0, percent * 360, 1.0, 1.0).toColor();
-        widget.colorListener(color.value);
+        widget.colorListener(Color(color.value));
         break;
       case PickMode.Grey:
         final int channel = (0xff * percent).toInt();
-        widget.colorListener(Color.fromARGB(0xff, channel, channel, channel).value);
+        widget.colorListener(Color(Color.fromARGB(0xff, channel, channel, channel).value));
         break;
     }
   }
@@ -203,7 +218,13 @@ class CircleColorPicker extends StatefulWidget {
   /// initial color of this color picker.
   final Color initialColor;
 
-  const CircleColorPicker({super.key, this.radius = 120, this.initialColor = const Color(0xffff0000), this.thumbColor = Colors.black, this.thumbRadius = 8, required this.colorListener});
+  const CircleColorPicker(
+      {super.key,
+      this.radius = 120,
+      this.initialColor = const Color(0xffff0000),
+      this.thumbColor = Colors.black,
+      this.thumbRadius = 8,
+      required this.colorListener});
 
   @override
   State<CircleColorPicker> createState() {
@@ -212,7 +233,15 @@ class CircleColorPicker extends StatefulWidget {
 }
 
 class _CircleColorPickerState extends State<CircleColorPicker> {
-  static const List<Color> colors = [Color(0xffff0000), Color(0xffffff00), Color(0xff00ff00), Color(0xff00ffff), Color(0xff0000ff), Color(0xffff00ff), Color(0xffff0000)];
+  static const List<Color> colors = [
+    Color(0xffff0000),
+    Color(0xffffff00),
+    Color(0xff00ff00),
+    Color(0xff00ffff),
+    Color(0xff0000ff),
+    Color(0xffff00ff),
+    Color(0xffff0000)
+  ];
 
   late double thumbDistanceToCenter;
   late double thumbRadians;
@@ -241,13 +270,16 @@ class _CircleColorPickerState extends State<CircleColorPicker> {
         child: Container(
           width: thumbRadius * 2,
           height: thumbRadius * 2,
-          decoration: BoxDecoration(boxShadow: const <BoxShadow>[
-            BoxShadow(
-              color: _kThumbShadowColor,
-              spreadRadius: 2,
-              blurRadius: 3,
-            )
-          ], color: widget.thumbColor, borderRadius: BorderRadius.all(Radius.circular(thumbRadius))),
+          decoration: BoxDecoration(
+              boxShadow: const <BoxShadow>[
+                BoxShadow(
+                  color: _kThumbShadowColor,
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                )
+              ],
+              color: widget.thumbColor,
+              borderRadius: BorderRadius.all(Radius.circular(thumbRadius))),
         ));
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -263,7 +295,9 @@ class _CircleColorPickerState extends State<CircleColorPicker> {
               child: Container(
                 width: radius * 2,
                 height: radius * 2,
-                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(radius)), gradient: const SweepGradient(colors: colors)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(radius)),
+                    gradient: const SweepGradient(colors: colors)),
               ),
             ),
             thumb
@@ -283,7 +317,7 @@ class _CircleColorPickerState extends State<CircleColorPicker> {
     double theta = atan2(deltaX, deltaY);
     double degree = 270 - radiansToDegrees(theta);
     if (degree < 0) degree = 360 + degree;
-    widget.colorListener(HSVColor.fromAHSV(1, degree, 1, 1).toColor().value);
+    widget.colorListener(Color(HSVColor.fromAHSV(1, degree, 1, 1).toColor().value));
     setState(() {
       thumbDistanceToCenter = min(distanceToCenter, widget.radius);
       thumbRadians = theta;

@@ -64,13 +64,17 @@ class BaseLoadingScreenState extends State<BaseDraggableLoading> {
   Widget build(BuildContext context) {
     return BlocBuilder<BaseLoadingCubit, BaseLoadingState>(
       builder: (context, state) {
-        double widthText = UtilsHelper.getTextWidth(text: state.message ?? "Đang cập nhật dữ liệu...", textStyle: context.textTheme.bodyLarge!.copyWith(color: Colors.white));
+        double widthText = UtilsHelper.getTextWidth(
+            text: state.message ?? "Đang cập nhật dữ liệu...",
+            textStyle: context.textTheme.bodyLarge!.copyWith(color: Colors.white));
         double heightText = UtilsHelper.getTextHeight(
           text: state.message ?? "",
           textStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.white),
           maxWidthOfWidget: context.mediaQuery.size.width - 60,
         );
-        widthText = widthText > context.mediaQuery.size.width ? context.mediaQuery.size.width - DeviceDimension.padding : widthText;
+        widthText = widthText > context.mediaQuery.size.width
+            ? context.mediaQuery.size.width - DeviceDimension.padding
+            : widthText;
         return Stack(
           clipBehavior: Clip.hardEdge,
           children: [
@@ -87,8 +91,12 @@ class BaseLoadingScreenState extends State<BaseDraggableLoading> {
               autoAlignType: AlignmentType.both,
               floatingWidgetHeight: widget.floatSize.height,
               floatingWidgetWidth: widget.floatSize.width,
-              dx: context.mediaQuery.size.width - widget.floatSize.width - DeviceDimension.padding / 2,
-              dy: context.mediaQuery.size.height - widget.floatSize.height - DeviceDimension.padding / 2,
+              dx: context.mediaQuery.size.width -
+                  widget.floatSize.width -
+                  DeviceDimension.padding / 2,
+              dy: context.mediaQuery.size.height -
+                  widget.floatSize.height -
+                  DeviceDimension.padding / 2,
               deleteWidgetDecoration: widget.hasDeletedWidget
                   ? BoxDecoration(
                       gradient: const LinearGradient(
@@ -124,7 +132,9 @@ class BaseLoadingScreenState extends State<BaseDraggableLoading> {
               visible: state.isLoading ?? false,
               child: Container(
                 color: Colors.grey.withOpacity(0.6),
-                padding: EdgeInsets.symmetric(horizontal: (context.mediaQuery.size.width - widthText - DeviceDimension.padding) / 2),
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                        (context.mediaQuery.size.width - widthText - DeviceDimension.padding) / 2),
                 // width: context.mediaQuery.size.width,
                 child: Center(
                     child: Container(
@@ -132,7 +142,9 @@ class BaseLoadingScreenState extends State<BaseDraggableLoading> {
                     borderRadiusValue: 8.0,
                     colorBackground: Colors.white,
                   ),
-                  height: widthText > context.mediaQuery.size.width ? heightText + 100 : heightText + 90,
+                  height: widthText > context.mediaQuery.size.width
+                      ? heightText + 100
+                      : heightText + 90,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

@@ -31,8 +31,10 @@ class SliverCollapseToFAB extends SliverPersistentHeaderDelegate {
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
 
     final double size = lerpDouble(childSize, fabSize, progress)!;
-    final double top = lerpDouble(40, MediaQuery.of(context).size.height - fabOffset.dy - size, progress)!;
-    final double left = lerpDouble(20, MediaQuery.of(context).size.width - fabOffset.dx - size, progress)!;
+    final double top =
+        lerpDouble(40, MediaQuery.of(context).size.height - fabOffset.dy - size, progress)!;
+    final double left =
+        lerpDouble(20, MediaQuery.of(context).size.width - fabOffset.dx - size, progress)!;
     final double scale = lerpDouble(1.0, fabSize / childSize, progress)!;
 
     return Stack(

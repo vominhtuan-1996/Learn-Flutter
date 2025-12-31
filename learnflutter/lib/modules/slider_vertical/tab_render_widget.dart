@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -162,13 +161,15 @@ class RenderTabBar extends RenderBox {
     //
     // 2+
     final point2plust = Offset(point2.dx + 40, size.height / 2 - 60);
-    backgroundTriangleLine.cubicTo(point1.dx, point1.dy, point1plus.dx + 25, point1plus.dy + 25, point2.dx, point2.dy);
+    backgroundTriangleLine.cubicTo(
+        point1.dx, point1.dy, point1plus.dx + 25, point1plus.dy + 25, point2.dx, point2.dy);
     // 3
     final point3 = Offset(point2.dx + 30, size.height / 2 - 70);
     print(point3);
 
     // backgroundTriangleLine.lineTo(point3.dx, point3.dy);
-    backgroundTriangleLine.cubicTo(point2.dx, point2.dy, point2plust.dx, point2plust.dy, point3.dx, point3.dy);
+    backgroundTriangleLine.cubicTo(
+        point2.dx, point2.dy, point2plust.dx, point2plust.dy, point3.dx, point3.dy);
     // 4
     final point4 = Offset(point2.dx + widthtemp * 4, point3.dy);
     print(point4);

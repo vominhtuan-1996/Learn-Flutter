@@ -29,7 +29,8 @@ class _PullUpLoadMoreWrapperState extends State<PullUpLoadMoreWrapper> {
   }
 
   void _handleScroll() {
-    final overscroll = _scrollController.position.pixels - _scrollController.position.maxScrollExtent;
+    final overscroll =
+        _scrollController.position.pixels - _scrollController.position.maxScrollExtent;
     if (overscroll > 0) {
       setState(() => _overScrollExtent = overscroll);
     } else {

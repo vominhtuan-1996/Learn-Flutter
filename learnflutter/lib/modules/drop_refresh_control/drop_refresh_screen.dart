@@ -28,7 +28,9 @@ class DropRefreshScreen extends StatelessWidget {
             child: FloatingActionButton(
               shape: CircleBorder(),
               onPressed: () {
-                _scrollController.animateTo(0.0, duration: Duration(milliseconds: 600), curve: Curves.decelerate); // Cuộn lên đầu danh sách
+                _scrollController.animateTo(0.0,
+                    duration: Duration(milliseconds: 600),
+                    curve: Curves.decelerate); // Cuộn lên đầu danh sách
               },
               child: Icon(Icons.arrow_upward_outlined, size: 30, color: Colors.white),
             ),

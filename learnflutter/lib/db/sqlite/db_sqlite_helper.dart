@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'user_database.dart';
 
 class DbSqliteHelper {
   static const isResetData = false;
@@ -14,6 +15,9 @@ class DbSqliteHelper {
 
   static Database? _database;
 
+  // Database instances
+  late UserDatabase _userDatabase;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     // Initialize the DB first time it is accessed
@@ -25,7 +29,10 @@ class DbSqliteHelper {
     }
     try {
       _database = await _initDatabase();
-    } catch (e) {}
+      _initializeDatabases();
+    } catch (e) {
+      print('Error initializing database: $e');
+    }
     return _database!;
   }
 
@@ -36,7 +43,7 @@ class DbSqliteHelper {
       path,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 3,
+      version: 4,
       onConfigure: (db) async => await db.execute('PRAGMA foreign_keys = ON'),
     );
   }
@@ -47,12 +54,27 @@ class DbSqliteHelper {
     }
   }
 
-  // type: INTEGER, TEXT , BLOB, REAL, 	NUMERIC
-  Future<void> _onCreate(Database db, int version) async {
-    _createLogsTable(db);
+  /// Initialize all database instances
+  void _initializeDatabases() {
+    _userDatabase = UserDatabase();
   }
 
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
+  /// Get UserDatabase instance
+  UserDatabase get userDatabase => _userDatabase;
+
+  // type: INTEGER, TEXT , BLOB, REAL, NUMERIC
+  Future<void> _onCreate(Database db, int version) async {
+    await _createUserTable(db);
+    await _createLogsTable(db);
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    // Handle database upgrades here if needed
+  }
+
+  Future<void> _createUserTable(Database db) async {
+    await UserDatabase().initializeTable(db);
+  }
 
   Future<void> _createLogsTable(db) async {}
 }

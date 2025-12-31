@@ -215,7 +215,8 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                     imageName: 'car',
                   ),
                   _createDummyPage(
-                    text: 'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
+                    text:
+                        'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
                     imageName: 'car',
                   ),
                 ],
@@ -279,7 +280,8 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                     imageName: 'car',
                   ),
                   _createDummyPage(
-                    text: 'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
+                    text:
+                        'Can\'t return the loan? Don\'t worry, we\'ll take your soul as a collateral ;-)',
                     imageName: 'car',
                   ),
                 ],
@@ -308,7 +310,11 @@ class _StoryExamplePageState extends State<StoryExamplePage> {
                     addBottomBar: false,
                   ),
                 ],
-                segmentDuration: [const Duration(seconds: 3), const Duration(seconds: 3), const Duration(seconds: 3)],
+                segmentDuration: [
+                  const Duration(seconds: 3),
+                  const Duration(seconds: 3),
+                  const Duration(seconds: 3)
+                ],
               ),
               StoryButtonData(
                 storyId: "6",

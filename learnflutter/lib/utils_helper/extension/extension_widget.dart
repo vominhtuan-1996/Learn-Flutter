@@ -12,7 +12,8 @@ extension WidgetExtension on Widget {
 
   Widget onTap(VoidCallback? onTap) => GestureDetector(onTap: onTap, child: this);
 
-  Widget paddingSymmetric({double horizontal = 0.0, double vertical = 0.0}) => Padding(padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical), child: this);
+  Widget paddingSymmetric({double horizontal = 0.0, double vertical = 0.0}) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical), child: this);
 
   Widget paddingOnly({
     double left = 0.0,
@@ -25,16 +26,33 @@ extension WidgetExtension on Widget {
         child: this,
       );
 
-  Widget paddingFromLTRB({required double left, required double right, required double top, required double bottom}) => Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
+  Widget paddingFromLTRB(
+          {required double left,
+          required double right,
+          required double top,
+          required double bottom}) =>
+      Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
 
   Widget marginAll(double value) => Padding(padding: EdgeInsets.all(value), child: this);
 
-  Widget marginSymmetric({required double horizontal, required double vertical}) => Padding(padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical), child: this);
+  Widget marginSymmetric({required double horizontal, required double vertical}) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical), child: this);
 
-  Widget marginOnly({required double left, required double right, required double top, required double bottom}) =>
-      Padding(padding: EdgeInsets.only(left: left, right: right, top: top, bottom: bottom), child: this);
+  Widget marginOnly(
+          {required double left,
+          required double right,
+          required double top,
+          required double bottom}) =>
+      Padding(
+          padding: EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
+          child: this);
 
-  Widget marginFromLTRB({required double left, required double right, required double top, required double bottom}) => Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
+  Widget marginFromLTRB(
+          {required double left,
+          required double right,
+          required double top,
+          required double bottom}) =>
+      Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
 
   Widget center() => Center(child: this);
 
@@ -61,7 +79,8 @@ extension WidgetExtension on Widget {
 
   Widget showIf(bool value) => value ? this : const SizedBox.shrink();
 
-  Widget align([AlignmentGeometry alignment = Alignment.center]) => Align(alignment: alignment, child: this);
+  Widget align([AlignmentGeometry alignment = Alignment.center]) =>
+      Align(alignment: alignment, child: this);
 
   Widget expanded({int flex = 1}) => Expanded(flex: flex, child: this);
 
@@ -125,7 +144,10 @@ extension WidgetExtension on Widget {
   }
 
   /// update status bar color according to the screens and theme
-  Widget annotateRegion(BuildContext context, {Color? statusBarColor, Brightness? statusBarIconBrightness, Brightness? statusBarBrightness}) {
+  Widget annotateRegion(BuildContext context,
+      {Color? statusBarColor,
+      Brightness? statusBarIconBrightness,
+      Brightness? statusBarBrightness}) {
     Brightness brightness = Theme.of(context).brightness;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       /// if the value is null, the value of the current scope will be used
@@ -133,14 +155,19 @@ extension WidgetExtension on Widget {
       /// status bar colors are used opposite to the theme brightness
       value: SystemUiOverlayStyle(
         statusBarColor: statusBarColor ?? context.theme.indicatorColor,
-        statusBarIconBrightness: statusBarIconBrightness ?? (brightness == Brightness.light ? Brightness.dark : Brightness.light),
+        statusBarIconBrightness: statusBarIconBrightness ??
+            (brightness == Brightness.light ? Brightness.dark : Brightness.light),
         statusBarBrightness: statusBarBrightness ?? brightness,
       ),
       child: this,
     );
   }
 
-  Widget toScrollableList({int itemCount = 10, Axis scrollDirection = Axis.vertical, EdgeInsets padding = EdgeInsets.zero, Widget? separator}) {
+  Widget toScrollableList(
+      {int itemCount = 10,
+      Axis scrollDirection = Axis.vertical,
+      EdgeInsets padding = EdgeInsets.zero,
+      Widget? separator}) {
     List<Widget> items = List.generate(itemCount, (index) => this);
     if (separator != null) {
       items = items.expand((element) => [element, separator]).toList();

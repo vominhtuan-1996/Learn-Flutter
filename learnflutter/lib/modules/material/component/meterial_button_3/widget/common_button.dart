@@ -24,7 +24,8 @@ class CommonButton extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.borderRadius),
-            border: Border.all(color: widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity)),
+            border: Border.all(
+                color: widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity)),
             boxShadow: [
               BoxShadow(
                 color: widget.shadowColor.withOpacity(0.3),

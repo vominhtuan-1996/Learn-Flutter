@@ -31,7 +31,8 @@ class AweseomSnackBarExample extends StatelessWidget {
 
                   content: AwesomeSnackbarContent(
                     title: 'Thông báo!',
-                    message: ' change contentType to ContentType.success, ContentType.warning or ContentType.help for variants body of snackbar!',
+                    message:
+                        ' change contentType to ContentType.success, ContentType.warning or ContentType.help for variants body of snackbar!',
                     color: Colors.red,
 
                     /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
@@ -77,7 +78,8 @@ class AweseomSnackBarExample extends StatelessWidget {
                   forceActionsBelow: true,
                   content: AwesomeSnackbarContent(
                     title: 'Oh Hey!!',
-                    message: 'This is an example error message that will be shown in the body of materialBanner!',
+                    message:
+                        'This is an example error message that will be shown in the body of materialBanner!',
 
                     /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                     contentType: ContentType.warning,

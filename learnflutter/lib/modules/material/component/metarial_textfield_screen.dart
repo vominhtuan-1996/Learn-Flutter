@@ -10,7 +10,8 @@ class MaterialTextFieldScreen extends StatefulWidget {
   State<MaterialTextFieldScreen> createState() => _MaterialTextFieldScreenState();
 }
 
-class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with ComponentMaterialDetail {
+class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen>
+    with ComponentMaterialDetail {
   late TextEditingController _textFieldController;
   @override
   void initState() {
@@ -43,7 +44,8 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                 child: TextField(
                   controller: _textFieldController,
                   enabled: true,
-                  buildCounter: (context, {required currentLength, required isFocused, required maxLength}) {
+                  buildCounter: (context,
+                      {required currentLength, required isFocused, required maxLength}) {
                     return Text(
                       '$currentLength/$maxLength ký tự',
                       semanticsLabel: 'character count',
@@ -79,7 +81,8 @@ class _MaterialTextFieldScreenState extends State<MaterialTextFieldScreen> with 
                 child: TextField(
                   controller: _textFieldController,
                   enabled: false,
-                  buildCounter: (context, {required currentLength, required isFocused, required maxLength}) {
+                  buildCounter: (context,
+                      {required currentLength, required isFocused, required maxLength}) {
                     return Text(
                       '$currentLength/$maxLength ký tự',
                       semanticsLabel: 'character count',

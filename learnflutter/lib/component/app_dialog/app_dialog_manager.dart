@@ -56,23 +56,4 @@ class AppDialogManager {
   static void error(String content, {String title = 'Lỗi'}) {
     show(type: AlertDialogType.error, title: title, content: content);
   }
-
-  // static void confirm({
-  //   required String content,
-  //   String title = 'Xác nhận',
-  //   String confirmText = 'Đồng ý',
-  //   String cancelText = 'Hủy',
-  //   required VoidCallback onConfirm,
-  //   VoidCallback? onCancel,
-  // }) {
-  //   show(
-  //     type: AlertDialogType.confirm,
-  //     title: title,
-  //     content: content,
-  //     confirmText: confirmText,
-  //     cancelText: cancelText,
-  //     onConfirm: onConfirm,
-  //     onCancel: onCancel,
-  //   );
-  // }
 }

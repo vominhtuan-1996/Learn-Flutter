@@ -8,7 +8,8 @@ class DropWaterLottieRefreshIndicatorPage extends StatefulWidget {
   const DropWaterLottieRefreshIndicatorPage({super.key});
 
   @override
-  State<DropWaterLottieRefreshIndicatorPage> createState() => _DropWaterLottieRefreshIndicatorPageState();
+  State<DropWaterLottieRefreshIndicatorPage> createState() =>
+      _DropWaterLottieRefreshIndicatorPageState();
 }
 
 class _DropWaterLottieRefreshIndicatorPageState extends State<DropWaterLottieRefreshIndicatorPage> {

@@ -9,7 +9,8 @@ class PositionedTransitionWidget extends StatefulWidget {
 
 /// [AnimationController]s can be created with `vsync: this` because of
 /// [TickerProviderStateMixin].
-class _PositionedTransitionWidgetState extends State<PositionedTransitionWidget> with TickerProviderStateMixin {
+class _PositionedTransitionWidgetState extends State<PositionedTransitionWidget>
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -38,7 +39,8 @@ class _PositionedTransitionWidgetState extends State<PositionedTransitionWidget>
                   biggest,
                 ),
                 end: RelativeRect.fromSize(
-                  Rect.fromLTWH(biggest.width - bigLogo, biggest.height - bigLogo, bigLogo, bigLogo),
+                  Rect.fromLTWH(
+                      biggest.width - bigLogo, biggest.height - bigLogo, bigLogo, bigLogo),
                   biggest,
                 ),
               ).animate(CurvedAnimation(

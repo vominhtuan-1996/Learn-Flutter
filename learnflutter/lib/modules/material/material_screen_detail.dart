@@ -4,7 +4,13 @@ import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 
 class MaterialScreenDetail extends StatefulWidget {
-  const MaterialScreenDetail({super.key, required this.contentWidget, this.title, this.description, this.drawer, this.bottomNavigationBar});
+  const MaterialScreenDetail(
+      {super.key,
+      required this.contentWidget,
+      this.title,
+      this.description,
+      this.drawer,
+      this.bottomNavigationBar});
   final Widget contentWidget;
   final String? title;
   final String? description;

@@ -32,7 +32,8 @@ class _AutoFormulaExcelViewerState extends State<AutoFormulaExcelViewer> {
 
     if (result == null) return;
 
-    Uint8List bytes = result.files.first.bytes ?? await File(result.files.first.path!).readAsBytes();
+    Uint8List bytes =
+        result.files.first.bytes ?? await File(result.files.first.path!).readAsBytes();
 
     final excel = Excel.decodeBytes(bytes);
     final sheet = excel.tables[excel.tables.keys.first];
@@ -137,7 +138,11 @@ class _AutoFormulaExcelViewerState extends State<AutoFormulaExcelViewer> {
               child: DataTable(
                 columns: List.generate(
                   displayTable.first.length,
-                  (index) => DataColumn(label: Text(''), onSort: (columnIndex, ascending) {}, tooltip: 'gi do', headingRowAlignment: MainAxisAlignment.start),
+                  (index) => DataColumn(
+                      label: Text(''),
+                      onSort: (columnIndex, ascending) {},
+                      tooltip: 'gi do',
+                      headingRowAlignment: MainAxisAlignment.start),
                 ),
                 rows: displayTable.map((row) {
                   return DataRow(

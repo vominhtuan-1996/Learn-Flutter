@@ -39,7 +39,11 @@ class _ItemPaginationState extends State<ItemPagination> {
       delayRate: 400,
       isDelay: true,
       onTap: () async {
-        final isUploadedStep = context.read<PaginationCubit>().state.paginationModel[widget.indexStep - 1].isUploadedStep;
+        final isUploadedStep = context
+            .read<PaginationCubit>()
+            .state
+            .paginationModel[widget.indexStep - 1]
+            .isUploadedStep;
         if (!isUploadedStep) {
           return;
         }
@@ -50,11 +54,17 @@ class _ItemPaginationState extends State<ItemPagination> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: widget.paginationModel.isUploadedStep || (widget.tabType == TabType.maintained && widget.currentStep != widget.indexStep) ? AppColors.primary : AppColors.yellowBackground,
+            color: widget.paginationModel.isUploadedStep ||
+                    (widget.tabType == TabType.maintained && widget.currentStep != widget.indexStep)
+                ? AppColors.primary
+                : AppColors.yellowBackground,
             shape: BoxShape.circle,
             border: Border.all(
               width: 1,
-              color: widget.paginationModel.isUploadedStep || (widget.isCompleteStep ? widget.currentStep - 1 : widget.currentStep) == widget.indexStep || widget.tabType == TabType.maintained
+              color: widget.paginationModel.isUploadedStep ||
+                      (widget.isCompleteStep ? widget.currentStep - 1 : widget.currentStep) ==
+                          widget.indexStep ||
+                      widget.tabType == TabType.maintained
                   ? AppColors.primary
                   : Colors.transparent,
             ),
@@ -64,13 +74,21 @@ class _ItemPaginationState extends State<ItemPagination> {
             builder: (context) {
               if (widget.isCompleteStep) {
                 if (widget.currentStep - 1 == widget.indexStep) {
-                  return ImageHelper.loadFromAsset(widget.tabType == TabType.maintained ? PaginationAsset.icCircleEye : PaginationAsset.icCirclePencil,
-                      width: DeviceDimension.horizontalSize(40), height: DeviceDimension.verticalSize(40));
+                  return ImageHelper.loadFromAsset(
+                      widget.tabType == TabType.maintained
+                          ? PaginationAsset.icCircleEye
+                          : PaginationAsset.icCirclePencil,
+                      width: DeviceDimension.horizontalSize(40),
+                      height: DeviceDimension.verticalSize(40));
                 }
               } else {
                 if (widget.currentStep == widget.indexStep) {
-                  return ImageHelper.loadFromAsset(widget.tabType == TabType.maintained ? PaginationAsset.icCircleEye : PaginationAsset.icCirclePencil,
-                      width: DeviceDimension.horizontalSize(40), height: DeviceDimension.verticalSize(40));
+                  return ImageHelper.loadFromAsset(
+                      widget.tabType == TabType.maintained
+                          ? PaginationAsset.icCircleEye
+                          : PaginationAsset.icCirclePencil,
+                      width: DeviceDimension.horizontalSize(40),
+                      height: DeviceDimension.verticalSize(40));
                 }
               }
               return SizedBox(
@@ -80,7 +98,10 @@ class _ItemPaginationState extends State<ItemPagination> {
                   child: Text(
                     widget.indexStep + 1 < 10 ? "0${widget.indexStep}" : "${widget.indexStep}",
                     style: AppTextStyles.themeBodyMedium.copyWith(
-                      color: widget.paginationModel.isUploadedStep || widget.tabType == TabType.maintained ? AppColors.white : AppColors.primary,
+                      color: widget.paginationModel.isUploadedStep ||
+                              widget.tabType == TabType.maintained
+                          ? AppColors.white
+                          : AppColors.primary,
                     ),
                   ),
                 ),

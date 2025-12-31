@@ -69,7 +69,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                   DialogUtils.showBasicDialog(
                                     title: 'Basic dialog title',
                                     context: context,
-                                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                                    content:
+                                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                                     contentWidget: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [

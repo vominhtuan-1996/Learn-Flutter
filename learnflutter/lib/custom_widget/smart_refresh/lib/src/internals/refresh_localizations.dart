@@ -88,41 +88,25 @@ class RefreshLocalizations {
     return values["en"];
   }
 
-  static const RefreshLocalizationsDelegate delegate =
-      RefreshLocalizationsDelegate();
+  static const RefreshLocalizationsDelegate delegate = RefreshLocalizationsDelegate();
 
   static RefreshLocalizations? of(BuildContext context) {
     return Localizations.of(context, RefreshLocalizations);
   }
 }
 
-class RefreshLocalizationsDelegate
-    extends LocalizationsDelegate<RefreshLocalizations> {
+class RefreshLocalizationsDelegate extends LocalizationsDelegate<RefreshLocalizations> {
   const RefreshLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) {
-    return [
-      'en',
-      'zh',
-      'fr',
-      'ru',
-      'uk',
-      'ja',
-      'it',
-      'de',
-      'ko',
-      'pt',
-      'sv',
-      'nl',
-      'es'
-    ].contains(locale.languageCode);
+    return ['en', 'zh', 'fr', 'ru', 'uk', 'ja', 'it', 'de', 'ko', 'pt', 'sv', 'nl', 'es']
+        .contains(locale.languageCode);
   }
 
   @override
   Future<RefreshLocalizations> load(Locale locale) {
-    return SynchronousFuture<RefreshLocalizations>(
-        RefreshLocalizations(locale));
+    return SynchronousFuture<RefreshLocalizations>(RefreshLocalizations(locale));
   }
 
   @override

@@ -17,7 +17,7 @@ class IsolateJsonParsingScreen extends StatefulWidget {
 
 class _IsolateJsonParsingScreenState extends State<IsolateJsonParsingScreen> {
   final ApiService apiService = ApiService('https://jsonplaceholder.typicode.com/posts');
-  final StreamController<dynamic> _controller = StreamController<dynamic>.broadcast();
+  final StreamController<List<dynamic>> _controller = StreamController<List<dynamic>>.broadcast();
   Stream<dynamic> parsedItemsStream = Stream.empty();
   List receivedItems = [];
   bool isLoading = true;
@@ -32,7 +32,7 @@ class _IsolateJsonParsingScreenState extends State<IsolateJsonParsingScreen> {
     final rawJson = await apiService.fetchDataFromApi();
     parseJson(rawJson).listen(
       (event) async {
-        receivedItems.add(event); // Lưu lại item đã nhận
+        // receivedItems.add(event); // Lưu lại item đã nhận
         _controller.add(event);
       },
     );
@@ -67,7 +67,7 @@ class _IsolateJsonParsingScreenState extends State<IsolateJsonParsingScreen> {
         },
         child: Icon(Icons.refresh),
       ),
-      child: StreamBuilder<dynamic>(
+      child: StreamBuilder<List<dynamic>>(
         stream: _controller.stream,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           // return ListViewAnimated(
@@ -84,7 +84,7 @@ class _IsolateJsonParsingScreenState extends State<IsolateJsonParsingScreen> {
             //   receivedItems.add(snapshot.data!); // Lưu lại item đã nhận
             // }
             return ListViewAnimated(
-              fullData: receivedItems,
+              fullData: snapshot.data,
             );
             // Nếu có dữ liệu
           } else {

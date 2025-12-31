@@ -67,7 +67,8 @@ class NumberFormatterScreenState extends State<NumberFormatterScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  print(listExtension.replace(item: Person(name: 'Tuan6', country: 'country'), index: 1));
+                  print(listExtension.replace(
+                      item: Person(name: 'Tuan6', country: 'country'), index: 1));
                   setState(() {
                     rebuild = !rebuild;
                   });

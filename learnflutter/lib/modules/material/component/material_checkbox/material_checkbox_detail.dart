@@ -11,7 +11,8 @@ class MaterialCheckBoxDetail extends StatefulWidget {
   State<MaterialCheckBoxDetail> createState() => _MaterialCheckBoxDetailState();
 }
 
-class _MaterialCheckBoxDetailState extends State<MaterialCheckBoxDetail> with ComponentMaterialDetail {
+class _MaterialCheckBoxDetailState extends State<MaterialCheckBoxDetail>
+    with ComponentMaterialDetail {
   bool value = false;
   @override
   void initState() {
@@ -48,7 +49,8 @@ class _MaterialCheckBoxDetailState extends State<MaterialCheckBoxDetail> with Co
                       },
                       fillColor: Colors.red,
                       disible: false,
-                      checkedColor: Colors.black, borderColor: Colors.transparent,
+                      checkedColor: Colors.black,
+                      borderColor: Colors.transparent,
 
                       // value: value,
                       // onChanged: (bool? value) {

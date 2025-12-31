@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class SliverAppbarPersistentHeaderTabbar extends StatefulWidget {
   const SliverAppbarPersistentHeaderTabbar({super.key});
   @override
-  State<SliverAppbarPersistentHeaderTabbar> createState() => _SliverAppbarPersistentHeaderTabbarState();
+  State<SliverAppbarPersistentHeaderTabbar> createState() =>
+      _SliverAppbarPersistentHeaderTabbarState();
 }
 
-class _SliverAppbarPersistentHeaderTabbarState extends State<SliverAppbarPersistentHeaderTabbar> with TickerProviderStateMixin {
+class _SliverAppbarPersistentHeaderTabbarState extends State<SliverAppbarPersistentHeaderTabbar>
+    with TickerProviderStateMixin {
   late TabController _tabController;
 
   final tabs = const [

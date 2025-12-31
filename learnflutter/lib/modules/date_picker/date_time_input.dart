@@ -95,7 +95,9 @@ class _DateTimeInputState extends State<DateTimeInputScreen> {
                                   ),
                                   child: Text(
                                     dateFormatter.format(selectedDateTime).toString(),
-                                    style: showCalendar ? theme.textTheme.bodyMedium!.copyWith(color: Colors.red) : theme.textTheme.bodyMedium,
+                                    style: showCalendar
+                                        ? theme.textTheme.bodyMedium!.copyWith(color: Colors.red)
+                                        : theme.textTheme.bodyMedium,
                                   ),
                                 ),
                                 onTap: () => showCalendar
@@ -118,7 +120,9 @@ class _DateTimeInputState extends State<DateTimeInputScreen> {
                                 ),
                                 child: Text(
                                   timeFormatter.format(selectedDateTime).toString(),
-                                  style: showTimePicker ? theme.textTheme.bodyMedium!.copyWith(color: Colors.red) : theme.textTheme.bodyMedium,
+                                  style: showTimePicker
+                                      ? theme.textTheme.bodyMedium!.copyWith(color: Colors.red)
+                                      : theme.textTheme.bodyMedium,
                                 ),
                               ),
                               onTap: () => showTimePicker

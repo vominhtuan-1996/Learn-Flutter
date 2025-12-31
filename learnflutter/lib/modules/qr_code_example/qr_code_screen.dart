@@ -80,10 +80,13 @@ class _QRViewExampleState extends State<QRViewExample> {
           ],
         ),
         Positioned.fill(
-          top: DeviceDimension.statusBarHeight(context) + DeviceDimension.appBar + DeviceDimension.padding * 2,
+          top: DeviceDimension.statusBarHeight(context) +
+              DeviceDimension.appBar +
+              DeviceDimension.padding * 2,
           child: Text(
             'Di chuyển camera đến mã QR để quét',
-            style: context.textTheme.bodyMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            style: context.textTheme.bodyMedium
+                ?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ).paddingSymmetric(horizontal: DeviceDimension.padding / 2),
         ),
@@ -104,7 +107,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                 ),
                 Text(
                   'Chọn ảnh từ thư viện',
-                  style: context.textTheme.bodyMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                 ).paddingOnly(left: DeviceDimension.padding / 2),
               ],
             ).center(),
@@ -170,7 +174,9 @@ class _QRViewExampleState extends State<QRViewExample> {
         //   child: ZigZagLaserOverlay(width: MediaQuery.of(context).size.width * 0.8, height: MediaQuery.of(context).size.width * 0.8),
         // ),
         Positioned.fill(
-          top: DeviceDimension.statusBarHeight(context) + DeviceDimension.appBar + DeviceDimension.padding * 5,
+          top: DeviceDimension.statusBarHeight(context) +
+              DeviceDimension.appBar +
+              DeviceDimension.padding * 5,
           left: DeviceDimension.padding * 3,
           right: DeviceDimension.padding * 3,
           child: QRScanLaserOverlay(

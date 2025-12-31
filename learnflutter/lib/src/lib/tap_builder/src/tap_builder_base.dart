@@ -248,7 +248,8 @@ abstract class TapBuilderBaseState<T extends TapBuilderWidget> extends State<T> 
   }
 
   bool get canRequestFocus {
-    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ?? NavigationMode.traditional;
+    final NavigationMode mode =
+        MediaQuery.maybeOf(context)?.navigationMode ?? NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
         return enabled && widget.canRequestFocus;

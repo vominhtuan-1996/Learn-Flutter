@@ -10,7 +10,8 @@ class PageLoadingScreen extends StatefulWidget {
     super.key,
     this.isVisible = true,
     this.message = 'Loading...Loading...Loading...',
-    this.styleMessage = const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+    this.styleMessage =
+        const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
   });
   final bool isVisible;
   final String message;

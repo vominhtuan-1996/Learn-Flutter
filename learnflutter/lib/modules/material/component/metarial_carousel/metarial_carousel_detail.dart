@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/src/luxury_card_stack/lib/luxury_card_stack.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/component/metarial_carousel/material_carousel.dart';
@@ -13,7 +14,8 @@ class MaterialCarouselDetail extends StatefulWidget {
   State<MaterialCarouselDetail> createState() => _MaterialCarouselDetailState();
 }
 
-class _MaterialCarouselDetailState extends State<MaterialCarouselDetail> with ComponentMaterialDetail {
+class _MaterialCarouselDetailState extends State<MaterialCarouselDetail>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();
@@ -136,6 +138,56 @@ class _MaterialCarouselDetailState extends State<MaterialCarouselDetail> with Co
             SizedBox(
               height: DeviceDimension.padding,
             ),
+            LuxuryCardStackView(
+              items: [
+                LuxuryCardItem(
+                  title: 'Rolls Royce',
+                  subtitle: 'Classic',
+                  tag: 'LUXURY',
+                  image: 'assets/images/ic_menu_acceptance.png',
+                ),
+                LuxuryCardItem(
+                  title: 'Rolls Royce 1 ',
+                  subtitle: 'Classic',
+                  tag: 'LUXURY',
+                  image: 'assets/images/ic_menu_acceptance.png',
+                ),
+                LuxuryCardItem(
+                  title: 'Rolls Royce 2',
+                  subtitle: 'Classic',
+                  tag: 'LUXURY',
+                  image: 'assets/images/ic_menu_acceptance.png',
+                ),
+                LuxuryCardItem(
+                  title: 'Rolls Royce 3',
+                  subtitle: 'Classic',
+                  tag: 'LUXURY',
+                  image: 'assets/images/ic_menu_acceptance.png',
+                )
+              ],
+              // controller: controller,
+              onSwipeEnd: (index) {},
+              visibleCount: 4,
+              cardBuilder: (context, item, index) {
+                return LuxuryCardWidget(item: item);
+              },
+            ),
+            // StackedCards(
+            //   cards: [
+            //     LuxuryCardData(
+            //       title: 'Rolls Royce',
+            //       subtitle: 'Classic',
+            //       tag: 'LUXURY',
+            //       image: 'assets/images/ic_menu_acceptance.png',
+            //     ),
+            //     LuxuryCardData(
+            //       image: 'assets/images/ic_menu_acceptance.png',
+            //     ),
+            //     LuxuryCardData(
+            //       image: 'assets/images/ic_menu_acceptance.png',
+            //     ),
+            //   ],
+            // )
           ],
         ),
       ),

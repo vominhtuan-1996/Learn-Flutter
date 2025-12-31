@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,7 +13,8 @@ class ProgressBar extends LeafRenderObjectWidget {
     this.strokeCap = StrokeCap.round,
     this.min = 0,
     this.max = 100,
-    this.styleLabel = const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+    this.styleLabel =
+        const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
     this.backGroundLabel = Colors.blue,
     this.onChanged,
     this.showLabel = true,
@@ -262,7 +262,9 @@ class RenderProgressBar extends RenderBox {
     final canvas = context.canvas;
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
-    String value = _currentThumbValue == 0 ? min.toStringAsFixed(0) : (_currentThumbValue * _max).toStringAsFixed(0);
+    String value = _currentThumbValue == 0
+        ? min.toStringAsFixed(0)
+        : (_currentThumbValue * _max).toStringAsFixed(0);
     widthText = UtilsHelper.getTextWidth(text: value, textStyle: styleLabel);
 
     TextPainter painter;
@@ -315,7 +317,10 @@ class RenderProgressBar extends RenderBox {
     final point2paththumbFillPaint = Offset(center.dx, center.dy + (size.height / 2) * 0.6);
     canvas.drawLine(point1paththumbFillPaint, point2paththumbFillPaint, thumbFillPaint);
     if (showLabel) {
-      painter.paint(canvas, Offset(center.dx - (widthText / 2) - (widthText / 24 * _currentThumbValue), point1pathThumb.dy - thumbSize));
+      painter.paint(
+          canvas,
+          Offset(center.dx - (widthText / 2) - (widthText / 24 * _currentThumbValue),
+              point1pathThumb.dy - thumbSize));
     }
     canvas.restore();
   }

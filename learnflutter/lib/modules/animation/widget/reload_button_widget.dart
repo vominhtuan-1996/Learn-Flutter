@@ -9,7 +9,8 @@ class ReloadButtonWidget extends StatefulWidget {
   State<ReloadButtonWidget> createState() => ReloadButtonWidgetState();
 }
 
-class ReloadButtonWidgetState extends State<ReloadButtonWidget> with SingleTickerProviderStateMixin {
+class ReloadButtonWidgetState extends State<ReloadButtonWidget>
+    with SingleTickerProviderStateMixin {
   bool isFav = false;
   late AnimationController _animationController;
   late Animation<Color?> _colorAnimation;
@@ -46,7 +47,8 @@ class ReloadButtonWidgetState extends State<ReloadButtonWidget> with SingleTicke
       _animationController.duration = const Duration(milliseconds: 600);
     }
 
-    _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);
+    _colorAnimation =
+        ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);
 
     if (widget.isRotate) {
       _sizeAnimation = Tween<double>(begin: 0, end: 1).animate(

@@ -13,7 +13,8 @@ class MaterialProgressIndicators extends StatefulWidget {
   State<MaterialProgressIndicators> createState() => _MaterialProgressIndicatorsState();
 }
 
-class _MaterialProgressIndicatorsState extends State<MaterialProgressIndicators> with ComponentMaterialDetail, TickerProviderStateMixin {
+class _MaterialProgressIndicatorsState extends State<MaterialProgressIndicators>
+    with ComponentMaterialDetail, TickerProviderStateMixin {
   late AnimationController controllerLiner;
   bool stopAnimationLiner = false;
   late AnimationController controllerDeterminate;
@@ -77,7 +78,8 @@ class _MaterialProgressIndicatorsState extends State<MaterialProgressIndicators>
               style: context.textTheme.headlineMedium,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
+              padding: EdgeInsets.symmetric(
+                  vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
               child: LinearProgressIndicator(
                 minHeight: 20,
                 value: controllerLiner.value,
@@ -115,7 +117,8 @@ class _MaterialProgressIndicatorsState extends State<MaterialProgressIndicators>
               style: context.textTheme.headlineMedium,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
+              padding: EdgeInsets.symmetric(
+                  vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
               child: LinearProgressIndicator(
                 minHeight: 30,
                 value: controllerDeterminate.value,
@@ -152,7 +155,8 @@ class _MaterialProgressIndicatorsState extends State<MaterialProgressIndicators>
               style: context.textTheme.headlineMedium,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
+              padding: EdgeInsets.symmetric(
+                  vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
               child: CircularProgressIndicator(
                 value: controllerCircle.value,
                 strokeCap: StrokeCap.round,

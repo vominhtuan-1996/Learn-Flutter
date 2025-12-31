@@ -53,7 +53,8 @@ class _PaginationWidgetState extends State<PaginationWidget> with HandleScrollMi
   Widget build(BuildContext context) {
     return BlocProvider<PaginationCubit>(
       create: (context) {
-        return PaginationCubit(scrollController, widget.numbStep, widget.tabType == TabType.maintained);
+        return PaginationCubit(
+            scrollController, widget.numbStep, widget.tabType == TabType.maintained);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,9 +84,13 @@ class _PaginationWidgetState extends State<PaginationWidget> with HandleScrollMi
                               if (index < widget.numbStep) {
                                 children.add(
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: DeviceDimension.horizontalSize(5)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: DeviceDimension.horizontalSize(5)),
                                     child: ImageHelper.loadFromAsset(
-                                      state.paginationModel[index - 1].isUploadedStep || widget.tabType == TabType.maintained ? PaginationAsset.orangeDivider : PaginationAsset.dashDivider,
+                                      state.paginationModel[index - 1].isUploadedStep ||
+                                              widget.tabType == TabType.maintained
+                                          ? PaginationAsset.orangeDivider
+                                          : PaginationAsset.dashDivider,
                                       width: DeviceDimension.horizontalSize(20),
                                     ),
                                   ),
@@ -112,7 +117,9 @@ class _PaginationWidgetState extends State<PaginationWidget> with HandleScrollMi
                     onCompleteStep: widget.onCompleteStep,
                     onPreviousStep: widget.onPreviousStep,
                     isFirstStep: state.currentStep == 1,
-                    isLastStep: widget.hasCompleteStep ? state.currentStep == widget.numbStep + 1 : state.currentStep == widget.numbStep,
+                    isLastStep: widget.hasCompleteStep
+                        ? state.currentStep == widget.numbStep + 1
+                        : state.currentStep == widget.numbStep,
                   )
                 : Container();
           })

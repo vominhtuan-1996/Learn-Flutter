@@ -15,7 +15,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   void initState() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://agents.fpt.ai/live-chat/chat?tenant_id=01JNJVV5TX8QX5R521SDAA8SAW&bot_code=01JWZPK62975PSACJ3GTDPADCS'));
+      ..loadRequest(Uri.parse(
+          'https://agents.fpt.ai/live-chat/chat?tenant_id=01JNJVV5TX8QX5R521SDAA8SAW&bot_code=01JWZPK62975PSACJ3GTDPADCS'));
     super.initState();
   }
 

@@ -29,7 +29,9 @@ class StoryButton extends StatefulWidget {
   State<StoryButton> createState() => _StoryButtonState();
 }
 
-class _StoryButtonState extends State<StoryButton> with SetStateAfterFrame, FirstBuildMixin implements IButtonPositionable, IWatchMarkable {
+class _StoryButtonState extends State<StoryButton>
+    with SetStateAfterFrame, FirstBuildMixin
+    implements IButtonPositionable, IWatchMarkable {
   double? _buttonWidth;
 
   @override
@@ -145,8 +147,11 @@ class _StoryButtonState extends State<StoryButton> with SetStateAfterFrame, Firs
                           color: Colors.transparent,
                           child: InkWell(
                             splashColor: widget.buttonData.splashColor,
-                            splashFactory: widget.buttonData.inkFeatureFactory ?? InkRipple.splashFactory,
-                            onTap: widget.buttonData.showAddButton ? widget.buttonData.onAddStoryPressed : _onTap,
+                            splashFactory:
+                                widget.buttonData.inkFeatureFactory ?? InkRipple.splashFactory,
+                            onTap: widget.buttonData.showAddButton
+                                ? widget.buttonData.onAddStoryPressed
+                                : _onTap,
                             onLongPress: !widget.buttonData.showAddButton ? null : _onTap,
                             child: const SizedBox(
                               width: double.infinity,
@@ -168,7 +173,8 @@ class _StoryButtonState extends State<StoryButton> with SetStateAfterFrame, Firs
                                   color: Color(0xFF4D5761),
                                   child: Container(
                                     decoration: BoxDecoration(shape: BoxShape.circle),
-                                    padding: widget.buttonData.addStoryButtonPadding ?? EdgeInsets.all(3.0),
+                                    padding: widget.buttonData.addStoryButtonPadding ??
+                                        EdgeInsets.all(3.0),
                                     child: Icon(
                                       Icons.add,
                                       size: widget.buttonData.addStoryButtonSize ?? 24,
@@ -326,7 +332,8 @@ class StoryButtonData {
     ),
     this.borderOffset = 2.0,
   }) : assert(
-          segmentDuration.first.inMilliseconds % kStoryTimerTickMillis == 0 && segmentDuration.first.inMilliseconds >= 1000,
+          segmentDuration.first.inMilliseconds % kStoryTimerTickMillis == 0 &&
+              segmentDuration.first.inMilliseconds >= 1000,
           'Segment duration in milliseconds must be a multiple of $kStoryTimerTickMillis and not less than 1000 milliseconds',
         );
 }

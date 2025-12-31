@@ -5,7 +5,8 @@ import 'package:learnflutter/constraint/define_constraint.dart';
 import 'package:learnflutter/utils_helper/datetime_utils.dart';
 
 class GoogleChatUtils {
-  static String generateTextParagraph({required Map<String, dynamic> info, required String header}) {
+  static String generateTextParagraph(
+      {required Map<String, dynamic> info, required String header}) {
     final buffer = StringBuffer();
     buffer.writeln("<b>$header</b>");
     info.forEach((key, value) {
@@ -17,7 +18,12 @@ class GoogleChatUtils {
 
 // Optional: escape basic HTML characters
   static String _escapeHtml(String input) {
-    return input.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+    return input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
   }
 
   static String convertCurlToGoogleChatMarkdown(String rawCurl) {
@@ -40,21 +46,26 @@ class GoogleChatUtils {
           "card": {
             "header": {
               "title": title,
-              "subtitle": "Time: ${DateTimeUtils.getCurrentTime(format: DateTimeType.DATE_TIME_FORMAT_VN)}",
+              "subtitle":
+                  "Time: ${DateTimeUtils.getCurrentTime(format: DateTimeType.DATE_TIME_FORMAT_VN)}",
               "imageUrl": "https://developers.google.com/chat/images/quickstart-app-avatar.png"
             },
             "sections": [
               {
                 "widgets": [
                   {
-                    "textParagraph": {"text": generateTextParagraph(info: section1, header: titleHeaderSection1)}
+                    "textParagraph": {
+                      "text": generateTextParagraph(info: section1, header: titleHeaderSection1)
+                    }
                   }
                 ]
               },
               {
                 "widgets": [
                   {
-                    "textParagraph": {"text": generateTextParagraph(info: section2, header: titleHeaderSection2)}
+                    "textParagraph": {
+                      "text": generateTextParagraph(info: section2, header: titleHeaderSection2)
+                    }
                   }
                 ]
               },
@@ -64,7 +75,8 @@ class GoogleChatUtils {
                 "widgets": [
                   {
                     "textParagraph": {
-                      "text": "<b>$titleHeaderSection3</b><br>------------------------------<br> ${convertCurlToGoogleChatMarkdown(curl)}<br>------------------------------",
+                      "text":
+                          "<b>$titleHeaderSection3</b><br>------------------------------<br> ${convertCurlToGoogleChatMarkdown(curl)}<br>------------------------------",
                       "maxLines": 1
                     }
                   }

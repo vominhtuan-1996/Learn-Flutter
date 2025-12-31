@@ -33,14 +33,16 @@ class _BottomSheetState extends State<VMTBottomSheet> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    _heightAnimation = Tween<double>(begin: widget.heightBottomSheet, end: widget.heightBottomSheet).animate(_controller);
+    _heightAnimation = Tween<double>(begin: widget.heightBottomSheet, end: widget.heightBottomSheet)
+        .animate(_controller);
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(36 * 0.8), topRight: Radius.circular(36 * 0.8)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(36 * 0.8), topRight: Radius.circular(36 * 0.8)),
             border: Border.symmetric(
               horizontal: BorderSide(
                 color: Colors.grey,

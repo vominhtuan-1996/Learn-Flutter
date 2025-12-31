@@ -44,7 +44,8 @@ class _SFCircularChartPageState extends State<SFCircularChartPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text((data as SalesData).date.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
+            Text((data as SalesData).date.toString())
+                .paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).conntry.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).y.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text(data.y1.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
@@ -63,7 +64,8 @@ class _SFCircularChartPageState extends State<SFCircularChartPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text((data as ProgressData).task.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
+            Text((data as ProgressData).task.toString())
+                .paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).percent.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
           ],
         );

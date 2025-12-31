@@ -12,7 +12,8 @@ class MaterialFloatingButtonDetail extends StatefulWidget {
   State<MaterialFloatingButtonDetail> createState() => _MaterialFloatingButtonDetailState();
 }
 
-class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDetail> with ComponentMaterialDetail {
+class _MaterialFloatingButtonDetailState extends State<MaterialFloatingButtonDetail>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();

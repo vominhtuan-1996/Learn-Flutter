@@ -26,18 +26,21 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  OverScrollHeaderStretchConfiguration? get stretchConfiguration => OverScrollHeaderStretchConfiguration();
+  OverScrollHeaderStretchConfiguration? get stretchConfiguration =>
+      OverScrollHeaderStretchConfiguration();
 
   double get deltaExtent => maxExtent - minExtent;
 
-  static const imgBgr = Image(image: AssetImage('assets/images/slier_appbar_bgr.webp'), fit: BoxFit.cover);
+  static const imgBgr =
+      Image(image: AssetImage('assets/images/slier_appbar_bgr.webp'), fit: BoxFit.cover);
 
   double transform(double begin, double end, double t, [double x = 1]) {
     return Tween<double>(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x));
   }
 
   Color transformColor(Color? begin, Color? end, double t, [double x = 1]) {
-    return ColorTween(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x)) ?? Colors.transparent;
+    return ColorTween(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x)) ??
+        Colors.transparent;
   }
 
   @override
@@ -82,7 +85,12 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             const double cardMarginHorizontal = 16;
             children
               ..add(
-                Positioned(left: cardMarginHorizontal, right: cardMarginHorizontal, bottom: 0, height: deltaExtent, child: Container()
+                Positioned(
+                    left: cardMarginHorizontal,
+                    right: cardMarginHorizontal,
+                    bottom: 0,
+                    height: deltaExtent,
+                    child: Container()
                     // ActionAndOverviewInfoCard(
                     //   contentPadding: const EdgeInsets.all(cardPadding),
                     //   borderRadius: BorderRadius.circular(transform(12, 0, t, 2)),
@@ -165,8 +173,13 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                   t,
                   2,
                 ),
-                top: constraints.maxHeight > maxExtent ? null : transform(minExtent + cardPadding, minExtent - IconImgButton.tapTargetSize - 4, t, 2),
-                bottom: constraints.maxHeight < maxExtent ? null : deltaExtent - IconImgButton.tapTargetSize - cardPadding,
+                top: constraints.maxHeight > maxExtent
+                    ? null
+                    : transform(
+                        minExtent + cardPadding, minExtent - IconImgButton.tapTargetSize - 4, t, 2),
+                bottom: constraints.maxHeight < maxExtent
+                    ? null
+                    : deltaExtent - IconImgButton.tapTargetSize - cardPadding,
                 child: Container(),
               ),
             );

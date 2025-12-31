@@ -8,7 +8,8 @@ class IconAnimationWidget extends StatefulWidget {
   State<IconAnimationWidget> createState() => IconAnimationWidgetState();
 }
 
-class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTickerProviderStateMixin {
+class IconAnimationWidgetState extends State<IconAnimationWidget>
+    with SingleTickerProviderStateMixin {
   bool isFav = false;
   late AnimationController _animationController;
   late Animation<Color?> _colorAnimation;
@@ -24,7 +25,8 @@ class IconAnimationWidgetState extends State<IconAnimationWidget> with SingleTic
       _animationController.duration = const Duration(milliseconds: 600);
     }
 
-    _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);
+    _colorAnimation =
+        ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_animationController);
 
     if (widget.isRotate) {
       _sizeAnimation = Tween<double>(begin: -0.05, end: 0.05).animate(

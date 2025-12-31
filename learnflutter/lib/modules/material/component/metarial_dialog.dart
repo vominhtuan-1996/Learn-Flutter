@@ -53,7 +53,8 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content:
+                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                 );
               },
               type: MaterialButtonType.commonbutton,
@@ -71,7 +72,8 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content:
+                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -158,7 +160,8 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showDialogWithHeroIcon(
                     context: context,
                     type: TypeDialog.success,
-                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                    content:
+                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                     title: 'Dialog with hero icon');
               },
               type: MaterialButtonType.commonbutton,
@@ -176,7 +179,8 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showDialogWithHeroIcon(
                   context: context,
                   type: TypeDialog.success,
-                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                  content:
+                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                   title: 'Dialog with hero icon',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -279,9 +283,15 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               textAlign: TextAlign.center,
               onTap: () async {
                 List uploadList = [
-                  RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(
+                      id: 'id',
+                      title:
+                          'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '2'),
-                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(
+                      id: 'id',
+                      title:
+                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '4'),
                   RadioItemModel(id: 'id', title: '5'),
                   RadioItemModel(
@@ -290,9 +300,15 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                           'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '7'),
                   RadioItemModel(id: 'id', title: '8'),
-                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(
+                      id: 'id',
+                      title:
+                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '10'),
-                  RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(
+                      id: 'id',
+                      title:
+                          'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                 ];
                 DialogUtils.showUploadProgress(
                   contextDialog: context,

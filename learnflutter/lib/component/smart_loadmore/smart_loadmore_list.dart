@@ -11,12 +11,12 @@ class SmartLoadMoreList<T> extends StatefulWidget {
   final int pageSize;
 
   const SmartLoadMoreList({
-    Key? key,
+    super.key,
     required this.fetchItems,
     required this.itemBuilder,
     this.prefetchSize = 20,
     this.pageSize = 10,
-  }) : super(key: key);
+  });
 
   @override
   State<SmartLoadMoreList<T>> createState() => _SmartLoadMoreListState<T>();

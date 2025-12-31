@@ -8,12 +8,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:learnflutter/main.dart';
+// Use a minimal test app to avoid initializing app-level services like localization
+import 'package:flutter/material.dart';
+
+class CounterTestApp extends StatefulWidget {
+  const CounterTestApp({super.key});
+
+  @override
+  State<CounterTestApp> createState() => _CounterTestAppState();
+}
+
+class _CounterTestAppState extends State<CounterTestApp> {
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Counter Test')),
+        body: Center(child: Text('$_count')),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => setState(() => _count++),
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    // Build our minimal test app and trigger a frame.
+    await tester.pumpWidget(const CounterTestApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

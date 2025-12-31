@@ -12,7 +12,8 @@ class MaterialDividerDetail extends StatefulWidget {
   State<MaterialDividerDetail> createState() => _MaterialDividerDetailState();
 }
 
-class _MaterialDividerDetailState extends State<MaterialDividerDetail> with ComponentMaterialDetail {
+class _MaterialDividerDetailState extends State<MaterialDividerDetail>
+    with ComponentMaterialDetail {
   final double thickness = 1.2;
   @override
   void initState() {

@@ -14,7 +14,8 @@ class SnappingScrollPhysicsExample extends StatefulWidget {
 }
 
 class _SnappingScrollPhysicsExampleState extends State<SnappingScrollPhysicsExample> {
-  double heightItem = DeviceDimension.screenHeight - DeviceDimension.padding * 2 - DeviceDimension.appBar;
+  double heightItem =
+      DeviceDimension.screenHeight - DeviceDimension.padding * 2 - DeviceDimension.appBar;
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
@@ -29,12 +30,17 @@ class _SnappingScrollPhysicsExampleState extends State<SnappingScrollPhysicsExam
             // },
             child: Container(
               color: Colors.primaries[index % Colors.primaries.length],
-              height: heightItem - DeviceDimension.statusBarHeight(context), // Set the height for each item
-            ).paddingSymmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding).center(),
+              height: heightItem -
+                  DeviceDimension.statusBarHeight(context), // Set the height for each item
+            )
+                .paddingSymmetric(
+                    horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding)
+                .center(),
           );
         },
         itemCount: 50,
-        physics: SnappingScrollPhysics(itemDimension: DeviceDimension.screenHeight - DeviceDimension.padding),
+        physics: SnappingScrollPhysics(
+            itemDimension: DeviceDimension.screenHeight - DeviceDimension.padding),
       ),
     );
   }

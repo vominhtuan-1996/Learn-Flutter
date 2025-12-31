@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:learnflutter/modules/indicator/shape/arrow_down_shape.dart';
@@ -25,7 +24,8 @@ class ArrowRefreshIndicator extends StatefulWidget {
   State<ArrowRefreshIndicator> createState() => _ArrowRefreshIndicatorState();
 }
 
-class _ArrowRefreshIndicatorState extends State<ArrowRefreshIndicator> with TickerProviderStateMixin {
+class _ArrowRefreshIndicatorState extends State<ArrowRefreshIndicator>
+    with TickerProviderStateMixin {
   late AnimationController _doneController;
   late AnimationController _bounceController;
   late Animation<double> _bounceAnimation;
@@ -78,10 +78,12 @@ class _ArrowRefreshIndicatorState extends State<ArrowRefreshIndicator> with Tick
                         child: AnimatedBuilder(
                           animation: controller,
                           builder: (context, _) {
-                            final progress = Curves.easeOut.transform(controller.value.clamp(0.0, 1.0));
+                            final progress =
+                                Curves.easeOut.transform(controller.value.clamp(0.0, 1.0));
                             final state = controller.state;
                             double arrowProgress = progress;
-                            if (controller.state == IndicatorState.idle && controller.value == 0.0) {
+                            if (controller.state == IndicatorState.idle &&
+                                controller.value == 0.0) {
                               _bounceController.forward(from: 0.0);
                             }
                             if (state == IndicatorState.loading) {

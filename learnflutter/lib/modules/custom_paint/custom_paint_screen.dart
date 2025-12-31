@@ -71,10 +71,10 @@ class _CustomPainterScreenState extends State<CustomPainterScreen> with TickerPr
                     thumbColor: Colors.white,
                     cornerRadius: 10,
                     pickMode: PickMode.Color,
-                    colorListener: (int value) {
+                    colorListener: (Color value) {
                       setState(() {
                         currentstrokeWidth = 3;
-                        currentColor = Color(value);
+                        currentColor = value;
                       });
                     }),
                 TextButton(

@@ -35,7 +35,8 @@ class UtilsHelper {
     Navigator.popAndPushNamed(context, routeName, result: result);
   }
 
-  static Future<dynamic> navigationPushNamed(BuildContext context, String route, {dynamic data}) async {
+  static Future<dynamic> navigationPushNamed(BuildContext context, String route,
+      {dynamic data}) async {
     var navigator = Navigator.of(context);
     return await navigator.pushNamed(route, arguments: data);
   }
@@ -60,7 +61,8 @@ class UtilsHelper {
     }
   }
 
-  static Future<T?> pushToController<T>({required BuildContext context, bool useRootNavigator = true, required String route}) {
+  static Future<T?> pushToController<T>(
+      {required BuildContext context, bool useRootNavigator = true, required String route}) {
     return Navigator.of(context, rootNavigator: useRootNavigator).pushNamed(route);
   }
 
@@ -71,15 +73,26 @@ class UtilsHelper {
   }
 
   /// Text height
-  static double getTextHeight({required String text, required TextStyle textStyle, required double maxWidthOfWidget, double minWidthOfWidget = 0}) {
-    final textPainter = TextPainter(textAlign: TextAlign.center, textDirection: TextDirection.ltr, text: TextSpan(text: text, style: textStyle))
+  static double getTextHeight(
+      {required String text,
+      required TextStyle textStyle,
+      required double maxWidthOfWidget,
+      double minWidthOfWidget = 0}) {
+    final textPainter = TextPainter(
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+        text: TextSpan(text: text, style: textStyle))
       ..layout(maxWidth: maxWidthOfWidget, minWidth: minWidthOfWidget);
     return textPainter.height;
   }
 
   /// Text Width
   static double getTextWidth({required String text, required TextStyle textStyle}) {
-    final textPainter = TextPainter(textAlign: TextAlign.center, textDirection: TextDirection.ltr, text: TextSpan(text: text, style: textStyle))..layout();
+    final textPainter = TextPainter(
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+        text: TextSpan(text: text, style: textStyle))
+      ..layout();
     return textPainter.size.width;
   }
 

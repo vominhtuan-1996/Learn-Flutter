@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,14 +6,17 @@ class DemoLocalizations {
   DemoLocalizations(this.localeName);
 
   static Future<DemoLocalizations> load(Locale locale) {
-    final String name = locale.countryCode == null || locale.countryCode!.isEmpty ? locale.languageCode : locale.toString();
+    final String name = locale.countryCode == null || locale.countryCode!.isEmpty
+        ? locale.languageCode
+        : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return Future.value(DemoLocalizations(localeName));
   }
 
   static DemoLocalizations of(BuildContext context) {
-    return Localizations.of<DemoLocalizations>(context, DemoLocalizations) ?? DemoLocalizations('vi');
+    return Localizations.of<DemoLocalizations>(context, DemoLocalizations) ??
+        DemoLocalizations('vi');
   }
 
   final String localeName;

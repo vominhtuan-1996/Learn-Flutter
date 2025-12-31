@@ -55,9 +55,14 @@ class _DropWaterRefreshDemoState extends State<DropWaterRefreshDemo> {
                   handle: SliverOverlapAbsorberHandle(),
                   sliver: SliverRefreshControl(
                     onRefresh: _onRefresh,
-                    indicatorBuilder: (BuildContext context, RefreshIndicatorMode refreshState, double pulledExtent, double refreshTriggerPullDistance, double refreshIndicatorExtent) {
+                    indicatorBuilder: (BuildContext context,
+                        RefreshIndicatorMode refreshState,
+                        double pulledExtent,
+                        double refreshTriggerPullDistance,
+                        double refreshIndicatorExtent) {
                       if (refreshState == RefreshIndicatorMode.drag) {
-                        double percentage = (pulledExtent / refreshTriggerPullDistance).clamp(0.0, 1.0);
+                        double percentage =
+                            (pulledExtent / refreshTriggerPullDistance).clamp(0.0, 1.0);
                         return Center(
                           child: Opacity(
                             opacity: percentage,
@@ -111,9 +116,11 @@ enum RefreshIndicatorMode {
 
 class SliverRefreshControl extends StatelessWidget {
   final RefreshCallback onRefresh;
-  final Widget Function(BuildContext, RefreshIndicatorMode, double, double, double) indicatorBuilder;
+  final Widget Function(BuildContext, RefreshIndicatorMode, double, double, double)
+      indicatorBuilder;
 
-  const SliverRefreshControl({super.key, 
+  const SliverRefreshControl({
+    super.key,
     required this.onRefresh,
     required this.indicatorBuilder,
   });

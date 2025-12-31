@@ -8,8 +8,7 @@ class AnimationDismissCupertinoModalPopupExample extends StatefulWidget {
 }
 
 class _AnimationDismissCupertinoModalPopupExampleState
-    extends State<AnimationDismissCupertinoModalPopupExample>
-    with SingleTickerProviderStateMixin {
+    extends State<AnimationDismissCupertinoModalPopupExample> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 

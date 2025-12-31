@@ -92,9 +92,12 @@ class SegmentedRenderBox extends RenderBox {
     final pointend3 = Offset(pointend2.dx + 40, pointstart.dy);
     final backgroundTriangleLine = Path()
       ..moveTo(pointstart.dx, pointstart.dy)
-      ..cubicTo(pointcurve1.dx, pointcurve1.dy, pointcurve2.dx, pointcurve2.dy, pointend.dx, pointend.dy)
-      ..cubicTo(pointendcurve1.dx, pointendcurve1.dy, pointendcurve2.dx, pointendcurve2.dy, pointend2.dx, pointend2.dy)
-      ..cubicTo(pointend2curve1.dx, pointend2curve1.dy, pointend2curve2.dx, pointend2curve2.dy, pointend3.dy, 0);
+      ..cubicTo(
+          pointcurve1.dx, pointcurve1.dy, pointcurve2.dx, pointcurve2.dy, pointend.dx, pointend.dy)
+      ..cubicTo(pointendcurve1.dx, pointendcurve1.dy, pointendcurve2.dx, pointendcurve2.dy,
+          pointend2.dx, pointend2.dy)
+      ..cubicTo(pointend2curve1.dx, pointend2curve1.dy, pointend2curve2.dx, pointend2curve2.dy,
+          pointend3.dy, 0);
     backgroundTriangleLine.close();
     context.canvas.drawPath(
       backgroundTriangleLine,

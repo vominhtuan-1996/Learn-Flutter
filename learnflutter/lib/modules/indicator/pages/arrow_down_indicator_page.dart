@@ -16,7 +16,8 @@ class ArrowDownIndicatorPage extends StatefulWidget {
   State<ArrowDownIndicatorPage> createState() => _ArrowDownIndicatorPageState();
 }
 
-class _ArrowDownIndicatorPageState extends State<ArrowDownIndicatorPage> with TickerProviderStateMixin {
+class _ArrowDownIndicatorPageState extends State<ArrowDownIndicatorPage>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();

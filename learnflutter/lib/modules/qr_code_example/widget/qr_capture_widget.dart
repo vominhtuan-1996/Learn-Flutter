@@ -41,7 +41,8 @@ class _QrCaptureWidgetState extends State<QrCaptureWidget> {
 
   Future<void> _captureQR() async {
     try {
-      RenderRepaintBoundary boundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 

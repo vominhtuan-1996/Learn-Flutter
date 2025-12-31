@@ -21,8 +21,7 @@ import 'package:notification_center/notification_center.dart';
 class NotificationCenterService {
   NotificationCenterService._();
 
-  static void postCenterNotification(
-      {required String nameNotification, dynamic data}) {
+  static void postCenterNotification({required String nameNotification, dynamic data}) {
     NotificationCenter().notify(nameNotification, data: data);
   }
 
@@ -31,8 +30,7 @@ class NotificationCenterService {
     NotificationCenter().subscribe(nameNotification, callback);
   }
 
-  static void unsubscribeCenterNotification(
-      {required String nameNotification}) {
+  static void unsubscribeCenterNotification({required String nameNotification}) {
     NotificationCenter().unsubscribe(nameNotification);
   }
 

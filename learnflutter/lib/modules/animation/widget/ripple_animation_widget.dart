@@ -6,7 +6,8 @@ class RippleAnimationWidget extends StatefulWidget {
   State<RippleAnimationWidget> createState() => RippleAnimationWidgetState();
 }
 
-class RippleAnimationWidgetState extends State<RippleAnimationWidget> with SingleTickerProviderStateMixin {
+class RippleAnimationWidgetState extends State<RippleAnimationWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _colorAnimation;
   late Animation<double> _sizeAnimation;

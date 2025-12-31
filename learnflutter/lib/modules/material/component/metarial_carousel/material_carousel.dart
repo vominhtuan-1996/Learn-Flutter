@@ -58,8 +58,11 @@ class _M3CarouselState extends State<M3Carousel> {
     }
     if (builtChildren.length == widget.visible) {
       for (int a = 0; a < builtChildren.length; a++) {
-        double cal1 = useWidth - (widget.trailingChildWidth + (widget.spacing * (builtChildren.length - 1)));
-        builtChildren[a]['width'] = a == (builtChildren.length - 1) ? widget.trailingChildWidth : cal1 / (builtChildren.length - 1);
+        double cal1 =
+            useWidth - (widget.trailingChildWidth + (widget.spacing * (builtChildren.length - 1)));
+        builtChildren[a]['width'] = a == (builtChildren.length - 1)
+            ? widget.trailingChildWidth
+            : cal1 / (builtChildren.length - 1);
         builtChildren[a]['marginRight'] = a == (builtChildren.length - 1) ? 0 : widget.spacing;
         builtChildren[a]['opacity'] = a == (builtChildren.length - 1) ? 0.0 : 1.0;
       }
@@ -72,17 +75,23 @@ class _M3CarouselState extends State<M3Carousel> {
     }
     if (activeIndex == ((builtChildren.length) - widget.visible)) {
       for (int a = 0; a < widget.visible; a++) {
-        double cal1 = useWidth - (widget.trailingChildWidth + (widget.spacing * (widget.visible - 1)));
-        builtChildren[activeIndex + a]['width'] = a == 0 ? widget.trailingChildWidth : cal1 / (widget.visible - 1);
-        builtChildren[activeIndex + a]['marginRight'] = a == (widget.visible - 1) ? 0 : widget.spacing;
+        double cal1 =
+            useWidth - (widget.trailingChildWidth + (widget.spacing * (widget.visible - 1)));
+        builtChildren[activeIndex + a]['width'] =
+            a == 0 ? widget.trailingChildWidth : cal1 / (widget.visible - 1);
+        builtChildren[activeIndex + a]['marginRight'] =
+            a == (widget.visible - 1) ? 0 : widget.spacing;
         builtChildren[activeIndex + a]['opacity'] = a == 0 ? 0.0 : 1.0;
         builtChildren[activeIndex + a]['direction'] = 0;
       }
     } else {
       for (int a = 0; a < widget.visible; a++) {
-        double cal1 = useWidth - (widget.trailingChildWidth + (widget.spacing * (widget.visible - 1)));
-        builtChildren[activeIndex + a]['width'] = a == (widget.visible - 1) ? widget.trailingChildWidth : cal1 / (widget.visible - 1);
-        builtChildren[activeIndex + a]['marginRight'] = a == (widget.visible - 1) ? 0 : widget.spacing;
+        double cal1 =
+            useWidth - (widget.trailingChildWidth + (widget.spacing * (widget.visible - 1)));
+        builtChildren[activeIndex + a]['width'] =
+            a == (widget.visible - 1) ? widget.trailingChildWidth : cal1 / (widget.visible - 1);
+        builtChildren[activeIndex + a]['marginRight'] =
+            a == (widget.visible - 1) ? 0 : widget.spacing;
         builtChildren[activeIndex + a]['opacity'] = a == (widget.visible - 1) ? 0.0 : 1.0;
         builtChildren[activeIndex + a]['direction'] = a == (widget.visible - 1) ? 1 : 0;
       }

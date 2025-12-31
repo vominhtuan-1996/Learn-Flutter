@@ -15,7 +15,7 @@ class AppAlertDialog extends StatefulWidget {
   final String cancelText;
   final AlertDialogType type;
 
-  AppAlertDialog({
+  const AppAlertDialog({
     super.key,
     required this.title,
     required this.content,
@@ -45,7 +45,7 @@ class AppAlertDialogState extends State<AppAlertDialog> {
             extendBody: true,
             body: Container(
               width: constraints.maxWidth * 0.8,
-              height: constraints.maxHeight * 0.6,
+              height: constraints.maxHeight * 0.4,
               decoration: AppBoxDecoration.boxDecorationBorderRadius(
                 borderRadiusValue: 8,
                 colorBackground: Colors.white,

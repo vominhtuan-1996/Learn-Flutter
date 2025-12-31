@@ -62,7 +62,7 @@ class SettingScreenState extends State<SettingScreen> {
                           max: 1.353,
                           value: textScale,
                           onChanged: (value) {
-                            themeBloc.changeScaleText(value);
+                            // themeBloc.changeScaleText(value);
                             textScale = value;
                             print(value);
                             setState(() {});
@@ -96,7 +96,7 @@ class SettingScreenState extends State<SettingScreen> {
                         setState(() {
                           switchValue = value ?? false;
                         });
-                        themeBloc.changeBrightness(value);
+                        // themeBloc.changeBrightness(value);
                       },
                     ),
                   ),

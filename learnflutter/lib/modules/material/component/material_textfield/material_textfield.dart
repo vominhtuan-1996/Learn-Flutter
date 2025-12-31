@@ -107,10 +107,14 @@ class _MaterialTextFieldState extends State<MaterialTextField> {
 
   @override
   Widget build(BuildContext context) {
-    OutlineInputBorder border = OutlineInputBorder(borderSide: BorderSide(color: widget.decorationBorderColor ?? Colors.red));
-    OutlineInputBorder focusedBorder = OutlineInputBorder(borderSide: BorderSide(color: widget.focusedBorderColor ?? Colors.teal));
-    OutlineInputBorder enabledBorder = OutlineInputBorder(borderSide: BorderSide(color: widget.enabledBorderColor ?? Colors.teal));
-    OutlineInputBorder disabledBorder = OutlineInputBorder(borderSide: BorderSide(color: widget.disabledBorderColor ?? Colors.teal));
+    OutlineInputBorder border = OutlineInputBorder(
+        borderSide: BorderSide(color: widget.decorationBorderColor ?? Colors.red));
+    OutlineInputBorder focusedBorder =
+        OutlineInputBorder(borderSide: BorderSide(color: widget.focusedBorderColor ?? Colors.teal));
+    OutlineInputBorder enabledBorder =
+        OutlineInputBorder(borderSide: BorderSide(color: widget.enabledBorderColor ?? Colors.teal));
+    OutlineInputBorder disabledBorder = OutlineInputBorder(
+        borderSide: BorderSide(color: widget.disabledBorderColor ?? Colors.teal));
     return Padding(
       padding: EdgeInsets.all(DeviceDimension.padding / 2),
       child: TextField(
@@ -143,7 +147,8 @@ class _MaterialTextFieldState extends State<MaterialTextField> {
           labelText: widget.hintText,
           labelStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.grey.withOpacity(0.7)),
           fillColor: context.theme.inputDecorationTheme.fillColor,
-          contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding / 2, vertical: DeviceDimension.padding / 4),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceDimension.padding / 2, vertical: DeviceDimension.padding / 4),
           prefixIconConstraints: widget.prefixIconConstraints ?? boxConstraintZero,
           suffixIconConstraints: widget.suffixIconConstraints ?? boxConstraintZero,
           prefixIconColor: widget.prefixIconColor,
@@ -173,7 +178,9 @@ class _MaterialTextFieldState extends State<MaterialTextField> {
                         widget.onSuffixIconPressed;
                       }
                     },
-                    child: ConstrainedBox(constraints: widget.suffixIconConstraints ?? boxConstraintZero, child: Icon(widget.suffixIcon)),
+                    child: ConstrainedBox(
+                        constraints: widget.suffixIconConstraints ?? boxConstraintZero,
+                        child: Icon(widget.suffixIcon)),
                   ),
                 )
               : Container(

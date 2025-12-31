@@ -115,7 +115,8 @@ class Cube extends StatelessWidget {
               color: Colors.purple,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203635_9d761d059fb99a5dcffaf5ea28eb0ee6_646793.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203635_9d761d059fb99a5dcffaf5ea28eb0ee6_646793.jpg'),
                 ),
               )),
         ),
@@ -131,7 +132,8 @@ class Cube extends StatelessWidget {
               color: Colors.orange,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203343_435385fa021573f31f986ad649309e43_428280.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277203343_435385fa021573f31f986ad649309e43_428280.jpg'),
                 ),
               )),
         ),
@@ -145,7 +147,8 @@ class Cube extends StatelessWidget {
               color: Colors.red,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277202570_45c69497968fb655673fe5167863250d_763520.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277202570_45c69497968fb655673fe5167863250d_763520.jpg'),
                 ),
               )),
         ),
@@ -159,7 +162,8 @@ class Cube extends StatelessWidget {
               color: Colors.blue,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277206068_80075bbf7ff569987318b936c3034020_123463.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277206068_80075bbf7ff569987318b936c3034020_123463.jpg'),
                 ),
               )),
         ),
@@ -175,7 +179,8 @@ class Cube extends StatelessWidget {
               color: Colors.yellow,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205747_f6f22e36cd5ff81f644bbfd748824cf9_676080.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205747_f6f22e36cd5ff81f644bbfd748824cf9_676080.jpg'),
                 ),
               )),
         ),
@@ -191,7 +196,8 @@ class Cube extends StatelessWidget {
               color: Colors.pink,
               child: Center(
                 child: Image(
-                  image: NetworkImage('https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205325_ba9d3b34ef5dcf40a3e338b032b63d17_654209.jpg'),
+                  image: NetworkImage(
+                      'https://istorage.fpt.vn/v2/big-upload/istorage/Map/180/202308/image/0/Map_1693277205325_ba9d3b34ef5dcf40a3e338b032b63d17_654209.jpg'),
                 ),
               )),
         ),

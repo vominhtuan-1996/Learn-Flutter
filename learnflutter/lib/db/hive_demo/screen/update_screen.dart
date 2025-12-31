@@ -6,7 +6,8 @@ class UpdateScreen extends StatefulWidget {
   final int index;
   final Person person;
 
-  const UpdateScreen({super.key, 
+  const UpdateScreen({
+    super.key,
     required this.index,
     required this.person,
   });

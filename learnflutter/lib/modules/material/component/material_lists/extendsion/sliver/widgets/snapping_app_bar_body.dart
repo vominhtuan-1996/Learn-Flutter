@@ -77,9 +77,7 @@ class SnappingAppBarBody extends StatelessWidget {
                 child: collapsedBar,
               ),
               automaticallyImplyLeading: automaticallyImplyLeading,
-              backgroundColor: isCollapsed
-                  ? collapsedBackgroundColor
-                  : expandedBackgroundColor,
+              backgroundColor: isCollapsed ? collapsedBackgroundColor : expandedBackgroundColor,
               leading: leading,
               flexibleSpace: FlexibleSpaceBar(
                 background: expandedContent,

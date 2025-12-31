@@ -125,7 +125,8 @@ class SvgUtilsHelper {
 
   static List<SvgElementPath> parsePathData(String d) {
     List<SvgElementPath> points = [];
-    List<String> commands = d.split(RegExp(r'(?=[MLZmlzCHVQAhvq])')).where((s) => s.isNotEmpty).toList();
+    List<String> commands =
+        d.split(RegExp(r'(?=[MLZmlzCHVQAhvq])')).where((s) => s.isNotEmpty).toList();
 
     double startX = 0;
     double startY = 0;
@@ -134,7 +135,8 @@ class SvgUtilsHelper {
 
     for (String command in commands) {
       String type = command[0];
-      List<String> params = command.substring(1).trim().split(RegExp(r'[\s,]+')).where((s) => s.isNotEmpty).toList();
+      List<String> params =
+          command.substring(1).trim().split(RegExp(r'[\s,]+')).where((s) => s.isNotEmpty).toList();
 
       switch (type) {
         case 'M':

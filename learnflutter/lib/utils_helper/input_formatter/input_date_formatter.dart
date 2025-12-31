@@ -4,7 +4,9 @@ import 'package:learnflutter/utils_helper/extension/extension_string.dart';
 class DateTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.length > oldValue.text.length && newValue.text.isNotEmpty && oldValue.text.isNotEmpty) {
+    if (newValue.text.length > oldValue.text.length &&
+        newValue.text.isNotEmpty &&
+        oldValue.text.isNotEmpty) {
       if (RegExp('[^0-9/]').hasMatch(newValue.text)) return oldValue;
       if (newValue.text.length > 10) return oldValue;
       if (newValue.text.length == 2 || newValue.text.length == 5) {
@@ -67,7 +69,9 @@ class DateTextFormatter extends TextInputFormatter {
           );
         }
       }
-    } else if (newValue.text.length == 1 && oldValue.text.isEmpty && RegExp('[^0-9]').hasMatch(newValue.text)) {
+    } else if (newValue.text.length == 1 &&
+        oldValue.text.isEmpty &&
+        RegExp('[^0-9]').hasMatch(newValue.text)) {
       return oldValue;
     }
     return newValue;

@@ -68,7 +68,9 @@ class FormValidationDemo2State extends State<FormValidationDemo2> {
         if (value == null) {
           return 'không có giới tính phù hợp';
         }
-        return (value as String).isNotEmpty && value == "Nam" || value == "Nữ" ? null : 'không có giới tính phù hợp';
+        return (value as String).isNotEmpty && value == "Nam" || value == "Nữ"
+            ? null
+            : 'không có giới tính phù hợp';
       },
     );
     validationManager.addField(
@@ -243,7 +245,9 @@ class FormValidationDemo extends StatelessWidget {
         if (value == null) {
           return 'không có giới tính phù hợp';
         }
-        return (value as String).isNotEmpty && value == "Nam" || value == "Nữ" ? null : 'không có giới tính phù hợp';
+        return (value as String).isNotEmpty && value == "Nam" || value == "Nữ"
+            ? null
+            : 'không có giới tính phù hợp';
       },
     );
     validationManager.addField(

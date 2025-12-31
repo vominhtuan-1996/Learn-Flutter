@@ -44,7 +44,8 @@ class _ArrowDownShapeState extends State<ArrowDownShape> {
   @override
   Widget build(BuildContext context) {
     // 👇 Ẩn hoàn toàn nếu chưa kéo (progress == 0) và chưa active
-    if ((widget.state == IndicatorState.idle || widget.state == IndicatorState.settling) && widget.progress == 0.0) {
+    if ((widget.state == IndicatorState.idle || widget.state == IndicatorState.settling) &&
+        widget.progress == 0.0) {
       return const SizedBox.shrink();
     }
 

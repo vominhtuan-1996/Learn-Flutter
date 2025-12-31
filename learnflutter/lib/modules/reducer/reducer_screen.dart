@@ -24,7 +24,8 @@ class ReducerScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counter = useReducer<int, Actions>((value, action) => counterReducer(value, action), initialAction: Actions.init, initialState: 0);
+    final counter = useReducer<int, Actions>((value, action) => counterReducer(value, action),
+        initialAction: Actions.init, initialState: 0);
     return BaseLoading(
         child: Column(
       children: [

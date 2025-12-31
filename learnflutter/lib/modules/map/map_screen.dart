@@ -41,7 +41,9 @@ class _VietnamMapScreenState extends State<VietnamMapScreen> {
 
       if (geometry['type'] == 'Polygon') {
         final coords = coordsList[0]; // Single polygon
-        final points = coords.map<LatLng>((c) => LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble())).toList();
+        final points = coords
+            .map<LatLng>((c) => LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble()))
+            .toList();
 
         final color = Colors.primaries[rand.nextInt(Colors.primaries.length)].withOpacity(0.4);
 
@@ -62,7 +64,9 @@ class _VietnamMapScreenState extends State<VietnamMapScreen> {
         final multiCoords = geometry['coordinates'] as List;
         for (final polygonCoords in multiCoords) {
           final coords = polygonCoords[0]; // lấy ring ngoài
-          final points = coords.map<LatLng>((c) => LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble())).toList();
+          final points = coords
+              .map<LatLng>((c) => LatLng((c[1] as num).toDouble(), (c[0] as num).toDouble()))
+              .toList();
 
           _polygons.add(Polygon(
             points: points,

@@ -69,7 +69,9 @@ class DashOffset {
       return true;
     }
 
-    return other is DashOffset && other._rawVal == _rawVal && other._dashOffsetType == _dashOffsetType;
+    return other is DashOffset &&
+        other._rawVal == _rawVal &&
+        other._dashOffsetType == _dashOffsetType;
   }
 
   @override

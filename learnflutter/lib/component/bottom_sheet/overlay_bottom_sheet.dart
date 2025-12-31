@@ -16,8 +16,10 @@ class BottomSheetOverlay {
   }) {
     assert(minHeight > 0, 'chiều cao tối thiểu phải lớn hơn 0');
     assert(maxHeight > minHeight, 'chiều cao tối đa phải lớn hơn chiều cao tối thiểu');
-    assert(initialHeight >= minHeight && initialHeight <= maxHeight, 'chiều cao lần đầu phải nằm giữa chiều cao tối thiểu và tối đa');
-    assert(maxHeight <= MediaQuery.of(context).size.height * 0.9, 'chiều cao tối đa không được lớn hơn 9/10 chiều cao màn hình');
+    assert(initialHeight >= minHeight && initialHeight <= maxHeight,
+        'chiều cao lần đầu phải nằm giữa chiều cao tối thiểu và tối đa');
+    assert(maxHeight <= MediaQuery.of(context).size.height * 0.9,
+        'chiều cao tối đa không được lớn hơn 9/10 chiều cao màn hình');
     if (_entry != null) return;
 
     final overlay = Overlay.of(context);
@@ -133,7 +135,8 @@ class _BottomSheetWidgetState extends State<_BottomSheetWidget> with TickerProvi
   void _onVerticalDragUpdate(DragUpdateDetails details) {
     final dragOffset = details.globalPosition.dy - _dragStartY;
     final isDraggingDown = dragOffset > 0;
-    final isAtTop = !_scrollController.hasClients || (_scrollController.hasClients && _scrollController.offset <= 0);
+    final isAtTop = !_scrollController.hasClients ||
+        (_scrollController.hasClients && _scrollController.offset <= 0);
 
     if (isAtTop || !isDraggingDown) {
       final newHeight = _dragCurrentHeight - dragOffset;

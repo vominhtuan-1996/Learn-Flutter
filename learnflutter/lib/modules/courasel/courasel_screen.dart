@@ -359,7 +359,11 @@ class FullscreenSliderDemo extends StatelessWidget {
         builder: (context) {
           final double height = MediaQuery.of(context).size.height;
           return CarouselSlider(
-            options: CarouselOptions(height: height * 0.7, viewportFraction: 0.75, enlargeCenterPage: true, aspectRatio: 1 / 1
+            options: CarouselOptions(
+                height: height * 0.7,
+                viewportFraction: 0.75,
+                enlargeCenterPage: true,
+                aspectRatio: 1 / 1
 
                 // autoPlay: false,
                 ),

@@ -43,7 +43,11 @@ class FetchMoreIndicator extends StatelessWidget {
                         transform: Matrix4.translationValues(0.0, dy, 0.0),
                         child: switch (controller.state) {
                           IndicatorState.idle => null,
-                          IndicatorState.dragging || IndicatorState.canceling || IndicatorState.armed || IndicatorState.settling => const Column(
+                          IndicatorState.dragging ||
+                          IndicatorState.canceling ||
+                          IndicatorState.armed ||
+                          IndicatorState.settling =>
+                            const Column(
                               children: [
                                 Icon(Icons.keyboard_arrow_up),
                                 Text("Pull to fetch more"),
@@ -62,7 +66,9 @@ class FetchMoreIndicator extends StatelessWidget {
                                 const Text("Fetching..."),
                               ],
                             ),
-                          IndicatorState.complete || IndicatorState.finalizing => const Text("Fetched 🚀"),
+                          IndicatorState.complete ||
+                          IndicatorState.finalizing =>
+                            const Text("Fetched 🚀"),
                         }),
                   ),
                 ],

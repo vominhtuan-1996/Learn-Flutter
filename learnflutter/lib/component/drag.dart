@@ -18,27 +18,27 @@ class _DragWidgetState extends State<DragWidget> {
       top: y,
       child: RawGestureDetector(
         gestures: {
-          AllowMultipleHorizontalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<AllowMultipleHorizontalDragGestureRecognizer>(
+          AllowMultipleHorizontalDragGestureRecognizer:
+              GestureRecognizerFactoryWithHandlers<AllowMultipleHorizontalDragGestureRecognizer>(
             () => AllowMultipleHorizontalDragGestureRecognizer(),
             (AllowMultipleHorizontalDragGestureRecognizer instance) {
-              instance
-                .onUpdate = (details) {
-                  x += details.delta.dx;
-                  setState(() {});
-                };
+              instance.onUpdate = (details) {
+                x += details.delta.dx;
+                setState(() {});
+              };
             },
           )
         },
         child: RawGestureDetector(
           gestures: {
-            AllowMultipleVerticalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<AllowMultipleVerticalDragGestureRecognizer>(
+            AllowMultipleVerticalDragGestureRecognizer:
+                GestureRecognizerFactoryWithHandlers<AllowMultipleVerticalDragGestureRecognizer>(
               () => AllowMultipleVerticalDragGestureRecognizer(),
               (AllowMultipleVerticalDragGestureRecognizer instance) {
-                instance
-                  .onUpdate = (details) {
-                    y += details.delta.dy;
-                    setState(() {});
-                  };
+                instance.onUpdate = (details) {
+                  y += details.delta.dy;
+                  setState(() {});
+                };
               },
             )
           },

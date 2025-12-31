@@ -117,7 +117,8 @@ class FloatingDraggableWidget extends StatefulWidget {
   State<FloatingDraggableWidget> createState() => _FloatingDraggableWidgetState();
 }
 
-class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget> with SingleTickerProviderStateMixin {
+class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget>
+    with SingleTickerProviderStateMixin {
   /// distance from top and left initial value
   late double top, left;
   double? right = 20;
@@ -234,8 +235,12 @@ class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget> with 
                               ),
                               child: SizedBox(
                                 key: containerKey1,
-                                height: isColliding ? widget.isCollidingDeleteWidgetHeight : widget.deleteWidgetWidth,
-                                width: isColliding ? widget.isCollidingDeleteWidgetWidth : widget.deleteWidgetWidth,
+                                height: isColliding
+                                    ? widget.isCollidingDeleteWidgetHeight
+                                    : widget.deleteWidgetWidth,
+                                width: isColliding
+                                    ? widget.isCollidingDeleteWidgetWidth
+                                    : widget.deleteWidgetWidth,
                                 child: widget.deleteWidget,
                               ),
                             ),
@@ -250,13 +255,17 @@ class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget> with 
                       top: top == -1 ? null : top,
                       left: left == -1 ? null : left,
                       right: widget.dx == null && left == -1 && top == -1 ? 20 : null,
-                      bottom: widget.bottom ?? (widget.dy == null && left == -1 && top == -1 ? 20 : null),
+                      bottom: widget.bottom ??
+                          (widget.dy == null && left == -1 && top == -1 ? 20 : null),
                       duration: Duration(milliseconds: isDragging ? 100 : 700),
 
                       /// setting animation time and animation type
                       /// the widget will bounce when it will touch the main screen border.
                       /// other wise it has just a simple ease animation.
-                      curve: top >= (height - widget.floatingWidgetHeight) || left >= (width - widget.floatingWidgetWidth) || top <= widget.floatingWidgetHeight || left <= 1
+                      curve: top >= (height - widget.floatingWidgetHeight) ||
+                              left >= (width - widget.floatingWidgetWidth) ||
+                              top <= widget.floatingWidgetHeight ||
+                              left <= 1
                           ? !widget.disableBounceAnimation
                               ? Curves.bounceOut
                               : Curves.ease
@@ -292,8 +301,10 @@ class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget> with 
                         onPanUpdate: (value) {
                           setState(() {
                             if (isTabbed && isDragEnable) {
-                              isColliding = hasDeleteWidget && hasCollision(containerKey1, containerKey2);
-                              top = _getDy(value.globalPosition.dy - (widget.floatingWidgetHeight), height);
+                              isColliding =
+                                  hasDeleteWidget && hasCollision(containerKey1, containerKey2);
+                              top = _getDy(
+                                  value.globalPosition.dy - (widget.floatingWidgetHeight), height);
                               left = _getDx(value.globalPosition.dx, width);
                               if (widget.onDragEvent != null) {
                                 widget.onDragEvent!(left, top);
@@ -308,8 +319,16 @@ class _FloatingDraggableWidgetState extends State<FloatingDraggableWidget> with 
                           setState(() {
                             if (isTabbed && isDragEnable) {
                               isDragging = false;
-                              left = _getDx(left + value.velocity.pixelsPerSecond.dx / (widget.speed ?? 50.0).toDouble(), width);
-                              top = _getDy(top + value.velocity.pixelsPerSecond.dy / (widget.speed ?? 50.0).toDouble(), height);
+                              left = _getDx(
+                                  left +
+                                      value.velocity.pixelsPerSecond.dx /
+                                          (widget.speed ?? 50.0).toDouble(),
+                                  width);
+                              top = _getDy(
+                                  top +
+                                      value.velocity.pixelsPerSecond.dy /
+                                          (widget.speed ?? 50.0).toDouble(),
+                                  height);
                               if (widget.onDragEvent != null) {
                                 widget.onDragEvent!(left, top);
                               }

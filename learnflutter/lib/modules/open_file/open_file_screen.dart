@@ -173,7 +173,8 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659dfa9412b7409efc7a0560";
+                        String link =
+                            "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659dfa9412b7409efc7a0560";
                         // String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659e55ee12b7409efc7b2b6a";
                         // String link = "https://i.stack.imgur.com/MMtcX.png";
 

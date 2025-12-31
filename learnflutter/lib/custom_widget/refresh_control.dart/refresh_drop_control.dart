@@ -85,4 +85,3 @@ class DropWaterPainter extends CustomPainter {
     return oldDelegate.pullExtent != pullExtent;
   }
 }
-

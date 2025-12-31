@@ -15,7 +15,8 @@ class HozizantalCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceDimension.padding, vertical: DeviceDimension.padding / 2),
           leading: const CircleAvatar(
             backgroundColor: Colors.purple,
             child: Text(

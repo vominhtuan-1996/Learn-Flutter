@@ -32,10 +32,15 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
     for (var element in listDirectory) {
       if (element is File) {
         final values = element.path.split('/');
-        listTest.add(ItemDirectoryModel(path: element.path, title: values.last, type: TypeDirectory.File.name));
+        listTest.add(ItemDirectoryModel(
+            path: element.path, title: values.last, type: TypeDirectory.File.name));
       } else if (element is Directory) {
         final values = element.path.split('/');
-        listTest.add(ItemDirectoryModel(absolute: element.absolute, title: values.last, type: TypeDirectory.Directory.name, listDirectory: element.absolute.listSync()));
+        listTest.add(ItemDirectoryModel(
+            absolute: element.absolute,
+            title: values.last,
+            type: TypeDirectory.Directory.name,
+            listDirectory: element.absolute.listSync()));
       }
     }
     return listTest;
@@ -120,13 +125,17 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
                   height: context.mediaQuery.size.height,
                   width: context.mediaQuery.size.width,
                   child: ListView.builder(
-                    itemCount: widget.listFile[widget.index].listDirectory != null ? widget.listFile[widget.index].listDirectory!.length : 0,
+                    itemCount: widget.listFile[widget.index].listDirectory != null
+                        ? widget.listFile[widget.index].listDirectory!.length
+                        : 0,
                     itemBuilder: (context, index1) {
                       return GestureDetector(
                         onTap: () {
                           openFile(widget.listFile[widget.index].listDirectory![index1]);
                         },
-                        child: ItemOpenFileWidget(index: index1, listDirectory: widget.listFile[widget.index].listDirectory!),
+                        child: ItemOpenFileWidget(
+                            index: index1,
+                            listDirectory: widget.listFile[widget.index].listDirectory!),
                       );
                     },
                   ),
@@ -141,7 +150,9 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
               children: [
                 Container(
                   child: SvgPicture.asset(
-                    widget.listFile[widget.index].type == TypeDirectory.File.name ? AssetNameImageSvg.ic_file : AssetNameImageSvg.ic_folder,
+                    widget.listFile[widget.index].type == TypeDirectory.File.name
+                        ? AssetNameImageSvg.ic_file
+                        : AssetNameImageSvg.ic_folder,
                     width: 50,
                     height: 50,
                   ),
@@ -159,7 +170,9 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
                     Visibility(
                       visible: widget.listFile[widget.index].listDirectory != null,
                       child: Text(
-                        widget.listFile[widget.index].listDirectory != null ? "${widget.listFile[widget.index].listDirectory!.length} Mục" : "",
+                        widget.listFile[widget.index].listDirectory != null
+                            ? "${widget.listFile[widget.index].listDirectory!.length} Mục"
+                            : "",
                         overflow: TextOverflow.visible,
                       ),
                     )
@@ -207,7 +220,8 @@ double haversineDistance(LatLng point1, LatLng point2) {
 
   double dLat = _toRadians(lat2 - lat1);
   double dLon = _toRadians(lon2 - lon1);
-  double a = sin(dLat / 2) * sin(dLat / 2) + cos(_toRadians(lat1)) * cos(_toRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2);
+  double a = sin(dLat / 2) * sin(dLat / 2) +
+      cos(_toRadians(lat1)) * cos(_toRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2);
   double c = 2 * atan2(sqrt(a), sqrt(1 - a));
   double distance = R * c;
   return distance;

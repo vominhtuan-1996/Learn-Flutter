@@ -14,7 +14,8 @@ class ZigZagLaserOverlay extends StatefulWidget {
   State<ZigZagLaserOverlay> createState() => _ZigZagLaserOverlayState();
 }
 
-class _ZigZagLaserOverlayState extends State<ZigZagLaserOverlay> with SingleTickerProviderStateMixin {
+class _ZigZagLaserOverlayState extends State<ZigZagLaserOverlay>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _position;
 

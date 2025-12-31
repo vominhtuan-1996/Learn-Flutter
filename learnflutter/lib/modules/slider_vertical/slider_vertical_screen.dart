@@ -9,7 +9,8 @@ class SliderVerticalScreen extends StatefulWidget {
   State<SliderVerticalScreen> createState() => SliderVerticalScreenState();
 }
 
-class SliderVerticalScreenState extends State<SliderVerticalScreen> with SingleTickerProviderStateMixin {
+class SliderVerticalScreenState extends State<SliderVerticalScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _colorAnimation;
   late Animation<double> _sizeAnimation;

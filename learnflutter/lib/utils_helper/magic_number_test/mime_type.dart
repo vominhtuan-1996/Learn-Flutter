@@ -20,7 +20,8 @@ int get defaultMagicNumbersMaxLength => _globalResolver.magicNumbersMaxLength;
 /// a file have been saved using the wrong file-name extension. If less than
 /// [defaultMagicNumbersMaxLength] bytes was provided, some magic-numbers won't
 /// be matched against.
-String? lookupMimeType(String path, {List<int>? headerBytes}) => _globalResolver.lookup(path, headerBytes: headerBytes);
+String? lookupMimeType(String path, {List<int>? headerBytes}) =>
+    _globalResolver.lookup(path, headerBytes: headerBytes);
 
 /// Returns the extension for the given MIME type.
 ///

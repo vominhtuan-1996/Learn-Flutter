@@ -32,7 +32,9 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
           onTap?.call();
         },
         builder: (context, state, isFocused, cursorLocation, cursorAlignment) {
-          cursorAlignment = state == TapState.pressed ? Alignment(-cursorAlignment.x, -cursorAlignment.y) : Alignment.center;
+          cursorAlignment = state == TapState.pressed
+              ? Alignment(-cursorAlignment.x, -cursorAlignment.y)
+              : Alignment.center;
           return AnimatedContainer(
             transformAlignment: Alignment.center,
             transform: Matrix4.rotationX(-cursorAlignment.y * 0.2)
@@ -69,7 +71,8 @@ class AnimatedTapButtonBuilder extends StatelessWidget {
                             color: Colors.white.withOpacity(0.01),
                             boxShadow: [
                               BoxShadow(
-                                color: context.theme.primaryColor.withOpacity(state == TapState.pressed ? 0.5 : 0.0),
+                                color: context.theme.primaryColor
+                                    .withOpacity(state == TapState.pressed ? 0.5 : 0.0),
                                 blurRadius: 200,
                                 spreadRadius: 130,
                               ),

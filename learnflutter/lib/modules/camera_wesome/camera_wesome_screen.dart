@@ -62,13 +62,16 @@ class CameraWeSomeScreen extends StatelessWidget {
                 '${extDir.path}/camerawesome',
               ).create(recursive: true);
               if (sensors.length == 1) {
-                final String filePath = '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+                final String filePath =
+                    '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
                 return SingleCaptureRequest(filePath, sensors.first);
               }
               // Separate pictures taken with front and back camera
               return MultipleCaptureRequest(
                 {
-                  for (final sensor in sensors) sensor: '${testDir.path}/${sensor.position == SensorPosition.front ? 'front_' : "back_"}${DateTime.now().millisecondsSinceEpoch}.jpg',
+                  for (final sensor in sensors)
+                    sensor:
+                        '${testDir.path}/${sensor.position == SensorPosition.front ? 'front_' : "back_"}${DateTime.now().millisecondsSinceEpoch}.jpg',
                 },
               );
             },

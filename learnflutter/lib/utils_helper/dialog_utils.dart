@@ -59,7 +59,8 @@ class DialogUtils {
     return temp;
   }
 
-  static Widget widgetContentDialogWithType({TypeDialog type = TypeDialog.custom, String? content, Widget? contentWidget}) {
+  static Widget widgetContentDialogWithType(
+      {TypeDialog type = TypeDialog.custom, String? content, Widget? contentWidget}) {
     Widget temp = Container();
     switch (type) {
       case TypeDialog.error:
@@ -89,7 +90,8 @@ class DialogUtils {
         return AlertDialog(
           icon: widgetIconsDialogWithType(type),
           title: Text(title),
-          content: widgetContentDialogWithType(type: type, content: content, contentWidget: contentWidget),
+          content: widgetContentDialogWithType(
+              type: type, content: content, contentWidget: contentWidget),
           actions: actions ??
               <Widget>[
                 TextButton(
@@ -444,7 +446,9 @@ class DialogUtils {
             return Container(
               decoration: BoxDecoration(
                 color: backgroundColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(48 * initialSize), topRight: Radius.circular(48 * initialSize)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(48 * initialSize),
+                    topRight: Radius.circular(48 * initialSize)),
               ),
               child: SingleChildScrollView(
                 physics: NoBounceScrollPhysics(),
@@ -452,7 +456,8 @@ class DialogUtils {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
+                      padding: EdgeInsets.only(
+                          top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
                       child: Container(
                         height: 6,
                         width: context.mediaQuery.size.width / 7,
@@ -586,8 +591,10 @@ class DialogUtils {
                                     ),
                                     child: FadeTransition(
                                       key: ValueKey<int>(1),
-                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data).animate(animation),
-                                      child: ImageHelper.loadFromAsset('assets/icons/ic_popup_success.svg'),
+                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data)
+                                          .animate(animation),
+                                      child: ImageHelper.loadFromAsset(
+                                          'assets/icons/ic_popup_success.svg'),
                                     ),
                                   ),
                           ),
@@ -684,7 +691,8 @@ class DialogUtils {
                                 ),
                                 child: LinearProgressIndicator(
                                   minHeight: 8,
-                                  value: math((snapshot.data! / (uploadList.length - 1)).toString()),
+                                  value:
+                                      math((snapshot.data! / (uploadList.length - 1)).toString()),
                                   semanticsLabel: 'Linear',
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -774,8 +782,10 @@ class DialogUtils {
                                     ),
                                     child: FadeTransition(
                                       key: ValueKey<int>(1),
-                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data).animate(animation),
-                                      child: ImageHelper.loadFromAsset('assets/icons/ic_popup_success.svg'),
+                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data)
+                                          .animate(animation),
+                                      child: ImageHelper.loadFromAsset(
+                                          'assets/icons/ic_popup_success.svg'),
                                     ),
                                   ),
                           ),
@@ -841,7 +851,9 @@ class DialogUtils {
               child: Container(
                 decoration: BoxDecoration(
                   color: backgroundColor ?? Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(36 * initialSize), topRight: Radius.circular(36 * initialSize)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(36 * initialSize),
+                      topRight: Radius.circular(36 * initialSize)),
                   border: Border.symmetric(
                     horizontal: BorderSide(
                       color: Colors.grey,
@@ -862,7 +874,9 @@ class DialogUtils {
                             // ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
+                            padding: EdgeInsets.only(
+                                top: DeviceDimension.padding / 4,
+                                bottom: DeviceDimension.padding / 2),
                             child: Container(
                               height: 6,
                               width: context.mediaQuery.size.width / 7,
@@ -873,7 +887,10 @@ class DialogUtils {
                             ),
                           ),
                         ),
-                        VMTBottomSheet(heightBottomSheet: (state.height ?? heightBottomSheet) - heightDropAction, child: child),
+                        VMTBottomSheet(
+                            heightBottomSheet:
+                                (state.height ?? heightBottomSheet) - heightDropAction,
+                            child: child),
                       ],
                     );
                   },
@@ -906,7 +923,8 @@ class DialogUtils {
             scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
             child: AlertDialog(
                 backgroundColor: AppColors.greyBlue,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(DeviceDimension.padding / 2))),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(DeviceDimension.padding / 2))),
                 insetPadding: EdgeInsets.zero,
                 contentPadding: EdgeInsets.zero,
                 clipBehavior: Clip.antiAliasWithSaveLayer,

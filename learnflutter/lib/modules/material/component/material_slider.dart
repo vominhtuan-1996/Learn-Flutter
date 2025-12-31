@@ -60,7 +60,8 @@ class _MaterialSliderState extends State<MaterialSlider> with ComponentMaterialD
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
+              padding: EdgeInsets.symmetric(
+                  vertical: DeviceDimension.padding, horizontal: DeviceDimension.padding),
               child: ProgressBar(
                 barColor: const Color(0xFF6750A4),
                 thumbColor: const Color(0xFF6750A4),

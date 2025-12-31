@@ -66,11 +66,18 @@ class ChildMenusModel {
   });
 
   factory ChildMenusModel.fromJson(Map<String, dynamic> json) {
-    return ChildMenusModel(iconChildMenu: json['iconChildMenu'], titleChildMenu: json['titleChildMenu'], routeName: json['routeName']);
+    return ChildMenusModel(
+        iconChildMenu: json['iconChildMenu'],
+        titleChildMenu: json['titleChildMenu'],
+        routeName: json['routeName']);
   }
 
   Map<String, dynamic> toJson() {
-    return {'iconChildMenu': iconChildMenu, 'titleChildMenu': titleChildMenu, 'routeName': routeName};
+    return {
+      'iconChildMenu': iconChildMenu,
+      'titleChildMenu': titleChildMenu,
+      'routeName': routeName
+    };
   }
 }
 

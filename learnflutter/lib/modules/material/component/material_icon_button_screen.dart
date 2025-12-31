@@ -19,7 +19,8 @@ class MaterialIconButtonScreen extends StatefulWidget {
   State<MaterialIconButtonScreen> createState() => _MaterialIconButtonScreenState();
 }
 
-class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen> with ComponentMaterialDetail {
+class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();

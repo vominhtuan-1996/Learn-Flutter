@@ -9,7 +9,8 @@ class QRScanLaserOverlay extends StatefulWidget {
   State<QRScanLaserOverlay> createState() => QRScanLaserOverlayState();
 }
 
-class QRScanLaserOverlayState extends State<QRScanLaserOverlay> with SingleTickerProviderStateMixin {
+class QRScanLaserOverlayState extends State<QRScanLaserOverlay>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 

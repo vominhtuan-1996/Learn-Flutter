@@ -1,34 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:learnflutter/core/global/var_global.dart';
+import 'package:learnflutter/core/theme_token/theme_controller.dart';
 
 class SettingThemeState {
-  final ThemeData? themeData;
-  final bool? light;
-  final double? scaleText;
-  Color? themeBackgound = themeBackgoundGlobal;
-  SettingThemeState({this.themeData, this.light = true, this.scaleText = 1.0, this.themeBackgound});
+  final ThemeTokens tokens;
 
-  factory SettingThemeState.initial({
-    ThemeData? themeData,
-  }) {
-    return SettingThemeState(
-      themeData: themeData,
-    );
-  }
+  const SettingThemeState(this.tokens);
 
   SettingThemeState copyWith({
-    ThemeData? themeData,
-    bool? light,
-    double? scaleText,
-    Color? themeBackgound,
+    ThemeTokens? tokens,
   }) {
     return SettingThemeState(
-      themeData: themeData ?? this.themeData,
-      light: light ?? this.light,
-      scaleText: scaleText ?? this.scaleText,
-      themeBackgound: themeBackgound ?? this.themeBackgound,
+      tokens ?? this.tokens,
     );
   }
-
-  List<Object?> get props => [themeData, light, scaleText, themeBackgound];
 }

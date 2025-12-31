@@ -88,7 +88,12 @@ class LogScreenState extends State<LogScreen> {
 
 // Optional: escape basic HTML characters
   String _escapeHtml(String input) {
-    return input.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+    return input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
   }
 
   String convertCurlToGoogleChatMarkdown(String rawCurl) {
@@ -96,7 +101,8 @@ class LogScreenState extends State<LogScreen> {
   }
 
   Future<void> sendPayloadToApi(String payload) async {
-    final Uri url = Uri.parse("https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ");
+    final Uri url = Uri.parse(
+        "https://chat.googleapis.com/v1/spaces/AAQAVUl-jME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=wJoSK0-Wf6gL3lKINQlD0QNvZPPYW3aYtVrVAulBVrQ");
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
     };

@@ -5,7 +5,8 @@ class SnappingScrollPhysics extends ClampingScrollPhysics {
 
   /// Cuộn và snap lại theo 1 đơn vị chiều cao cố định (ví dụ item height)
 
-  const SnappingScrollPhysics({required this.itemDimension, ScrollPhysics? parent}) : super(parent: parent);
+  const SnappingScrollPhysics({required this.itemDimension, ScrollPhysics? parent})
+      : super(parent: parent);
   @override
   SnappingScrollPhysics applyTo(ScrollPhysics? ancestor) {
     return SnappingScrollPhysics(itemDimension: itemDimension, parent: buildParent(ancestor));

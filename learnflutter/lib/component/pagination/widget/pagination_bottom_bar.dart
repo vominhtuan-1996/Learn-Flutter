@@ -52,7 +52,9 @@ class _BottomBarPaginationState extends State<BottomBarPagination> {
                 child: MbButton(
                   delayRate: 400,
                   isDelay: true,
-                  minWidth: isLastStepMaintainedTab ? DeviceDimension.screenWidth - (paddingHorizontal * 2) : buttonMinHorizontalSize,
+                  minWidth: isLastStepMaintainedTab
+                      ? DeviceDimension.screenWidth - (paddingHorizontal * 2)
+                      : buttonMinHorizontalSize,
                   color: Colors.transparent,
                   borderColor: Colors.transparent,
                   textColor: AppColors.backButtonColor,
@@ -69,9 +71,13 @@ class _BottomBarPaginationState extends State<BottomBarPagination> {
                 child: MbButton(
                   delayRate: 400,
                   isDelay: true,
-                  minWidth: widget.isFirstStep ? DeviceDimension.screenWidth - (paddingHorizontal * 2) : buttonMinHorizontalSize,
+                  minWidth: widget.isFirstStep
+                      ? DeviceDimension.screenWidth - (paddingHorizontal * 2)
+                      : buttonMinHorizontalSize,
                   //check logic has complete step
-                  label: (widget.isLastStep) ? "Hoàn tất >" : "Tiếp tục ${widget.isFirstStep ? "" : " >"}",
+                  label: (widget.isLastStep)
+                      ? "Hoàn tất >"
+                      : "Tiếp tục ${widget.isFirstStep ? "" : " >"}",
                   onPress: () async {
                     if (widget.isLastStep) {
                       await widget.onCompleteStep!(state.currentStep);

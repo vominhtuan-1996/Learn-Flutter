@@ -19,7 +19,8 @@ class MaterialSideSheetScreen extends StatefulWidget {
   State<MaterialSideSheetScreen> createState() => _MaterialSideSheetScreenScreenState();
 }
 
-class _MaterialSideSheetScreenScreenState extends State<MaterialSideSheetScreen> with ComponentMaterialDetail {
+class _MaterialSideSheetScreenScreenState extends State<MaterialSideSheetScreen>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();

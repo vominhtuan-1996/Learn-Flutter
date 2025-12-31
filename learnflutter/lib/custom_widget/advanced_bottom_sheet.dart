@@ -9,7 +9,8 @@ class AdvancedBottomSheet extends StatefulWidget {
   State<AdvancedBottomSheet> createState() => _AdvancedBottomSheetState();
 }
 
-class _AdvancedBottomSheetState extends State<AdvancedBottomSheet> with SingleTickerProviderStateMixin {
+class _AdvancedBottomSheetState extends State<AdvancedBottomSheet>
+    with SingleTickerProviderStateMixin {
   late DraggableScrollableController _sheetController;
   late AnimationController _blurController;
 

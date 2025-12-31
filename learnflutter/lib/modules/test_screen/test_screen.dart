@@ -11,6 +11,8 @@ import 'package:learnflutter/component/search_bar/page/search_bar_builder.dart';
 import 'package:learnflutter/component/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/component/tap_builder/tap_delayed_pressed_button_builder.dart';
 import 'package:learnflutter/core/global/func_global.dart';
+import 'package:learnflutter/core/global/var_global.dart';
+import 'package:learnflutter/core/theme_token/extension_theme.dart';
 import 'package:learnflutter/l10n/helper.dart';
 import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/utils_helper/extension/extension_context.dart';
@@ -19,6 +21,7 @@ import 'package:learnflutter/component/attribute_string/attribute_string_widget.
 import 'package:learnflutter/modules/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/utils_helper/dialog_utils.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
+import 'package:mobimap_module/bridge/mobimap_module.dart';
 // import 'package:mobimap_module/bridge/mobimap_module.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 
@@ -37,7 +40,8 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   SearchController searchControler = SearchController();
   _launchURL() async {
-    final Uri url = Uri.parse('https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
+    final Uri url = Uri.parse(
+        'https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
@@ -51,9 +55,15 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   List uploadList = [
-    RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(
+        id: 'id',
+        title:
+            'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '2'),
-    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(
+        id: 'id',
+        title:
+            'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '4'),
     RadioItemModel(id: 'id', title: '5'),
     RadioItemModel(
@@ -62,9 +72,15 @@ class _TestScreenState extends State<TestScreen> {
             'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '7'),
     RadioItemModel(id: 'id', title: '8'),
-    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(
+        id: 'id',
+        title:
+            'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '10'),
-    RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(
+        id: 'id',
+        title:
+            'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
   ];
 
   void splitCodeString() {
@@ -297,16 +313,33 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  // MobiMapModule.open(
-                  //   context,
-                  //   token: "123",
-                  //   empCode: "mobix",
-                  //   initialRoute: '/m_progress_image_checklist',
-                  //   username: "x",
-                  //   env: "STAGING",
-                  // );
+                  MobiMapModule.open(
+                    context,
+                    token:
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NGI4ZmNkNWIxYjA2Mjc3NDIyMTQ2NCIsInVzZXJuYW1lIjoiMDAxODEzOTAiLCJBY2NvdW50SW5zaWRlIjoiSVNDMDEuVFVBTlZNMzciLCJMb2NhdGlvbklEIjoiOCIsIkRlcHRJRCI6IjE0NzYiLCJTdXBwb3J0ZXIiOiJJU0MgVEVTVCIsIkJsb2NrSUQiOiI2MDU5OTYiLCJDdXJyZW50VmVyc2lvbiI6IiIsIlJlbGVhc2VWZXJpb24iOiIxLjQwLjAuMzAiLCJMaW5rRG93bmxvYWQiOiJodHRwczovL21vYmluZXR3cy1zdGFnLmZwdC52bi9zZXJ2aWNlL21vYmluZXQvZ2F0ZXdheS90cmFuc2l0aW9uLWFwcC9hcGkvZG93bmxvYWQiLCJBY2Nvb3VudFBheSI6IiIsIlN0YWZmSUQiOiIwIiwiRW1haWwiOiJUdWFuVk0zN0BmcHQuY29tIiwiSXNBZG1pbiI6IkZhbHNlIiwiUGFydG5lcklkIjoiMzU3IiwiVXJsSW1hZ2UiOiIiLCJEZXZpY2VOYW1lIjoiIiwiVGl0bGUiOiItMSIsIlBvc2l0aW9uIjoiLTEiLCJyb2xlIjpbIjIiLCIzIl0sIlVzZXJDbGFpbSI6WyIyIiwiMyJdLCJuYmYiOjE3NjY1NjA0ODQsImV4cCI6MTc2OTE1MjQ4NCwiaWF0IjoxNzY2NTYwNDg0LCJpc3MiOiJtb2JpbmV0LWlkZW50aXR5LXNlcnZpY2UiLCJhdWQiOiJtb2JpbmV0LWNsaWVudHMifQ.bomqSxIAKHeRFCKNegV4klE8vnKvjSr6jyMA6vsLV1w",
+                    empCode: "00181390",
+                    initialRoute: '/mnt_xla_checklist',
+                    username: "ISC01.TUANVM37",
+                    env: "STAGING",
+                    isDarkMode: false,
+                    fontName: getThemeBloc(context)
+                        .state
+                        .tokens
+                        .texts
+                        .titleLarge
+                        .fontFamily
+                        .split('_')
+                        .first,
+                    primaryColor: getThemeBloc(context).state.tokens.colors.primary,
+                  );
                 },
                 child: Text('Mobimap Module'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.colorPicker);
+                },
+                child: Text('colorPicker Screen'),
               ),
               InputHistoryTextField(
                 historyKey: 'search',

@@ -4,7 +4,8 @@ import 'package:learnflutter/modules/material/component/material_lists/widgets/s
 class SliverAnimationListWrapperExample extends StatefulWidget {
   const SliverAnimationListWrapperExample({super.key});
   @override
-  State<SliverAnimationListWrapperExample> createState() => _SliverAnimationListWrapperExampleState();
+  State<SliverAnimationListWrapperExample> createState() =>
+      _SliverAnimationListWrapperExampleState();
 }
 
 class _SliverAnimationListWrapperExampleState extends State<SliverAnimationListWrapperExample> {

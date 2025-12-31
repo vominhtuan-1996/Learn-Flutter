@@ -55,8 +55,7 @@ class DateTimeUtils {
       bool isUTC = true]) {
     try {
       DateFormat format = DateFormat(formatTemplate);
-      DateTime parseDate =
-          DateFormat(inputFormat).parse(date!, isUTC).toLocal();
+      DateTime parseDate = DateFormat(inputFormat).parse(date!, isUTC).toLocal();
       return format.format(parseDate);
     } catch (e) {
       return "";
@@ -66,8 +65,7 @@ class DateTimeUtils {
   static String timestampToDateString(int? timestamp,
       {String formatTemplate = DateTimeType.DATE_TIME_FORMAT_GMT}) {
     DateFormat format = DateFormat(formatTemplate);
-    return format
-        .format(DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000));
+    return format.format(DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000));
   }
 
   static DateTime timestampToDate(int? timestamp) {

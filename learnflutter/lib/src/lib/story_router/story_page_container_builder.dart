@@ -20,7 +20,8 @@ class StoryPageContainerBuilder extends StatefulWidget {
   State<StoryPageContainerBuilder> createState() => _StoryPageContainerBuilderState();
 }
 
-class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder> with SetStateAfterFrame, FirstBuildMixin {
+class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder>
+    with SetStateAfterFrame, FirstBuildMixin {
   late PageController _pageController;
   late IStoryPageTransform _storyPageTransform;
   static const double kMaxPageOverscroll = .2;
@@ -189,7 +190,9 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder> w
 
           return ClipRRect(
             clipper: _PageClipper(
-              borderRadius: widget.settings.buttonData.borderDecoration.borderRadius?.resolve(null).bottomLeft,
+              borderRadius: widget.settings.buttonData.borderDecoration.borderRadius
+                  ?.resolve(null)
+                  .bottomLeft,
               startX: _activeButtonData.buttonCenterPosition?.dx ?? widget.settings.tapPosition.dx,
               startY: _activeButtonData.buttonCenterPosition?.dy ?? widget.settings.tapPosition.dy,
               animationValue: animationValue,
@@ -198,7 +201,8 @@ class _StoryPageContainerBuilderState extends State<StoryPageContainerBuilder> w
               backgroundColor: Colors.transparent,
               body: Container(
                 decoration: widget.settings.buttonData.containerBackgroundDecoration.copyWith(
-                  color: widget.settings.buttonData.containerBackgroundDecoration.color?.withOpacity(
+                  color:
+                      widget.settings.buttonData.containerBackgroundDecoration.color?.withOpacity(
                     bgOpacity,
                   ),
                 ),

@@ -50,7 +50,8 @@ class _SliverOnboardingViewState extends State<SliverOnboardingView> {
               itemCount: widget.pages.length,
               itemBuilder: (context, index) {
                 final page = widget.pages[index];
-                final isDark = ThemeData.estimateBrightnessForColor(page.backgroundColor) == Brightness.dark;
+                final isDark =
+                    ThemeData.estimateBrightnessForColor(page.backgroundColor) == Brightness.dark;
                 final textColor = isDark ? Colors.white : Colors.black87;
 
                 return Container(

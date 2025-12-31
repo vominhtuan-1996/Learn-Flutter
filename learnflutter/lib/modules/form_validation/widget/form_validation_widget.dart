@@ -7,7 +7,14 @@ import 'package:learnflutter/core/app/app_colors.dart';
 
 class FormValidationWidget extends StatelessWidget {
   const FormValidationWidget(
-      {super.key, required this.listenable, required this.enable, required this.content, required this.title, required this.required, this.titleStyle, required this.keyListenable});
+      {super.key,
+      required this.listenable,
+      required this.enable,
+      required this.content,
+      required this.title,
+      required this.required,
+      this.titleStyle,
+      required this.keyListenable});
   final bool enable;
   final Widget content;
   final String title;
@@ -33,7 +40,8 @@ class FormValidationWidget extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: title,
-                          style: titleStyle ?? AppTextStyles.themeBodyMedium.copyWith(color: AppColors.second_03),
+                          style: titleStyle ??
+                              AppTextStyles.themeBodyMedium.copyWith(color: AppColors.second_03),
                         ),
                         TextSpan(
                           text: required ? ' *' : "",

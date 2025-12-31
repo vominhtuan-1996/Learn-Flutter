@@ -21,8 +21,7 @@ class WaterDropRefresh extends StatefulWidget {
   State<WaterDropRefresh> createState() => _WaterDropRefreshState();
 }
 
-class _WaterDropRefreshState extends State<WaterDropRefresh>
-    with SingleTickerProviderStateMixin {
+class _WaterDropRefreshState extends State<WaterDropRefresh> with SingleTickerProviderStateMixin {
   double _pullDistance = 0.0;
   bool _refreshing = false;
 

@@ -16,7 +16,59 @@ class SFSparkBarChartPage extends StatefulWidget {
 class _SFSparkBarChartPageState extends State<SFSparkBarChartPage> {
   late TooltipBehavior _tooltipBehavior;
   List<double> getDefaultData() {
-    return <double>[100, 50, 1, 0, 1, 3, 7, 6, 4, 10, 13, 6, 7, 5, 11, 5, 3, 1, 5, 1, 0, 1, 3, 7, 6, 4, 10, 13, 6, 7, 5, 11, 5, 3, 1, 5, 1, 0, 1, 3, 7, 6, 4, 10, 13, 6, 7, 5, 11, 5, 3];
+    return <double>[
+      100,
+      50,
+      1,
+      0,
+      1,
+      3,
+      7,
+      6,
+      4,
+      10,
+      13,
+      6,
+      7,
+      5,
+      11,
+      5,
+      3,
+      1,
+      5,
+      1,
+      0,
+      1,
+      3,
+      7,
+      6,
+      4,
+      10,
+      13,
+      6,
+      7,
+      5,
+      11,
+      5,
+      3,
+      1,
+      5,
+      1,
+      0,
+      1,
+      3,
+      7,
+      6,
+      4,
+      10,
+      13,
+      6,
+      7,
+      5,
+      11,
+      5,
+      3
+    ];
   }
 
   @override
@@ -27,7 +79,8 @@ class _SFSparkBarChartPageState extends State<SFSparkBarChartPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text((data as SalesData).date.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
+            Text((data as SalesData).date.toString())
+                .paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).conntry.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).y.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text(data.y1.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),

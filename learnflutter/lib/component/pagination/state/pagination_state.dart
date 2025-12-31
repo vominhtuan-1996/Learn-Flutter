@@ -6,13 +6,19 @@ class PaginationState extends BaseState {
   int currentStep;
   final bool isLastStep;
 
-  PaginationState({required this.isLastStep, required this.paginationModel, required this.currentStep});
+  PaginationState(
+      {required this.isLastStep, required this.paginationModel, required this.currentStep});
 
   factory PaginationState.initial(int? numbStep, bool isMaintainedTab) {
     return PaginationState(
       isLastStep: false,
       currentStep: 1,
-      paginationModel: numbStep == null ? const [] : List.generate(numbStep, (index) => isMaintainedTab ? (PaginationModel()..isUploadedStep = true) : PaginationModel()),
+      paginationModel: numbStep == null
+          ? const []
+          : List.generate(
+              numbStep,
+              (index) =>
+                  isMaintainedTab ? (PaginationModel()..isUploadedStep = true) : PaginationModel()),
     );
   }
 

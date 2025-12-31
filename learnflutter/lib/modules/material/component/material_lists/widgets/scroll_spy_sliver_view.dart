@@ -73,7 +73,10 @@ class _ScrollSpySliverViewState extends State<ScrollSpySliverView> {
                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   child: Text(
                     widget.sections[i].title,
-                    style: isActive ? widget.activeTextStyle ?? const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue) : widget.sidebarTextStyle ?? const TextStyle(color: Colors.black87),
+                    style: isActive
+                        ? widget.activeTextStyle ??
+                            const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)
+                        : widget.sidebarTextStyle ?? const TextStyle(color: Colors.black87),
                   ),
                 ),
               );

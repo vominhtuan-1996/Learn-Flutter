@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
 
-typedef ItemBuilder<T> = Widget Function(BuildContext context, int index, Animation<double> animation);
+typedef ItemBuilder<T> = Widget Function(
+    BuildContext context, int index, Animation<double> animation);
 
 class ListViewAnimated<T> extends StatefulWidget {
   const ListViewAnimated({super.key, required this.fullData, this.itemBuilder});

@@ -61,7 +61,8 @@ class _AnimatedBannerOverlay extends StatefulWidget {
   State<_AnimatedBannerOverlay> createState() => _AnimatedBannerOverlayState();
 }
 
-class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay> with SingleTickerProviderStateMixin {
+class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _slideAnimation;
 
@@ -121,7 +122,8 @@ class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay> with Sin
             height: DeviceDimension.screenHeight * widget.ratioScreenHeight,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(36), bottomRight: Radius.circular(36)),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(36), bottomRight: Radius.circular(36)),
               color: widget.backgroundColor,
               boxShadow: [
                 BoxShadow(

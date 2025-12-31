@@ -12,7 +12,8 @@ class MaterialNavigationRailScreen extends StatefulWidget {
   State<MaterialNavigationRailScreen> createState() => _MaterialNavigationRailScreenState();
 }
 
-class _MaterialNavigationRailScreenState extends State<MaterialNavigationRailScreen> with ComponentMaterialDetail {
+class _MaterialNavigationRailScreenState extends State<MaterialNavigationRailScreen>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();

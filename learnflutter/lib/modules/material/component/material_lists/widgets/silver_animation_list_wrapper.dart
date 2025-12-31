@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class SliverAnimatedListWrapper<T> extends StatefulWidget {
   final List<T> initialItems;
-  final Widget Function(BuildContext context, T item, int index, Animation<double> animation) itemBuilder;
+  final Widget Function(BuildContext context, T item, int index, Animation<double> animation)
+      itemBuilder;
   final Future<List<T>> Function()? onLoadMore;
   final Future<void> Function()? onRefresh;
   final bool enableDelete;
@@ -32,7 +33,9 @@ class _SliverAnimatedListWrapperState<T> extends State<SliverAnimatedListWrapper
     _items.addAll(widget.initialItems);
 
     _scrollController.addListener(() {
-      if (widget.onLoadMore != null && !_isLoadingMore && _scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+      if (widget.onLoadMore != null &&
+          !_isLoadingMore &&
+          _scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
         _loadMoreItems();
       }
     });

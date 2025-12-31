@@ -77,7 +77,9 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                             onTap: () {
                               setState(() {
                                 indexPage = index;
-                                _pageController.animateToPage(indexPage, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+                                _pageController.animateToPage(indexPage,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.decelerate);
                               });
                             },
                             child: Container(

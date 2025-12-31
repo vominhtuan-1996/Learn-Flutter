@@ -16,7 +16,8 @@ class RotatingBorderOverlay extends StatefulWidget {
   State<RotatingBorderOverlay> createState() => _RotatingBorderOverlayState();
 }
 
-class _RotatingBorderOverlayState extends State<RotatingBorderOverlay> with SingleTickerProviderStateMixin {
+class _RotatingBorderOverlayState extends State<RotatingBorderOverlay>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override

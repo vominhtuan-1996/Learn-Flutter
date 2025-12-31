@@ -8,7 +8,7 @@ import 'package:learnflutter/custom_widget/smart_refresh/lib/src/smart_refresher
 
 class SmartLoadmoreScreen extends StatelessWidget {
   SmartLoadmoreScreen({super.key});
-  RefreshController _refreshController = RefreshController(initialRefresh: true);
+  final RefreshController _refreshController = RefreshController(initialRefresh: true);
 
   Future<List<String>> fetchItems(int offset, int limit) async {
     await Future.delayed(const Duration(milliseconds: 500)); // simulate network
@@ -32,7 +32,7 @@ class SmartLoadmoreScreen extends StatelessWidget {
         onLoading: () async {
           //monitor fetch data from network
           await Future.delayed(Duration(milliseconds: 1000));
-
+          fetchItems(0, 10);
           _refreshController.loadComplete();
         },
       ),

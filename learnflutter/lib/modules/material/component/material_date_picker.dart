@@ -17,8 +17,7 @@ class MaterialDatePicker extends StatefulWidget {
 }
 
 /// RestorationProperty objects can be used because of RestorationMixin.
-class _MaterialDatePickerState extends State<MaterialDatePicker>
-    with RestorationMixin {
+class _MaterialDatePickerState extends State<MaterialDatePicker> with RestorationMixin {
   // In this example, the restoration ID for the mixin is passed in through
   // the [StatefulWidget]'s constructor.
   @override
@@ -58,8 +57,7 @@ class _MaterialDatePickerState extends State<MaterialDatePicker>
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(_selectedDate, 'selected_date');
-    registerForRestoration(
-        _restorableDatePickerRouteFuture, 'date_picker_route_future');
+    registerForRestoration(_restorableDatePickerRouteFuture, 'date_picker_route_future');
   }
 
   void _selectDate(DateTime? newSelectedDate) {
@@ -111,8 +109,7 @@ class _MaterialDatePickerState extends State<MaterialDatePicker>
                         showDayOfWeek: false,
 
                         maximumDate: DateTime.now(),
-                        minimumDate: DateTime.now()
-                            .subtract(const Duration(days: 365 * 7)),
+                        minimumDate: DateTime.now().subtract(const Duration(days: 365 * 7)),
 
                         // This is called when the user changes the date.
                         onDateTimeChanged: (DateTime newDate) {

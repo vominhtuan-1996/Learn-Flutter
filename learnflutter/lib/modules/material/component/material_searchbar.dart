@@ -52,7 +52,10 @@ class _MaterialSearchbarState extends State<MaterialSearchbar> with ComponentMat
       contentWidget: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: DeviceDimension.padding / 4, right: DeviceDimension.padding / 2, left: DeviceDimension.padding / 2),
+            padding: EdgeInsets.only(
+                top: DeviceDimension.padding / 4,
+                right: DeviceDimension.padding / 2,
+                left: DeviceDimension.padding / 2),
             child: SearchBarBuilder(
               searchController: searchControler,
               childBuilder: (context, data) {

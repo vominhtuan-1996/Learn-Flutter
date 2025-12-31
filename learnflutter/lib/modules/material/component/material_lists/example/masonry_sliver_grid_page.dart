@@ -17,7 +17,8 @@ class MasonrySliverGridPage extends StatelessWidget {
           const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.all(16),
-              child: Text('Gợi ý theo sở thích', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              child: Text('Gợi ý theo sở thích',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
           ),
           SliverMasonryGrid.count(

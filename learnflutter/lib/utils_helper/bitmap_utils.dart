@@ -13,7 +13,8 @@ class BitmapUtils {
 
   Future<ByteData?> generateSquareWithText(String text) async {
     final recorder = PictureRecorder();
-    final canvas = Canvas(recorder, Rect.fromPoints(const Offset(0.0, 0.0), const Offset(300.0, 100.0)));
+    final canvas =
+        Canvas(recorder, Rect.fromPoints(const Offset(0.0, 0.0), const Offset(300.0, 100.0)));
 
     final stroke = Paint()
       ..color = Colors.grey
@@ -132,7 +133,9 @@ class MyCustomPainter extends CustomPainter {
 
 // To use your custom painter as a Paint object, simply create an instance of your custom painter and pass it to the Paint constructor.
 
-final myPaint = Paint()..shader = const LinearGradient(colors: [Colors.red, Colors.yellow]).createShader(const Rect.fromLTRB(0, 0, 100, 100));
+final myPaint = Paint()
+  ..shader = const LinearGradient(colors: [Colors.red, Colors.yellow])
+      .createShader(const Rect.fromLTRB(0, 0, 100, 100));
 
 final myCustomPainter = MyCustomPainter();
 

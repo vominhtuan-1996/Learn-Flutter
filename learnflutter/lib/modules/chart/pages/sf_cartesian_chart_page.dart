@@ -54,24 +54,45 @@ class _SFCartesianChartPageState extends State<SFCartesianChartPage> {
           width: lineWidth ?? 2,
           xValueMapper: (SalesData sales, _) => sales.y,
           yValueMapper: (SalesData sales, _) => sales.y2,
-          markerSettings: MarkerSettings(isVisible: isMarkerVisible, height: markerWidth ?? 6, width: markerHeight ?? 6, shape: DataMarkerType.circle, borderWidth: 3, borderColor: Colors.black),
-          dataLabelSettings: const DataLabelSettings(isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 6,
+              width: markerHeight ?? 6,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.black),
+          dataLabelSettings: const DataLabelSettings(
+              isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
       LineSeries<SalesData, num>(
           enableTooltip: true,
           dataSource: chartData,
           xValueMapper: (SalesData sales, _) => sales.y,
           yValueMapper: (SalesData sales, _) => sales.y3,
           width: lineWidth ?? 2,
-          markerSettings: MarkerSettings(isVisible: isMarkerVisible, height: markerWidth ?? 6, width: markerHeight ?? 6, shape: DataMarkerType.circle, borderWidth: 3, borderColor: Colors.red),
-          dataLabelSettings: const DataLabelSettings(isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 6,
+              width: markerHeight ?? 6,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.red),
+          dataLabelSettings: const DataLabelSettings(
+              isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
       LineSeries<SalesData, num>(
           enableTooltip: isTooltipVisible,
           dataSource: chartData,
           width: lineWidth ?? 2,
           xValueMapper: (SalesData sales, _) => sales.y,
           yValueMapper: (SalesData sales, _) => sales.y4,
-          markerSettings: MarkerSettings(isVisible: isMarkerVisible, height: markerWidth ?? 6, width: markerHeight ?? 6, shape: DataMarkerType.circle, borderWidth: 3, borderColor: Colors.black),
-          dataLabelSettings: const DataLabelSettings(isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
+          markerSettings: MarkerSettings(
+              isVisible: isMarkerVisible,
+              height: markerWidth ?? 6,
+              width: markerHeight ?? 6,
+              shape: DataMarkerType.circle,
+              borderWidth: 3,
+              borderColor: Colors.black),
+          dataLabelSettings: const DataLabelSettings(
+              isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
     ];
   }
 
@@ -88,7 +109,8 @@ class _SFCartesianChartPageState extends State<SFCartesianChartPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text((data as SalesData).date.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
+            Text((data as SalesData).date.toString())
+                .paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).conntry.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).y.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text(data.y1.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
@@ -174,8 +196,6 @@ class _SFCartesianChartPageState extends State<SFCartesianChartPage> {
   }
 }
 
-
-
 // @override
 //     Widget build(BuildContext context) {
 //         final List<SalesData> chartData = [
@@ -203,7 +223,7 @@ class _SFCartesianChartPageState extends State<SFCartesianChartPage> {
 //             )
 //         );
 //     }
-//  
+//
 //     class SalesData {
 //         SalesData(this.year, this.sales);
 //         final DateTime year;

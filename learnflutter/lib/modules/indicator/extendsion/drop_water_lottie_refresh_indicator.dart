@@ -20,7 +20,8 @@ class DropWaterLottieRefreshIndicator extends StatefulWidget {
   State<DropWaterLottieRefreshIndicator> createState() => _DropWaterLottieRefreshIndicatorState();
 }
 
-class _DropWaterLottieRefreshIndicatorState extends State<DropWaterLottieRefreshIndicator> with TickerProviderStateMixin {
+class _DropWaterLottieRefreshIndicatorState extends State<DropWaterLottieRefreshIndicator>
+    with TickerProviderStateMixin {
   late AnimationController _lottieController;
   bool _playSplash = false;
 

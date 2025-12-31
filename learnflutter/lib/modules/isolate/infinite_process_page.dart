@@ -129,8 +129,7 @@ class InfiniteProcessIsolateController extends ChangeNotifier {
 
   Future<void> createIsolate() async {
     receivePort = ReceivePort();
-    newIsolate =
-        await Isolate.spawn(_secondIsolateEntryPoint, receivePort.sendPort);
+    newIsolate = await Isolate.spawn(_secondIsolateEntryPoint, receivePort.sendPort);
   }
 
   void listen() {

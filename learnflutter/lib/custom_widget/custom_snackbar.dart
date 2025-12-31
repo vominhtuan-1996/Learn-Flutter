@@ -32,22 +32,36 @@ class CustomSnackBar {
   final SnackBarBehavior behavior;
 
   /// [behavior] just work with snack bar
-  const CustomSnackBar({required this.contentType, this.behavior = SnackBarBehavior.fixed, this.position = SnackBarPosition.bottom});
+  const CustomSnackBar(
+      {required this.contentType,
+      this.behavior = SnackBarBehavior.fixed,
+      this.position = SnackBarPosition.bottom});
 
   static const CustomSnackBar bottomFixedHelp = CustomSnackBar(contentType: SnackBarType.help);
-  static const CustomSnackBar bottomFixedFailure = CustomSnackBar(contentType: SnackBarType.failure);
-  static const CustomSnackBar bottomFixedSuccess = CustomSnackBar(contentType: SnackBarType.success);
-  static const CustomSnackBar bottomFixedWarning = CustomSnackBar(contentType: SnackBarType.warning);
+  static const CustomSnackBar bottomFixedFailure =
+      CustomSnackBar(contentType: SnackBarType.failure);
+  static const CustomSnackBar bottomFixedSuccess =
+      CustomSnackBar(contentType: SnackBarType.success);
+  static const CustomSnackBar bottomFixedWarning =
+      CustomSnackBar(contentType: SnackBarType.warning);
 
-  static const CustomSnackBar bottomFloatingHelp = CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.help);
-  static const CustomSnackBar bottomFloatingFailure = CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.failure);
-  static const CustomSnackBar bottomFloatingSuccess = CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.success);
-  static const CustomSnackBar bottomFloatingWarning = CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.warning);
+  static const CustomSnackBar bottomFloatingHelp =
+      CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.help);
+  static const CustomSnackBar bottomFloatingFailure =
+      CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.failure);
+  static const CustomSnackBar bottomFloatingSuccess =
+      CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.success);
+  static const CustomSnackBar bottomFloatingWarning =
+      CustomSnackBar(behavior: SnackBarBehavior.floating, contentType: SnackBarType.warning);
 
-  static const CustomSnackBar topHelp = CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.help);
-  static const CustomSnackBar topFailure = CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.failure);
-  static const CustomSnackBar topSuccess = CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.success);
-  static const CustomSnackBar topWarning = CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.warning);
+  static const CustomSnackBar topHelp =
+      CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.help);
+  static const CustomSnackBar topFailure =
+      CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.failure);
+  static const CustomSnackBar topSuccess =
+      CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.success);
+  static const CustomSnackBar topWarning =
+      CustomSnackBar(position: SnackBarPosition.top, contentType: SnackBarType.warning);
 
   void show({
     String title = 'Thông báo',
@@ -59,7 +73,10 @@ class CustomSnackBar {
     Duration? duration,
   }) {
     double sizeSnackbarContent = 160;
-    double textHeight = UtilsHelper.getTextHeight(text: message, textStyle: messageStyle ?? AppTextStyles.themeBodyMedium, maxWidthOfWidget: DeviceDimension.screenWidth);
+    double textHeight = UtilsHelper.getTextHeight(
+        text: message,
+        textStyle: messageStyle ?? AppTextStyles.themeBodyMedium,
+        maxWidthOfWidget: DeviceDimension.screenWidth);
     if (position == SnackBarPosition.bottom) {
       final content = SnackBar(
         elevation: 0,
@@ -76,7 +93,8 @@ class CustomSnackBar {
           contentType: contentType,
           color: snackBarColor,
           onTap: onTap,
-          onClose: ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!).hideCurrentSnackBar,
+          onClose:
+              ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!).hideCurrentSnackBar,
         ),
       );
       ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!)
@@ -90,7 +108,9 @@ class CustomSnackBar {
         dismissDirection: DismissDirection.up,
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(
-          bottom: MediaQuery.of(UtilsHelper.navigatorKey.currentContext!).size.height - textHeight - sizeSnackbarContent,
+          bottom: MediaQuery.of(UtilsHelper.navigatorKey.currentContext!).size.height -
+              textHeight -
+              sizeSnackbarContent,
         ),
         content: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -103,7 +123,8 @@ class CustomSnackBar {
               contentType: contentType,
               color: snackBarColor,
               onTap: onTap,
-              onClose: ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!).hideCurrentSnackBar,
+              onClose: ScaffoldMessenger.of(UtilsHelper.navigatorKey.currentContext!)
+                  .hideCurrentSnackBar,
             ),
             const SizedBox.shrink(),
           ],

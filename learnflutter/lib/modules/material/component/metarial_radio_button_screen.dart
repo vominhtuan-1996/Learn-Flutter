@@ -15,7 +15,8 @@ class MaterialRaidoButtonScreen extends StatefulWidget {
   State<MaterialRaidoButtonScreen> createState() => _MaterialRaidoButtonScreenState();
 }
 
-class _MaterialRaidoButtonScreenState extends State<MaterialRaidoButtonScreen> with ComponentMaterialDetail {
+class _MaterialRaidoButtonScreenState extends State<MaterialRaidoButtonScreen>
+    with ComponentMaterialDetail {
   String initialValue = "";
   @override
   void initState() {

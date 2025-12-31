@@ -18,7 +18,8 @@ class IceCreamIndicatorScreen extends StatefulWidget {
   State<IceCreamIndicatorScreen> createState() => _IceCreamIndicatorState();
 }
 
-class _IceCreamIndicatorState extends State<IceCreamIndicatorScreen> with SingleTickerProviderStateMixin {
+class _IceCreamIndicatorState extends State<IceCreamIndicatorScreen>
+    with SingleTickerProviderStateMixin {
   static const _indicatorSize = 80.0;
   bool _showExplosion = false;
   late AnimationController _spoonController;

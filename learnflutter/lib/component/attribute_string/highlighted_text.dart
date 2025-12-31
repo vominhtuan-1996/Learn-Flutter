@@ -20,11 +20,12 @@ class HighlightedText extends StatelessWidget {
     List<InlineSpan> listAttributed = [];
 
     // Sử dụng style mặc định nếu không truyền vào
-    final TextStyle normalStyle = style ?? context.theme.textTheme.bodyMedium!.copyWith(color: context.theme.colorScheme.onPrimary);
+    final TextStyle normalStyle = style ??
+        context.theme.textTheme.bodyMedium!.copyWith(color: context.theme.colorScheme.onPrimary);
 
     if (message.isNotEmpty && texthighlight.isNotEmpty) {
       String lowerMessage = message.toLowerCase();
-      String lowerHighlight = texthighlight.toLowerCase(); 
+      String lowerHighlight = texthighlight.toLowerCase();
       int idx = lowerMessage.indexOf(lowerHighlight);
 
       if (idx >= 0 && lowerMessage != lowerHighlight) {

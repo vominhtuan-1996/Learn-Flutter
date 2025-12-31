@@ -540,15 +540,29 @@ List<LineSeries<SalesData, num>> getDefaultData() {
         xValueMapper: (SalesData sales, _) => sales.y,
         yValueMapper: (SalesData sales, _) => sales.y4,
         width: lineWidth ?? 2,
-        markerSettings: MarkerSettings(isVisible: isMarkerVisible, height: markerWidth ?? 4, width: markerHeight ?? 4, shape: DataMarkerType.circle, borderWidth: 3, borderColor: Colors.red),
-        dataLabelSettings: const DataLabelSettings(isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
+        markerSettings: MarkerSettings(
+            isVisible: isMarkerVisible,
+            height: markerWidth ?? 4,
+            width: markerHeight ?? 4,
+            shape: DataMarkerType.circle,
+            borderWidth: 3,
+            borderColor: Colors.red),
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto)),
     LineSeries<SalesData, num>(
         enableTooltip: isTooltipVisible,
         dataSource: chartData,
         width: lineWidth ?? 2,
         xValueMapper: (SalesData sales, _) => sales.y,
         yValueMapper: (SalesData sales, _) => sales.y3,
-        markerSettings: MarkerSettings(isVisible: isMarkerVisible, height: markerWidth ?? 4, width: markerHeight ?? 4, shape: DataMarkerType.circle, borderWidth: 3, borderColor: Colors.black),
-        dataLabelSettings: const DataLabelSettings(isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto))
+        markerSettings: MarkerSettings(
+            isVisible: isMarkerVisible,
+            height: markerWidth ?? 4,
+            width: markerHeight ?? 4,
+            shape: DataMarkerType.circle,
+            borderWidth: 3,
+            borderColor: Colors.black),
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: isDataLabelVisible, labelAlignment: ChartDataLabelAlignment.auto))
   ];
 }

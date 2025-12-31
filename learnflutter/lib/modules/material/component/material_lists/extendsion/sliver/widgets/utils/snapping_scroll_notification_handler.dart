@@ -106,7 +106,8 @@ class SnappingScrollNotificationHandler {
     double currentScrollingPosition,
     double expandThresholdPosition,
   ) {
-    return currentScrollingPosition > expandThresholdPosition && currentScrollingPosition < expandedBarHeight - collapsedBarHeight;
+    return currentScrollingPosition > expandThresholdPosition &&
+        currentScrollingPosition < expandedBarHeight - collapsedBarHeight;
   }
 
   /// Returns `true` if the app bar should snap to fully expanded position.
@@ -128,7 +129,8 @@ class SnappingScrollNotificationHandler {
     required double expandThresholdPosition,
     CollapsingStateCallback? onCollapseStateChanged,
   }) {
-    isCollapsed.value = scrollController.hasClients && scrollController.offset > expandThresholdPosition;
+    isCollapsed.value =
+        scrollController.hasClients && scrollController.offset > expandThresholdPosition;
     onCollapseStateChanged?.call(
       isCollapsed.value,
       scrollController.offset,

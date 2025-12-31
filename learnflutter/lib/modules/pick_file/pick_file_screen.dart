@@ -25,7 +25,8 @@ class _PickFileScreenState extends State<PickFileScreen> {
       isLoading: false,
       floatingActionButton: FloatingActionButton.large(
         onPressed: () async {
-          FilePickerResult? temp = await FilePicker.platform.pickFiles(allowedExtensions: ['pdf', 'svg'], type: FileType.custom);
+          FilePickerResult? temp = await FilePicker.platform
+              .pickFiles(allowedExtensions: ['pdf', 'svg'], type: FileType.custom);
           svgElement = await SvgUtilsHelper.getSvgElement(temp?.files.first.path ?? "");
           if (temp != null) {
             files.add(temp);

@@ -102,7 +102,9 @@ class TwoLevelHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return ClassicHeader(
-      refreshStyle: displayAlignment == TwoLevelDisplayAlignment.fromBottom ? RefreshStyle.Follow : RefreshStyle.Behind,
+      refreshStyle: displayAlignment == TwoLevelDisplayAlignment.fromBottom
+          ? RefreshStyle.Follow
+          : RefreshStyle.Behind,
       height: height,
       refreshingIcon: refreshingIcon,
       refreshingText: refreshingText,
@@ -122,10 +124,13 @@ class TwoLevelHeader extends StatelessWidget {
       iconPos: iconPos,
       outerBuilder: (child) {
         final RefreshStatus? mode = SmartRefresher.of(context)!.controller.headerStatus;
-        final bool isTwoLevel = (mode == RefreshStatus.twoLevelClosing || mode == RefreshStatus.twoLeveling || mode == RefreshStatus.twoLevelOpening);
+        final bool isTwoLevel = (mode == RefreshStatus.twoLevelClosing ||
+            mode == RefreshStatus.twoLeveling ||
+            mode == RefreshStatus.twoLevelOpening);
         if (displayAlignment == TwoLevelDisplayAlignment.fromBottom) {
           return Container(
-            decoration: !isTwoLevel ? (decoration ?? const BoxDecoration(color: Colors.redAccent)) : null,
+            decoration:
+                !isTwoLevel ? (decoration ?? const BoxDecoration(color: Colors.redAccent)) : null,
             height: SmartRefresher.ofState(context)!.viewportExtent,
             alignment: isTwoLevel ? null : Alignment.bottomCenter,
             child: isTwoLevel
@@ -140,7 +145,9 @@ class TwoLevelHeader extends StatelessWidget {
             child: isTwoLevel
                 ? twoLevelWidget
                 : Container(
-                    decoration: !isTwoLevel ? (decoration ?? const BoxDecoration(color: Colors.redAccent)) : null,
+                    decoration: !isTwoLevel
+                        ? (decoration ?? const BoxDecoration(color: Colors.redAccent))
+                        : null,
                     alignment: Alignment.bottomCenter,
                     padding: const EdgeInsets.only(bottom: 15),
                     child: child,

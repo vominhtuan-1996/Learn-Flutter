@@ -62,7 +62,8 @@ class MaterialCheckBoxState extends State<MaterialCheckBox> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: sizeMaterial * widget.scale, maxWidth: sizeMaterial * widget.scale),
+      constraints: BoxConstraints(
+          maxHeight: sizeMaterial * widget.scale, maxWidth: sizeMaterial * widget.scale),
       child: AbsorbPointer(
           absorbing: widget.disible,
           child: Stack(
@@ -72,7 +73,8 @@ class MaterialCheckBoxState extends State<MaterialCheckBox> {
                   borderRadiusValue: widget.borderRadius * widget.scale,
                   borderWidth: widget.scale,
                   colorBorder: widget.borderColor,
-                  colorBackground: widget.disible ? Colors.grey.withOpacity(opacityDisible) : Colors.transparent,
+                  colorBackground:
+                      widget.disible ? Colors.grey.withOpacity(opacityDisible) : Colors.transparent,
                 ),
               ),
               Transform.scale(
@@ -80,10 +82,13 @@ class MaterialCheckBoxState extends State<MaterialCheckBox> {
                 child: Checkbox(
                   shape: shapeBorder(widget.borderRadius),
                   side: BorderSide(
-                    color: widget.isChecked ? widget.fillColor.withOpacity(widget.disible ? opacityDisible : opacity) : widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity),
+                    color: widget.isChecked
+                        ? widget.fillColor.withOpacity(widget.disible ? opacityDisible : opacity)
+                        : widget.borderColor.withOpacity(widget.disible ? opacityDisible : opacity),
                     width: 0,
                   ),
-                  checkColor: widget.checkedColor.withOpacity(widget.disible ? opacityDisible : opacity),
+                  checkColor:
+                      widget.checkedColor.withOpacity(widget.disible ? opacityDisible : opacity),
                   fillColor: WidgetStateProperty.resolveWith(getColor),
                   value: widget.isChecked,
                   onChanged: (value) {

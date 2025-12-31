@@ -14,7 +14,8 @@ class BlinkingBorderOverlay extends StatefulWidget {
   State<BlinkingBorderOverlay> createState() => _BlinkingBorderOverlayState();
 }
 
-class _BlinkingBorderOverlayState extends State<BlinkingBorderOverlay> with SingleTickerProviderStateMixin {
+class _BlinkingBorderOverlayState extends State<BlinkingBorderOverlay>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnim;
 

@@ -16,8 +16,7 @@ class DropPainter extends CustomPainter {
 
     final Path path = Path()
       ..moveTo(size.width / 2, 0)
-      ..quadraticBezierTo(
-          size.width / 2 - radius, radius, size.width / 2, radius * 2)
+      ..quadraticBezierTo(size.width / 2 - radius, radius, size.width / 2, radius * 2)
       ..quadraticBezierTo(size.width / 2 + radius, radius, size.width / 2, 0)
       ..close();
 

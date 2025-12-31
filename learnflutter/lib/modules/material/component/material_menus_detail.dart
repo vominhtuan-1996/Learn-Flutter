@@ -21,7 +21,8 @@ void launchUrlExternally(String url) {
   launchUrlString(url, mode: LaunchMode.externalApplication);
 }
 
-class _MaterialMenuDetailScreenState extends State<MaterialMenuDetailScreen> with ComponentMaterialDetail {
+class _MaterialMenuDetailScreenState extends State<MaterialMenuDetailScreen>
+    with ComponentMaterialDetail {
   bool light = true;
   var _navigationIndex = 0;
   @override

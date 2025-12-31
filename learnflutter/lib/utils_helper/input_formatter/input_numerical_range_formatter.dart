@@ -7,7 +7,8 @@ class NumericalRangeFormatter extends TextInputFormatter {
   final double max;
   final bool isShowSnackbar;
   final String? message;
-  NumericalRangeFormatter({required this.min, required this.max, this.isShowSnackbar = false, this.message});
+  NumericalRangeFormatter(
+      {required this.min, required this.max, this.isShowSnackbar = false, this.message});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -30,7 +31,8 @@ class NumericalRangeFormatterNegative extends TextInputFormatter {
   final double max;
   final bool isShowSnackbar;
   final String? message;
-  NumericalRangeFormatterNegative({required this.min, required this.max, this.isShowSnackbar = false, this.message});
+  NumericalRangeFormatterNegative(
+      {required this.min, required this.max, this.isShowSnackbar = false, this.message});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -53,7 +55,8 @@ class NumericalIntegerRangeFormatter extends TextInputFormatter {
   final int max;
   final bool isShowSnackbar;
   final String? message;
-  NumericalIntegerRangeFormatter({required this.min, required this.max, this.isShowSnackbar = false, this.message});
+  NumericalIntegerRangeFormatter(
+      {required this.min, required this.max, this.isShowSnackbar = false, this.message});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {

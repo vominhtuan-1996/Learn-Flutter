@@ -33,7 +33,12 @@ abstract class RefreshIndicator extends StatefulWidget {
   /// the stopped time when refresh complete or fail
   final Duration completeDuration;
 
-  const RefreshIndicator({super.key, this.height = 60.0, this.offset = 0.0, this.completeDuration = const Duration(milliseconds: 500), this.refreshStyle = RefreshStyle.Follow});
+  const RefreshIndicator(
+      {super.key,
+      this.height = 60.0,
+      this.offset = 0.0,
+      this.completeDuration = const Duration(milliseconds: 500),
+      this.refreshStyle = RefreshStyle.Follow});
 }
 
 /// a widget  implements  pull up load
@@ -47,7 +52,8 @@ abstract class LoadIndicator extends StatefulWidget {
   /// callback when user click footer
   final VoidCallback? onClick;
 
-  const LoadIndicator({super.key, this.onClick, this.loadStyle = LoadStyle.ShowAlways, this.height = 60.0});
+  const LoadIndicator(
+      {super.key, this.onClick, this.loadStyle = LoadStyle.ShowAlways, this.height = 60.0});
 }
 
 /// Internal Implementation of Head Indicator
@@ -119,14 +125,21 @@ abstract class LoadIndicator extends StatefulWidget {
 ///  }
 /// }
 /// ```
-abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T> with IndicatorStateMixin<T, RefreshStatus> {
+abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T>
+    with IndicatorStateMixin<T, RefreshStatus> {
   bool _inVisual() {
     return _position!.pixels < 0.0;
   }
 
   @override
   double _calculateScrollOffset() {
-    return (floating ? (mode == RefreshStatus.twoLeveling || mode == RefreshStatus.twoLevelOpening || mode == RefreshStatus.twoLevelClosing ? refresherState!.viewportExtent : widget.height) : 0.0) -
+    return (floating
+            ? (mode == RefreshStatus.twoLeveling ||
+                    mode == RefreshStatus.twoLevelOpening ||
+                    mode == RefreshStatus.twoLevelClosing
+                ? refresherState!.viewportExtent
+                : widget.height)
+            : 0.0) -
         (_position?.pixels as num);
   }
 
@@ -142,7 +155,8 @@ abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T
   @override
   void _dispatchModeByOffset(double offset) {
     if (mode == RefreshStatus.twoLeveling) {
-      if (_position!.pixels > configuration!.closeTwoLevelDistance && activity is BallisticScrollActivity) {
+      if (_position!.pixels > configuration!.closeTwoLevelDistance &&
+          activity is BallisticScrollActivity) {
         refresher!.controller.twoLevelComplete();
         return;
       }
@@ -163,7 +177,9 @@ abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T
     // Sometimes different devices return velocity differently, so it's impossible to judge from velocity whether the user
     // has invoked animateTo (0.0) or the user is dragging the view.Sometimes animateTo (0.0) does not return velocity = 0.0
     // velocity < 0.0 may be spring up,>0.0 spring down
-    if ((configuration!.enableBallisticRefresh && activity!.velocity < 0.0) || activity is DragScrollActivity || activity is DrivenScrollActivity) {
+    if ((configuration!.enableBallisticRefresh && activity!.velocity < 0.0) ||
+        activity is DragScrollActivity ||
+        activity is DrivenScrollActivity) {
       if (refresher!.enablePullDown && offset >= configuration!.headerTriggerDistance) {
         if (!configuration!.skipCanRefresh) {
           mode = RefreshStatus.canRefresh;
@@ -266,7 +282,9 @@ abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         activity!.resetActivity();
-        _position!.animateTo(0.0, duration: const Duration(milliseconds: 500), curve: Curves.linear).whenComplete(() {
+        _position!
+            .animateTo(0.0, duration: const Duration(milliseconds: 500), curve: Curves.linear)
+            .whenComplete(() {
           mode = RefreshStatus.twoLeveling;
         });
         if (refresher!.onTwoLevel != null) refresher!.onTwoLevel!(true);
@@ -303,17 +321,22 @@ abstract class RefreshIndicatorState<T extends RefreshIndicator> extends State<T
     return SliverRefresh(
         paintOffsetY: widget.offset,
         floating: floating,
-        refreshIndicatorLayoutExtent:
-            mode == RefreshStatus.twoLeveling || mode == RefreshStatus.twoLevelOpening || mode == RefreshStatus.twoLevelClosing ? refresherState!.viewportExtent : widget.height,
+        refreshIndicatorLayoutExtent: mode == RefreshStatus.twoLeveling ||
+                mode == RefreshStatus.twoLevelOpening ||
+                mode == RefreshStatus.twoLevelClosing
+            ? refresherState!.viewportExtent
+            : widget.height,
         refreshStyle: widget.refreshStyle,
         child: RotatedBox(
-          quarterTurns: needReverseAll() && Scrollable.of(context).axisDirection == AxisDirection.up ? 10 : 0,
+          quarterTurns:
+              needReverseAll() && Scrollable.of(context).axisDirection == AxisDirection.up ? 10 : 0,
           child: buildContent(context, mode),
         ));
   }
 }
 
-abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T> with IndicatorStateMixin<T, LoadStatus> {
+abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T>
+    with IndicatorStateMixin<T, LoadStatus> {
   // use to update between one page and above one page
   bool _isHide = false;
   bool _enableLoading = false;
@@ -367,14 +390,17 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T> with
   }
 
   bool _checkIfCanLoading() {
-    if (_position!.maxScrollExtent - _position!.pixels <= configuration!.footerTriggerDistance && _position!.extentBefore > 2.0 && _enableLoading) {
+    if (_position!.maxScrollExtent - _position!.pixels <= configuration!.footerTriggerDistance &&
+        _position!.extentBefore > 2.0 &&
+        _enableLoading) {
       if (!configuration!.enableLoadingWhenFailed && mode == LoadStatus.failed) {
         return false;
       }
       if (!configuration!.enableLoadingWhenNoData && mode == LoadStatus.noMore) {
         return false;
       }
-      if (mode != LoadStatus.canLoading && _position!.userScrollDirection == ScrollDirection.forward) {
+      if (mode != LoadStatus.canLoading &&
+          _position!.userScrollDirection == ScrollDirection.forward) {
         return false;
       }
       return true;
@@ -392,7 +418,10 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T> with
     if (mode == LoadStatus.idle || mode == LoadStatus.failed || mode == LoadStatus.noMore) {
       // #292,#265,#208
       // stop the slow bouncing when load more too fast
-      if (_position!.activity!.velocity < 0 && _lastMode == LoadStatus.loading && !_position!.outOfRange && _position is ScrollActivityDelegate) {
+      if (_position!.activity!.velocity < 0 &&
+          _lastMode == LoadStatus.loading &&
+          !_position!.outOfRange &&
+          _position is ScrollActivityDelegate) {
         _position!.beginActivity(IdleScrollActivity(_position as ScrollActivityDelegate));
       }
 
@@ -458,7 +487,9 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T> with
 
       if (_checkIfCanLoading()) {
         if (activity is IdleScrollActivity) {
-          if ((configuration!.enableBallisticLoad) || ((!configuration!.enableBallisticLoad) && mode == LoadStatus.canLoading)) enterLoading();
+          if ((configuration!.enableBallisticLoad) ||
+              ((!configuration!.enableBallisticLoad) && mode == LoadStatus.canLoading))
+            enterLoading();
         }
       }
     } else {
@@ -499,7 +530,9 @@ abstract class LoadIndicatorState<T extends LoadIndicator> extends State<T> with
             : widget.loadStyle == LoadStyle.HideAlways
                 ? false
                 : floating,
-        shouldFollowContent: configuration!.shouldFooterFollowWhenNotFull != null ? configuration!.shouldFooterFollowWhenNotFull!(mode) : mode == LoadStatus.noMore,
+        shouldFollowContent: configuration!.shouldFooterFollowWhenNotFull != null
+            ? configuration!.shouldFooterFollowWhenNotFull!(mode)
+            : mode == LoadStatus.noMore,
         layoutExtent: widget.height,
         mode: mode,
         child: LayoutBuilder(
@@ -573,7 +606,9 @@ mixin IndicatorStateMixin<T extends StatefulWidget, V> on State<T> {
     configuration = RefreshConfiguration.of(context);
     refresher = SmartRefresher.of(context);
     refresherState = SmartRefresher.ofState(context);
-    RefreshNotifier<V>? newMode = V == RefreshStatus ? refresher!.controller.headerMode as RefreshNotifier<V>? : refresher!.controller.footerMode as RefreshNotifier<V>?;
+    RefreshNotifier<V>? newMode = V == RefreshStatus
+        ? refresher!.controller.headerMode as RefreshNotifier<V>?
+        : refresher!.controller.footerMode as RefreshNotifier<V>?;
     final ScrollPosition newPosition = Scrollable.of(context).position;
     if (newMode != _mode) {
       _mode?.removeListener(_handleModeChange);

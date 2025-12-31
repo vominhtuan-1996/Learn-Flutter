@@ -22,7 +22,8 @@ class SliverParallaxStickyPage extends StatelessWidget {
           // Parallax effect
           SliverToBoxAdapter(
             child: ParallaxImage(
-              imageUrl: 'https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1000&q=80',
+              imageUrl:
+                  'https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1000&q=80',
               height: imageHeight,
             ),
           ),

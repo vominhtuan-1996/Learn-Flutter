@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,7 +12,8 @@ class GraphicsWidget extends LeafRenderObjectWidget {
     this.strokeCap = StrokeCap.round,
     this.min = 0,
     this.max = 100,
-    this.styleLabel = const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+    this.styleLabel =
+        const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
     this.backGroundLabel = Colors.blue,
     this.onChanged,
     this.showLabel = true,

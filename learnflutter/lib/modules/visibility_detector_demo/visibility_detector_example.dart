@@ -158,7 +158,8 @@ class VisibilityDetectorDemoPageState extends State<VisibilityDetectorDemoPage> 
               child: ListView.builder(
                 key: mainListKey,
                 scrollDirection: _layout.mainAxis,
-                itemExtent: (_layout.mainAxis == Axis.vertical ? cellHeight : cellWidth) + 2 * externalCellPadding,
+                itemExtent: (_layout.mainAxis == Axis.vertical ? cellHeight : cellWidth) +
+                    2 * externalCellPadding,
                 itemBuilder: (BuildContext context, int primaryIndex) {
                   return _useSlivers
                       ? SliverDemoPageSecondaryAxis(
@@ -276,7 +277,9 @@ class SliverDemoPageSecondaryAxis extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: secondaryAxis == Axis.horizontal ? const EdgeInsets.symmetric(vertical: externalCellPadding) : const EdgeInsets.symmetric(horizontal: externalCellPadding),
+      padding: secondaryAxis == Axis.horizontal
+          ? const EdgeInsets.symmetric(vertical: externalCellPadding)
+          : const EdgeInsets.symmetric(horizontal: externalCellPadding),
       child: CustomScrollView(
         scrollDirection: secondaryAxis,
         reverse: reverse,
@@ -316,7 +319,8 @@ class DemoPageCell extends StatelessWidget {
     required this.useSlivers,
     required this.useScale,
   })  : _cellName = 'Item $primaryIndex-$secondaryIndex',
-        _backgroundColor = ((primaryIndex + secondaryIndex) % 2 == 0) ? Colors.pink[200] : Colors.yellow[200],
+        _backgroundColor =
+            ((primaryIndex + secondaryIndex) % 2 == 0) ? Colors.pink[200] : Colors.yellow[200],
         super(key: key);
 
   final int primaryIndex;

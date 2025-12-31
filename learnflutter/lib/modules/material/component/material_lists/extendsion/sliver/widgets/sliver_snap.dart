@@ -223,8 +223,7 @@ class SliverSnap extends HookWidget {
         expandedContentHeight ?? MediaQuery.of(context).size.height / 2;
 
     final controller = scrollController ?? useScrollController();
-    final snappingScrollNotificationHandler =
-        SnappingScrollNotificationHandler.withHapticFeedback(
+    final snappingScrollNotificationHandler = SnappingScrollNotificationHandler.withHapticFeedback(
       expandedBarHeight: defaultExpandedContentHeight,
       collapsedBarHeight: collapsedBarHeight,
       bottomBarHeight: bottom?.preferredSize.height ?? 0.0,
@@ -233,8 +232,7 @@ class SliverSnap extends HookWidget {
     final animatedOpacity = useState(1.0);
 
     return NotificationListener<ScrollNotification>(
-      onNotification: (notification) =>
-          snappingScrollNotificationHandler.handleScrollNotification(
+      onNotification: (notification) => snappingScrollNotificationHandler.handleScrollNotification(
         notification: notification,
         isCollapsedValueNotifier: isCollapsedValueNotifier,
         onCollapseStateChanged: (isCollapsed, scrollingOffset, maxExtent) {
@@ -245,8 +243,7 @@ class SliverSnap extends HookWidget {
           );
 
           scrollPercentValueNotifier.value = 1 - scrollingOffset / maxExtent;
-          animatedOpacity.value =
-              _calculateOpacity(scrollPercentValueNotifier.value);
+          animatedOpacity.value = _calculateOpacity(scrollPercentValueNotifier.value);
         },
         scrollController: controller,
       ),

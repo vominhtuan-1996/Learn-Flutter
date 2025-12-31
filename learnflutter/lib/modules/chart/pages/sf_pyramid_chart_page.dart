@@ -44,7 +44,8 @@ class _SFPyramidChartPageState extends State<SFPyramidChartPage> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text((data as SalesData).date.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
+            Text((data as SalesData).date.toString())
+                .paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).conntry.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text((data).y.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),
             Text(data.y1.toString()).paddingOnly(bottom: DeviceDimension.padding / 2),

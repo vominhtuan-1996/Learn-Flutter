@@ -6,7 +6,8 @@ class UpdatePersonForm extends StatefulWidget {
   final int index;
   final Person person;
 
-  const UpdatePersonForm({super.key, 
+  const UpdatePersonForm({
+    super.key,
     required this.index,
     required this.person,
   });

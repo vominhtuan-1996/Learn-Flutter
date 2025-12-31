@@ -11,7 +11,8 @@ class MaterialNavigationDrawerScreen extends StatefulWidget {
   State<MaterialNavigationDrawerScreen> createState() => _MaterialProgressIndicatorsState();
 }
 
-class _MaterialProgressIndicatorsState extends State<MaterialNavigationDrawerScreen> with ComponentMaterialDetail {
+class _MaterialProgressIndicatorsState extends State<MaterialNavigationDrawerScreen>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();

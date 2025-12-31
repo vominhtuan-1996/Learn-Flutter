@@ -67,7 +67,8 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
         children: <Widget>[
           Container(
               height: 50,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: const Color(0xFFFDA758).withValues(alpha: 0.2)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: const Color(0xFFFDA758).withValues(alpha: 0.2)),
               child: Center(
                 child: Image.asset(loadImageWithImageName(data.iconChildMenu, TypeImage.png)),
               )),
@@ -75,7 +76,9 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
             height: 6,
           ),
           Center(
-            child: Text(data.titleChildMenu, textAlign: TextAlign.center, style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal)),
+            child: Text(data.titleChildMenu,
+                textAlign: TextAlign.center,
+                style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal)),
           )
         ],
       ),
@@ -95,12 +98,17 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
         return Container(
             alignment: Alignment.center,
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-              Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(const Color(0xFF795675), 14, FontWeight.w600)),
+              Text(item.parentMenuTitle,
+                  textAlign: TextAlign.left,
+                  style: textStyleManrope(const Color(0xFF795675), 14, FontWeight.w600)),
               const SizedBox(height: 10),
               SizedBox(
-                height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
+                height: item.childMenus.length / 4 > 1
+                    ? caculatorHeightWithCount(item.childMenus.length) * 110
+                    : 110,
                 child: SliverGrid.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
                   itemBuilder: (BuildContext ctxt, int index) {
                     ChildMenusModel childMenusModel = item.childMenus[index];
                     return childMenusCell(childMenusModel, false);
@@ -134,10 +142,13 @@ class _SliverAppMenuState extends State<SliverAppMenu> {
               ),
             ),
             SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
               itemBuilder: (BuildContext ctxt, int index) {
                 // ChildMenusModel childMenusModel = item.childMenus[index];
-                return Text('childMenusModel.titleChildMenu', textAlign: TextAlign.center, style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal));
+                return Text('childMenusModel.titleChildMenu',
+                    textAlign: TextAlign.center,
+                    style: textStyleManrope(const Color(0xFF795675), 12, FontWeight.normal));
               },
               itemCount: 50,
             ),
@@ -180,18 +191,21 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  OverScrollHeaderStretchConfiguration? get stretchConfiguration => OverScrollHeaderStretchConfiguration();
+  OverScrollHeaderStretchConfiguration? get stretchConfiguration =>
+      OverScrollHeaderStretchConfiguration();
 
   double get deltaExtent => maxExtent - minExtent;
 
-  static const imgBgr = Image(image: AssetImage('assets/images/slier_appbar_bgr.webp'), fit: BoxFit.cover);
+  static const imgBgr =
+      Image(image: AssetImage('assets/images/slier_appbar_bgr.webp'), fit: BoxFit.cover);
 
   double transform(double begin, double end, double t, [double x = 1]) {
     return Tween<double>(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x));
   }
 
   Color transformColor(Color? begin, Color? end, double t, [double x = 1]) {
-    return ColorTween(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x)) ?? Colors.transparent;
+    return ColorTween(begin: begin, end: end).transform(x == 1 ? t : min(1.0, t * x)) ??
+        Colors.transparent;
   }
 
   @override
@@ -329,8 +343,13 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 t,
                 2,
               ),
-              top: constraints.maxHeight > maxExtent ? null : transform(minExtent + cardPadding, minExtent - IconImgButton.tapTargetSize - 4, t, 2),
-              bottom: constraints.maxHeight < maxExtent ? null : deltaExtent - IconImgButton.tapTargetSize - cardPadding,
+              top: constraints.maxHeight > maxExtent
+                  ? null
+                  : transform(
+                      minExtent + cardPadding, minExtent - IconImgButton.tapTargetSize - 4, t, 2),
+              bottom: constraints.maxHeight < maxExtent
+                  ? null
+                  : deltaExtent - IconImgButton.tapTargetSize - cardPadding,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -344,7 +363,9 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                             padding: const EdgeInsets.all(8),
                             height: 40,
                             width: 100,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.0), color: const Color(0xFFFDA758)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18.0),
+                                color: const Color(0xFFFDA758)),
                             child: const Center(
                               child: Text(
                                 'Nghiệm Thu',
@@ -424,7 +445,8 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             height: 48,
             width: 48,
             padding: EdgeInsets.zero,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(48.0 / 4), color: Colors.white),
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(48.0 / 4), color: Colors.white),
             child: Center(
               child: Image.asset(loadImageWithImageName('ic_notification', TypeImage.png)),
             )));

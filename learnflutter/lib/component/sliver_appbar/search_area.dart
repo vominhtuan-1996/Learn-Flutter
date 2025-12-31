@@ -36,7 +36,10 @@ class _SearchAreaState extends State<SearchArea> {
       children: [
         Container(
           height: 48,
-          width: widget.appBarContentWidth - IconImgButton.tapTargetSize - widget.appBarSpace.width! * 3 - 4,
+          width: widget.appBarContentWidth -
+              IconImgButton.tapTargetSize -
+              widget.appBarSpace.width! * 3 -
+              4,
           margin: const EdgeInsets.only(left: 4),
           decoration: BoxDecoration(
             color: widget.iconBgrColor,
@@ -61,7 +64,8 @@ class _SearchAreaState extends State<SearchArea> {
         prefixIcon: Image.asset(loadImageWithImageName('ic_search_organe', TypeImage.png)),
         suffixIcon: _controllerTextField.text.isNotEmpty ? initUISuffixIconSearchView() : null,
         hintText: "Tìm kiếm chức năng",
-        hintStyle: textStyleManrope(const Color(0xFFFDA758).withOpacity(0.5), 14, FontWeight.normal),
+        hintStyle:
+            textStyleManrope(const Color(0xFFFDA758).withOpacity(0.5), 14, FontWeight.normal),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),

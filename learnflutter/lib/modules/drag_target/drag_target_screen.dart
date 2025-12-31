@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
 
@@ -69,7 +68,8 @@ class DragTargetScreenState extends State<DragTargetScreen> {
                   },
                   onAcceptWithDetails: (details) {
                     Color temp = shuffledColors[index]; // Lưu tạm màu blue
-                    shuffledColors[indexStarted] = shuffledColors[index]; // Hoán đổi blue và deepPurple
+                    shuffledColors[indexStarted] =
+                        shuffledColors[index]; // Hoán đổi blue và deepPurple
                     shuffledColors[index] = temp; // Gán
                     print(shuffledColors);
                     print(colors);

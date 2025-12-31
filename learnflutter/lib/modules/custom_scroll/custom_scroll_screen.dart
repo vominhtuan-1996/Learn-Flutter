@@ -82,7 +82,11 @@ class CustomSliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegat
     });
   }
 
-  SizedBox buildRow({required double itemMaxWidth, required double itemMaxHeight, required double t, required Widget child}) {
+  SizedBox buildRow(
+      {required double itemMaxWidth,
+      required double itemMaxHeight,
+      required double t,
+      required Widget child}) {
     return SizedBox(
       width: lerpDouble(itemMaxWidth, itemMaxWidth * .3, t),
       height: lerpDouble(itemMaxHeight, itemMaxHeight * .3, t),

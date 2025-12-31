@@ -54,11 +54,17 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
 
   BoxConstraints boxConstraints(SearchState state) {
     if (state is SearchLoading) {
-      return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 6);
+      return widget.viewConstraints ??
+          BoxConstraints(maxHeight: context.mediaQuery.size.height / 6);
     } else if (state is SearchError) {
-      return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 3);
+      return widget.viewConstraints ??
+          BoxConstraints(maxHeight: context.mediaQuery.size.height / 3);
     } else if (state is SearchLoaded) {
-      return widget.viewConstraints ?? BoxConstraints(maxHeight: state.suggestions.isNotEmpty ? context.mediaQuery.size.height / 2 : context.mediaQuery.size.height / 3);
+      return widget.viewConstraints ??
+          BoxConstraints(
+              maxHeight: state.suggestions.isNotEmpty
+                  ? context.mediaQuery.size.height / 2
+                  : context.mediaQuery.size.height / 3);
     }
     return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 2);
   }
@@ -82,7 +88,9 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                   if (state is SearchLoading) {
                     return widget.builderWaiting?.call(context) ??
                         Center(
-                          child: Padding(padding: EdgeInsets.symmetric(vertical: 16), child: CupertinoActivityIndicator()),
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: CupertinoActivityIndicator()),
                         );
                   } else if (state is SearchError) {
                     return widget.builderError?.call(context) ?? Text('Error fetching suggestions');

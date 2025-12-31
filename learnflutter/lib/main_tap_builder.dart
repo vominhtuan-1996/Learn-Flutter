@@ -120,7 +120,9 @@ class AnimatedStateButton extends StatelessWidget {
     return AnimatedTapBuilder(
       onTap: () {},
       builder: (context, state, isFocused, cursorLocation, cursorAlignment) {
-        cursorAlignment = state == TapState.pressed ? Alignment(-cursorAlignment.x, -cursorAlignment.y) : Alignment.center;
+        cursorAlignment = state == TapState.pressed
+            ? Alignment(-cursorAlignment.x, -cursorAlignment.y)
+            : Alignment.center;
         return Padding(
           padding: EdgeInsets.all(8),
           child: AnimatedContainer(
@@ -179,7 +181,8 @@ class AnimatedStateButton extends StatelessWidget {
                           color: Colors.white.withOpacity(0.01),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.white.withOpacity(state == TapState.pressed ? 0.5 : 0.0),
+                              color:
+                                  Colors.white.withOpacity(state == TapState.pressed ? 0.5 : 0.0),
                               blurRadius: 200,
                               spreadRadius: 130,
                             ),

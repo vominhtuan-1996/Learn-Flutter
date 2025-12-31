@@ -178,7 +178,9 @@ class _MyPathProviderScreenState extends State<PathProviderScreen> {
                   child: ElevatedButton(
                     onPressed: Platform.isAndroid ? null : _requestAppLibraryDirectory,
                     child: Text(
-                      Platform.isAndroid ? 'Application Library Directory unavailable' : 'Get Application Library Directory',
+                      Platform.isAndroid
+                          ? 'Application Library Directory unavailable'
+                          : 'Get Application Library Directory',
                     ),
                   ),
                 ),
@@ -212,7 +214,9 @@ class _MyPathProviderScreenState extends State<PathProviderScreen> {
                   child: ElevatedButton(
                     onPressed: !Platform.isAndroid ? null : _requestExternalStorageDirectory,
                     child: Text(
-                      !Platform.isAndroid ? 'External storage is unavailable' : 'Get External Storage Directory',
+                      !Platform.isAndroid
+                          ? 'External storage is unavailable'
+                          : 'Get External Storage Directory',
                     ),
                   ),
                 ),
@@ -235,7 +239,9 @@ class _MyPathProviderScreenState extends State<PathProviderScreen> {
                             );
                           },
                     child: Text(
-                      !Platform.isAndroid ? 'External directories are unavailable' : 'Get External Storage Directories',
+                      !Platform.isAndroid
+                          ? 'External directories are unavailable'
+                          : 'Get External Storage Directories',
                     ),
                   ),
                 ),
@@ -252,7 +258,9 @@ class _MyPathProviderScreenState extends State<PathProviderScreen> {
                   child: ElevatedButton(
                     onPressed: !Platform.isAndroid ? null : _requestExternalCacheDirectories,
                     child: Text(
-                      !Platform.isAndroid ? 'External directories are unavailable' : 'Get External Cache Directories',
+                      !Platform.isAndroid
+                          ? 'External directories are unavailable'
+                          : 'Get External Cache Directories',
                     ),
                   ),
                 ),
@@ -267,9 +275,12 @@ class _MyPathProviderScreenState extends State<PathProviderScreen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(
-                    onPressed: Platform.isAndroid || Platform.isIOS ? null : _requestDownloadsDirectory,
+                    onPressed:
+                        Platform.isAndroid || Platform.isIOS ? null : _requestDownloadsDirectory,
                     child: Text(
-                      Platform.isAndroid || Platform.isIOS ? 'Downloads directory is unavailable' : 'Get Downloads Directory',
+                      Platform.isAndroid || Platform.isIOS
+                          ? 'Downloads directory is unavailable'
+                          : 'Get Downloads Directory',
                     ),
                   ),
                 ),

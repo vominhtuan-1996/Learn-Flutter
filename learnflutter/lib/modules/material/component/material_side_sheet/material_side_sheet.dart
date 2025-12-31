@@ -210,7 +210,9 @@ class SideSheetMaterial3 extends StatelessWidget {
       elevation: 1,
       color: colorScheme.surface,
       surfaceTintColor: colorScheme.surfaceTint,
-      borderRadius: direction == DirectionSideSheet.right ? BorderRadius.horizontal(left: Radius.circular(28)) : BorderRadius.horizontal(right: Radius.circular(28)),
+      borderRadius: direction == DirectionSideSheet.right
+          ? BorderRadius.horizontal(left: Radius.circular(28))
+          : BorderRadius.horizontal(right: Radius.circular(28)),
       child: SafeArea(
         top: safeAreaTop,
         bottom: safeAreaBottom,

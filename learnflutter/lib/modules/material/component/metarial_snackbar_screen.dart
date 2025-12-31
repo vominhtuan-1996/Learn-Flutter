@@ -14,7 +14,8 @@ class MaterialSnackbarScreen extends StatefulWidget {
   State<MaterialSnackbarScreen> createState() => _MaterialRaidoButtonScreenState();
 }
 
-class _MaterialRaidoButtonScreenState extends State<MaterialSnackbarScreen> with ComponentMaterialDetail {
+class _MaterialRaidoButtonScreenState extends State<MaterialSnackbarScreen>
+    with ComponentMaterialDetail {
   String initialValue = "";
   @override
   void initState() {
@@ -119,7 +120,8 @@ class _MaterialRaidoButtonScreenState extends State<MaterialSnackbarScreen> with
                   forceActionsBelow: true,
                   content: AwesomeSnackbarContent(
                     title: 'Oh Hey!!',
-                    message: 'This is an example error message that will be shown in the body of materialBanner!',
+                    message:
+                        'This is an example error message that will be shown in the body of materialBanner!',
 
                     /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                     contentType: ContentType.warning,

@@ -222,7 +222,8 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   shadowColor: AppColors.grey,
                   shadowOffset: Offset.zero,
                   onTap: () async {
-                    Navigator.of(context).pushNamed(model.router, arguments: ArgumentsScreenModel(title: '', data: model));
+                    Navigator.of(context).pushNamed(model.router,
+                        arguments: ArgumentsScreenModel(title: '', data: model));
                   },
                   suffixIcon: Icons.arrow_forward_outlined,
                   suffixColor: AppColors.black,

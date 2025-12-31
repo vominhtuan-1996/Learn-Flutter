@@ -2,11 +2,9 @@ class BaseLoadingState {
   final bool? isLoading;
   final String? message;
 
-  BaseLoadingState({
-    this.isLoading, this.message
-  } );
+  BaseLoadingState({this.isLoading, this.message});
 
-  factory BaseLoadingState.initial(bool? isLoading , String? message ) {
+  factory BaseLoadingState.initial(bool? isLoading, String? message) {
     return BaseLoadingState(
       isLoading: isLoading,
       message: message,

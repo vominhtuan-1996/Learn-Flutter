@@ -115,8 +115,7 @@ class DataTransferIsolateController extends ChangeNotifier {
 
   Future<void> createIsolate() async {
     _incomingReceivePort = ReceivePort();
-    _isolate = await Isolate.spawn(
-        _secondIsolateEntryPoint, _incomingReceivePort.sendPort);
+    _isolate = await Isolate.spawn(_secondIsolateEntryPoint, _incomingReceivePort.sendPort);
   }
 
   void listen() {
@@ -125,8 +124,7 @@ class DataTransferIsolateController extends ChangeNotifier {
         case SendPort():
           _outgoingSendPort = message;
         case int():
-          currentProgress.insert(
-              0, '$message% - ${_timer.elapsedMilliseconds / 1000} seconds');
+          currentProgress.insert(0, '$message% - ${_timer.elapsedMilliseconds / 1000} seconds');
           progressPercent = message / 100;
         case 'done':
           runningTest = 0;
@@ -176,8 +174,7 @@ class DataTransferIsolateController extends ChangeNotifier {
       }
 
       if (transferableTyped) {
-        final transferable =
-            TransferableTypedData.fromList([Int32List.fromList(randNums)]);
+        final transferable = TransferableTypedData.fromList([Int32List.fromList(randNums)]);
         await sendNumbers(transferable);
       } else {
         await sendNumbers(randNums);
@@ -204,8 +201,7 @@ class RunningList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progress =
-        Provider.of<DataTransferIsolateController>(context).currentProgress;
+    final progress = Provider.of<DataTransferIsolateController>(context).currentProgress;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -246,8 +242,7 @@ Future<void> _secondIsolateEntryPoint(SendPort sendPort) async {
 
         sendPort.send('done');
       } else if (message is TransferableTypedData) {
-        await generateAndSum(
-            sendPort, message.materialize().asInt32List(), length);
+        await generateAndSum(sendPort, message.materialize().asInt32List(), length);
         length++;
       } else if (message is List<int>) {
         await generateAndSum(sendPort, message, length);

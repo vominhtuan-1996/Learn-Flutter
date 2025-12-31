@@ -12,7 +12,8 @@ class MaterialSegmentedScreen extends StatefulWidget {
   State<MaterialSegmentedScreen> createState() => MaterialSegmentedScreenState();
 }
 
-class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with SingleTickerProviderStateMixin {
+class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
   late int _indexTab = 0;
   List colors = [Colors.red.shade200, Colors.blue.shade100, Colors.orange.shade200];
@@ -91,7 +92,13 @@ class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen> with S
     );
   }
 
-  final Map<int, Widget> _children = {0: const Text('Flutter'), 1: const Text('Dart'), 2: const Text('Desktop'), 3: const Text('Mobile'), 4: const Text('Web')};
+  final Map<int, Widget> _children = {
+    0: const Text('Flutter'),
+    1: const Text('Dart'),
+    2: const Text('Desktop'),
+    3: const Text('Mobile'),
+    4: const Text('Web')
+  };
 
   // Holds all indices of children to be disabled.
   // Set this list either null or empty to have no children disabled.

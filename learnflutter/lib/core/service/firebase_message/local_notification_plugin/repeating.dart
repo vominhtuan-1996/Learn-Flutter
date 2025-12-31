@@ -75,7 +75,9 @@ Future<void> _scheduleDailyTenAMLastYearNotification() async {
     'daily scheduled notification body',
     _nextInstanceOfTenAMLastYear(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('daily notification channel id', 'daily notification channel name', channelDescription: 'daily notification description'),
+      android: AndroidNotificationDetails(
+          'daily notification channel id', 'daily notification channel name',
+          channelDescription: 'daily notification description'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.time,
@@ -90,7 +92,9 @@ Future<void> _scheduleWeeklyTenAMNotification() async {
     'weekly scheduled notification body',
     _nextInstanceOfTenAM(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('weekly notification channel id', 'weekly notification channel name', channelDescription: 'weekly notificationdescription'),
+      android: AndroidNotificationDetails(
+          'weekly notification channel id', 'weekly notification channel name',
+          channelDescription: 'weekly notificationdescription'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
@@ -105,7 +109,9 @@ Future<void> _scheduleWeeklyMondayTenAMNotification() async {
     'weekly scheduled notification body',
     _nextInstanceOfMondayTenAM(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('weekly notification channel id', 'weekly notification channel name', channelDescription: 'weekly notificationdescription'),
+      android: AndroidNotificationDetails(
+          'weekly notification channel id', 'weekly notification channel name',
+          channelDescription: 'weekly notificationdescription'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
@@ -120,7 +126,9 @@ Future<void> _scheduleMonthlyMondayTenAMNotification() async {
     'monthly scheduled notification body',
     _nextInstanceOfMondayTenAM(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('monthly notification channel id', 'monthly notification channel name', channelDescription: 'monthly notificationdescription'),
+      android: AndroidNotificationDetails(
+          'monthly notification channel id', 'monthly notification channel name',
+          channelDescription: 'monthly notificationdescription'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime,
@@ -135,7 +143,9 @@ Future<void> _scheduleYearlyMondayTenAMNotification() async {
     'yearly scheduled notification body',
     _nextInstanceOfMondayTenAM(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('yearly notification channel id', 'yearly notification channel name', channelDescription: 'yearly notification description'),
+      android: AndroidNotificationDetails(
+          'yearly notification channel id', 'yearly notification channel name',
+          channelDescription: 'yearly notification description'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.dateAndTime,
@@ -144,8 +154,11 @@ Future<void> _scheduleYearlyMondayTenAMNotification() async {
 }
 
 Future<void> _repeatNotification() async {
-  const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('repeating channel id', 'repeating channel name', channelDescription: 'repeating description');
-  const NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+  const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'repeating channel id', 'repeating channel name',
+      channelDescription: 'repeating description');
+  const NotificationDetails notificationDetails =
+      NotificationDetails(android: androidNotificationDetails);
   await flutterLocalNotificationsPlugin.periodicallyShow(
     id++,
     'repeating title',
@@ -157,8 +170,11 @@ Future<void> _repeatNotification() async {
 }
 
 Future<void> _repeatPeriodicallyWithDurationNotification() async {
-  const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('repeating channel id', 'repeating channel name', channelDescription: 'repeating description');
-  const NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+  const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'repeating channel id', 'repeating channel name',
+      channelDescription: 'repeating description');
+  const NotificationDetails notificationDetails =
+      NotificationDetails(android: androidNotificationDetails);
   await flutterLocalNotificationsPlugin.periodicallyShowWithDuration(
     id++,
     'repeating period title',
@@ -176,7 +192,9 @@ Future<void> _scheduleDailyTenAMNotification() async {
     'daily scheduled notification body',
     _nextInstanceOfTenAM(),
     const NotificationDetails(
-      android: AndroidNotificationDetails('daily notification channel id', 'daily notification channel name', channelDescription: 'daily notification description'),
+      android: AndroidNotificationDetails(
+          'daily notification channel id', 'daily notification channel name',
+          channelDescription: 'daily notification description'),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.time,

@@ -120,14 +120,18 @@ class _CalenderState extends State<CalenderScreen> {
     List<DateTime?> values,
   ) {
     values = values.map((e) => e != null ? DateUtils.dateOnly(e) : null).toList();
-    var valueText = (values.isNotEmpty ? values[0] : null).toString().replaceAll('00:00:00.000', '');
+    var valueText =
+        (values.isNotEmpty ? values[0] : null).toString().replaceAll('00:00:00.000', '');
 
     if (datePickerType == CalendarDatePicker2Type.multi) {
-      valueText = values.isNotEmpty ? values.map((v) => v.toString().replaceAll('00:00:00.000', '')).join(', ') : 'null';
+      valueText = values.isNotEmpty
+          ? values.map((v) => v.toString().replaceAll('00:00:00.000', '')).join(', ')
+          : 'null';
     } else if (datePickerType == CalendarDatePicker2Type.range) {
       if (values.isNotEmpty) {
         final startDate = values[0].toString().replaceAll('00:00:00.000', '');
-        final endDate = values.length > 1 ? values[1].toString().replaceAll('00:00:00.000', '') : 'null';
+        final endDate =
+            values.length > 1 ? values[1].toString().replaceAll('00:00:00.000', '') : 'null';
         valueText = '$startDate to $endDate';
       } else {
         return 'null';
@@ -378,7 +382,8 @@ class _CalenderState extends State<CalenderScreen> {
         CalendarDatePicker2WithActionButtons(
           config: config,
           value: _rangeDatePickerWithActionButtonsWithValue,
-          onValueChanged: (dates) => setState(() => _rangeDatePickerWithActionButtonsWithValue = dates),
+          onValueChanged: (dates) =>
+              setState(() => _rangeDatePickerWithActionButtonsWithValue = dates),
         ),
         const SizedBox(height: 10),
         Row(
@@ -461,14 +466,18 @@ class ShowCalender extends StatelessWidget {
     List<DateTime?> values,
   ) {
     values = values.map((e) => e != null ? DateUtils.dateOnly(e) : null).toList();
-    var valueText = (values.isNotEmpty ? values[0] : null).toString().replaceAll('00:00:00.000', '');
+    var valueText =
+        (values.isNotEmpty ? values[0] : null).toString().replaceAll('00:00:00.000', '');
 
     if (datePickerType == CalendarDatePicker2Type.multi) {
-      valueText = values.isNotEmpty ? values.map((v) => v.toString().replaceAll('00:00:00.000', '')).join(', ') : 'null';
+      valueText = values.isNotEmpty
+          ? values.map((v) => v.toString().replaceAll('00:00:00.000', '')).join(', ')
+          : 'null';
     } else if (datePickerType == CalendarDatePicker2Type.range) {
       if (values.isNotEmpty) {
         final startDate = values[0].toString().replaceAll('00:00:00.000', '');
-        final endDate = values.length > 1 ? values[1].toString().replaceAll('00:00:00.000', '') : 'null';
+        final endDate =
+            values.length > 1 ? values[1].toString().replaceAll('00:00:00.000', '') : 'null';
         valueText = '$startDate to $endDate';
       } else {
         return 'null';

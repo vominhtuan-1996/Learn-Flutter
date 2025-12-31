@@ -14,6 +14,7 @@ void parseJsonInIsolate(ParseJsonMessage message) {
   final List<dynamic> parsedItems = jsonDecode(message.rawJson);
   for (final item in parsedItems) {
     // Gửi từng item về main thread
+    print(item);
     message.sendPort.send(item);
   }
   // Đánh dấu kết thúc

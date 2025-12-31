@@ -295,7 +295,8 @@ class _StoryTimelineState extends State<StoryTimeline> {
 
   @override
   void initState() {
-    _maxAccumulator = widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
+    _maxAccumulator =
+        widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
     _timer = Timer.periodic(
       const Duration(
         milliseconds: kStoryTimerTickMillis,
@@ -321,13 +322,15 @@ class _StoryTimelineState extends State<StoryTimeline> {
       _accumulatedTime += kStoryTimerTickMillis;
       if (_accumulatedTime >= _maxAccumulator) {
         if (_isLastSegment) {
-          _maxAccumulator = widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
+          _maxAccumulator = widget
+              .buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
           _onStoryComplete();
         } else {
           _accumulatedTime = 0;
           _onSegmentComplete();
           _curSegmentIndex++;
-          _maxAccumulator = widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
+          _maxAccumulator = widget
+              .buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
         }
       }
       setState(() {});
@@ -339,14 +342,16 @@ class _StoryTimelineState extends State<StoryTimeline> {
       widget.buttonData.markAsWatched();
     }
     widget.buttonData.currentSegmentIndex = 0;
-    widget.controller._onStoryComplete("${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
+    widget.controller
+        ._onStoryComplete("${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
   }
 
   void _onSegmentComplete() {
     if (widget.buttonData.storyWatchedContract == StoryWatchedContract.onSegmentEnd) {
       widget.buttonData.markAsWatched();
     }
-    widget.controller._onSegmentComplete("${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
+    widget.controller._onSegmentComplete(
+        "${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
   }
 
   bool get _isLastSegment {
@@ -376,12 +381,14 @@ class _StoryTimelineState extends State<StoryTimeline> {
     if (_isLastSegment) {
       _accumulatedTime = _maxAccumulator;
       widget.buttonData.currentSegmentIndex = 0;
-      widget.controller._onStoryComplete("${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
+      widget.controller._onStoryComplete(
+          "${widget.buttonData.storyId}-${widget.buttonData.currentSegmentIndex}");
     } else {
       _accumulatedTime = 0;
       _onSegmentComplete();
       _curSegmentIndex++;
-      _maxAccumulator = widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
+      _maxAccumulator =
+          widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
     }
   }
 
@@ -391,7 +398,8 @@ class _StoryTimelineState extends State<StoryTimeline> {
     } else {
       _accumulatedTime = 0;
       _curSegmentIndex--;
-      _maxAccumulator = widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
+      _maxAccumulator =
+          widget.buttonData.segmentDuration[widget.buttonData.currentSegmentIndex].inMilliseconds;
       _onSegmentComplete();
     }
   }

@@ -119,12 +119,15 @@ import 'package:learnflutter/modules/smart_refresh/smart_refresh_screen.dart';
 import 'package:learnflutter/component/sliver_appbar/main-appbar.dart';
 import 'package:learnflutter/modules/test_screen/test_screen.dart';
 import 'package:learnflutter/modules/theme/page_theme_screen.dart';
+import 'package:learnflutter/modules/theme/setting_texttheme_screen.dart';
 import 'package:learnflutter/modules/trouble_shooting/trouble_shooting_screen.dart';
 import 'package:learnflutter/modules/visibility_detector_demo/visibility_detector_example.dart';
 import 'package:learnflutter/modules/web_view/web_view_screen.dart';
 import 'package:learnflutter/src/lib/story_router/story_page_container_builder.dart';
 import 'package:learnflutter/src/lib/story_router/story_route.dart';
+import 'package:path/path.dart';
 
+import '../../modules/auth/screens/login_screen.dart';
 import '../../modules/flutter_3d/pages/flutter_3d_screen.dart';
 
 class Routes {
@@ -296,6 +299,9 @@ class Routes {
   static const String mobimapModule = "mobimap_module_app";
 
   static const String camerawesome = "camera_wesome_screen";
+
+  // flutter text theme
+  static const String settingTextThemeScreen = "setting_text_theme_screen";
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -1029,9 +1035,17 @@ class Routes {
       case login:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: login),
-          builder: (_) => LoginScreenTemp(),
+          builder: (_) => LoginScreen(),
         );
-
+      case settingTextThemeScreen:
+        final param = arguments.data as Map;
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: settingTextThemeScreen),
+          builder: (_) => SettingTextThemeScreen(
+            role: param['role'],
+          ),
+        );
+      case defaultRoute:
       default:
         return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());
     }

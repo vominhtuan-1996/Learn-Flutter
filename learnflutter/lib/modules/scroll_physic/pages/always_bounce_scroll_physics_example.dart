@@ -41,7 +41,10 @@ class _AlwaysBounceScrollPhysicsExampleState extends State<AlwaysBounceScrollPhy
           Positioned.fill(
             child: Image.asset(
               'assets/images/slier_appbar_bgr.webp',
-              height: DeviceDimension.screenHeight - DeviceDimension.appBar - DeviceDimension.statusBarHeight(context) + DeviceDimension.padding,
+              height: DeviceDimension.screenHeight -
+                  DeviceDimension.appBar -
+                  DeviceDimension.statusBarHeight(context) +
+                  DeviceDimension.padding,
               fit: BoxFit.cover,
             ),
           ),

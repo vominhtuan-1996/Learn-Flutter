@@ -140,11 +140,13 @@ class _HomeRefreshShapeState extends State<HomeRefreshShape> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    if ((widget.state == IndicatorState.idle || widget.state == IndicatorState.settling) && widget.progress == 0.0) {
+    if ((widget.state == IndicatorState.idle || widget.state == IndicatorState.settling) &&
+        widget.progress == 0.0) {
       return const SizedBox.shrink();
     }
 
-    double progress = widget.state == IndicatorState.loading ? _loadingController.value : widget.progress;
+    double progress =
+        widget.state == IndicatorState.loading ? _loadingController.value : widget.progress;
 
     double scale = 1.0;
     double opacity = 1.0;
