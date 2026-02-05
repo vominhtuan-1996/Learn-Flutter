@@ -8,7 +8,10 @@ import 'package:learnflutter/utils_helper/extension/extension_context.dart';
 import 'package:learnflutter/modules/material/component/component_material_mixi.dart';
 import 'package:learnflutter/modules/material/material_screen.dart';
 import 'package:learnflutter/modules/material/material_screen_detail.dart';
+import 'package:learnflutter/modules/material/component/search_module/search_result_page.dart';
 
+/// Lớp MaterialSearchbar trình bày một giao diện thanh tìm kiếm với các gợi ý động.
+/// Khi người dùng chọn một gợi ý hoặc gửi truy vấn, hệ thống sẽ điều hướng đến trang kết quả.
 class MaterialSearchbar extends StatefulWidget {
   const MaterialSearchbar({super.key, required this.data});
   final RouterMaterialModel data;
@@ -16,32 +19,25 @@ class MaterialSearchbar extends StatefulWidget {
   State<MaterialSearchbar> createState() => _MaterialSearchbarState();
 }
 
-class _MaterialSearchbarState extends State<MaterialSearchbar> with ComponentMaterialDetail {
+class _MaterialSearchbarState extends State<MaterialSearchbar>
+    with ComponentMaterialDetail {
   String? value;
   SearchController searchControler = SearchController();
-  CarouselController carou = CarouselController(initialItem: 10);
-  int lenght = 10;
-  @override
-  void initState() {
-    // carou.
 
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  Future<Widget> _getDrawText() async {
-    return Container();
-  }
-
+  /// Hàm mô phỏng việc tải dữ liệu gợi ý từ API dựa trên từ khóa tìm kiếm.
   Future<List<dynamic>> fetchSuggestions(String query) async {
-    // Thực hiện yêu cầu đến API tìm kiếm sản phẩm
-    // For demonstration, returning a dummy list
-    await Future.delayed(Duration(seconds: 1)); // Simulate network delay
-    return List<String>.generate(10, (index) => 'Suggestion123 $index for $query');
+    await Future.delayed(const Duration(seconds: 1)); // Mô phỏng độ trễ mạng.
+    return List<String>.generate(10, (index) => 'Gợi ý $index cho "$query"');
+  }
+
+  /// Hàm thực hiện chuyển hướng người dùng đến trang kết quả tìm kiếm.
+  void _navigateToResults(String query) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchResultPage(query: query),
+      ),
+    );
   }
 
   @override
@@ -59,28 +55,25 @@ class _MaterialSearchbarState extends State<MaterialSearchbar> with ComponentMat
             child: SearchBarBuilder(
               searchController: searchControler,
               childBuilder: (context, data) {
+                // Xây dựng giao diện hiển thị cho từng mục gợi ý trong danh sách.
                 return ListTile(
                   title: Text(data),
+                  leading: const Icon(Icons.search),
                 );
-                // Row(
-                //   children: [
-                //     // Text(data),
-                //     ListTile(
-                //       title: Text(data),
-                //     ),
-                //     // Icon(Icons.access_alarm),
-                //   ],
-                // );
               },
               onTapChildBuilder: (value) {
-                print(value);
+                // Điều hướng khi người dùng nhấn chọn một mục gợi ý.
+                if (value is String) {
+                  _navigateToResults(value);
+                }
               },
-              // onTapChildBuilder: (va) {
-              //   print('Tapped');
-              // },
               getSuggestions: fetchSuggestions,
+              onSubmitted: (value) {
+                // Điều hướng khi người dùng nhấn nút tìm kiếm trên bàn phím.
+                _navigateToResults(value);
+              },
               onChanged: (value) {
-                print(value);
+                print('Từ khóa thay đổi: $value');
               },
             ),
           )

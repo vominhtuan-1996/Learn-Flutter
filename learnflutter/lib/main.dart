@@ -59,8 +59,7 @@ void main() {
             // Example refresh flow: read refresh token from SharedPreferences, call refresh endpoint
             final refreshToken = SharedPreferenceUtils.prefs.getString('refresh_token');
             if (refreshToken == null) return null;
-            final resp = await ApiClient.instance
-                .post('/auth/refresh', data: {'refreshToken': refreshToken});
+            final resp = await ApiClient.instance.post('/auth/refresh', data: {'refreshToken': refreshToken});
             final newToken = resp['accessToken'] ?? resp['token'];
             if (newToken != null && newToken is String) {
               ApiClient.instance.setAuthToken(newToken);
@@ -75,7 +74,7 @@ void main() {
       // Wrapper này ngăn rebuild UI khi keyboard hiển thị/ẩn
       runApp(GlobalNoKeyboardRebuild(
         addBottomPadding: true,
-        animationDurationMs: 200,
+        animationDurationMs: 50,
         child: MyApp(),
       ));
     },

@@ -142,6 +142,7 @@ dependencies:
   pretty_qr_code: ^3.4.0
   image_gallery_saver: ^2.0.3
   flutter_3d_controller: ^2.2.0
+  another_transformer_page_view: ^2.0.1
   custom_refresh_indicator: ^4.0.1
   lottie: ^3.0.0
   path_drawing: ^1.0.0

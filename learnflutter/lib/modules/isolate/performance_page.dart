@@ -15,6 +15,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/isolate/app_isolate_handler.dart';
+
 // Computes the nth number in the Fibonacci sequence.
 int fib(int n) {
   var a = n - 1;
@@ -57,7 +59,8 @@ class _PerformancePageState extends State<PerformancePage> {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(elevation: 8.0),
                       onPressed: switch (snapshot.connectionState) {
-                        ConnectionState.done => () => handleComputeOnMain(context),
+                        ConnectionState.done => () =>
+                            handleComputeOnMain(context),
                         _ => null
                       },
                       child: const Text('Compute on Main'),
@@ -70,7 +73,8 @@ class _PerformancePageState extends State<PerformancePage> {
                     return ElevatedButton(
                         style: ElevatedButton.styleFrom(elevation: 8.0),
                         onPressed: switch (snapshot.connectionState) {
-                          ConnectionState.done => () => handleComputeOnSecondary(context),
+                          ConnectionState.done => () =>
+                              handleComputeOnSecondary(context),
                           _ => null
                         },
                         child: const Text('Compute on Secondary'));
@@ -100,7 +104,7 @@ class _PerformancePageState extends State<PerformancePage> {
   }
 
   void handleComputeOnSecondary(BuildContext context) {
-    var future = computeOnSecondaryIsolate()
+    var future = AppIsolateHandler().compute(() => fib(45))
       ..then((_) {
         var snackBar = const SnackBar(
           content: Text('Secondary Isolate Done!'),
@@ -144,11 +148,13 @@ class _SmoothAnimationWidgetState extends State<SmoothAnimationWidget>
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    _animationController =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
-    _borderAnimation =
-        BorderRadiusTween(begin: BorderRadius.circular(100.0), end: BorderRadius.circular(0.0))
-            .animate(_animationController);
+    _borderAnimation = BorderRadiusTween(
+            begin: BorderRadius.circular(100.0),
+            end: BorderRadius.circular(0.0))
+        .animate(_animationController);
 
     _animationController.repeat(reverse: true);
   }

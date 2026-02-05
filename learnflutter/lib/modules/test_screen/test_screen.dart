@@ -51,7 +51,8 @@ class _TestScreenState extends State<TestScreen> {
     // Thực hiện yêu cầu đến API tìm kiếm sản phẩm
     // For demonstration, returning a dummy list
     await Future.delayed(Duration(seconds: 1)); // Simulate network delay
-    return List<String>.generate(10, (index) => 'Suggestion123 $index for $query');
+    return List<String>.generate(
+        10, (index) => 'Suggestion123 $index for $query');
   }
 
   List uploadList = [
@@ -98,7 +99,8 @@ class _TestScreenState extends State<TestScreen> {
 
   String convertCurlToMarkdown(String curlInput) {
     // Loại bỏ khoảng trắng đầu cuối và escape các ký tự đặc biệt
-    final escapedCurl = curlInput.trim().replaceAll(r'\', r'\\').replaceAll('"', r'\"');
+    final escapedCurl =
+        curlInput.trim().replaceAll(r'\', r'\\').replaceAll('"', r'\"');
     // Đưa vào code block markdown
     return '```\n$escapedCurl\n```';
   }
@@ -321,7 +323,7 @@ class _TestScreenState extends State<TestScreen> {
                     initialRoute: '/mnt_xla_checklist',
                     username: "ISC01.TUANVM37",
                     env: "STAGING",
-                    isDarkMode: false,
+                    isDarkMode: !getThemeBloc(context).state.tokens.isLight,
                     fontName: getThemeBloc(context)
                         .state
                         .tokens
@@ -330,7 +332,8 @@ class _TestScreenState extends State<TestScreen> {
                         .fontFamily
                         .split('_')
                         .first,
-                    primaryColor: getThemeBloc(context).state.tokens.colors.primary,
+                    primaryColor:
+                        getThemeBloc(context).state.tokens.colors.primary,
                   );
                 },
                 child: Text('Mobimap Module'),
@@ -362,7 +365,8 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.indicatorExampleScreen);
+                  Navigator.of(context)
+                      .pushNamed(Routes.indicatorExampleScreen);
                 },
                 child: Text('Indicator Example'),
               ),
@@ -380,7 +384,8 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.visibilityDetectorExample);
+                  Navigator.of(context)
+                      .pushNamed(Routes.visibilityDetectorExample);
                 },
                 child: Text('visibilityDetectorExample'),
               ),
@@ -426,6 +431,12 @@ class _TestScreenState extends State<TestScreen> {
               //         },
               //         child: Text("send log to google chat"),
               //       ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.transformerPageView);
+                },
+                child: Text("TransformerPageView Example"),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.smartLoadmoreScreen);
@@ -494,14 +505,16 @@ class _TestScreenState extends State<TestScreen> {
                 enabled: true,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.troubleShootingScreen);
+                    Navigator.of(context)
+                        .pushNamed(Routes.troubleShootingScreen);
                   },
                   child: Text('TroubleShootingScreen'),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.draggableExampleScreen);
+                  Navigator.of(context)
+                      .pushNamed(Routes.draggableExampleScreen);
                 },
                 child: Text('FloatingDraggableWidget'),
               ),
@@ -562,7 +575,8 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.notificationScrollScreen);
+                  Navigator.of(context)
+                      .pushNamed(Routes.notificationScrollScreen);
                 },
                 child: Text('NotificationScrollScreen'),
               ),
@@ -677,7 +691,8 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
+                  Navigator.of(context)
+                      .pushNamed(Routes.materialSegmentedScreen);
                 },
                 child: Text('Test Material Segmented'),
               ),
@@ -826,7 +841,8 @@ class _TestScreenState extends State<TestScreen> {
                 child: CupertinoSwitch(
                   // This bool value toggles the switch.
                   value: switchValue,
-                  activeTrackColor: Color(0xFFB6E13D), // CupertinoColors.activeGreen,
+                  activeTrackColor:
+                      Color(0xFFB6E13D), // CupertinoColors.activeGreen,
                   inactiveTrackColor: Color(0xFFD9D9D9),
                   thumbColor: Colors.red,
                   onChanged: (bool? value) {

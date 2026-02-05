@@ -66,7 +66,8 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                   ? context.mediaQuery.size.height / 2
                   : context.mediaQuery.size.height / 3);
     }
-    return widget.viewConstraints ?? BoxConstraints(maxHeight: context.mediaQuery.size.height / 2);
+    return widget.viewConstraints ??
+        BoxConstraints(maxHeight: context.mediaQuery.size.height / 2);
   }
 
   @override
@@ -93,7 +94,8 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                               child: CupertinoActivityIndicator()),
                         );
                   } else if (state is SearchError) {
-                    return widget.builderError?.call(context) ?? Text('Error fetching suggestions');
+                    return widget.builderError?.call(context) ??
+                        Text('Error fetching suggestions');
                   } else if (state is SearchLoaded) {
                     return Builder(
                       builder: (context) => SingleChildScrollView(
@@ -102,11 +104,14 @@ class _SearchBarBuilderState extends State<SearchBarBuilder> {
                             state.suggestions.length,
                             (index) => GestureDetector(
                               onTap: () {
-                                controller.text = state.suggestions[index];
+                                controller.text =
+                                    state.suggestions[index].toString();
                                 UtilsHelper.pop(context);
-                                widget.onTapChildBuilder?.call(state.suggestions[index]);
+                                widget.onTapChildBuilder
+                                    ?.call(state.suggestions[index]);
                               },
-                              child: widget.childBuilder(context, state.suggestions[index]),
+                              child: widget.childBuilder(
+                                  context, state.suggestions[index]),
                             ),
                           ),
                         ),

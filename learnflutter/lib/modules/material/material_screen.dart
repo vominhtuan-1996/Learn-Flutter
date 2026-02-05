@@ -7,7 +7,11 @@ import 'package:learnflutter/component/routes/argument_screen_model.dart';
 import 'package:learnflutter/component/routes/route.dart';
 import 'package:learnflutter/modules/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/modules/material/component/metarial_radio_button/metarial_radio_button.dart';
+import 'package:learnflutter/modules/material/component/metarial_radio_button/radio_item_model.dart';
+import 'package:learnflutter/modules/material/component/search_module/search_list_bottom_sheet.dart';
 
+/// Lớp RouterMaterialModel định nghĩa cấu trúc dữ liệu cho một thành phần trong danh sách Material.
 class RouterMaterialModel {
   RouterMaterialModel(this.title, this.router, this.description);
 
@@ -16,14 +20,27 @@ class RouterMaterialModel {
   final String router;
 }
 
+/// Trang MaterialScreen hiển thị danh sách tất cả các thành phần Material có sẵn trong ứng dụng.
 class MaterialScreen extends StatefulWidget {
   const MaterialScreen({super.key});
   @override
   State<MaterialScreen> createState() => MaterialScreenState();
 }
 
-class MaterialScreenState extends State<MaterialScreen> with TickerProviderStateMixin {
+class MaterialScreenState extends State<MaterialScreen>
+    with TickerProviderStateMixin {
   DateTime selectedDate = DateTime.now();
+
+  /// Danh sách các kết quả đã được chọn và xác nhận từ Bottom Sheet.
+  List<RadioItemModel> confirmedResults = [];
+
+  /// Dữ liệu mẫu ban đầu để hiển thị trong danh sách của Bottom Sheet.
+  final List<RadioItemModel> dummyInitialData = [
+    RadioItemModel(id: '1', title: 'Mục có sẵn 1'),
+    RadioItemModel(id: '2', title: 'Mục có sẵn 2'),
+  ];
+
+  /// Danh sách các thành phần Material sẽ được hiển thị trên giao diện.
   List components = [
     RouterMaterialModel(
       'Badges',
@@ -182,6 +199,7 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     ),
   ];
   bool light = true;
+
   @override
   void initState() {
     super.initState();
@@ -201,6 +219,30 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
     }
   }
 
+  /// Hàm mở Bottom Sheet chứa danh sách lựa chọn và tính năng tìm kiếm.
+  /// Nó hỗ trợ cả hai chế độ chọn đơn (single) và chọn nhiều (multi).
+  void _openSearchOptions(RadioType type) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SearchListBottomSheet(
+        type: type,
+        initialData: dummyInitialData.map((e) {
+          // Khôi phục trạng thái đã chọn dựa trên các kết quả đã xác nhận trước đó.
+          e.isSelected =
+              confirmedResults.any((confirmed) => confirmed.id == e.id);
+          return e;
+        }).toList(),
+        onConfirm: (results) {
+          setState(() {
+            confirmedResults = results;
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
@@ -210,8 +252,47 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
       ),
       child: SingleChildScrollView(
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Phần chức năng mới: Nút mở Bottom Sheet Tìm kiếm & Lựa chọn.
+            Padding(
+              padding: EdgeInsets.all(DeviceDimension.padding / 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Module Search Workflow:',
+                    style: context.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => _openSearchOptions(RadioType.single),
+                          child: const Text('Mở Bottom Sheet (Single)'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => _openSearchOptions(RadioType.multi),
+                          child: const Text('Mở Bottom Sheet (Multi)'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (confirmedResults.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                        'Đã xác nhận: ${confirmedResults.map((e) => e.title).join(", ")}'),
+                  ],
+                ],
+              ),
+            ),
+            const Divider(),
+            ...List.generate(
               components.length,
               (index) {
                 RouterMaterialModel model = components[index];
@@ -223,7 +304,8 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   shadowOffset: Offset.zero,
                   onTap: () async {
                     Navigator.of(context).pushNamed(model.router,
-                        arguments: ArgumentsScreenModel(title: '', data: model));
+                        arguments:
+                            ArgumentsScreenModel(title: '', data: model));
                   },
                   suffixIcon: Icons.arrow_forward_outlined,
                   suffixColor: AppColors.black,
@@ -238,386 +320,9 @@ class MaterialScreenState extends State<MaterialScreen> with TickerProviderState
                   ),
                 );
               },
-            )
-            // [
-            //   MaterialTextField(
-            //     enabled: true,
-            //     readOnly: false,
-            //     onChanged: (p0) {},
-            //     hintText: 'Nhập từ khoá tìm kiếm',
-            //     focusedBorderColor: AppColors.primary,
-            //     counterText: 'Keep it short',
-            //     helperText: 'Keep it short, this is just a demo.',
-            //     decorationBorderColor: Colors.red,
-            //     enabledBorderColor: AppColors.primary,
-            //     disabledBorderColor: AppColors.black,
-            //     prefixIcon: Icons.search,
-            //     prefixIconColor: AppColors.primary,
-            //     prefixIconConstraints: const BoxConstraints(maxWidth: 40, maxHeight: 30),
-            //     onPrefixIconIconPressed: () {
-            //       print('onPrefixIconIconPressed');
-            //     },
-            //     suffixIcon: Icons.close,
-            //     suffixIconColor: AppColors.blue,
-            //     suffixIconConstraints: const BoxConstraints(maxWidth: 40, maxHeight: 30),
-            //     onSuffixIconPressed: () {
-            //       print('onSuffixIconPressed');
-            //     },
-            //   ),
-            //   SizedBox(
-            //     width: 50,
-            //     height: 50,
-            //     child: MaterialButton3(
-            //       backgoundColor: AppColors.white,
-            //       borderColor: AppColors.primary,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: AppColors.grey,
-            //       onTap: () {
-            //         showModalBottomSheet<void>(
-            //           context: context,
-            //           builder: (BuildContext context) {
-            //             return SizedBox(
-            //               height: context.mediaQuery.size.height / 2,
-            //               child: Stack(
-            //                 children: [
-            //                   Column(
-            //                     children: <Widget>[
-            //                       SizedBox(height: DeviceDimension.padding / 2),
-            //                       Container(
-            //                         height: 3,
-            //                         width: context.mediaQuery.size.width / 8,
-            //                         decoration: AppBoxDecoration.boxDecorationBorderRadius(
-            //                           borderRadiusValue: 8,
-            //                           borderWidth: 1,
-            //                           colorBackground: Colors.grey,
-            //                         ),
-            //                       ),
-            //                       Expanded(
-            //                         child: CupertinoDatePicker(
-            //                           minimumYear: DateTime.now().year - 7,
-            //                           maximumDate: DateTime.now(),
-            //                           initialDateTime: selectedDate,
-            //                           mode: CupertinoDatePickerMode.date,
-            //                           dateOrder: DatePickerDateOrder.dmy,
-
-            //                           // use24hFormat: true,
-            //                           // This shows day of week alongside day of month
-            //                           // This is called when the user changes the date.
-            //                           onDateTimeChanged: (DateTime newDate) {
-            //                             selectedDate = newDate;
-            //                           },
-            //                         ),
-            //                       ),
-            //                       SizedBox(
-            //                         width: context.mediaQuery.size.width,
-            //                         child: MaterialButton3(
-            //                           backgoundColor: AppColors.white,
-            //                           borderColor: AppColors.white,
-            //                           borderRadius: DeviceDimension.padding,
-            //                           shadowColor: AppColors.grey,
-            //                           onTap: () async {
-            //                             setState(() => selectedDate);
-            //                             DialogUtils.dismissPopup(context);
-            //                           },
-            //                           type: MaterialButtonType.commonbutton,
-            //                           lableText: 'OK',
-            //                           labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-            //                         ),
-            //                       ),
-            //                       SizedBox(height: DeviceDimension.padding),
-            //                       SizedBox(
-            //                         width: context.mediaQuery.size.width,
-            //                         child: MaterialButton3(
-            //                           backgoundColor: AppColors.white,
-            //                           borderColor: AppColors.white,
-            //                           borderRadius: DeviceDimension.padding,
-            //                           shadowColor: AppColors.grey,
-            //                           onTap: () async {
-            //                             DialogUtils.dismissPopup(context);
-            //                           },
-            //                           type: MaterialButtonType.commonbutton,
-            //                           lableText: 'Cancle',
-            //                           labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                   Positioned(
-            //                     right: 10,
-            //                     top: 10,
-            //                     child: GestureDetector(
-            //                       onTap: () => Navigator.pop(context),
-            //                       child: const Center(
-            //                           child: Icon(
-            //                         Icons.close,
-            //                         color: Colors.black,
-            //                         size: 30,
-            //                       )),
-            //                     ),
-            //                   )
-            //                 ],
-            //               ),
-            //             );
-            //           },
-            //         );
-            //       },
-            //       type: MaterialButtonType.fab,
-            //       fabIcon: Icons.accessibility,
-            //       fabIconColor: Colors.blue,
-            //     ),
-            //   ),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(
-            //     width: 150,
-            //     child: MaterialButton3(
-            //       backgoundColor: AppColors.green,
-            //       borderColor: AppColors.green,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: AppColors.grey,
-            //       onTap: () async {
-            //         DialogUtils.dialogBuilder(
-            //           context: context,
-            //           type: TypeDialog.custom,
-            //           contentWidget: const SizedBox(
-            //             height: 200,
-            //             child: Card(
-            //               clipBehavior: Clip.hardEdge,
-            //               color: Colors.red,
-            //               child: Center(child: Text('data')),
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //       type: MaterialButtonType.commonbutton,
-            //       lableText: 'show Card',
-            //       labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(
-            //     width: 150,
-            //     child: MaterialButton3(
-            //       backgoundColor: AppColors.green,
-            //       borderColor: AppColors.green,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: AppColors.grey,
-            //       onTap: () async {
-            //         DialogUtils.showActionSheet(
-            //             context: context,
-            //             title: 'Hihi',
-            //             titleCancleAction: '???',
-            //             content: Container(
-            //               width: context.mediaQuery.size.width,
-            //               height: 100,
-            //               color: Colors.red,
-            //               child: Material(
-            //                 child: MaterialTextField(
-            //                   enabled: true,
-            //                   readOnly: false,
-            //                   onChanged: (p0) {},
-            //                   hintText: 'Nhập từ khoá tìm kiếm',
-            //                   focusedBorderColor: AppColors.primary,
-            //                   counterText: 'Keep it short',
-            //                   helperText: 'Keep it short, this is just a demo.',
-            //                   decorationBorderColor: Colors.red,
-            //                   enabledBorderColor: AppColors.primary,
-            //                   disabledBorderColor: AppColors.black,
-            //                   prefixIcon: Icons.search,
-            //                   prefixIconColor: AppColors.primary,
-            //                   prefixIconConstraints: const BoxConstraints(maxWidth: 40, maxHeight: 30),
-            //                   onPrefixIconIconPressed: () {
-            //                     print('onPrefixIconIconPressed');
-            //                   },
-            //                   suffixIcon: Icons.close,
-            //                   suffixIconColor: AppColors.blue,
-            //                   suffixIconConstraints: const BoxConstraints(maxWidth: 40, maxHeight: 30),
-            //                   onSuffixIconPressed: () {
-            //                     print('onSuffixIconPressed');
-            //                   },
-            //                 ),
-            //               ),
-            //               // child: Column(
-            //               //   children: [
-            //               //     IconAnimationWidget(
-            //               //       isRotate: true,
-            //               //     ),
-            //               //     IconAnimationWidget(
-            //               //       isRotate: false,
-            //               //     ),
-            //               //     RippleAnimationWidget()
-            //               //   ],
-            //               // ),
-            //             ));
-            //       },
-            //       type: MaterialButtonType.commonbutton,
-            //       lableText: 'Bottom Action Sheet ',
-            //       labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(
-            //     width: 150,
-            //     child: MaterialButton3(
-            //       backgoundColor: AppColors.green,
-            //       borderColor: AppColors.green,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: AppColors.grey,
-            //       onTap: () async {
-            //         _selectDate(context);
-            //         // DialogUtils.showDatimePicker(
-            //         //   onComplete: (p0) {},
-            //         // );
-            //       },
-            //       type: MaterialButtonType.commonbutton,
-            //       lableText: 'showDatimePicker',
-            //       labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(width: 150, child: Text(selectedDate.toString())),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(
-            //     width: 120,
-            //     child: MaterialButton3(
-            //       backgoundColor: AppColors.green,
-            //       borderColor: AppColors.green,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: Colors.transparent,
-            //       shadowOffset: Offset.zero,
-            //       onTap: () async {
-            //         DialogUtils.dialogBuilder(
-            //           context: context,
-            //           type: TypeDialog.custom,
-            //           contentWidget: Container(
-            //             width: double.maxFinite,
-            //             height: 200,
-            //             padding: const EdgeInsets.all(10),
-            //             child: M3Carousel(
-            //               visible: 3,
-            //               borderRadius: 20,
-            //               slideAnimationDuration: 500,
-            //               titleFadeAnimationDuration: 300,
-            //               childClick: (int index) {
-            //                 print("Clicked $index");
-            //               },
-            //               children: [
-            //                 IconAnimationWidget(),
-            //                 IconAnimationWidget(
-            //                   icon: Icons.notification_add_rounded,
-            //                   isRotate: true,
-            //                 ),
-            //                 RippleAnimationWidget(),
-            //                 Container(
-            //                   height: 100,
-            //                   width: 100,
-            //                   color: Colors.pink,
-            //                 ),
-            //                 Container(
-            //                   height: 100,
-            //                   width: 100,
-            //                   color: Colors.black,
-            //                 )
-            //               ],
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //       type: MaterialButtonType.extendedfab,
-            //       lableText: 'Show Dialogs',
-            //       labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            //   SizedBox(height: DeviceDimension.padding),
-            //   SizedBox(
-            //     height: 60,
-            //     child: MaterialButton3(
-            //       backgoundColor: Colors.white,
-            //       borderColor: AppColors.grey,
-            //       borderRadius: DeviceDimension.padding,
-            //       shadowColor: Colors.transparent,
-            //       shadowOffset: Offset.zero,
-            //       onTap: () {},
-            //       type: MaterialButtonType.segmentedbutton,
-            //       lableText: 'Enable',
-            //       prefixIcon: Icons.check_circle,
-            //       prefixColor: Colors.black,
-            //       labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.green),
-            //     ),
-            //   ),
-            //   MaterialButton3(
-            //     backgoundColor: Colors.white,
-            //     borderColor: AppColors.white,
-            //     borderRadius: DeviceDimension.padding,
-            //     shadowColor: Colors.transparent,
-            //     shadowOffset: Offset.zero,
-            //     onTap: () {
-            //       print('object');
-            //     },
-            //     type: MaterialButtonType.iconbutton,
-            //     fabIcon: Icons.accessibility,
-            //     fabIconColor: Colors.blue,
-            //   ),
-            //   Container(
-            //     width: double.maxFinite,
-            //     height: 200,
-            //     padding: const EdgeInsets.all(10),
-            //     child: M3Carousel(
-            //       visible: 3,
-            //       borderRadius: 20,
-            //       slideAnimationDuration: 500,
-            //       titleFadeAnimationDuration: 300,
-            //       childClick: (int index) {
-            //         print("Clicked $index");
-            //       },
-            //       children: [
-            //         IconAnimationWidget(),
-            //         IconAnimationWidget(
-            //           icon: Icons.notification_add_rounded,
-            //           isRotate: true,
-            //         ),
-            //         RippleAnimationWidget(),
-            //         Container(
-            //           height: 100,
-            //           width: 100,
-            //           color: Colors.pink,
-            //         ),
-            //         Container(
-            //           height: 100,
-            //           width: 100,
-            //           color: Colors.black,
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            //   Container(
-            //     height: 30,
-            //     width: 90,
-            //     child: Switch(
-            //       value: light,
-            //       trackOutlineColor: const MaterialStatePropertyAll<Color?>(Colors.transparent),
-            //       activeTrackColor: Colors.red,
-            //       activeThumbImage: Image.asset(loadImageWithImageName('ic_search_organe', TypeImage.png)).image,
-            //       inactiveThumbImage: Image.asset(loadImageWithImageName('ic_tabbar_user_selected', TypeImage.png)).image,
-            //       onChanged: (bool value) {},
-            //     ),
-            //   ),
-            //   SizedBox(
-            //     height: 30,
-            //   ),
-            //   MaterialCheckBox(
-            //     disible: false,
-            //     scale: 1.6,
-            //     isChecked: true,
-            //     checkedColor: Colors.black,
-            //     borderColor: Colors.black,
-            //     onChangedCheck: (value) {
-            //       print(value);
-            //     },
-            //     borderRadius: 6,
-            //     fillColor: Colors.transparent,
-            //   ),
-            // ],
             ),
+          ],
+        ),
       ),
     );
   }

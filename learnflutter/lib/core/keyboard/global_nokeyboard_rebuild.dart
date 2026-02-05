@@ -7,7 +7,7 @@ class KeyboardPaddingConstants {
   static const int animationDurationMs = 200;
 
   /// Curve animation cho keyboard transition
-  static const Curve animationCurve = Curves.easeInOut;
+  static const Curve animationCurve = Curves.decelerate;
 }
 
 /// GlobalNoKeyboardRebuild - Prevent UI Rebuild When Keyboard Show/Hide
@@ -143,7 +143,7 @@ class _KeyboardPaddingWrapper extends StatelessWidget {
         // Một số nền tảng có thể trả về giá trị lớn hoặc không mong muốn,
         // nên giới hạn tối đa theo tỷ lệ của chiều cao màn hình.
         final screenHeight = MediaQuery.of(context).size.height;
-        final maxAllowed = screenHeight * 0.4; // không cho keyboard chiếm >70% màn hình
+        final maxAllowed = screenHeight * 0.6; // không cho keyboard chiếm >70% màn hình
         if (keyboardHeight.isNaN || keyboardHeight < 0) {
           keyboardHeight = 0.0;
         }
@@ -177,6 +177,7 @@ class _KeyboardPaddingWrapper extends StatelessWidget {
           duration: Duration(milliseconds: animationDurationMs),
           curve: animationCurve,
           padding: EdgeInsets.only(bottom: bottomPadding),
+          color: Colors.white,
           child: child,
         );
       },

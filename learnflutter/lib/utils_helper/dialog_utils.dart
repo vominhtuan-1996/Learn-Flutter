@@ -59,8 +59,7 @@ class DialogUtils {
     return temp;
   }
 
-  static Widget widgetContentDialogWithType(
-      {TypeDialog type = TypeDialog.custom, String? content, Widget? contentWidget}) {
+  static Widget widgetContentDialogWithType({TypeDialog type = TypeDialog.custom, String? content, Widget? contentWidget}) {
     Widget temp = Container();
     switch (type) {
       case TypeDialog.error:
@@ -90,8 +89,7 @@ class DialogUtils {
         return AlertDialog(
           icon: widgetIconsDialogWithType(type),
           title: Text(title),
-          content: widgetContentDialogWithType(
-              type: type, content: content, contentWidget: contentWidget),
+          content: widgetContentDialogWithType(type: type, content: content, contentWidget: contentWidget),
           actions: actions ??
               <Widget>[
                 TextButton(
@@ -446,9 +444,7 @@ class DialogUtils {
             return Container(
               decoration: BoxDecoration(
                 color: backgroundColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(48 * initialSize),
-                    topRight: Radius.circular(48 * initialSize)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(48 * initialSize), topRight: Radius.circular(48 * initialSize)),
               ),
               child: SingleChildScrollView(
                 physics: NoBounceScrollPhysics(),
@@ -456,8 +452,7 @@ class DialogUtils {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
+                      padding: EdgeInsets.only(top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
                       child: Container(
                         height: 6,
                         width: context.mediaQuery.size.width / 7,
@@ -525,7 +520,7 @@ class DialogUtils {
 
   static Future<void> showDownload({
     required BuildContext contextDialog,
-    String title = 'Basic dialog title',
+    String title = 'Downloading File',
     String content = 'Basic dialog content',
     List<Widget>? actions,
     Widget? contentWidget,
@@ -544,11 +539,13 @@ class DialogUtils {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) async {
                   await Future.delayed(
-                    const Duration(milliseconds: 300),
+                    const Duration(milliseconds: 500),
                     () {
                       if (context.mounted) {
                         dismissPopup(context, complete: () {
-                          OpenFile.open(snapshot.data as String);
+                          if (snapshot.data != null) {
+                            OpenFile.open(snapshot.data as String);
+                          }
                         });
                       }
                     },
@@ -556,53 +553,95 @@ class DialogUtils {
                 },
               );
             }
-            return Center(
-              child: ScaleTransition(
-                scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
-                child: StreamBuilder(
-                  stream: stream.stream,
-                  initialData: 0.0,
-                  builder: (context, snapshot) {
-                    return AlertDialog(
-                      scrollable: true,
-                      content: Column(
-                        children: [
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (Widget child, Animation<double> animation) {
-                              return FadeTransition(opacity: animation, child: child);
-                            },
-                            child: snapshot.data != 1
-                                ? Container(
-                                    key: ValueKey<int>(0),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: DeviceDimension.padding / 2,
+            return ScaleTransition(
+              scale: Tween<double>(begin: 0.5, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOut,
+                ),
+              ),
+              child: FadeTransition(
+                opacity: Tween<double>(begin: 0.5, end: 1.0).animate(animation),
+                child: Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  child: StreamBuilder<double>(
+                    stream: stream.stream,
+                    initialData: 0.0,
+                    builder: (context, snapshot) {
+                      final progress = snapshot.data ?? 0.0;
+                      final isCompleted = progress == 1.0;
+
+                      return Container(
+                        padding: const EdgeInsets.all(24.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(16.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              isCompleted ? 'Completed' : title,
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 24.0),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (Widget child, Animation<double> animation) {
+                                return FadeTransition(opacity: animation, child: child);
+                              },
+                              child: isCompleted
+                                  ? const Icon(
+                                      Icons.check_circle,
+                                      color: Colors.green,
+                                      size: 60,
+                                      key: ValueKey('completed'),
+                                    )
+                                  : SizedBox(
+                                      key: const ValueKey('progress'),
+                                      width: 80,
+                                      height: 80,
+                                      child: Stack(
+                                        fit: StackFit.expand,
+                                        children: [
+                                          CircularProgressIndicator(
+                                            value: progress,
+                                            strokeWidth: 8,
+                                            backgroundColor: Colors.grey.shade300,
+                                            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                                          ),
+                                          Center(
+                                            child: Text(
+                                              '${(progress * 100).toStringAsFixed(0)}%',
+                                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    child: LinearProgressIndicator(
-                                      minHeight: 8,
-                                      value: snapshot.data,
-                                      semanticsLabel: 'Linear',
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  )
-                                : Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: DeviceDimension.padding / 2,
-                                    ),
-                                    child: FadeTransition(
-                                      key: ValueKey<int>(1),
-                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data)
-                                          .animate(animation),
-                                      child: ImageHelper.loadFromAsset(
-                                          'assets/icons/ic_popup_success.svg'),
-                                    ),
-                                  ),
-                          ),
-                          Text('${((snapshot.data ?? 0.0) * 100).toStringAsFixed(0)} %'),
-                        ],
-                      ),
-                    );
-                  },
+                            ),
+                            const SizedBox(height: 24.0),
+                            if (!isCompleted)
+                              Text(
+                                'Please wait...',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             );
@@ -611,10 +650,10 @@ class DialogUtils {
         );
         return child;
       },
-      transitionDuration: const Duration(milliseconds: 300), // DURATION FOR ANIMATION
+      transitionDuration: const Duration(milliseconds: 300),
       barrierDismissible: false,
       pageBuilder: (context, animation, secondaryAnimation) {
-        return const Text('');
+        return const SizedBox.shrink();
       },
     );
   }
@@ -691,8 +730,7 @@ class DialogUtils {
                                 ),
                                 child: LinearProgressIndicator(
                                   minHeight: 8,
-                                  value:
-                                      math((snapshot.data! / (uploadList.length - 1)).toString()),
+                                  value: math((snapshot.data! / (uploadList.length - 1)).toString()),
                                   semanticsLabel: 'Linear',
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -782,10 +820,8 @@ class DialogUtils {
                                     ),
                                     child: FadeTransition(
                                       key: ValueKey<int>(1),
-                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data)
-                                          .animate(animation),
-                                      child: ImageHelper.loadFromAsset(
-                                          'assets/icons/ic_popup_success.svg'),
+                                      opacity: Tween<double>(begin: 0.3, end: snapshot.data).animate(animation),
+                                      child: ImageHelper.loadFromAsset('assets/icons/ic_popup_success.svg'),
                                     ),
                                   ),
                           ),
@@ -851,9 +887,7 @@ class DialogUtils {
               child: Container(
                 decoration: BoxDecoration(
                   color: backgroundColor ?? Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(36 * initialSize),
-                      topRight: Radius.circular(36 * initialSize)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(36 * initialSize), topRight: Radius.circular(36 * initialSize)),
                   border: Border.symmetric(
                     horizontal: BorderSide(
                       color: Colors.grey,
@@ -874,9 +908,7 @@ class DialogUtils {
                             // ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(
-                                top: DeviceDimension.padding / 4,
-                                bottom: DeviceDimension.padding / 2),
+                            padding: EdgeInsets.only(top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
                             child: Container(
                               height: 6,
                               width: context.mediaQuery.size.width / 7,
@@ -887,10 +919,7 @@ class DialogUtils {
                             ),
                           ),
                         ),
-                        VMTBottomSheet(
-                            heightBottomSheet:
-                                (state.height ?? heightBottomSheet) - heightDropAction,
-                            child: child),
+                        VMTBottomSheet(heightBottomSheet: (state.height ?? heightBottomSheet) - heightDropAction, child: child),
                       ],
                     );
                   },
@@ -923,8 +952,7 @@ class DialogUtils {
             scale: Tween<double>(begin: 0.3, end: 1.0).animate(animation),
             child: AlertDialog(
                 backgroundColor: AppColors.greyBlue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(DeviceDimension.padding / 2))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(DeviceDimension.padding / 2))),
                 insetPadding: EdgeInsets.zero,
                 contentPadding: EdgeInsets.zero,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
