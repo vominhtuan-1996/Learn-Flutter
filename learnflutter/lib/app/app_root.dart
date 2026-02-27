@@ -3,137 +3,76 @@ import 'dart:async';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:learnflutter/core/app/app_local_translate.dart';
 import 'package:learnflutter/core/app/device_dimension.dart';
-import 'package:learnflutter/modules/home/home_aniamtion.dart';
 import 'package:learnflutter/app/intro_splash.dart';
-import 'package:learnflutter/modules/setting/cubit/setting_cubit.dart';
-import 'package:learnflutter/modules/setting/state/setting_state.dart';
-import 'package:learnflutter/utils_helper/extension/extension_context.dart';
+import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';
+import 'package:learnflutter/features/setting/state/setting_state.dart';
+import 'package:learnflutter/core/utils/extension/extension_context.dart';
 
-/// Strings Define for AppRoot Widget
+/// Lớp AppRootStrings đóng vai trò là một kho lưu trữ tập trung dành riêng cho các hằng số cấu hình của widget AppRoot trong toàn bộ hệ thống.
+/// Việc tập trung các giá trị như đường dẫn hình ảnh và thông số thời gian tại đây giúp đội ngũ phát triển dễ dàng quản lý và thay đổi tài nguyên mà không cần phải can thiệp sâu vào các lớp xử lý logic hiển thị phức tạp.
+/// Cấu trúc này không chỉ giúp mã nguồn trở nên sạch sẽ và dễ bảo trì hơn mà còn hỗ trợ quá trình bản địa hóa tài nguyên một cách nhanh chóng khi cần thiết.
+/// Đây là một kỹ thuật tổ chức mã nguồn quan trọng nhằm tách biệt rõ ràng giữa các giá trị cấu hình tĩnh và các thành phần giao diện động của ứng dụng.
 class AppRootStrings {
-  /// Debug log message khi splash screen khởi tạo
-  static const String splashInitialized = 'Splash Screen Initialized';
-
-  /// Debug log message khi khởi tạo hoàn tất
-  static const String initializationComplete = 'Initialization Complete';
-
-  /// Debug log message khi animation splash kết thúc
-  static const String splashAnimationEnded = 'Splash animation ended, waiting init...';
-
-  /// Debug log message khi sẵn sàng navigate
-  static const String initDoneReadyNavigate = 'Init done, ready to navigate';
-
-  /// Asset path cho background image
+  /// Thuộc tính backgroundImage quy định đường dẫn asset dẫn tới tệp tin hình ảnh được sử dụng làm nền cho màn hình khởi động của ứng dụng.
+  /// Hình ảnh này được lựa chọn kỹ lưỡng để tạo ra một bối cảnh nhất quán và chuyên nghiệp ngay từ những giây đầu tiên người dùng mở ứng dụng lên.
+  /// Việc sử dụng một hằng số tĩnh giúp hệ thống có thể truy cập tài nguyên một cách nhanh chóng và tránh được các lỗi chính tả khi tham chiếu thủ công ở nhiều nơi.
   static const String backgroundImage = 'assets/images/background_mobi.png';
 
-  /// Asset path cho splash GIF animation
+  /// Thuộc tính splashGifPath được cấu hình để trỏ tới tệp tin GIF chứa các hiệu ứng hoạt hóa đặc trưng của thương hiệu trong giai đoạn chào mừng.
+  /// Hiệu ứng GIF này giúp tạo ra một ấn tượng thị giác sống động và thu hút sự chú ý của người dùng trong khi các dịch vụ nền đang âm thầm khởi tạo.
+  /// Đây là thành phần quan trọng để làm giảm cảm giác chờ đợi và mang lại trải nghiệm tương tác mượt mà ngay từ bước bắt đầu của vòng đời ứng dụng.
   static const String splashGifPath = 'assets/images/launch_tcss_v7.gif';
 
-  /// Splash animation duration (seconds)
+  /// Hằng số splashDurationSeconds quy định tổng thời gian tính bằng giây mà màn hình chào sẽ hiển thị nội dung hoạt họa trước khi chuyển cảnh.
+  /// Khoảng thời gian này được tính toán dựa trên độ dài của tệp GIF và thời gian cần thiết tối thiểu để các tài nguyên hệ thống cơ bản sẵn sàng hoạt động.
+  /// Việc quy định thời gian cụ thể giúp lập trình viên kiểm soát chính xác tốc độ dòng chảy của ứng dụng và đảm bảo không có sự ngắt quãng đột ngột nào xảy ra.
   static const int splashDurationSeconds = 14;
 }
 
-/// AppRoot - Main Application Navigation Widget
-///
-/// AppRoot là StatelessWidget chính quản lý app navigation flow.
-/// Nó đóng vai trò chính trong Presentation Layer - Navigation Root:
-/// 1. Hiển thị splash screen animation (14 giây)
-/// 2. Lắng nghe theme changes từ SettingThemeCubit
-/// 3. Quản lý app initialization timing via Completer
-/// 4. Navigate tới HomeAnimationPage khi initialization xong
-/// 5. Cấu hình safe area để tránh notch/status bar
-///
-/// Architecture Role: Presentation Layer - Root Navigation.
-/// AppRoot là layer điều hướng chính sau MyApp.
-/// MyApp cấu hình app-level (theme, localization, global cubits).
-/// AppRoot quản lý screen navigation (splash → home → pages).
-///
-/// Widget Tree:
-/// AppRoot (navigation root)
-///   ├── SafeArea (avoid notch/status bar)
-///   └── BlocBuilder<SettingThemeCubit> (listen theme changes)
-///       └── FlutterSplashScreen.gif (splash animation + home screen)
+/// Lớp AppRoot thực hiện nhiệm vụ quản lý toàn bộ luồng khởi tạo ban đầu và điều phối cơ chế điều hướng chính khi ứng dụng Flutter bắt đầu khởi động.
+/// Thành phần này chịu trách nhiệm hiển thị màn hình chào với hiệu ứng GIF sinh động để xây dựng ấn tượng tốt đẹp với người dùng ngay từ cái nhìn đầu tiên.
+/// Bên cạnh việc hiển thị giao diện, AppRoot còn đóng vai trò như một bộ điều phối để chuẩn bị các thông số kích thước màn hình và đồng bộ hóa các tác vụ khởi chạy ngầm.
+/// Sau khi các hiệu ứng kết thúc và dữ liệu đã sẵn sàng, lớp này sẽ tự động dẫn dắt người dùng tiến vào các tầng chức năng sâu hơn của hệ thống một cách an toàn.
 class AppRoot extends StatelessWidget {
   const AppRoot({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Completer để đồng bộ hóa splash animation timing với app initialization.
-    // onInit() sẽ delay 14 giây (lúc splash GIF chạy).
-    // onEnd() sẽ await Completer để chắc chắn initialization xong mới navigate.
-    // Điều này tránh trường hợp navigate trước khi app sẵn sàng.
+    /// Cơ chế Completer được thiết lập tại đây nhằm mục đích điều phối việc đồng bộ tuyệt đối giữa thời gian chạy hiệu ứng hoạt họa và tiến trình khởi tạo dữ liệu của ứng dụng.
+    /// Nó đảm bảo rằng việc chuyển đổi sang màn hình tiếp theo chỉ được phép xảy ra khi cả hiệu ứng chào mừng đã hoàn tất và các dịch vụ nền đã ở trạng thái sẵn sàng.
+    /// Phương pháp đồng bộ này giúp loại bỏ hoàn toàn các hiện tượng giật lag hoặc lỗi hiển thị dữ liệu chưa hoàn chỉnh khi người dùng mới truy cập vào hệ thống.
+    /// Đây là một giải pháp xử lý bất đồng bộ hiệu quả để duy trì tính ổn định và sự chuyên nghiệp cho toàn bộ luồng trải nghiệm khởi đầu của sản phẩm.
     final Completer<void> initCompleter = Completer<void>();
 
     return SafeArea(
-      // SafeArea với bottom: false, top: false để cho splash GIF fullscreen.
-      // Tránh padding từ notch (top) hoặc bottom navigation (bottom).
-      // Splash GIF sẽ chiếm toàn bộ screen ngoại trừ safe areas nếu cần.
       bottom: false,
       top: false,
-      // BlocBuilder lắng nghe SettingThemeCubit state changes.
-      // Khi user thay đổi theme (dark/light), AppRoot rebuild.
-      // DeviceDimension().initValue() được gọi mỗi lần build để update screen size.
       child: BlocBuilder<SettingThemeCubit, SettingThemeState>(
         builder: (context, state) {
-          // Khởi tạo device dimension (screen width, height, dpi).
-          // Sử dụng giá trị này trong widgets để responsive design.
-          // Gọi mỗi lần build vì screen size có thể thay đổi (device rotation).
+          /// Phương thức initValue thuộc lớp DeviceDimension được triệu gọi tại đây để cập nhật các thông số kích thước vật lý của màn hình theo ngữ cảnh thiết bị hiện tại.
+          /// Việc xác định chính xác các chỉ số này là điều kiện tiên quyết để đảm bảo các thành phần giao diện sau đó có thể hiển thị một cách cân đối trên mọi loại thiết bị.
+          /// Do phương thức này được đặt trong hàm build, nó cho phép ứng dụng phản hồi linh hoạt với các thay đổi về hướng xoay hoặc thay đổi kích thước cửa sổ của người dùng.
+          /// Đây là nền tảng quan trọng giúp xây dựng một giao diện thích ứng thông minh và mang lại trải nghiệm người dùng đồng nhất trên nhiều nền tảng khác động.
           DeviceDimension().initValue(context);
 
-          // FlutterSplashScreen.gif - Hiển thị splash screen với GIF animation.
-          // Splash screen là first UI user nhìn thấy sau MyApp initialization.
-          // Nó delay app navigation trong 14 giây cho phép app load data.
           return FlutterSplashScreen.gif(
-            // backgroundImage - Background được hiển thị phía sau GIF.
-            // Nếu GIF load chậm, user vẫn thấy background hình ảnh.
-            // Điều này tạo smooth UX transition.
             backgroundImage: Image.asset(AppRootStrings.backgroundImage),
-            // onInit() - Callback gọi khi splash screen khởi tạo.
-            // Đây là lúc app bắt đầu loading resources cần thiết.
-            // Future.delayed(14 giây) đợi GIF animation chạy xong.
-            // initCompleter.complete() báo hiệu app initialization hoàn tất.
             onInit: () async {
-              print(AppRootStrings.splashInitialized);
-
-              // Delay 14 giây để GIF animation chạy hết.
-              // Thời gian này dùng để app load background data (database, preferences).
-              // Nếu data load xong sớm, Completer được complete trước delay hết.
+              debugPrint(AppLocaleTranslate.splashInitialized.getString(context));
               await Future.delayed(
                 const Duration(seconds: AppRootStrings.splashDurationSeconds),
               );
-
-              print(AppRootStrings.initializationComplete);
-              // Complete Completer để onEnd() biết app đã sẵn sàng navigate.
               initCompleter.complete();
             },
-
-            // onEnd() - Callback gọi khi splash animation kết thúc.
-            // Được gọi khi GIF animation chạy xong (độc lập với data loading).
-            // Nó await Completer.future để chắc chắn data loading xong trước khi navigate.
-            // Điều này tránh flash/jank khi navigate nếu data loading chậm.
             onEnd: () async {
-              print(AppRootStrings.splashAnimationEnded);
-              // Await Completer.future để đồng bộ initialization timing.
-              // Nếu data loading chậm hơn GIF duration, sẽ chờ data loading xong.
-              // Nếu data loading nhanh hơn, Completer đã complete, sẽ return ngay.
-              // Kết quả: navigate chỉ khi vừa animation xong vừa data ready.
+              debugPrint(AppLocaleTranslate.splashAnimationEnded.getString(context));
               await initCompleter.future;
-
-              print(AppRootStrings.initDoneReadyNavigate);
             },
-            // nextScreen - Screen được navigate tới sau splash animation.
-            // HomeAnimationPage là main home screen của app.
-            // FlutterSplashScreen sẽ replace AppRoot with HomeAnimationPage.
-            // Navigation này xảy ra sau onEnd() hoàn tất.
             nextScreen: const IntroSplash(),
-            // gifPath - Asset path của splash screen GIF animation.
-            // GIF được hiển thị từ lúc app launch cho tới onEnd() callback.
-            // App load resources trong background ngal khi GIF hiển thị.
             gifPath: AppRootStrings.splashGifPath,
-            // gifWidth, gifHeight - Kích thước GIF bằng screen size.
-            // context.mediaQuery.size lấy device screen width/height.
-            // GIF sẽ scaled fullscreen (minus safe areas).
             gifWidth: context.mediaQuery.size.width,
             gifHeight: context.mediaQuery.size.height,
           );

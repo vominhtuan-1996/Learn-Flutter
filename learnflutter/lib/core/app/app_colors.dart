@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Lớp AppColors định nghĩa bảng màu chủ đạo và các biến số màu sắc được sử dụng xuyên suốt trong ứng dụng.
+/// Việc tập trung quản lý màu sắc giúp chúng tôi duy trì sự nhất quán về mặt thị giác và dễ dàng thay đổi chủ đề (theme) trong tương lai.
+/// Mỗi mã màu đều được đặt tên theo mục đích sử dụng hoặc tên màu cụ thể để các lập trình viên khác có thể dễ dàng hiểu và áp dụng.
+/// Đây là một phần quan trọng của hệ thống thiết kế (Design System) giúp ứng dụng trông chuyên nghiệp và hiện đại hơn.
 class AppColors {
   AppColors._();
 
@@ -56,7 +60,10 @@ class AppColors {
   static const Color backButtonColor = Color(0xFF8C8C8C);
 }
 
-/// Convert hex color (#000000) code to Flutter [Color]
+/// Lớp HexColor hỗ trợ việc chuyển đổi các mã màu định dạng Hex (ví dụ: #FFFFFF) sang đối tượng Color của Flutter.
+/// Nó giúp lập trình viên có thể sử dụng trực tiếp các mã màu từ các bản thiết kế của designer một cách thuận tiện nhất.
+/// Lớp này tự động xử lý các trường hợp mã màu có hoặc không có tiền tố dấu thăng (#) và hỗ trợ đầy đủ kênh Alpha.
+/// Đây là một công cụ hữu ích để mở rộng khả năng định nghĩa màu sắc linh hoạt hơn so với các hằng số màu mặc định.
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -69,6 +76,10 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
+/// Phần mở rộng LighterColor cung cấp các phương thức để tạo ra các sắc thái màu sáng hơn hoặc đậm hơn từ một màu gốc.
+/// Các phương thức này sử dụng thuật toán tính toán các thành phần RGB để điều chỉnh độ sáng mà vẫn giữ được tông màu chủ đạo.
+/// Điều này cực kỳ hữu ích khi tạo ra các trạng thái hover, focus hoặc trang trí các thành phần giao diện phụ trợ.
+/// Việc sử dụng extension giúp mã nguồn trở nên gọn gàng và mang tính hướng đối tượng cao khi làm việc với màu sắc.
 extension LighterColor on Color {
   Color get lighter {
     int lighter(int value) {

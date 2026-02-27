@@ -1,16 +1,14 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/component/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/component/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/component/shimmer/widget/shimmer_loading_widget.dart';
-import 'package:learnflutter/component/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/isolate/api_service.dart';
 import 'package:learnflutter/core/isolate/json_parse.dart';
-import 'package:learnflutter/modules/animation/widget/list_view_animation.dart';
+import 'package:learnflutter/features/animation/widget/list_view_animation.dart';
 
 class IsolateJsonParsingScreen extends StatefulWidget {
+  const IsolateJsonParsingScreen({super.key});
+
   @override
   _IsolateJsonParsingScreenState createState() => _IsolateJsonParsingScreenState();
 }

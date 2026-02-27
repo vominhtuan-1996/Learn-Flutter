@@ -1,61 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/keyboard/keyboard_service.dart';
 
-/// Keyboard Padding Constants
+/// Lớp KeyboardPaddingConstants định nghĩa các thông số cấu hình mặc định cho các hiệu ứng chuyển cảnh của bàn phím.
+/// Nó giúp duy trì sự nhất quán về trải nghiệm người dùng bằng cách tập trung các giá trị như thời gian chạy và kiểu đường cong của animation.
+/// Việc thay đổi các hằng số này sẽ ảnh hưởng đến toàn bộ ứng dụng, giúp việc tinh chỉnh giao diện trở nên nhanh chóng và dễ dàng hơn.
 class KeyboardPaddingConstants {
-  /// Default animation duration khi keyboard show/hide (milliseconds)
+  /// Thời gian mặc định cho hiệu ứng xuất hiện hoặc biến mất của bàn phím (đơn vị: mili giây).
   static const int animationDurationMs = 200;
 
-  /// Curve animation cho keyboard transition
+  /// Kiểu đường cong animation giúp hiệu ứng trượt của bàn phím trở nên tự nhiên và mượt mà hơn.
   static const Curve animationCurve = Curves.decelerate;
 }
 
-/// GlobalNoKeyboardRebuild - Prevent UI Rebuild When Keyboard Show/Hide
-///
-/// Widget này giải quyết vấn đề: Khi keyboard show, MediaQuery insets thay đổi,
-/// dẫn tới rebuild toàn bộ app (cause jank/lag).
-///
-/// Giải pháp: Loại bỏ bottom inset từ MediaQuery data.
-/// Kết quả: Keyboard show nhưng không rebuild, chỉ add padding khi cần.
-///
-/// Architecture Role: Core Layer - Keyboard Management Wrapper.
-/// Là StatelessWidget wrapper bao quanh app root để:
-/// 1. Prevent rebuild khi keyboard show (removeViewInsets bottom: true)
-/// 2. Cung cấp keyboard visibility state (KeyboardService)
-/// 3. App có thể manually add padding nếu cần (via KeyboardService.visible)
-/// 4. Tránh jank/flash animation khi keyboard transition
-///
-/// Usage:
-/// ```dart
-/// runApp(GlobalNoKeyboardRebuild(child: MyApp()));
-/// ```
-///
-/// Khi user tap TextField:
-/// - Keyboard show từ bottom
-/// - MediaQuery insets thay đổi (bottom: keyboard height)
-/// - GlobalNoKeyboardRebuild loại bỏ insets → không rebuild
-/// - Child widgets đọc KeyboardService.visible để manually add padding
-/// - Result: Smooth keyboard animation mà không jank
-///
-/// How it works:
-/// 1. MediaQuery.fromView() lấy current MediaQuery data (include insets)
-/// 2. removeViewInsets(removeBottom: true) loại bỏ bottom inset
-/// 3. Wrap child với modified MediaQuery data
-/// 4. Keyboard vẫn show nhưng insets không trigger rebuild
-/// 5. Widgets dùng KeyboardService.keyboardVisible ValueNotifier để add padding
+/// Lớp GlobalNoKeyboardRebuild là một giải pháp tối ưu nhằm ngăn chặn việc toàn bộ ứng dụng bị vẽ lại (rebuild) khi bàn phím xuất hiện hoặc biến mất.
+/// Trong Flutter, mặc định việc thay đổi kích thước view insets sẽ kích hoạt lại hàm build của các widget cấp cao, gây ra hiện tượng giật lag (jank).
+/// Lớp này can thiệp vào dữ liệu MediaQuery để loại bỏ thông số đệm dưới từ hệ thống, từ đó tránh được sự thay đổi kích thước đột ngột ở lớp root.
+/// Thay vào đó, nó khuyến khích việc sử dụng KeyboardService để chủ động thêm khoảng đệm lót một cách thủ công và mượt mà hơn cho các thành phần cần thiết.
 class GlobalNoKeyboardRebuild extends StatelessWidget {
-  /// Child widget - Thường là MyApp (entire app tree)
+  /// Widget con thường là toàn bộ cây ứng dụng (MyApp) cần được bảo vệ khỏi việc rebuild không cần thiết.
   final Widget child;
 
-  /// Có thêm bottom padding khi keyboard visible không (default: true)
-  /// Nếu true: Thêm padding để content không bị keyboard che
-  /// Nếu false: Không add padding, allow custom padding logic
+  /// Xác định xem có tự động thêm khoảng đệm lót phía dưới khi bàn phím xuất hiện hay không.
   final bool addBottomPadding;
 
-  /// Animation duration cho keyboard show/hide transition (milliseconds)
+  /// Thời gian diễn ra hiệu ứng chuyển đổi giữa các trạng thái bàn phím.
   final int animationDurationMs;
 
-  /// Animation curve cho keyboard transition
+  /// Loại đường cong mô tả tốc độ của hiệu ứng animation.
   final Curve animationCurve;
 
   const GlobalNoKeyboardRebuild({
@@ -68,29 +39,22 @@ class GlobalNoKeyboardRebuild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lấy current MediaQuery data từ FlutterView (platform layer)
-    // platformDispatcher.views.first là main view (entire device screen)
+    // Truy xuất thông tin cấu hình hiển thị hiện tại từ cửa sổ ứng dụng chính của thiết bị.
     final view = WidgetsBinding.instance.platformDispatcher.views.first;
 
-    // Tạo MediaQueryData từ view (include current insets)
+    // Khởi tạo dữ liệu MediaQuery thô bao gồm cả các khoảng đệm hệ thống mặc định.
     final originalMediaQuery = MediaQueryData.fromView(view);
 
-    // Loại bỏ bottom inset (keyboard height)
-    // removeViewInsets(removeBottom: true) sẽ remove bottom inset
-    // Kết quả: Keyboard vẫn show nhưng MediaQuery.viewInsets.bottom = 0
-    // → Không trigger rebuild vì MediaQuery data không thay đổi
+    // Thực hiện việc loại bỏ thông số khoảng đệm dưới (thường là chiều cao bàn phím) để đánh lừa các widget con.
+    // Kết quả là khi bàn phím hiện lên, các thành phần giao diện cấp cao sẽ không nhận thấy sự thay đổi về kích thước màn hình.
+    // Điều này cực kỳ quan trọng để duy trì tốc độ khung hình ổn định khi người dùng tap vào các trường nhập liệu.
     final modifiedMediaQuery = originalMediaQuery.removeViewInsets(
       removeBottom: true,
     );
 
-    // Wrap child với modified MediaQuery (no bottom insets)
-    // Tất cả descendants đọc MediaQuery sẽ thấy bottom inset = 0
-    // Nhưng KeyboardService.visible vẫn reflect actual keyboard state
+    // Cung cấp dữ liệu MediaQuery đã chỉnh sửa cho toàn bộ các thành phần cấp dưới thông qua widget MediaQuery.
     return MediaQuery(
       data: modifiedMediaQuery,
-      // ValueListenableBuilder lắng nghe keyboard visibility changes
-      // Khi keyboard show/hide, kích hoạt rebuild layer keyboard padding
-      // Nhưng parent UI (không dùng keyboard padding) không rebuild
       child: addBottomPadding
           ? _KeyboardPaddingWrapper(
               animationDurationMs: animationDurationMs,
@@ -102,17 +66,10 @@ class GlobalNoKeyboardRebuild extends StatelessWidget {
   }
 }
 
-/// _KeyboardPaddingWrapper - Animated Bottom Padding When Keyboard Visible
-///
-/// Private widget cung cấp smooth animated padding khi keyboard show.
-/// Dùng AnimatedContainer để animate padding transition.
-///
-/// Flow:
-/// 1. ValueListenableBuilder lắng nghe KeyboardService.keyboardVisible
-/// 2. Khi keyboard visible = true: Add padding = keyboard height
-/// 3. Khi keyboard visible = false: Padding = 0
-/// 4. AnimatedContainer smooth transition between states (200ms)
-/// 5. Tất cả animation nằm trong Widget này (không rebuild parent)
+/// Lớp nội bộ _KeyboardPaddingWrapper thực hiện việc thêm khoảng đệm lót một cách có kiểm soát và mượt mà.
+/// Nó lắng nghe trạng thái bàn phím từ KeyboardService và chỉ vẽ lại chính nó thay vì làm ảnh hưởng đến các widget cha cấp cao.
+/// Việc tính toán chiều cao bàn phím được thực hiện kỹ lưỡng dựa trên tỷ lệ điểm ảnh vật lý để đảm bảo độ chính xác tuyệt đối trên mọi thiết bị.
+/// Ngoài ra, nó còn hỗ trợ tự động cuộn đến trường đang được focus để mang lại trải nghiệm nhập liệu thuận tiện nhất cho người dùng.
 class _KeyboardPaddingWrapper extends StatelessWidget {
   final Widget child;
   final int animationDurationMs;
@@ -126,34 +83,27 @@ class _KeyboardPaddingWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ValueListenableBuilder lắng nghe KeyboardService.keyboardVisible
-    // Khi ValueNotifier value thay đổi (keyboard show/hide),
-    // chỉ rebuild _KeyboardPaddingWrapper (bên dưới child layer)
-    // Parent UI không rebuild (vì MediaQuery insets không thay đổi)
+    // Sử dụng ValueListenableBuilder để chỉ thực hiện rebuild cục bộ khi trạng thái bàn phím thay đổi.
     return ValueListenableBuilder<bool>(
       valueListenable: KeyboardService.instance.keyboardVisible,
       builder: (context, isKeyboardVisible, child) {
-        // Lấy keyboard height từ platform window viewInsets để chính xác hơn.
-        // Lưu ý: Window.viewInsets trả về giá trị theo physical pixels, vì vậy
-        // cần chia cho devicePixelRatio để có logical pixels giống MediaQuery.
+        // Lấy thông tin chiều cao bàn phím từ window và quy đổi sang đơn vị điểm ảnh logic (logical pixels).
         final window = WidgetsBinding.instance.window;
-        double keyboardHeight = window.viewInsets.bottom / window.devicePixelRatio;
+        double keyboardHeight =
+            window.viewInsets.bottom / window.devicePixelRatio;
 
-        // Defensive checks: đảm bảo giá trị hợp lệ và không quá lớn.
-        // Một số nền tảng có thể trả về giá trị lớn hoặc không mong muốn,
-        // nên giới hạn tối đa theo tỷ lệ của chiều cao màn hình.
+        // Thực hiện kiểm tra an toàn để đảm bảo chiều cao bàn phím không vượt quá giới hạn cho phép hoặc có giá trị bất thường.
         final screenHeight = MediaQuery.of(context).size.height;
-        final maxAllowed = screenHeight * 0.6; // không cho keyboard chiếm >70% màn hình
+        final maxAllowed = screenHeight * 0.6;
         if (keyboardHeight.isNaN || keyboardHeight < 0) {
           keyboardHeight = 0.0;
         }
         keyboardHeight = keyboardHeight.clamp(0.0, maxAllowed);
 
-        // Nếu keyboard không visible thì padding = 0.
+        // Xác định giá trị đệm cuối cùng dựa trên việc bàn phím có đang hiển thị hay không.
         final bottomPadding = isKeyboardVisible ? keyboardHeight : 0.0;
 
-        // Khi keyboard vừa show, cố gắng scroll tới TextField đang focus.
-        // Sử dụng Scrollable.ensureVisible trên primaryFocus.context.
+        // Tự động đảm bảo trường nhập liệu đang được focus luôn nằm trong vùng nhìn thấy của người dùng khi bàn phím hiện lên.
         if (isKeyboardVisible) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             try {
@@ -167,12 +117,12 @@ class _KeyboardPaddingWrapper extends StatelessWidget {
                 );
               }
             } catch (e) {
-              // Nếu ensureVisible thất bại (không có Scrollable ancestor), bỏ qua.
+              // Bỏ qua nếu không tìm thấy tổ tiên là Scrollable hoặc có lỗi xảy ra trong quá trình cuộn.
             }
           });
         }
 
-        // AnimatedContainer để animate padding một cách mượt mà.
+        // Sử dụng AnimatedContainer để thực hiện việc thay đổi khoảng đệm một cách mượt mà và tự nhiên nhất.
         return AnimatedContainer(
           duration: Duration(milliseconds: animationDurationMs),
           curve: animationCurve,

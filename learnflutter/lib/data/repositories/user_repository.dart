@@ -1,5 +1,5 @@
 import 'package:learnflutter/core/network/api_client.dart';
-import 'package:learnflutter/db/models/user_model.dart';
+import 'package:learnflutter/data/models/user_model.dart';
 
 /// UserRepository - Wrapper repository to interact with user-related API endpoints
 ///

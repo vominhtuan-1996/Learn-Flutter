@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/src/lib/story_router/story_button.dart';
-import 'package:learnflutter/src/lib/story_router/story_list_view.dart';
-import 'package:learnflutter/src/lib/story_router/story_page_container_view.dart';
-import 'package:learnflutter/src/lib/story_router/story_page_scaffold.dart';
-import 'package:learnflutter/src/lib/story_router/story_page_transform.dart.dart';
+import 'package:learnflutter/shared/widgets/lib/story_router/story_button.dart';
+import 'package:learnflutter/shared/widgets/lib/story_router/story_list_view.dart';
+import 'package:learnflutter/shared/widgets/lib/story_router/story_page_container_view.dart';
+import 'package:learnflutter/shared/widgets/lib/story_router/story_page_scaffold.dart';
+import 'package:learnflutter/shared/widgets/lib/story_router/story_page_transform.dart.dart';
 
 void main() {
   runApp(const MyApp());

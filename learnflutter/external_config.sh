@@ -8,7 +8,7 @@ TELEGRAM_BOT_TOKEN="7320246267:AAEWMv8pNBxVXBMSk-pRwWS38Upet5SmfMw"
 TELEGRAM_CHAT_ID="-4277408521"
 #Bundle Identifier
 BundelID_STAG="com.fpt.rii.mobimap.stag"
-BundelID_PROD="com.fpt.rii.mobimap"
+BundelID_PROD="com.isc.mobimap.mobimapFlutter"
 #Profile 
 Profile_STAG="com.fpt.rii.mobimap_DIC_STAG"
-Profile_PROD="com.fpt.rii.mobimap_DIC"
+Profile_PROD="SU12_MOBIMAP_FLUTTER_V2_DIC"

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/src/lib/tab_controler/tab_container.dart';
+import 'package:learnflutter/shared/widgets/lib/tab_controler/tab_container.dart';
 
 // import 'package:tab_container/tab_container.dart';
 // import 'package:tab_container/tab_edge.dart';

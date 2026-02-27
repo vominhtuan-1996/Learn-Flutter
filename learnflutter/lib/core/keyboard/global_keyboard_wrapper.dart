@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/keyboard/keyboard_overlay_controller.dart';
 import 'keyboard_service.dart';
 
+/// Lớp GlobalKeyboardWrapper đóng vai trò là một lớp bao bọc (wrapper) ở cấp độ toàn cục để quản lý khoảng trống giao diện khi bàn phím xuất hiện.
+/// Nó lắng nghe các thay đổi về chiều cao của bàn phím từ KeyboardService và tự động điều chỉnh phần đệm lót (padding) phía dưới của các widget con.
+/// Việc sử dụng hiệu ứng AnimatedPadding giúp cho quá trình thay đổi kích thước diễn ra mượt mà, tránh hiện tượng giao diện bị nhảy đột ngột.
+/// Đây là một giải pháp hữu hiệu để đảm bảo các trường nhập liệu không bị bàn phím che khuất mà không cần cấu hình thủ công cho từng màn hình.
 class GlobalKeyboardWrapper extends StatefulWidget {
   const GlobalKeyboardWrapper({super.key, required this.child});
   final Widget child;
@@ -10,24 +13,6 @@ class GlobalKeyboardWrapper extends StatefulWidget {
 }
 
 class _GlobalKeyboardWrapperState extends State<GlobalKeyboardWrapper> {
-  ValueNotifier<double> keyboardHeight = ValueNotifier(0);
-
-  @override
-  void initState() {
-    super.initState();
-
-    // KeyboardService.instance.listener = (visible, height) {
-    //   keyboardHeight.value = visible ? height : 0;
-
-    //   /// TODO: xử lý logic toàn app tại đây
-    //   /// Ví dụ: show/hide 1 global overlay
-    //   /// Example: KeyboardOverlayController.update(visible, height);
-    // };
-    // KeyboardService.instance.listener = (visible, height) {
-
-    // };
-  }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<double>(
@@ -39,29 +24,7 @@ class _GlobalKeyboardWrapperState extends State<GlobalKeyboardWrapper> {
           child: child,
         );
       },
+      child: widget.child,
     );
   }
 }
-
-// class GlobalKeyboardWrapper extends StatefulWidget {
-//   final Widget child;
-//   const GlobalKeyboardWrapper({super.key, required this.child});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<double>(
-//       stream: KeyboardService.instance.keyboardHeightStream,
-//       initialData: 0,
-//       builder: (context, snapshot) {
-//         final height = snapshot.data ?? 0;
-
-//         return AnimatedPadding(
-//           duration: const Duration(milliseconds: 150),
-//           curve: Curves.easeOut,
-//           padding: EdgeInsets.only(bottom: height),
-//           child: child,
-//         );
-//       },
-//     );
-//   }
-// }
