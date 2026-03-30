@@ -1,4 +1,4 @@
-import 'package:learnflutter/core/network/api_client.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:learnflutter/features/login/model/login_request_model.dart';
 import 'package:learnflutter/features/login/model/login_response_model.dart';
 

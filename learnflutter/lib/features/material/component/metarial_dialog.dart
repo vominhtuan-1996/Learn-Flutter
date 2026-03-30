@@ -53,8 +53,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                 );
               },
               type: MaterialButtonType.commonbutton,
@@ -69,11 +68,107 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
+                DialogUtils.showFullDialog(
+                  actions: [],
+                  context: context,
+                  contentWidget: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Tiến trình xử lý tạo phiếu triển khải quà tặng',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ).paddingAll(
+                        DeviceDimension.padding,
+                      ),
+                      Divider(
+                        color: AppColors.grey.withValues(alpha: 0.6),
+                        thickness: 1,
+                      ),
+                      Text(
+                        'Success',
+                        style: context.textTheme.titleLarge?.copyWith(
+                          color: AppColors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Your action was successful!',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.grey,
+                        ),
+                      ),
+                      const IconAnimationWidget(),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Success',
+                        style: context.textTheme.titleLarge?.copyWith(
+                          color: AppColors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Your action was successful!',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.grey,
+                        ),
+                      ),
+                      const IconAnimationWidget(),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Success',
+                        style: context.textTheme.titleLarge?.copyWith(
+                          color: AppColors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Your action was successful!',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.grey,
+                        ),
+                      ),
+                      const IconAnimationWidget(),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Success',
+                        style: context.textTheme.titleLarge?.copyWith(
+                          color: AppColors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: DeviceDimension.padding),
+                      Text(
+                        'Your action was successful!',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              type: MaterialButtonType.commonbutton,
+              lableText: 'Tiến trình xưt lý tạo phiếu triển khải quà tặng',
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+            ).paddingOnly(bottom: DeviceDimension.padding / 2),
+            MaterialButton3(
+              disible: false,
+              backgoundColor: context.theme.colorScheme.onPrimary,
+              borderColor: context.theme.colorScheme.onPrimary,
+              borderRadius: DeviceDimension.padding,
+              shadowColor: AppColors.grey,
+              textAlign: TextAlign.center,
+              onTap: () async {
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -160,8 +255,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showDialogWithHeroIcon(
                     context: context,
                     type: TypeDialog.success,
-                    content:
-                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                     title: 'Dialog with hero icon');
               },
               type: MaterialButtonType.commonbutton,
@@ -179,8 +273,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                 DialogUtils.showDialogWithHeroIcon(
                   context: context,
                   type: TypeDialog.success,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                   title: 'Dialog with hero icon',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -283,15 +376,9 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               textAlign: TextAlign.center,
               onTap: () async {
                 List uploadList = [
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '2'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '4'),
                   RadioItemModel(id: 'id', title: '5'),
                   RadioItemModel(
@@ -300,15 +387,9 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
                           'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '7'),
                   RadioItemModel(id: 'id', title: '8'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '10'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                 ];
                 DialogUtils.showUploadProgress(
                   contextDialog: context,

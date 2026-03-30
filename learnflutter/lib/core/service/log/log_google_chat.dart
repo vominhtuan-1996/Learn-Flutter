@@ -136,8 +136,11 @@ class ConstantKeyGoogleChat {
 class LogGoogleChat {
   LogGoogleChat._();
 
-  /// Phương thức sendPayloadToApi thực hiện việc đẩy dữ liệu lên Google Chat thông qua phương thức POST HTTP.
-  /// Nó tự động lấy các thông tin cấu hình cần thiết và thiết lập thời gian chờ (timeout) để đảm bảo không treo luồng Isolate.
+  /// Google Chat card tối đa ~4096 ký tự trong một textParagraph.
+  static const int _maxLogCharsPerMessage = 3500;
+
+  /// [sendPayloadToApi] đẩy dữ liệu lên Google Chat thông qua phương thức POST HTTP.
+  /// Chạy trong Isolate riêng để không block UI thread.
   static Future<void> sendPayloadToApi(Map<String, dynamic> payload) async {
     final roomId = await ConstantKeyGoogleChat.getRoomChatId();
     final key = await ConstantKeyGoogleChat.getKey();
@@ -153,5 +156,101 @@ class LogGoogleChat {
         data: jsonEncode(payload),
       );
     }, payload);
+  }
+
+  /// [sendLogFile] đọc nội dung file log và gửi lên Google Chat.
+  ///
+  /// Nội dung được chia thành nhiều tin nhắn nếu quá [_maxLogCharsPerMessage] ký tự.
+  /// Trả về `true` nếu gửi thành công ít nhất 1 tin nhắn.
+  static Future<bool> sendLogFile(
+    dynamic file, {
+    // dart:io File
+    String title = '📋 Daily Log Report',
+  }) async {
+    try {
+      String content;
+      if (file == null) return false;
+      content = await file.readAsString() as String;
+      if (content.trim().isEmpty) return false;
+
+      await _sendLogChunks(content, title: title);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// [sendLogText] gửi nội dung log dưới dạng text thẳng (không cần file).
+  static Future<bool> sendLogText(
+    String content, {
+    String title = '📋 Log Report',
+  }) async {
+    try {
+      if (content.trim().isEmpty) return false;
+      await _sendLogChunks(content, title: title);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // ─── Private ──────────────────────────────────────────────────────────────
+
+  static Future<void> _sendLogChunks(String content,
+      {required String title}) async {
+    final chunks = _chunkString(content, _maxLogCharsPerMessage);
+    final totalChunks = chunks.length;
+
+    for (int i = 0; i < chunks.length; i++) {
+      final chunkTitle =
+          totalChunks > 1 ? '$title (${i + 1}/$totalChunks)' : title;
+      final payload = _buildLogPayload(chunkTitle, chunks[i]);
+      await sendPayloadToApi(payload);
+      // Nhỏ delay giữa các message tránh rate limit
+      if (i < chunks.length - 1) {
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+    }
+  }
+
+  static Map<String, dynamic> _buildLogPayload(
+      String title, String logContent) {
+    return {
+      'cardsV2': [
+        {
+          'cardId': 'logCard_${DateTime.now().millisecondsSinceEpoch}',
+          'card': {
+            'header': {
+              'title': title,
+              'subtitle': DateTimeUtils.getCurrentTime(
+                  format: DateTimeType.DATE_TIME_FORMAT_VN),
+              'imageUrl':
+                  'https://developers.google.com/chat/images/quickstart-app-avatar.png',
+            },
+            'sections': [
+              {
+                'widgets': [
+                  {
+                    'textParagraph': {
+                      'text':
+                          '<code>${GoogleChatUtils._escapeHtml(logContent)}</code>',
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    };
+  }
+
+  static List<String> _chunkString(String s, int chunkSize) {
+    final chunks = <String>[];
+    for (int i = 0; i < s.length; i += chunkSize) {
+      chunks.add(
+          s.substring(i, i + chunkSize > s.length ? s.length : i + chunkSize));
+    }
+    return chunks;
   }
 }

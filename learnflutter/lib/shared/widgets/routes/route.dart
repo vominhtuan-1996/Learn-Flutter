@@ -33,10 +33,14 @@ import 'package:learnflutter/features/indicator/pages/fetch_more_indicator_page.
 import 'package:learnflutter/features/indicator/pages/home_refresh_indicator_page.dart';
 import 'package:learnflutter/features/indicator/pages/ice_cream_indicator.dart';
 import 'package:learnflutter/features/log/log_screen.dart';
+import 'package:learnflutter/features/log/talker_example_screen.dart';
+import 'package:learnflutter/core/service/talker/app_talker.dart';
 // import 'package:learnflutter/features/login/page/login_screen.dart';
 import 'package:learnflutter/features/map/map_screen.dart';
 import 'package:learnflutter/features/map/example/example_map_screen.dart';
+import 'package:learnflutter/features/map/offline/offline_mbtiles_map_screen.dart';
 import 'package:learnflutter/features/map/google_map_base/google_map_base_screen.dart';
+import 'package:learnflutter/features/map/google_map_offline/google_map_offline_screen.dart';
 import 'package:learnflutter/features/material/component/material_badge.dart';
 import 'package:learnflutter/features/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/features/material/component/material_bottom_sheet.dart';
@@ -138,6 +142,7 @@ import 'package:learnflutter/shared/widgets/lib/story_router/story_page_containe
 import 'package:learnflutter/shared/widgets/lib/story_router/story_route.dart';
 import 'package:learnflutter/games/tic_tac_toe/screens/game_screen.dart';
 import 'package:learnflutter/games/rubik/screens/rubik_screen.dart';
+import 'package:learnflutter/features/news/presentation/news_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -249,6 +254,7 @@ class Routes {
   static const String dropRefresh = 'drop_refresh_screen';
   static const String mapScreen = 'map_screen';
   static const String exampleMapScreen = 'example_map_screen';
+  static const String offlineMbtilesMapScreen = 'offline_mbtiles_map_screen';
   static const String isolateParseScreen = 'isolate_parse_screen';
   static const String smartLoadmoreScreen = "smart_loadmore_screen";
   static const String webViewScreen = "web_view_screen";
@@ -259,6 +265,8 @@ class Routes {
   static const String transformerPageView = "transformer_page_view";
   static const String googleMapBase = 'google_map_base';
   static const String newLogin = "/new_login";
+  static const String newsScreen = "/news_screen";
+  static const String googleMapOffline = "/google_map_offline";
 
   //*regions Sliver
   static const String sliverAppbarCollapsingHeaderHero =
@@ -343,6 +351,9 @@ class Routes {
   // game rubik
   static const String rubikGame = 'rubik_game';
 
+  // talker logger example
+  static const String talkerScreen = 'talker_example_screen';
+
   static String current(BuildContext context) =>
       ModalRoute.of(context)?.settings.name ?? '';
 
@@ -352,6 +363,11 @@ class Routes {
             ? settings.arguments as ArgumentsScreenModel
             : ArgumentsScreenModel(title: "unknowns");
     switch (settings.name) {
+      case talkerScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: talkerScreen),
+          builder: (_) => TalkerExampleScreen(talker: AppTalker.instance),
+        );
       case rubikGame:
         return MaterialPageRoute(
           settings: RouteSettings(name: rubikGame),
@@ -903,6 +919,11 @@ class Routes {
           routeSettings: RouteSettings(name: exampleMapScreen),
           builder: (_) => const ExampleMapScreen(),
         );
+      case offlineMbtilesMapScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: offlineMbtilesMapScreen),
+          builder: (_) => const OfflineMbtilesMapScreen(),
+        );
       case isolateParseScreen:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: isolateParseScreen),
@@ -1163,6 +1184,16 @@ class Routes {
           builder: (_) => SettingTextThemeScreen(
             role: param['role'],
           ),
+        );
+      case newsScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: newsScreen),
+          builder: (_) => const NewsScreen(),
+        );
+      case googleMapOffline:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: googleMapOffline),
+          builder: (_) => const GoogleMapOfflineScreen(),
         );
       case defaultRoute:
       default:

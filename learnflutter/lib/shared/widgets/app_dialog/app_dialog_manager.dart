@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_update_patch_dialog.dart';
 import 'package:learnflutter/core/app/app_local_translate.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
+import 'package:learnflutter/features/gift_coupon/cubit/gift_coupon_cubit.dart';
+import 'package:learnflutter/features/gift_coupon/repos/gift_coupon_repository.dart';
+import 'package:learnflutter/features/gift_coupon/widgets/gift_coupon_process_dialog.dart';
+import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
 
 /// AppDialogManager chịu trách nhiệm quản lý việc hiển thị các hộp thoại trong ứng dụng.
 /// Nó cung cấp một giao diện lập trình đơn giản để kích hoạt các loại thông báo khác nhau như thông báo lỗi, thành công hoặc thông tin.
@@ -113,5 +118,46 @@ class AppDialogManager {
         );
       },
     );
+  }
+
+  /// [showGiftCouponAction] hiển thị popup tiến trình. Nếu có [pmsCode], bước 1 sẽ được xác định là hoàn thành.
+  static void showGiftCouponAction({String? pmsCode}) {
+    showGeneralDialog(
+      context: _context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, anim1, anim2) => const SizedBox.shrink(),
+      transitionBuilder: (context, anim1, anim2, child) {
+        return ScaleTransition(
+          scale: CurvedAnimation(parent: anim1, curve: Curves.easeOutBack),
+          child: BlocProvider(
+            create: (context) => GiftCouponCubit(pmsCode: pmsCode)..startProcess(),
+            child: const GiftCouponProcessDialog(),
+          ),
+        );
+      },
+    );
+  }
+
+  /// [startGiftCouponProcessFlow] thực hiện luồng nghiệp vụ:
+  /// 1. Gọi API tạo phiếu PMS ngầm (với loading overlay).
+  /// 2. Sau khi có pmsCode, mới hiển thị popup "Tạo phiếu thi công Inside".
+  static void startGiftCouponProcessFlow() {
+    _context.read<BaseLoadingCubit>().showLoading(
+          message: 'Đang khởi tạo phiếu triển khai PMS...',
+          func: () async {
+            // Sử dụng repository để tuân thủ đúng kiến trúc (đã được giả lập thành công tại repo)
+            return await GiftCouponRepository.instance.createPMSCoupon(data: {'type': 'GIFT_PMS'});
+          },
+          onSuccess: (response) {
+            // Trích xuất pmsCode từ phản hồi giả lập
+            final pmsCode = response['pmsCode'] ?? 'PMS-888';
+            showGiftCouponAction(pmsCode: pmsCode);
+          },
+          onFailed: (error) {
+            AppDialogManager.error('Không thể khởi tạo phiếu PMS: $error');
+          },
+        );
   }
 }

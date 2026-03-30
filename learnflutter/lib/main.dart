@@ -2,8 +2,8 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,9 +22,13 @@ import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/features/setting/state/setting_state.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:notification_center/notification_center.dart';
-import 'package:learnflutter/core/network/api_client.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:learnflutter/core/service/talker/app_talker.dart';
+import 'package:learnflutter/core/service/log/log_file_service.dart';
+import 'package:learnflutter/core/service/log/daily_log_scheduler.dart';
+import 'package:learnflutter/core/service/log/log_google_chat.dart';
 // import 'package:shorebird/shorebird.dart';
 
 /// Hàm main đóng vai trò là điểm khởi đầu chính thức cho toàn bộ vòng đời của ứng dụng Flutter.
@@ -37,6 +41,12 @@ void main() {
   /// Việc khởi tạo sớm này giúp ứng dụng có thể xử lý chính xác các sự kiện hệ thống và chuẩn bị một môi trường vận hành ổn định cho các thành phần UI phía sau.
   /// Đây là một bước chuẩn bị bắt buộc nhằm tránh các lỗi tiềm ẩn khi ứng dụng cố gắng giao tiếp với các dịch vụ cấp thấp của hệ điều hành.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Khởi tạo Workmanager cho các task chạy ngầm (như gửi log định kỳ)
+  Workmanager().initialize(
+    callbackDispatcher,
+    isInDebugMode: kDebugMode, // Đặt false khi release
+  );
 
   /// Khởi động keyboard listener service toàn cục nhằm mục đích theo dõi và phản hồi linh hoạt với mọi sự kiện đóng hoặc mở bàn phím từ phía người dùng.
   /// Dịch vụ này đóng vai trò then chốt trong việc điều phối giao diện, giúp ngăn chặn các vấn đề về hiển thị hoặc che lấp thông tin quan trọng.
@@ -55,7 +65,7 @@ void main() {
 
       // Initialize ApiClient with base URL and optional token refresh handler
       ApiClient.instance.init(
-        baseUrl: 'https://api.petsocial.example',
+        baseUrl: 'https://apis-stag.fpt.vn',
         tokenRefreshHandler: () async {
           try {
             // Example refresh flow: read refresh token from SharedPreferences, call refresh endpoint
@@ -140,6 +150,27 @@ void callbackDispatcher() {
         // iOS background fetch: Gọi khi iOS trigger background refresh
         stderr.writeln("The iOS background fetch was triggered");
         break;
+
+      // Task gửi log định kỳ hằng ngày hoặc manual trigger
+      case DailyLogScheduler.taskNameDaily:
+      case DailyLogScheduler.taskNameOneShot:
+        try {
+          // 1. Lấy file log mới nhất đã được persist từ trước
+          final file = await LogFileService.getLatestLogFile();
+          if (file != null) {
+            // 2. Gửi file log qua Google Chat
+            final success = await LogGoogleChat.sendLogFile(file, title: '📬 Background Log Report');
+            if (success) {
+              // 3. Nếu gửi xong thành công, dọn dẹp log cũ (giữ 7 ngày)
+              await LogFileService.clearOldLogFiles();
+            }
+            return success;
+          }
+        } catch (e) {
+          stderr.writeln("Log background task failed: $e");
+          return false;
+        }
+        break;
     }
     return Future.value(true);
   });
@@ -160,15 +191,30 @@ class MyApp extends StatefulWidget {
 /// Nó thực hiện việc khởi tạo dịch vụ FlutterLocalization và đăng ký các bản đồ ngôn ngữ cho tiếng Anh, tiếng Khmer, tiếng Nhật và tiếng Việt.
 /// Khi có sự thay đổi về ngôn ngữ hiển thị do người dùng lựa chọn, lớp này sẽ kích hoạt việc vẽ lại toàn bộ ứng dụng để áp dụng các bản dịch mới.
 /// Đây là nơi tập trung các logic liên quan đến việc bản địa hóa và đảm bảo trải nghiệm người dùng mượt mà trên nhiều vùng quốc gia khác nhau.
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// Thuộc tính _localization là một thực thể thuộc lớp FlutterLocalization được sử dụng để quản lý toàn bộ cơ chế đa ngôn ngữ của ứng dụng.
   /// Nó đóng vai trò là hạt nhân trung tâm giúp chuyển đổi các chuỗi văn bản giữa nhiều ngôn ngữ khác nhau dựa trên cấu hình của người dùng.
   /// Dịch vụ này cung cấp các tính năng từ việc khởi tạo các bản đồ ngôn ngữ cho đến việc xử lý các sự kiện thay đổi ngôn ngữ trong thời gian thực.
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    // Khi app chuyển sang trạng thái paused (xuống background)
+    // Tự động lưu log từ RAM ra file vật lý để background task có dữ liệu mới nhất.
+    if (state == AppLifecycleState.paused) {
+      AppTalker.saveHistoryToFile();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    // Khôi phục lịch gửi log nếu user đã bật trước đó
+    DailyLogScheduler.restoreIfEnabled();
 
     /// Hệ thống localization được khởi tạo đồng thời với việc định nghĩa các mã ngôn ngữ và các bản đồ dịch thuật tương ứng cho từng vùng quốc gia.
     /// Chúng tôi thiết lập tiếng Việt làm ngôn ngữ mặc định khi ứng dụng bắt đầu khởi chạy để tối ưu hóa trải nghiệm cho nhóm đối tượng người dùng chính.
@@ -213,6 +259,12 @@ class _MyAppState extends State<MyApp> {
   /// dẫn tới tất cả text string được dịch sang language mới.
   void _onTranslatedLanguage(Locale? locale) {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override

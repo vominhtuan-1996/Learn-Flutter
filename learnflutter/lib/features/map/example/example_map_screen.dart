@@ -1,14 +1,57 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/features/web_view/street_view_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
+
+/// [CachedTileProvider] là một implementation của [TileProvider] giúp tự động cache các mảnh bản đồ.
+/// Nó kiểm tra xem mảnh bản đồ (tile) đã tồn tại trong bộ nhớ máy chưa, nếu chưa sẽ tải từ URL và lưu lại.
+class CachedTileProvider implements TileProvider {
+  final Dio _dio = Dio();
+
+  @override
+  Future<Tile> getTile(int x, int y, int? zoom) async {
+    try {
+      if (zoom == null) return TileProvider.noTile;
+
+      // Đường dẫn lưu cache: ~/Documents/map_tiles/{zoom}/{x}/{y}.png
+      final directory = await getApplicationDocumentsDirectory();
+      final path = '${directory.path}/map_tiles/$zoom/$x/$y.png';
+      final file = File(path);
+
+      if (await file.exists()) {
+        final bytes = await file.readAsBytes();
+        return Tile(256, 256, bytes);
+      }
+
+      // Nếu chưa có, tải từ OpenStreetMap (Ví dụ)
+      final url = 'https://tile.openstreetmap.org/$zoom/$x/$y.png';
+      final response = await _dio.get<List<int>>(
+        url,
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        final bytes = Uint8List.fromList(response.data!);
+        // Lưu file vào cache (background)
+        await file.create(recursive: true);
+        await file.writeAsBytes(bytes);
+        return Tile(256, 256, bytes);
+      }
+    } catch (e) {
+      debugPrint('Error loading tile ($x, $y, $zoom): $e');
+    }
+    return TileProvider.noTile;
+  }
+}
 
 /// [ExampleMapScreen] là màn hình hiển thị bản đồ sử dụng thư viện google_maps_flutter.
-/// Màn hình này thay thế flutter_map trước đó để tận dụng các tính năng cao cấp của Google Maps
-/// như dữ liệu địa điểm phong phú, bản đồ vệ tinh chất lượng cao và khả năng tương tác mượt mà.
-/// Chúng ta vẫn giữ nguyên logic xử lý Markers, Polylines và tích hợp Street View khi người dùng tap.
+/// Màn hình này được bổ sung thêm ví dụ về Caching TileOverlay.
 class ExampleMapScreen extends StatefulWidget {
   const ExampleMapScreen({super.key});
 
@@ -17,21 +60,16 @@ class ExampleMapScreen extends StatefulWidget {
 }
 
 class _ExampleMapScreenState extends State<ExampleMapScreen> {
-  /// [Completer] được dùng để giữ instance của [GoogleMapController].
-  /// Việc dùng Completer đảm bảo chúng ta chỉ thực hiện các thao tác điều khiển
-  /// (như animateCamera) sau khi bản đồ đã hoàn tất quá trình khởi tạo trên thiết bị.
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  /// [CameraPosition] xác định toạ độ và mức zoom khởi tạo ban đầu.
-  /// Chúng ta hướng camera về trung tâm Việt Nam để bao quát toàn bộ lãnh thổ.
   static const CameraPosition _initialPosition = CameraPosition(
     target: LatLng(16.0, 107.0),
     zoom: 5.5,
   );
 
-  /// [_markers] trong Google Maps sử dụng [Set<Marker>] thay vì danh sách.
-  /// Mỗi marker yêu cầu một [markerId] duy nhất để hệ thống phân biệt và quản lý trạng thái.
+  bool _showCacheLayer = false;
+
   final Set<Marker> _markers = {
     Marker(
       markerId: const MarkerId('hanoi'),
@@ -53,9 +91,6 @@ class _ExampleMapScreenState extends State<ExampleMapScreen> {
     ),
   };
 
-  /// [_polylines] định nghĩa tập hợp các đoạn đường vẽ nối tiếp nhau.
-  /// Google Maps quản lý polylines qua [Set<Polyline>], cho phép tuỳ chỉnh độ dày,
-  /// màu sắc và kiểu vẽ (đứt đoạn, liền mạch) một cách linh hoạt.
   late final Set<Polyline> _polylines = {
     Polyline(
       polylineId: const PolylineId('route1'),
@@ -69,15 +104,34 @@ class _ExampleMapScreenState extends State<ExampleMapScreen> {
     ),
   };
 
+  /// Định nghĩa TileOverlay sử dụng CachedTileProvider.
+  Set<TileOverlay> get _tileOverlays {
+    return _showCacheLayer
+        ? {
+            TileOverlay(
+              tileOverlayId: const TileOverlayId('cached_osm'),
+              tileProvider: CachedTileProvider(),
+            ),
+          }
+        : {};
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseLoading(
       isLoading: false,
       appBar: AppBar(
-        title: const Text('Google Maps Example'),
+        title: const Text('Google Maps Caching'),
         actions: [
-          /// Nút quay về Hà Nội sử dụng [animateCamera] để tạo hiệu ứng di chuyển mượt mà.
-          /// Việc gọi [Completer.future] đảm bảo controller đã sẵn sàng trước khi thực thi lệnh.
+          /// Nút bật/tắt lớp bản đồ có cache.
+          IconButton(
+            icon: Icon(
+              _showCacheLayer ? Icons.layers_outlined : Icons.layers,
+              color: _showCacheLayer ? Colors.blue : null,
+            ),
+            tooltip: 'Bật/tắt Cached Layer',
+            onPressed: () => setState(() => _showCacheLayer = !_showCacheLayer),
+          ),
           IconButton(
             icon: const Icon(Icons.my_location),
             tooltip: 'Về Hà Nội',
@@ -92,7 +146,6 @@ class _ExampleMapScreenState extends State<ExampleMapScreen> {
         ],
       ),
       child: GoogleMap(
-        /// [mapType] thiết lập hiển thị bản đồ dạng vệ tinh để giống với TileLayer ban đầu.
         mapType: MapType.satellite,
         initialCameraPosition: _initialPosition,
         onMapCreated: (GoogleMapController controller) {
@@ -100,9 +153,7 @@ class _ExampleMapScreenState extends State<ExampleMapScreen> {
         },
         markers: _markers,
         polylines: _polylines,
-
-        /// [onTap] nhận toạ độ nơi người dùng nhấn và mở Street View tương ứng.
-        /// Sử dụng [DialogUtils] để hiển thị nội dung Street View trong một Bottom Sheet kéo dãn được.
+        tileOverlays: _tileOverlays, // Tích hợp lớp cache vào bản đồ
         onTap: (LatLng point) {
           DialogUtils.openDraggableBottomSheet(
             context: context,
@@ -116,8 +167,6 @@ class _ExampleMapScreenState extends State<ExampleMapScreen> {
             ),
           );
         },
-
-        /// Các tính năng mặc định được hỗ trợ tốt bởi Google Maps SDK.
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: true,

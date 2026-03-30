@@ -1,4 +1,4 @@
-import 'package:learnflutter/core/network/api_client.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:learnflutter/data/models/user_model.dart';
 
 /// UserRepository - Wrapper repository to interact with user-related API endpoints
@@ -15,8 +15,10 @@ class UserRepository {
   final ApiClient _api = ApiClient.instance;
 
   /// Login with email + password. On success sets auth token in ApiClient.
-  Future<UserModel> login({required String email, required String password}) async {
-    final resp = await _api.post('/auth/login', data: {'email': email, 'password': password});
+  Future<UserModel> login(
+      {required String email, required String password}) async {
+    final resp = await _api
+        .post('/auth/login', data: {'email': email, 'password': password});
 
     // resp expected format: { user: {...}, token: '...', accessToken: '...' }
     final token = resp['token'] ?? resp['accessToken'];

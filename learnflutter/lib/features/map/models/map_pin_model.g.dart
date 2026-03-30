@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'person.dart';
+part of 'map_pin_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PersonAdapter extends TypeAdapter<Person> {
+class MapPinModelAdapter extends TypeAdapter<MapPinModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  Person read(BinaryReader reader) {
+  MapPinModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Person(
-      name: fields[0] as String,
-      country: fields[1] as String,
+    return MapPinModel(
+      latitude: fields[0] as double,
+      longitude: fields[1] as double,
+      title: fields[2] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Person obj) {
+  void write(BinaryWriter writer, MapPinModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.latitude)
       ..writeByte(1)
-      ..write(obj.country);
+      ..write(obj.longitude)
+      ..writeByte(2)
+      ..write(obj.title);
   }
 
   @override
@@ -38,7 +41,7 @@ class PersonAdapter extends TypeAdapter<Person> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PersonAdapter &&
+      other is MapPinModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

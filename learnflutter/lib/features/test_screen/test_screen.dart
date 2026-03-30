@@ -45,8 +45,7 @@ class _TestScreenState extends State<TestScreen> {
   /// Nó thực hiện kiểm tra tính hợp lệ của URI và đảm bảo hệ thống có thể xử lý việc điều hướng ra trình duyệt ngoài.
   /// Trong trường hợp không thể mở liên kết, một ngoại lệ sẽ được ném ra để thông báo lỗi cho hệ thống giám sát.
   _launchURL() async {
-    final Uri url = Uri.parse(
-        'https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
+    final Uri url = Uri.parse('https://iam.fpt.vn/auth/realms/fpt/protocol/openid-connect/auth?client_id=fproject_portal&response_type=code&redirect_uri=https://ip.fpt.vn/keycloak/callback');
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
@@ -59,20 +58,13 @@ class _TestScreenState extends State<TestScreen> {
     // Thực hiện yêu cầu đến API tìm kiếm sản phẩm
     // For demonstration, returning a dummy list
     await Future.delayed(Duration(seconds: 1)); // Simulate network delay
-    return List<String>.generate(
-        10, (index) => 'Suggestion123 $index for $query');
+    return List<String>.generate(10, (index) => 'Suggestion123 $index for $query');
   }
 
   List uploadList = [
-    RadioItemModel(
-        id: 'id',
-        title:
-            'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '2'),
-    RadioItemModel(
-        id: 'id',
-        title:
-            'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '4'),
     RadioItemModel(id: 'id', title: '5'),
     RadioItemModel(
@@ -81,15 +73,9 @@ class _TestScreenState extends State<TestScreen> {
             'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '7'),
     RadioItemModel(id: 'id', title: '8'),
-    RadioItemModel(
-        id: 'id',
-        title:
-            'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
     RadioItemModel(id: 'id', title: '10'),
-    RadioItemModel(
-        id: 'id',
-        title:
-            'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+    RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
   ];
 
   /// Phương thức splitCodeString xử lý việc phân tách mã xác thực từ một URL callback phức tạp.
@@ -113,8 +99,7 @@ class _TestScreenState extends State<TestScreen> {
   /// Đây là một công cụ hỗ trợ ghi nhật ký (logging) hiệu quả để theo dõi các yêu cầu API trong quá trình gỡ lỗi.
   String convertCurlToMarkdown(String curlInput) {
     // Loại bỏ khoảng trắng đầu cuối và escape các ký tự đặc biệt
-    final escapedCurl =
-        curlInput.trim().replaceAll(r'\', r'\\').replaceAll('"', r'\"');
+    final escapedCurl = curlInput.trim().replaceAll(r'\', r'\\').replaceAll('"', r'\"');
     // Đưa vào code block markdown
     return '```\n$escapedCurl\n```';
   }
@@ -319,8 +304,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.newLogin);
                 },
-                child: Text(AppLocaleTranslate.testGlobalNoKeyboardRebuild
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.testGlobalNoKeyboardRebuild.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -383,8 +367,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   _checkForUpdate();
                 },
-                child:
-                    Text(AppLocaleTranslate.codePushPatch.getString(context)),
+                child: Text(AppLocaleTranslate.codePushPatch.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -419,8 +402,7 @@ class _TestScreenState extends State<TestScreen> {
                       debugPrint('🚀 Simulator: Started update process');
                     },
                     showSimulator: true,
-                    isDownloading:
-                        false, // Dialog sẽ tự handle việc chuyển sang downloading khi ấn Update
+                    isDownloading: false, // Dialog sẽ tự handle việc chuyển sang downloading khi ấn Update
                   );
                 },
                 child: const Text('💡 Simulation Progress (Slider)'),
@@ -454,27 +436,17 @@ class _TestScreenState extends State<TestScreen> {
                     username: "ISC01.TUANVM37",
                     env: "STAGING",
                     isDarkMode: !getThemeBloc(context).state.tokens.isLight,
-                    fontName: getThemeBloc(context)
-                        .state
-                        .tokens
-                        .texts
-                        .titleLarge
-                        .fontFamily
-                        .split('_')
-                        .first,
-                    primaryColor:
-                        getThemeBloc(context).state.tokens.colors.primary,
+                    fontName: getThemeBloc(context).state.tokens.texts.titleLarge.fontFamily.split('_').first,
+                    primaryColor: getThemeBloc(context).state.tokens.colors.primary,
                   );
                 },
-                child:
-                    Text(AppLocaleTranslate.mobimapModule.getString(context)),
+                child: Text(AppLocaleTranslate.mobimapModule.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.colorPicker);
                 },
-                child: Text(
-                    AppLocaleTranslate.colorPickerScreen.getString(context)),
+                child: Text(AppLocaleTranslate.colorPickerScreen.getString(context)),
               ),
               InputHistoryTextField(
                 historyKey: 'search',
@@ -484,8 +456,7 @@ class _TestScreenState extends State<TestScreen> {
                 showHistoryList: true,
                 hasFocusExpand: true,
                 decoration: InputDecoration(
-                  hintText:
-                      AppLocaleTranslate.inputHistoryHint.getString(context),
+                  hintText: AppLocaleTranslate.inputHistoryHint.getString(context),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -494,38 +465,31 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.scrollPhysicScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.scrollPhysicScreen.getString(context)),
+                child: Text(AppLocaleTranslate.scrollPhysicScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(Routes.indicatorExampleScreen);
+                  Navigator.of(context).pushNamed(Routes.indicatorExampleScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.indicatorExample.getString(context)),
+                child: Text(AppLocaleTranslate.indicatorExample.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.pmsSDKLogin);
                 },
-                child:
-                    Text(AppLocaleTranslate.pluginNghiemThu.getString(context)),
+                child: Text(AppLocaleTranslate.pluginNghiemThu.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.flutter3dScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.flutter3dScreen.getString(context)),
+                child: Text(AppLocaleTranslate.flutter3dScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(Routes.visibilityDetectorExample);
+                  Navigator.of(context).pushNamed(Routes.visibilityDetectorExample);
                 },
-                child: Text(AppLocaleTranslate.visibilityDetectorExample
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.visibilityDetectorExample.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -537,8 +501,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.excellScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.workExcellFile.getString(context)),
+                child: Text(AppLocaleTranslate.workExcellFile.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -586,8 +549,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.transformerPageView);
                 },
-                child: Text(AppLocaleTranslate.transformerPageViewExample
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.transformerPageViewExample.getString(context)),
               ),
 
               /// Nhóm các nút chức năng hỗ trợ việc tải dữ liệu và tương tác bản đồ.
@@ -597,14 +559,19 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.smartLoadmoreScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.smartLoadmoreScreen.getString(context)),
+                child: Text(AppLocaleTranslate.smartLoadmoreScreen.getString(context)),
               )
                   .animate(onPlay: (controller) => controller.repeat())
                   .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
                   .animate() // this wraps the previous Animate in another Animate
                   .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
                   .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.newsScreen);
+                },
+                child: const Text('Multi-Domain News Demo'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.newLogin);
@@ -615,8 +582,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.isolateParseScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.testParseDataIsolate.getString(context)),
+                child: Text(AppLocaleTranslate.testParseDataIsolate.getString(context)),
               )
                   .animate(onPlay: (controller) => controller.repeat())
                   .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
@@ -639,42 +605,52 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.of(context).pushNamed(Routes.exampleMapScreen);
                 },
                 child: const Text('Flutter Map Example (OSM)'),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
-                  .animate()
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.offlineMbtilesMapScreen);
+                },
+                child: const Text('Offline MBTiles Map'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.googleMapBase);
                 },
                 child: const Text('Google Map Base (Custom UI)'),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80))
-                  .animate()
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.googleMapOffline);
+                },
+                child: const Text('Google Map Offline Pin (Hive)'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.streetViewScreen);
                 },
                 child: const Text('Street View 360 (WebView)'),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
-                  .animate()
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  // Rule 1: Chạy PMS ngầm, thành công mới hiện popup
+                  AppDialogManager.startGiftCouponProcessFlow();
+                },
+                child: const Text('🎁 [Rule] PMS Success -> Show Inside Popup'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  // Rule 2: Đã có mã PMS, hiện popup và tập trung ngay vào Inside
+                  AppDialogManager.showGiftCouponAction();
+                },
+                child: const Text('🎁 [Rule] PMS Already Done -> Direct Inside Popup'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
 
               /// Các nút điều khiển tương tác nâng cao như làm mới danh sách và cửa sổ trò chuyện.
               /// Những thành phần này đòi hỏi sự phối hợp chặt chẽ giữa trạng thái ứng dụng và hiệu ứng hoạt ảnh.
               /// Việc thử nghiệm tại đây đảm bảo rằng các tương tác vuốt chạm luôn mang lại cảm giác mượt mà và tự nhiên nhất.
               AnimatedTapButtonBuilder(
                 background: context.colorScheme.primaryContainer,
-                child: Text(
-                    AppLocaleTranslate.dropRefreshControl.getString(context)),
+                child: Text(AppLocaleTranslate.dropRefreshControl.getString(context)),
                 onTap: () {
                   // Hapit
                   Navigator.of(context).pushNamed(Routes.dropRefresh);
@@ -707,11 +683,9 @@ class _TestScreenState extends State<TestScreen> {
                 enabled: true,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(Routes.troubleShootingScreen);
+                    Navigator.of(context).pushNamed(Routes.troubleShootingScreen);
                   },
-                  child: Text(AppLocaleTranslate.troubleShootingScreen
-                      .getString(context)),
+                  child: Text(AppLocaleTranslate.troubleShootingScreen.getString(context)),
                 ),
               ),
 
@@ -720,11 +694,9 @@ class _TestScreenState extends State<TestScreen> {
               /// Thử nghiệm giúp đảm bảo khả năng tổ chức thông tin phân cấp luôn rõ ràng và dễ tiếp cận.
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(Routes.draggableExampleScreen);
+                  Navigator.of(context).pushNamed(Routes.draggableExampleScreen);
                 },
-                child: Text(AppLocaleTranslate.floatingDraggableWidget
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.floatingDraggableWidget.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -744,8 +716,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.segmented);
                 },
-                child: Text(
-                    AppLocaleTranslate.getPointIntoFileSvg.getString(context)),
+                child: Text(AppLocaleTranslate.getPointIntoFileSvg.getString(context)),
               ),
               MaterialButton3.icon(
                 fabIcon: Icons.close,
@@ -782,17 +753,21 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.talkerScreen);
+                },
+                child: const Text('Talker Logger (Advanced)'),
+              ),
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(Routes.menu);
                 },
                 child: Text(AppLocaleTranslate.sliderAppBar.getString(context)),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(Routes.notificationScrollScreen);
+                  Navigator.of(context).pushNamed(Routes.notificationScrollScreen);
                 },
-                child: Text(AppLocaleTranslate.notificationScrollScreen
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.notificationScrollScreen.getString(context)),
               ),
 
               /// Các màn hình minh họa kỹ thuật lập trình nâng cao như Reducer, vẽ tùy chỉnh và đồ họa.
@@ -802,22 +777,19 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.reducerScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.reducerScreen.getString(context)),
+                child: Text(AppLocaleTranslate.reducerScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.customPaintScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.customPaintScreen.getString(context)),
+                child: Text(AppLocaleTranslate.customPaintScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.graphicsScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.graphicsScreen.getString(context)),
+                child: Text(AppLocaleTranslate.graphicsScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -829,22 +801,19 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.customScrollScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.customScrollScreen.getString(context)),
+                child: Text(AppLocaleTranslate.customScrollScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.regexExampleScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.regexExampleScreen.getString(context)),
+                child: Text(AppLocaleTranslate.regexExampleScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.dragTargetScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.dragTargetScreen.getString(context)),
+                child: Text(AppLocaleTranslate.dragTargetScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -856,15 +825,13 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.refreshControl);
                 },
-                child: Text(
-                    AppLocaleTranslate.refreshControlScreen.getString(context)),
+                child: Text(AppLocaleTranslate.refreshControlScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.colorPicker);
                 },
-                child: Text(
-                    AppLocaleTranslate.colorPickerScreen.getString(context)),
+                child: Text(AppLocaleTranslate.colorPickerScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -920,8 +887,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(Routes.materialSegmentedScreen);
+                  Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
                 },
                 child: Text(AppLocaleTranslate.segmented.getString(context)),
               ),
@@ -953,15 +919,13 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.webBrowserScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.testWebBrowser.getString(context)),
+                child: Text(AppLocaleTranslate.testWebBrowser.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.draggelScrollScreen);
                 },
-                child: Text(AppLocaleTranslate.testDraggelScrollScreen
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.testDraggelScrollScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -985,29 +949,25 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.pageLoadingScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.pageLoadingScreen.getString(context)),
+                child: Text(AppLocaleTranslate.pageLoadingScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.snackBarScreen);
                 },
-                child: Text(AppLocaleTranslate.awesomeSnackBarExample
-                    .getString(context)),
+                child: Text(AppLocaleTranslate.awesomeSnackBarExample.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.shimmerWidget);
                 },
-                child: Text(
-                    AppLocaleTranslate.testShimmerWidget.getString(context)),
+                child: Text(AppLocaleTranslate.testShimmerWidget.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.heroAnimationScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.heroAnimationScreen.getString(context)),
+                child: Text(AppLocaleTranslate.heroAnimationScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -1025,8 +985,7 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.progressHudScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.progressHudScreen.getString(context)),
+                child: Text(AppLocaleTranslate.progressHudScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -1038,29 +997,25 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.nesredScroll);
                 },
-                child: Text(
-                    AppLocaleTranslate.nestedScrollScreen.getString(context)),
+                child: Text(AppLocaleTranslate.nestedScrollScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.courasel);
                 },
-                child:
-                    Text(AppLocaleTranslate.couraselScreen.getString(context)),
+                child: Text(AppLocaleTranslate.couraselScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.bmprogresshudScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.bmProgressHudScreen.getString(context)),
+                child: Text(AppLocaleTranslate.bmProgressHudScreen.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.intertiveviewScreen);
                 },
-                child: Text(
-                    AppLocaleTranslate.interactiveViewer.getString(context)),
+                child: Text(AppLocaleTranslate.interactiveViewer.getString(context)),
               ),
 
               /// Các thành phần giao dịch đặc thù của Cupertino (iOS style).
@@ -1087,30 +1042,26 @@ class _TestScreenState extends State<TestScreen> {
                 onPressed: () {
                   _showActionSheet(context);
                 },
-                child: Text(
-                    AppLocaleTranslate.cupertinoActionSheet.getString(context)),
+                child: Text(AppLocaleTranslate.cupertinoActionSheet.getString(context)),
               ),
               IconAnimationWidget(),
               TextButton(
                 onPressed: () {
                   _showAlertDialog(context);
                 },
-                child: Text(
-                    AppLocaleTranslate.cupertinoAlertDialog.getString(context)),
+                child: Text(AppLocaleTranslate.cupertinoAlertDialog.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.datetimePickerScreen);
                 },
-                child:
-                    Text(AppLocaleTranslate.dateTimePicker.getString(context)),
+                child: Text(AppLocaleTranslate.dateTimePicker.getString(context)),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.dateTimeInput);
                 },
-                child:
-                    Text(AppLocaleTranslate.dateTimeInput.getString(context)),
+                child: Text(AppLocaleTranslate.dateTimeInput.getString(context)),
               ),
               TextButton(
                 onPressed: () {
@@ -1146,23 +1097,20 @@ class _TestScreenState extends State<TestScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child:
-                Text(AppLocaleTranslate.actionSheetDefault.getString(context)),
+            child: Text(AppLocaleTranslate.actionSheetDefault.getString(context)),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
             },
-            child:
-                Text(AppLocaleTranslate.actionSheetAction.getString(context)),
+            child: Text(AppLocaleTranslate.actionSheetAction.getString(context)),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
-                AppLocaleTranslate.actionSheetDestructive.getString(context)),
+            child: Text(AppLocaleTranslate.actionSheetDestructive.getString(context)),
           ),
         ],
       ),
