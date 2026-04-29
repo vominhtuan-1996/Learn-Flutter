@@ -41,6 +41,7 @@ import 'package:learnflutter/features/map/example/example_map_screen.dart';
 import 'package:learnflutter/features/map/offline/offline_mbtiles_map_screen.dart';
 import 'package:learnflutter/features/map/google_map_base/google_map_base_screen.dart';
 import 'package:learnflutter/features/map/google_map_offline/google_map_offline_screen.dart';
+import 'package:learnflutter/features/map/flutter_map_osm/flutter_map_osm_screen.dart';
 import 'package:learnflutter/features/material/component/material_badge.dart';
 import 'package:learnflutter/features/material/component/material_bottom_app_bar.dart';
 import 'package:learnflutter/features/material/component/material_bottom_sheet.dart';
@@ -93,6 +94,7 @@ import 'package:learnflutter/features/bmprogresshud/bmprogresshud_screen.dart';
 import 'package:learnflutter/features/camera/camera_screen.dart';
 import 'package:learnflutter/features/camera/model/camera_mode.dart';
 import 'package:learnflutter/features/ar_kit/arkit_screen.dart';
+import 'package:learnflutter/features/ar_kit/scanner/scanner_screen.dart';
 import 'package:learnflutter/features/photo_3d/photo_3d_screen.dart';
 import 'package:learnflutter/features/photo_to_3d/photo_to_3d_screen.dart';
 import 'package:learnflutter/shared/widgets/routes/argument_screen_model.dart';
@@ -126,6 +128,7 @@ import 'package:learnflutter/features/scroll_physic/pages/snapping_scroll_physic
 import 'package:learnflutter/features/scroll_physic/scroll_physic_screen.dart';
 import 'package:learnflutter/features/setting/setting_screen.dart';
 import 'package:learnflutter/features/shimmer/shimmer_widget.dart';
+import 'package:learnflutter/features/shimmer/shimmer_base_test_screen.dart';
 import 'package:learnflutter/shared/widgets/snack_bar/snack_bar_screen.dart';
 import 'package:learnflutter/features/slider_vertical/slider_vertical_screen.dart';
 import 'package:learnflutter/features/smart_loadmore_screen/smart_loadmore_screen.dart';
@@ -143,6 +146,12 @@ import 'package:learnflutter/shared/widgets/lib/story_router/story_route.dart';
 import 'package:learnflutter/games/tic_tac_toe/screens/game_screen.dart';
 import 'package:learnflutter/games/rubik/screens/rubik_screen.dart';
 import 'package:learnflutter/features/news/presentation/news_screen.dart';
+import 'package:learnflutter/features/onboarding/screens/splash_v1_screen.dart';
+import 'package:learnflutter/features/onboarding/screens/onboarding_step1_screen.dart';
+import 'package:learnflutter/features/onboarding/screens/onboarding_step2_screen.dart';
+import 'package:learnflutter/features/onboarding/screens/onboarding_step3_screen.dart';
+import 'package:learnflutter/features/onboarding/screens/onboarding_page_view.dart';
+import 'package:learnflutter/features/auth/screens/login_v1_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -182,6 +191,7 @@ class Routes {
   static const String tiePickerScreen = "/tie_picker_screen";
   static const String progressHudScreen = "/progress_hud_screen";
   static const String shimmerWidget = "/shimmer_widget";
+  static const String shimmerBaseTest = "/shimmer_base_test";
   static const String matixScreen = "/matix_screen";
   static const String heroAnimationScreen = "/hero_animation_screen";
   static const String infoScreen = "/info_screen";
@@ -199,6 +209,7 @@ class Routes {
   static const String animationScreen = 'animation_screen';
   static const String setting = 'setting_screen';
   static const String arkit = 'arkit_screen';
+  static const String lidarScanner = 'lidar_scanner_screen';
   static const String photo3D = 'photo_3d_screen';
   static const String photoTo3D = 'photo_to_3d_screen';
   static const String colorPicker = 'color_picker_screen';
@@ -267,6 +278,17 @@ class Routes {
   static const String newLogin = "/new_login";
   static const String newsScreen = "/news_screen";
   static const String googleMapOffline = "/google_map_offline";
+
+  // Monumental Habits Onboarding
+  static const String splashV1 = "/splash_v1";
+  static const String onboardingStep1 = "/onboarding_step1";
+  static const String onboardingStep2 = "/onboarding_step2";
+  static const String onboardingStep3 = "/onboarding_step3";
+  static const String onboardingPageView = "/onboarding_page_view";
+  static const String loginV1 = "/login_v1";
+
+  // flutter_map OSM
+  static const String flutterMapOsmScreen = 'flutter_map_osm_screen';
 
   //*regions Sliver
   static const String sliverAppbarCollapsingHeaderHero =
@@ -382,6 +404,36 @@ class Routes {
         return MaterialPageRoute(
           settings: RouteSettings(name: testScreen),
           builder: (_) => TestScreen(),
+        );
+      case splashV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: splashV1),
+          builder: (_) => const SplashV1Screen(),
+        );
+      case onboardingStep1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: onboardingStep1),
+          builder: (_) => OnboardingStep1Screen(onNext: () {}, onSkip: () {}),
+        );
+      case onboardingStep2:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: onboardingStep2),
+          builder: (_) => OnboardingStep2Screen(onNext: () {}, onSkip: () {}),
+        );
+      case onboardingStep3:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: onboardingStep3),
+          builder: (_) => OnboardingStep3Screen(onGetStarted: () {}),
+        );
+      case onboardingPageView:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: onboardingPageView),
+          builder: (_) => const OnboardingPageView(),
+        );
+      case loginV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: loginV1),
+          builder: (_) => const LoginV1Screen(),
         );
       case transformerPageView:
         return MaterialPageRoute(
@@ -527,6 +579,11 @@ class Routes {
           routeSettings: RouteSettings(name: shimmerWidget),
           builder: (_) => ExampleUiLoadingAnimation(),
         );
+      case shimmerBaseTest:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: shimmerBaseTest),
+          builder: (_) => const ShimmerBaseTestScreen(),
+        );
       case matixScreen:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: matixScreen),
@@ -621,6 +678,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: arkit),
           builder: (_) => const ARKitScreen(),
+        );
+      case lidarScanner:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: lidarScanner),
+          builder: (_) => const ScannerScreen(),
         );
       case photo3D:
         return SlideRightRoute(
@@ -923,6 +985,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: offlineMbtilesMapScreen),
           builder: (_) => const OfflineMbtilesMapScreen(),
+        );
+      case flutterMapOsmScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: flutterMapOsmScreen),
+          builder: (_) => const FlutterMapOsmScreen(),
         );
       case isolateParseScreen:
         return SlideRightRoute(

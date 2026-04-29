@@ -9,6 +9,9 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learnflutter/app/app_root.dart';
 import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/core/theme/extension_theme.dart';
+import 'package:learnflutter/core/theme/habit_builder_theme.dart';
+import 'package:learnflutter/features/onboarding/screens/splash_v1_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/search_bar/cubit/search_bar_cubit.dart';
@@ -64,14 +67,16 @@ void main() {
       await Hive.openBox('peopleBox');
 
       // Initialize ApiClient with base URL and optional token refresh handler
-      ApiClient.instance.init(
+      (
         baseUrl: 'https://apis-stag.fpt.vn',
         tokenRefreshHandler: () async {
           try {
             // Example refresh flow: read refresh token from SharedPreferences, call refresh endpoint
-            final refreshToken = SharedPreferenceUtils.prefs.getString('refresh_token');
+            final refreshToken =
+                SharedPreferenceUtils.prefs.getString('refresh_token');
             if (refreshToken == null) return null;
-            final resp = await ApiClient.instance.post('/auth/refresh', data: {'refreshToken': refreshToken});
+            final resp = await ApiClient.instance
+                .post('/auth/refresh', data: {'refreshToken': refreshToken});
             final newToken = resp['accessToken'] ?? resp['token'];
             if (newToken != null && newToken is String) {
               ApiClient.instance.setAuthToken(newToken);
@@ -98,11 +103,15 @@ void main() {
 /// Mỗi khóa tương ứng với một loại logic nghiệp vụ cụ thể như gửi thông báo đẩy, đồng bộ hóa dữ liệu định kỳ hoặc xử lý các tệp tin lớn trong nền.
 /// Việc tập trung các khóa này tại một nơi giúp ngăn chặn sự nhầm lẫn giữa các tác vụ và hỗ trợ việc bảo trì điều phối các luồng xử lý nền trở nên dễ dàng hơn.
 const String simpleTaskKey = "be.tramckrijte.workmanagerExample.simpleTask";
-const String rescheduledTaskKey = "be.tramckrijte.workmanagerExample.rescheduledTask";
+const String rescheduledTaskKey =
+    "be.tramckrijte.workmanagerExample.rescheduledTask";
 const String failedTaskKey = "be.tramckrijte.workmanagerExample.failedTask";
-const String simpleDelayedTask = "be.tramckrijte.workmanagerExample.simpleDelayedTask";
-const String simplePeriodicTask = "be.tramckrijte.workmanagerExample.simplePeriodicTask";
-const String simplePeriodic1HourTask = "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask";
+const String simpleDelayedTask =
+    "be.tramckrijte.workmanagerExample.simpleDelayedTask";
+const String simplePeriodicTask =
+    "be.tramckrijte.workmanagerExample.simplePeriodicTask";
+const String simplePeriodic1HourTask =
+    "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask";
 
 /// Hàm callbackDispatcher đóng vai trò là trình điều phối các tác vụ chạy ngầm được gọi trực tiếp bởi hệ điều hành thông qua WorkManager.
 /// Nó được đánh dấu với chỉ thị vm:entry-point để đảm bảo trình biên dịch không loại bỏ trong quá trình tối ưu hóa mã nguồn.
@@ -159,7 +168,8 @@ void callbackDispatcher() {
           final file = await LogFileService.getLatestLogFile();
           if (file != null) {
             // 2. Gửi file log qua Google Chat
-            final success = await LogGoogleChat.sendLogFile(file, title: '📬 Background Log Report');
+            final success = await LogGoogleChat.sendLogFile(file,
+                title: '📬 Background Log Report');
             if (success) {
               // 3. Nếu gửi xong thành công, dọn dẹp log cũ (giữ 7 ngày)
               await LogFileService.clearOldLogFiles();
@@ -310,12 +320,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             /// Ngoài ra, cơ chế onGenerateRoute cũng được tích hợp để tự động điều phối việc chuyển cảnh dựa trên các định danh route đã được đăng ký trước.
             return MaterialApp(
               navigatorKey: UtilsHelper.navigatorKey,
-              theme: AppThemes.primaryTheme(context, state),
-              darkTheme: AppThemes.primaryTheme(context, state),
+              theme: HabitBuilderTheme.light
+                  .toThemeData(), // AppThemes.primaryTheme(context, state),
+              darkTheme: HabitBuilderTheme.dark
+                  .toThemeData(), //AppThemes.primaryTheme(context, state),
               localizationsDelegates: _localization.localizationsDelegates,
               supportedLocales: _localization.supportedLocales,
               debugShowCheckedModeBanner: false,
-              home: AppRoot(),
+              home: const SplashV1Screen(),
               onGenerateRoute: Routes.generateRoute,
             );
           },

@@ -35,6 +35,18 @@ mixin AppLocaleTranslate {
   static const String initializationComplete = 'initializationComplete';
   static const String splashAnimationEnded = 'splashAnimationEnded';
   static const String initDoneReadyNavigate = 'initDoneReadyNavigate';
+  static const String onboardingWelcome = 'onboardingWelcome';
+  static const String onboardingStep2Title = 'onboardingStep2Title';
+  static const String onboardingStep2Body = 'onboardingStep2Body';
+  static const String onboardingStep3Title = 'onboardingStep3Title';
+  static const String onboardingStep3Body = 'onboardingStep3Body';
+  static const String onboardingStep4Title = 'onboardingStep4Title';
+  static const String onboardingStep4Body = 'onboardingStep4Body';
+  static const String getStarted = 'getStarted';
+  static const String loginWelcomeBack = 'loginWelcomeBack';
+  static const String continueWithGoogle = 'continueWithGoogle';
+  static const String continueWithFacebook = 'continueWithFacebook';
+
   static const String transformerExampleTitle = 'transformerExampleTitle';
   static const String pageIndex = 'pageIndex';
   static const String workExcellFile = 'workExcellFile';
@@ -228,6 +240,21 @@ mixin AppLocaleTranslate {
     success: 'Success',
     error: 'Error',
     loadingData: 'Updating data...',
+    onboardingWelcome: 'WELCOME TO MONUMENTAL HABITS',
+    onboardingStep2Title: 'WORK HARD BUT NOT TOO HARD',
+    onboardingStep2Body:
+        'Working hard is important, but taking care of yourself is also important.',
+    onboardingStep3Title:
+        'WE FIRST MAKE OUR HABITS, AND THEN OUR HABITS MAKE US',
+    onboardingStep3Body:
+        'We first make our habits, and then our habits make us. Out of habits, we form our character.',
+    onboardingStep4Title: 'JOIN A SUPPORTIVE COMMUNITY',
+    onboardingStep4Body:
+        'A community of like-minded people to keep you motivated and accountable.',
+    getStarted: 'Get Started',
+    loginWelcomeBack: 'Welcome back, you\'ve been missed!',
+    continueWithGoogle: 'Continue with Google',
+    continueWithFacebook: 'Continue with Facebook',
   };
   static const Map<String, dynamic> KM = {
     title: 'ការធ្វើមូលដ្ឋានីយកម្ម',
@@ -384,5 +411,20 @@ mixin AppLocaleTranslate {
     success: 'Thành công',
     error: 'Lỗi',
     loadingData: 'Đang cập nhật dữ liệu...',
+    onboardingWelcome: 'CHÀO MỪNG BẠN ĐẾN VỚI MONUMENTAL HABITS',
+    onboardingStep2Title: 'LÀM VIỆC CHĂM CHỈ NHƯNG ĐỪNG QUÁ SỨC',
+    onboardingStep2Body:
+        'Làm việc chăm chỉ là quan trọng, nhưng chăm sóc bản thân cũng quan trọng không kém.',
+    onboardingStep3Title:
+        'CHÚNG TA TẠO RA THÓI QUEN, VÀ RỒI THÓI QUEN TẠO NÊN CHÚNG TA',
+    onboardingStep3Body:
+        'Đầu tiên chúng ta tạo ra thói quen, và rồi thói quen hình thành nên con người chúng ta.',
+    onboardingStep4Title: 'THAM GIA CỘNG ĐỒNG HỖ TRỢ',
+    onboardingStep4Body:
+        'Một cộng đồng gồm những người cùng chí hướng để giúp bạn luôn có động lực và trách nhiệm.',
+    getStarted: 'Bắt đầu ngay',
+    loginWelcomeBack: 'Chào mừng trở lại, chúng tôi rất nhớ bạn!',
+    continueWithGoogle: 'Tiếp tục với Google',
+    continueWithFacebook: 'Tiếp tục với Facebook',
   };
 }

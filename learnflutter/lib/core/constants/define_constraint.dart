@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnflutter/core/network/MBMHttpHelper.dart';
 import 'package:learnflutter/features/menu/model/model_menu.dart';
 import 'package:learnflutter/shared/widgets/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
@@ -100,7 +99,6 @@ class AppConfig {
 
 void _updateCounter() {
   // NotificationService().showNotification(title: 'Sample title', body: DateTime.now().toString());
-  postdataTelegram('updateCounter_${DateTime.now().toString()}');
   // Timer.periodic(const Duration(minutes: 1), (timer) {
   //   print(DateTime.now().toString());
   //   NotificationCenter().notify('updateCounter');

@@ -3,9 +3,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
-import 'package:learnflutter/core/network/MBMHttpHelper.dart';
 import 'package:learnflutter/features/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/features/open_file/widget_item/item_widget.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
@@ -173,14 +173,11 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        String link =
-                            "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659dfa9412b7409efc7a0560";
+                        String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659dfa9412b7409efc7a0560";
                         // String link = "https://apis-stag.fpt.vn/resource/internet-infra/user-management/api/v1/helpers/storages/getContent?key=659e55ee12b7409efc7b2b6a";
                         // String link = "https://i.stack.imgur.com/MMtcX.png";
 
                         // downLoadFileWithLink(link, await saveFolder('659e55ee12b7409efc7b2b6a.zip'));
-                        final path = await downloadFile(link, await downLoadFolder());
-                        await OpenFile.open(path);
                       },
                       child: const Text('DownLoad File')),
                   Expanded(

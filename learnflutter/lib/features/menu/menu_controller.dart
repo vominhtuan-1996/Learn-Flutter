@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/network/MBMHttpHelper.dart';
 import 'package:learnflutter/features/menu/model/model_menu.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,8 +24,7 @@ class HomeMenuController extends StatefulWidget {
   State<HomeMenuController> createState() => HomeMenuControllerWidgetStateState();
 }
 
-class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
-    with TickerProviderStateMixin {
+class HomeMenuControllerWidgetStateState extends State<HomeMenuController> with TickerProviderStateMixin {
   bool isLoading = false;
   TextEditingController _controllerTextField = TextEditingController();
   ItemScrollController _controllerScrollView = ItemScrollController();
@@ -98,18 +96,6 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
     );
   }
 
-  void getListCategories() {
-    getHttp().then((value) => {
-          categories = value.categories,
-          menus = value.menus,
-          setState(() {
-            isLoading = true;
-            SVProgressHUD.dismiss();
-          }),
-          print(categories)
-        });
-  }
-
   // UI SearchView
   Container initUISearchView() {
     return Container(
@@ -136,8 +122,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             width: 50,
             height: 50,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(15.0), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0), color: Colors.white),
             child: Center(
               child: Image.asset(loadImageWithImageName('ic_notification', TypeImage.png)),
             )));
@@ -156,8 +141,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
           prefixIcon: Image.asset(loadImageWithImageName('ic_search_organe', TypeImage.png)),
           suffixIcon: _controllerTextField.text.length > 0 ? initUISuffixIconSearchView() : null,
           hintText: "Tìm kiếm chức năng",
-          hintStyle: textStyleManrope(
-              Color(0xFFFDA758).withOpacity(0.5), fontSizeSearchView, FontWeight.normal),
+          hintStyle: textStyleManrope(Color(0xFFFDA758).withOpacity(0.5), fontSizeSearchView, FontWeight.normal),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
@@ -218,8 +202,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
             }
           }
           if (isAddMenusSearch) {
-            menusSearch.add(
-                ModelMenusItem(childMenus: childMenus, parentMenuTitle: itemMenus.parentMenuTitle));
+            menusSearch.add(ModelMenusItem(childMenus: childMenus, parentMenuTitle: itemMenus.parentMenuTitle));
           }
         }
       }
@@ -273,17 +256,12 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
           child: Container(
               height: 40,
               width: 100,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: (categoriesItem.isSelected) ? Color(0xFFFDA758) : Colors.white),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.0), color: (categoriesItem.isSelected) ? Color(0xFFFDA758) : Colors.white),
               child: Center(
                 child: Text(
                   categoriesItem.title,
                   textAlign: TextAlign.center,
-                  style: textStyleManrope(
-                      (categoriesItem.isSelected) ? Colors.white : Color(0xFFFDA758),
-                      14,
-                      FontWeight.normal),
+                  style: textStyleManrope((categoriesItem.isSelected) ? Colors.white : Color(0xFFFDA758), 14, FontWeight.normal),
                 ),
               )),
         ));
@@ -303,10 +281,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
         Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-              Text('Tool sử dụng gần đây',
-                  textAlign: TextAlign.left,
-                  style:
-                      textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.bold)),
+              Text('Tool sử dụng gần đây', textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.bold)),
               SizedBox(height: 10),
               Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -343,19 +318,13 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
           return Container(
               alignment: Alignment.center,
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                Text(item.parentMenuTitle,
-                    textAlign: TextAlign.left,
-                    style: textStyleManrope(
-                        Color(0xFF795675), fontSizeSectionTitile, FontWeight.w600)),
+                Text(item.parentMenuTitle, textAlign: TextAlign.left, style: textStyleManrope(Color(0xFF795675), fontSizeSectionTitile, FontWeight.w600)),
                 SizedBox(height: 10),
                 Container(
-                  height: item.childMenus.length / 4 > 1
-                      ? caculatorHeightWithCount(item.childMenus.length) * 110
-                      : 110,
+                  height: item.childMenus.length / 4 > 1 ? caculatorHeightWithCount(item.childMenus.length) * 110 : 110,
                   child: GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 5 / 6, crossAxisSpacing: 7),
                     itemBuilder: (BuildContext ctxt, int index) {
                       ChildMenusModel childMenusModel = item.childMenus[index];
                       return childMenusCell(childMenusModel, false);
@@ -373,8 +342,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
     return GestureDetector(
       onTap: () {
         bool isAddObject = false;
-        List<ChildMenusModel> cacheRecentlyUsed =
-            parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+        List<ChildMenusModel> cacheRecentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
         for (ChildMenusModel element in cacheRecentlyUsed) {
           if (element.titleChildMenu == data.titleChildMenu) {
             isAddObject = false;
@@ -387,8 +355,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
           cacheRecentlyUsed.add(data);
           SharedPreferenceUtils.putObjectList(keysaveCache_childMenus, cacheRecentlyUsed);
           setState(() {
-            recentlyUsed =
-                parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
+            recentlyUsed = parseChildMenusModel(SharedPreferenceUtils.getObjectList(keysaveCache_childMenus)!);
           });
         }
         selectItemChildMenu(data.routeName);
@@ -398,8 +365,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
         children: <Widget>[
           Container(
               height: 50,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Color(0xFFFDA758).withOpacity(0.2)),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFFFDA758).withOpacity(0.2)),
               child: Center(
                 child: Image.asset(loadImageWithImageName(data.iconChildMenu, TypeImage.png)),
               )),
@@ -408,9 +374,7 @@ class HomeMenuControllerWidgetStateState extends State<HomeMenuController>
           ),
           Container(
               child: Center(
-            child: Text(data.titleChildMenu,
-                textAlign: TextAlign.center,
-                style: textStyleManrope(Color(0xFF795675), fontSizeCell, FontWeight.normal)),
+            child: Text(data.titleChildMenu, textAlign: TextAlign.center, style: textStyleManrope(Color(0xFF795675), fontSizeCell, FontWeight.normal)),
           ))
         ],
       ),

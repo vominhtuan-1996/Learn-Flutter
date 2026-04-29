@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/network/MBMHttpHelper.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:learnflutter/core/utils/extension/extension_string.dart';
 
 /// UtilsHelper cung cấp tập hợp các phương thức tiện ích dùng chung cho toàn bộ ứng dụng.
@@ -34,21 +34,18 @@ class UtilsHelper {
   }
 
   /// Đóng màn hình hiện tại và ngay lập tức điều hướng sang một màn hình mới theo tên.
-  static void popAndPushName(BuildContext context, String routeName,
-      [dynamic result]) {
+  static void popAndPushName(BuildContext context, String routeName, [dynamic result]) {
     Navigator.popAndPushNamed(context, routeName, result: result);
   }
 
   /// Chuyển hướng sang một màn hình mới theo tên và tùy chọn truyền theo dữ liệu (arguments).
-  static Future<dynamic> navigationPushNamed(BuildContext context, String route,
-      {dynamic data}) async {
+  static Future<dynamic> navigationPushNamed(BuildContext context, String route, {dynamic data}) async {
     var navigator = Navigator.of(context);
     return await navigator.pushNamed(route, arguments: data);
   }
 
   /// Ghi log định dạng kèm theo vết ngăn xếp để hỗ trợ quá trình gỡ lỗi chuyên sâu.
-  static void fMapLog(String fmt,
-      [Object? arg1, Object? arg2, Object? arg3, Object? arg4]) {
+  static void fMapLog(String fmt, [Object? arg1, Object? arg2, Object? arg3, Object? arg4]) {
     debugPrint('${StackTrace.current} --> $fmt');
   }
 
@@ -56,8 +53,7 @@ class UtilsHelper {
   /// Phương thức này trích xuất thông tin từ StackTrace để hiển thị gói và dòng mã cụ thể một cách trực quan.
   static void logDebug(dynamic label) {
     debugPrint(label.toString());
-    Iterable<String> lines =
-        StackTrace.current.toString().trimRight().split('\n');
+    Iterable<String> lines = StackTrace.current.toString().trimRight().split('\n');
     for (var element in lines) {
       if (element.substring(1, 3).toInt == 1) {
         String temp = element;
@@ -72,12 +68,8 @@ class UtilsHelper {
   }
 
   /// Điều hướng sang một controller mới thông qua rootNavigator nếu cần thiết.
-  static Future<T?> pushToController<T>(
-      {required BuildContext context,
-      bool useRootNavigator = true,
-      required String route}) {
-    return Navigator.of(context, rootNavigator: useRootNavigator)
-        .pushNamed(route);
+  static Future<T?> pushToController<T>({required BuildContext context, bool useRootNavigator = true, required String route}) {
+    return Navigator.of(context, rootNavigator: useRootNavigator).pushNamed(route);
   }
 
   /// Quay trở lại màn hình gốc đầu tiên trong cấu trúc điều hướng của ứng dụng.
@@ -89,37 +81,24 @@ class UtilsHelper {
 
   /// Tính toán chiều cao hiển thị tối thiểu của một đoạn văn bản dựa trên kiểu chữ và chiều rộng tối đa cho phép.
   /// Phương thức này rất hữu ích để điều chỉnh kích thước động cho các widget chứa văn bản biến đổi.
-  static double getTextHeight(
-      {required String text,
-      required TextStyle textStyle,
-      required double maxWidthOfWidget,
-      double minWidthOfWidget = 0}) {
-    final textPainter = TextPainter(
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
-        text: TextSpan(text: text, style: textStyle))
+  static double getTextHeight({required String text, required TextStyle textStyle, required double maxWidthOfWidget, double minWidthOfWidget = 0}) {
+    final textPainter = TextPainter(textAlign: TextAlign.center, textDirection: TextDirection.ltr, text: TextSpan(text: text, style: textStyle))
       ..layout(maxWidth: maxWidthOfWidget, minWidth: minWidthOfWidget);
     return textPainter.height;
   }
 
   /// Lấy chiều rộng thực tế của một đoạn văn bản khi được hiển thị với một kiểu chữ cụ thể.
-  static double getTextWidth(
-      {required String text, required TextStyle textStyle}) {
-    final textPainter = TextPainter(
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
-        text: TextSpan(text: text, style: textStyle))
-      ..layout();
+  static double getTextWidth({required String text, required TextStyle textStyle}) {
+    final textPainter = TextPainter(textAlign: TextAlign.center, textDirection: TextDirection.ltr, text: TextSpan(text: text, style: textStyle))..layout();
     return textPainter.size.width;
   }
 
   /// Tải tệp xuống từ một URL và báo cáo tiến trình thông qua StreamController.
   /// Phương thức này hỗ trợ theo dõi tỷ lệ phần trăm tải về để cập nhật giao diện người dùng theo thời gian thực.
-  static Future<String> downloadFile(
-      String savePath, StreamController<double> stream) async {
+  static Future<String> downloadFile(String savePath, StreamController<double> stream) async {
     String path = '$savePath/${DateTime.now().millisecondsSinceEpoch}.png';
     try {
-      final resut = await dio.download(
+      final resut = await ApiClient.instance.dio.download(
         'https://sampletestfile.com/wp-content/uploads/2023/08/11.5-MB.png',
         path,
         onReceiveProgress: (received, total) {
@@ -138,8 +117,7 @@ class UtilsHelper {
     return path;
   }
 
-  static dynamic getJsonValue(dynamic json, List<String> keys,
-      {bool isCheckAllCase = true, dynamic defaultValue}) {
+  static dynamic getJsonValue(dynamic json, List<String> keys, {bool isCheckAllCase = true, dynamic defaultValue}) {
     if (json is! Map) return defaultValue;
     int index = 1;
     for (String key in keys) {
@@ -180,11 +158,8 @@ class UtilsHelper {
   /// @isCheckAllCase = true: tự động chuyển đổi và check key theo các trường hợp camelCase, snake_case, PascalCase và param-case
   /// @return string value by json key
   ///
-  static String getJsonValueString(dynamic json, List<String> keys,
-      {bool isCheckAllCase = true, String defaultValue = ''}) {
-    return (getJsonValue(json, keys,
-            isCheckAllCase: isCheckAllCase, defaultValue: defaultValue))
-        .toString();
+  static String getJsonValueString(dynamic json, List<String> keys, {bool isCheckAllCase = true, String defaultValue = ''}) {
+    return (getJsonValue(json, keys, isCheckAllCase: isCheckAllCase, defaultValue: defaultValue)).toString();
   }
 
   static List<T?> getJsonValueList<T>(

@@ -300,6 +300,37 @@ class _TestScreenState extends State<TestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              const Text('✨ Monumental Habits Onboarding', style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.splashV1),
+                    child: const Text('Splash'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.onboardingStep1),
+                    child: const Text('Step 1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.onboardingStep2),
+                    child: const Text('Step 2'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.onboardingStep3),
+                    child: const Text('Step 3'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.onboardingPageView),
+                    child: const Text('PageView'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.loginV1),
+                    child: const Text('Login V1'),
+                  ),
+                ],
+              ),
+              const Divider(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.newLogin);
@@ -339,6 +370,13 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: const Text('AR Kit (3D Model Overlay)'),
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.lidarScanner);
+                },
+                child: const Text('AR Kit (3D Model Overlay)'),
+              ),
+
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.photo3D);
@@ -624,6 +662,12 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: const Text('Google Map Offline Pin (Hive)'),
               ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.flutterMapOsmScreen);
+                },
+                child: const Text('Flutter Map OSM (flutter_map)'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(Routes.streetViewScreen);
@@ -962,6 +1006,12 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.of(context).pushNamed(Routes.shimmerWidget);
                 },
                 child: Text(AppLocaleTranslate.testShimmerWidget.getString(context)),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.shimmerBaseTest);
+                },
+                child: const Text('Base Shimmer Test'),
               ),
               TextButton(
                 onPressed: () {

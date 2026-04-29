@@ -1,5 +1,5 @@
 ---
-description: Quy trình tích hợp flutter_map ^8.1.1 và thêm màn hình bản đồ vào test_screen
+description: Quy trình tích hợp mapbox và thêm màn hình bản đồ vào test_screen
 ---
 
 # Flutter Map Workflow
@@ -17,8 +17,7 @@ Mở `pubspec.yaml` và xác nhận 2 package sau đã có:
 
 ```yaml
 dependencies:
-  flutter_map: ^8.1.1
-  latlong2: ^0.9.0
+  mapbox_maps_flutter
 ```
 
 Nếu chưa có, thêm vào rồi chạy:
