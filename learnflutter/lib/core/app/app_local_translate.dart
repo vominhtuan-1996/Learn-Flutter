@@ -12,11 +12,32 @@ mixin AppLocaleTranslate {
   static const String emailLabel = 'emailLabel';
   static const String emailHint = 'emailHint';
   static const String passwordLabel = 'passwordLabel';
+  static const String registerTitle = 'registerTitle';
+  static const String nameLabel = 'nameLabel';
+  static const String nameHint = 'nameHint';
+  static const String keepMeSignedIn = 'keepMeSignedIn';
+  static const String createButton = 'createButton';
+  static const String alreadyHaveAccount = 'alreadyHaveAccount';
+  static const String signUpWith = 'signUpWith';
   static const String passwordHint = 'passwordHint';
   static const String forgotPassword = 'forgotPassword';
   static const String loginButton = 'loginButton';
   static const String noAccount = 'noAccount';
   static const String register = 'register';
+  static const String forgotPasswordTitle = 'forgotPasswordTitle';
+  static const String forgotPasswordDescription = 'forgotPasswordDescription';
+  static const String sendResetLink = 'sendResetLink';
+  static const String rememberPassword = 'rememberPassword';
+  static const String forgotPasswordEmailHint = 'forgotPasswordEmailHint';
+  static const String homeGreeting = 'homeGreeting';
+  static const String dailyQuote = 'dailyQuote';
+  static const String dailyQuoteAuthor = 'dailyQuoteAuthor';
+  static const String inProgress = 'inProgress';
+  static const String doneButton = 'doneButton';
+  static const String homeTab = 'homeTab';
+  static const String coursesTab = 'coursesTab';
+  static const String communityTab = 'communityTab';
+  static const String settingsTab = 'settingsTab';
 
   // Messages
   static const String passwordEmptyError = 'passwordEmptyError';
@@ -46,6 +67,78 @@ mixin AppLocaleTranslate {
   static const String loginWelcomeBack = 'loginWelcomeBack';
   static const String continueWithGoogle = 'continueWithGoogle';
   static const String continueWithFacebook = 'continueWithFacebook';
+
+  static const String profileTitle = 'profileTitle';
+  static const String editButton = 'editButton';
+  static const String habitsStat = 'habitsStat';
+  static const String tasksStat = 'tasksStat';
+  static const String streakStat = 'streakStat';
+  static const String billing = 'billing';
+  static const String nightMode = 'nightMode';
+  static const String notifications = 'notifications';
+  static const String contactUs = 'contactUs';
+  static const String aboutUs = 'aboutUs';
+  static const String logout = 'logout';
+  static const String addHabitTitle = 'addHabitTitle';
+  static const String habitNameLabel = 'habitNameLabel';
+  static const String habitNameHint = 'habitNameHint';
+  static const String buildHabit = 'buildHabit';
+  static const String quitHabit = 'quitHabit';
+  static const String habitIconLabel = 'habitIconLabel';
+  static const String habitFrequencyLabel = 'habitFrequencyLabel';
+  static const String daily = 'daily';
+  static const String weekly = 'weekly';
+  static const String monthly = 'monthly';
+  static const String reminderLabel = 'reminderLabel';
+  static const String saveButton = 'saveButton';
+  static const String coursesTitle = 'coursesTitle';
+  static const String allTab = 'allTab';
+  static const String popularTab = 'popularTab';
+  static const String newTab = 'newTab';
+  static const String featuredCourseTitle = 'featuredCourseTitle';
+  static const String featuredCourseDesc = 'featuredCourseDesc';
+  static const String lessonsCount = 'lessonsCount';
+  static const String morningRoutine = 'morningRoutine';
+  static const String selfCare = 'selfCare';
+  static const String productivity = 'productivity';
+  static const String communityTitle = 'communityTitle';
+  static const String mindfulnessTab = 'mindfulnessTab';
+  static const String fitnessTab = 'fitnessTab';
+  static const String journalingTab = 'journalingTab';
+  static const String cheerCount = 'cheerCount';
+  static const String commentCount = 'commentCount';
+  static const String postPlaceholder = 'postPlaceholder';
+  static const String rating = 'rating';
+  static const String courseDescription = 'courseDescription';
+  static const String startNow = 'startNow';
+  static const String wakeUpEarly = 'wakeUpEarly';
+  static const String drinkWater = 'drinkWater';
+  static const String exercise = 'exercise';
+  static const String meditation = 'meditation';
+  static const String healthyBreakfast = 'healthyBreakfast';
+  static const String currentStreak = 'currentStreak';
+  static const String bestStreak = 'bestStreak';
+  static const String totalCompleted = 'totalCompleted';
+  static const String habitSettingsTitle = 'habitSettingsTitle';
+  static const String editHabitTitle = 'editHabitTitle';
+  static const String deleteHabitConfirm = 'deleteHabitConfirm';
+  static const String deleteAndClear = 'deleteAndClear';
+  static const String archiveKeepHistory = 'archiveKeepHistory';
+  static const String notificationsTitle = 'notificationsTitle';
+  static const String todayHeader = 'todayHeader';
+  static const String yesterdayHeader = 'yesterdayHeader';
+  static const String habitReminderTitle = 'habitReminderTitle';
+  static const String habitReminderMessage = 'habitReminderMessage';
+  static const String communityCheerTitle = 'communityCheerTitle';
+  static const String communityCheerMessage = 'communityCheerMessage';
+
+  static const String readABook = 'readABook';
+  static const String achievementUnlocked = 'achievementUnlocked';
+  static const String daysStreakMessage = 'daysStreakMessage';
+  static const String twentyMin = 'twentyMin';
+  static const String fourPointFive = 'fourPointFive';
+  static const String fiveLessons = 'fiveLessons';
+  static const String lessonStats = 'lessonStats';
 
   static const String transformerExampleTitle = 'transformerExampleTitle';
   static const String pageIndex = 'pageIndex';
@@ -139,6 +232,13 @@ mixin AppLocaleTranslate {
     emailLabel: 'Email',
     emailHint: 'Enter email',
     passwordLabel: 'Password',
+    registerTitle: 'CREATE YOUR ACCOUNT',
+    nameLabel: 'Name',
+    nameHint: 'Mina Pasquariello',
+    keepMeSignedIn: 'Keep me signed in',
+    createButton: 'Create',
+    alreadyHaveAccount: 'Already have an account? ',
+    signUpWith: 'Or sign up with',
     passwordHint: 'Enter password',
     forgotPassword: 'Forgot password?',
     loginButton: 'Login',
@@ -255,6 +355,91 @@ mixin AppLocaleTranslate {
     loginWelcomeBack: 'Welcome back, you\'ve been missed!',
     continueWithGoogle: 'Continue with Google',
     continueWithFacebook: 'Continue with Facebook',
+    forgotPasswordTitle: 'FORGOT YOUR PASSWORD?',
+    forgotPasswordDescription:
+        'Enter your registered email below to receive password reset instruction',
+    sendResetLink: 'Send Reset Link',
+    rememberPassword: 'Remember password? ',
+    forgotPasswordEmailHint: 'jonathansmth@gmail.com',
+    homeGreeting: 'Hi Mira',
+    dailyQuote: 'WE FIRST MAKE OUR HABITS AND THEN OUR HABITS MAKE US.',
+    dailyQuoteAuthor: '- ANONYMOUS',
+    inProgress: 'IN PROGRESS',
+    doneButton: 'Done!',
+    homeTab: 'Home',
+    coursesTab: 'Courses',
+    communityTab: 'Community',
+    settingsTab: 'Settings',
+    profileTitle: 'Profile',
+    editButton: 'Edit',
+    habitsStat: 'Habits',
+    tasksStat: 'Tasks Completed',
+    streakStat: 'Days Streak',
+    billing: 'Billing',
+    nightMode: 'Night Mode',
+    notifications: 'Notifications',
+    contactUs: 'Contact Us',
+    aboutUs: 'About Us',
+    logout: 'Logout',
+    addHabitTitle: 'New Habit',
+    habitNameLabel: 'Habit Name',
+    habitNameHint: 'Enter habit name',
+    buildHabit: 'Build',
+    quitHabit: 'Quit',
+    habitIconLabel: 'Habit Icon',
+    habitFrequencyLabel: 'Habit Frequency',
+    daily: 'Daily',
+    weekly: 'Weekly',
+    monthly: 'Monthly',
+    reminderLabel: 'Reminder',
+    saveButton: 'Save',
+    coursesTitle: 'Courses',
+    allTab: 'All',
+    popularTab: 'Popular',
+    newTab: 'New',
+    featuredCourseTitle: '30 Day Journal Challenge',
+    featuredCourseDesc: 'Establish a habit of daily journaling',
+    lessonsCount: '%a Lessons (%b)',
+    morningRoutine: 'Morning Routine',
+    selfCare: 'Self Care',
+    productivity: 'Productivity',
+    communityTitle: 'Community',
+    mindfulnessTab: 'Mindfulness',
+    fitnessTab: 'Fitness',
+    journalingTab: 'Journaling',
+    cheerCount: '%a Cheers',
+    commentCount: '%a Comments',
+    postPlaceholder: 'Share your progress...',
+    rating: '%a Rating',
+    courseDescription: 'In this course, we will learn how to build a morning routine that lasts. We will cover the importance of waking up early, staying hydrated, and more.',
+    startNow: 'Start Now',
+    wakeUpEarly: 'Wake up Early',
+    drinkWater: 'Drink Water',
+    exercise: 'Exercise',
+    meditation: 'Meditation',
+    healthyBreakfast: 'Healthy Breakfast',
+    currentStreak: 'Current Streak',
+    bestStreak: 'Best Streak',
+    totalCompleted: 'Total',
+    habitSettingsTitle: 'Habit Settings',
+    editHabitTitle: 'Edit Habit',
+    deleteHabitConfirm: 'Delete this habit?',
+    deleteAndClear: 'Delete & Clear History',
+    archiveKeepHistory: 'Archive / Keep History',
+    notificationsTitle: 'Notifications',
+    todayHeader: 'Today',
+    yesterdayHeader: 'Yesterday',
+    habitReminderTitle: 'Habit Reminder',
+    habitReminderMessage: 'Don\'t forget to %a today!',
+    communityCheerTitle: 'Community Cheer',
+    communityCheerMessage: '%a cheered for your progress!',
+    readABook: 'Read a book',
+    achievementUnlocked: 'Achievement Unlocked',
+    daysStreakMessage: 'You completed %a days streak for %b!',
+    twentyMin: '20 min',
+    fourPointFive: '4.5',
+    fiveLessons: '5 Lessons',
+    lessonStats: '%a Lessons (%b)',
   };
   static const Map<String, dynamic> KM = {
     title: 'ការធ្វើមូលដ្ឋានីយកម្ម',
@@ -310,6 +495,13 @@ mixin AppLocaleTranslate {
     emailLabel: 'Email',
     emailHint: 'Nhập email',
     passwordLabel: 'Mật khẩu',
+    registerTitle: 'TẠO TÀI KHOẢN CỦA BẠN',
+    nameLabel: 'Tên',
+    nameHint: 'Mina Pasquariello',
+    keepMeSignedIn: 'Duy trì đăng nhập',
+    createButton: 'Tạo tài khoản',
+    alreadyHaveAccount: 'Đã có tài khoản? ',
+    signUpWith: 'Hoặc đăng ký bằng',
     passwordHint: 'Nhập mật khẩu',
     forgotPassword: 'Quên mật khẩu?',
     loginButton: 'Đăng nhập',
@@ -426,5 +618,90 @@ mixin AppLocaleTranslate {
     loginWelcomeBack: 'Chào mừng trở lại, chúng tôi rất nhớ bạn!',
     continueWithGoogle: 'Tiếp tục với Google',
     continueWithFacebook: 'Tiếp tục với Facebook',
+    forgotPasswordTitle: 'QUÊN MẬT KHẨU?',
+    forgotPasswordDescription:
+        'Nhập email đã đăng ký của bạn bên dưới để nhận hướng dẫn đặt lại mật khẩu',
+    sendResetLink: 'Gửi liên kết đặt lại',
+    rememberPassword: 'Nhớ mật khẩu? ',
+    forgotPasswordEmailHint: 'jonathansmth@gmail.com',
+    homeGreeting: 'Chào Mira',
+    dailyQuote: 'CHÚNG TA TẠO RA THÓI QUEN, VÀ RỒI THÓI QUEN TẠO NÊN CHÚNG TA.',
+    dailyQuoteAuthor: '- KHUYẾT DANH',
+    inProgress: 'ĐANG THỰC HIỆN',
+    doneButton: 'Xong!',
+    homeTab: 'Trang chủ',
+    coursesTab: 'Khóa học',
+    communityTab: 'Cộng đồng',
+    settingsTab: 'Cài đặt',
+    profileTitle: 'Hồ sơ',
+    editButton: 'Sửa',
+    habitsStat: 'Thói quen',
+    tasksStat: 'Nhiệm vụ xong',
+    streakStat: 'Ngày liên tiếp',
+    billing: 'Thanh toán',
+    nightMode: 'Chế độ tối',
+    notifications: 'Thông báo',
+    contactUs: 'Liên hệ',
+    aboutUs: 'Về chúng tôi',
+    logout: 'Đăng xuất',
+    addHabitTitle: 'Thói quen mới',
+    habitNameLabel: 'Tên thói quen',
+    habitNameHint: 'Nhập tên thói quen',
+    buildHabit: 'Xây dựng',
+    quitHabit: 'Từ bỏ',
+    habitIconLabel: 'Biểu tượng',
+    habitFrequencyLabel: 'Tần suất',
+    daily: 'Hàng ngày',
+    weekly: 'Hàng tuần',
+    monthly: 'Hàng tháng',
+    reminderLabel: 'Nhắc nhở',
+    saveButton: 'Lưu',
+    coursesTitle: 'Khóa học',
+    allTab: 'Tất cả',
+    popularTab: 'Phổ biến',
+    newTab: 'Mới nhất',
+    featuredCourseTitle: 'Thử thách 30 ngày viết nhật ký',
+    featuredCourseDesc: 'Thiết lập thói quen viết nhật ký hàng ngày',
+    lessonsCount: '%a Bài học (%b)',
+    morningRoutine: 'Thói quen buổi sáng',
+    selfCare: 'Chăm sóc bản thân',
+    productivity: 'Năng suất',
+    communityTitle: 'Cộng đồng',
+    mindfulnessTab: 'Chánh niệm',
+    fitnessTab: 'Thể hình',
+    journalingTab: 'Viết nhật ký',
+    cheerCount: '%a Lời cổ vũ',
+    commentCount: '%a Bình luận',
+    postPlaceholder: 'Chia sẻ tiến trình của bạn...',
+    rating: '%a Đánh giá',
+    courseDescription: 'Trong khóa học này, chúng ta sẽ học cách xây dựng thói quen buổi sáng bền vững. Chúng ta sẽ tìm hiểu tầm quan trọng của việc dậy sớm, uống đủ nước và nhiều hơn nữa.',
+    startNow: 'Bắt đầu ngay',
+    wakeUpEarly: 'Dậy sớm',
+    drinkWater: 'Uống nước',
+    exercise: 'Tập thể dục',
+    meditation: 'Thiền định',
+    healthyBreakfast: 'Bữa sáng lành mạnh',
+    currentStreak: 'Chuỗi hiện tại',
+    bestStreak: 'Chuỗi kỷ lục',
+    totalCompleted: 'Tổng cộng',
+    habitSettingsTitle: 'Cài đặt thói quen',
+    editHabitTitle: 'Chỉnh sửa thói quen',
+    deleteHabitConfirm: 'Xóa thói quen này?',
+    deleteAndClear: 'Xóa & Xóa lịch sử',
+    archiveKeepHistory: 'Lưu trữ / Giữ lịch sử',
+    notificationsTitle: 'Thông báo',
+    todayHeader: 'Hôm nay',
+    yesterdayHeader: 'Hôm qua',
+    habitReminderTitle: 'Nhắc nhở thói quen',
+    habitReminderMessage: 'Đừng quên %a vào hôm nay nhé!',
+    communityCheerTitle: 'Cổ vũ từ cộng đồng',
+    communityCheerMessage: '%a đã cổ vũ cho tiến trình của bạn!',
+    readABook: 'Đọc một cuốn sách',
+    achievementUnlocked: 'Đã mở khóa thành tựu',
+    daysStreakMessage: 'Bạn đã hoàn thành chuỗi %a ngày cho %b!',
+    twentyMin: '20 phút',
+    fourPointFive: '4.5',
+    fiveLessons: '5 Bài học',
+    lessonStats: '%a Bài học (%b)',
   };
 }

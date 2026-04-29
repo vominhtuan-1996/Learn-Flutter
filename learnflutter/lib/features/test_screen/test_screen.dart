@@ -328,6 +328,41 @@ class _TestScreenState extends State<TestScreen> {
                     onPressed: () => Navigator.of(context).pushNamed(Routes.loginV1),
                     child: const Text('Login V1'),
                   ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.registerV1),
+                    child: const Text('Register V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.forgotPasswordV1),
+                    child: const Text('Forgot Pw V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.homeV1),
+                    child: const Text('Home V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.settingsV1),
+                    child: const Text('Settings V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.addHabitV1),
+                    child: const Text('Add Habit V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.coursesV1),
+                    child: const Text('Courses V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.communityV1),
+                    child: const Text('Community V1'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      Routes.habitDetailsV1,
+                      arguments: {'habitName': 'Read Books'},
+                    ),
+                    child: const Text('Habit Details V1'),
+                  ),
                 ],
               ),
               const Divider(),

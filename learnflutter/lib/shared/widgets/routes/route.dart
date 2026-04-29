@@ -152,6 +152,16 @@ import 'package:learnflutter/features/onboarding/screens/onboarding_step2_screen
 import 'package:learnflutter/features/onboarding/screens/onboarding_step3_screen.dart';
 import 'package:learnflutter/features/onboarding/screens/onboarding_page_view.dart';
 import 'package:learnflutter/features/auth/screens/login_v1_screen.dart';
+import 'package:learnflutter/features/auth/screens/register_v1_screen.dart';
+import 'package:learnflutter/features/auth/screens/forgot_password_v1_screen.dart';
+import 'package:learnflutter/features/home/screens/home_v1_screen.dart';
+import 'package:learnflutter/features/setting/screens/settings_v1_screen.dart';
+import 'package:learnflutter/features/home/screens/add_habit_v1_screen.dart';
+import 'package:learnflutter/features/course/screens/courses_v1_screen.dart';
+import 'package:learnflutter/features/community/screens/community_v1_screen.dart';
+import 'package:learnflutter/features/course/screens/course_details_v1_screen.dart';
+import 'package:learnflutter/features/home/screens/habit_details_v1_screen.dart';
+import 'package:learnflutter/features/notification/screens/notifications_v1_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -286,6 +296,16 @@ class Routes {
   static const String onboardingStep3 = "/onboarding_step3";
   static const String onboardingPageView = "/onboarding_page_view";
   static const String loginV1 = "/login_v1";
+  static const String registerV1 = "/register_v1";
+  static const String forgotPasswordV1 = "/forgot_password_v1";
+  static const String homeV1 = "/home_v1";
+  static const String settingsV1 = "/settings_v1";
+  static const String addHabitV1 = "/add_habit_v1";
+  static const String coursesV1 = "/courses_v1";
+  static const String communityV1 = "/community_v1";
+  static const String courseDetailsV1 = "/course_details_v1";
+  static const String habitDetailsV1 = "/habit_details_v1";
+  static const String notificationsV1 = "/notifications_v1";
 
   // flutter_map OSM
   static const String flutterMapOsmScreen = 'flutter_map_osm_screen';
@@ -434,6 +454,59 @@ class Routes {
         return MaterialPageRoute(
           settings: RouteSettings(name: loginV1),
           builder: (_) => const LoginV1Screen(),
+        );
+      case registerV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: registerV1),
+          builder: (_) => const RegisterV1Screen(),
+        );
+      case forgotPasswordV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: forgotPasswordV1),
+          builder: (_) => const ForgotPasswordV1Screen(),
+        );
+      case homeV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: homeV1),
+          builder: (_) => const HomeV1Screen(),
+        );
+      case settingsV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settingsV1),
+          builder: (_) => const SettingsV1Screen(),
+        );
+      case addHabitV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: addHabitV1),
+          builder: (_) => const AddHabitV1Screen(),
+        );
+      case coursesV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: coursesV1),
+          builder: (_) => const CoursesV1Screen(),
+        );
+      case communityV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: communityV1),
+          builder: (_) => const CommunityV1Screen(),
+        );
+      case courseDetailsV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: courseDetailsV1),
+          builder: (_) => const CourseDetailsV1Screen(),
+        );
+      case habitDetailsV1:
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          settings: RouteSettings(name: habitDetailsV1),
+          builder: (_) => HabitDetailsV1Screen(
+            habitName: args?['habitName'] ?? 'Habit',
+          ),
+        );
+      case notificationsV1:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: notificationsV1),
+          builder: (_) => const NotificationsV1Screen(),
         );
       case transformerPageView:
         return MaterialPageRoute(

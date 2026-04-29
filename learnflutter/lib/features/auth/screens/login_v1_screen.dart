@@ -6,6 +6,7 @@ import 'package:learnflutter/core/app/app_local_translate.dart';
 import 'package:learnflutter/core/theme/habit_builder_theme.dart';
 import 'package:learnflutter/features/auth/cubit/login_cubit.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/shared/widgets/routes/route.dart';
 
 class LoginV1Screen extends StatefulWidget {
   const LoginV1Screen({super.key});
@@ -123,7 +124,7 @@ class _LoginV1ScreenState extends State<LoginV1Screen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).pushNamed(Routes.forgotPasswordV1),
                       child: Text(
                         AppLocaleTranslate.forgotPassword.getString(context),
                         style: GoogleFonts.manrope(
@@ -139,7 +140,7 @@ class _LoginV1ScreenState extends State<LoginV1Screen> {
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.homeV1),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: themeTokens.colors.secondary,
                         shape: RoundedRectangleBorder(
@@ -168,8 +169,9 @@ class _LoginV1ScreenState extends State<LoginV1Screen> {
                               themeTokens.colors.onBackground.withOpacity(0.6),
                         ),
                       ),
+
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).pushNamed(Routes.registerV1),
                         child: Text(
                           AppLocaleTranslate.register.getString(context),
                           style: GoogleFonts.manrope(
