@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/features/animation/widget/list_view_animation.dart';
+import 'package:learnflutter/core/animation/widget/list_view_animation.dart';
 
-typedef ItemBuilder<T> = Widget Function(BuildContext context, T item, int index);
+typedef ItemBuilder<T> = Widget Function(
+    BuildContext context, T item, int index);
 typedef FetchItems<T> = Future<List<T>> Function(int offset, int limit);
 
 class SmartLoadMoreList<T> extends StatefulWidget {
@@ -76,7 +77,8 @@ class _SmartLoadMoreListState<T> extends State<SmartLoadMoreList<T>> {
             position: Tween<Offset>(
               begin: Offset(1.0, 0.0), // Start from right
               end: Offset(0.0, 0.0), // Slide to normal
-            ).animate(CurvedAnimation(parent: animation, curve: Curves.decelerate)),
+            ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.decelerate)),
             child: Card(
               margin: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               child: ListTile(

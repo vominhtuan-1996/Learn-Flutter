@@ -4,18 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/isolate/api_service.dart';
 import 'package:learnflutter/core/isolate/json_parse.dart';
-import 'package:learnflutter/features/animation/widget/list_view_animation.dart';
+import 'package:learnflutter/core/animation/widget/list_view_animation.dart';
 
 class IsolateJsonParsingScreen extends StatefulWidget {
   const IsolateJsonParsingScreen({super.key});
 
   @override
-  _IsolateJsonParsingScreenState createState() => _IsolateJsonParsingScreenState();
+  _IsolateJsonParsingScreenState createState() =>
+      _IsolateJsonParsingScreenState();
 }
 
 class _IsolateJsonParsingScreenState extends State<IsolateJsonParsingScreen> {
-  final ApiService apiService = ApiService('https://jsonplaceholder.typicode.com/posts');
-  final StreamController<List<dynamic>> _controller = StreamController<List<dynamic>>.broadcast();
+  final ApiService apiService =
+      ApiService('https://jsonplaceholder.typicode.com/posts');
+  final StreamController<List<dynamic>> _controller =
+      StreamController<List<dynamic>>.broadcast();
   Stream<dynamic> parsedItemsStream = Stream.empty();
   List receivedItems = [];
   bool isLoading = true;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/features/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
-import 'package:learnflutter/features/animation/widget/scale_translate.dart';
+import 'package:learnflutter/core/animation/widget/scale_translate.dart';
 import 'package:learnflutter/features/material/component/material_side_sheet/material_side_sheet.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/features/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/core/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/features/material/material_screen.dart';
@@ -16,7 +16,8 @@ class MaterialIconButtonScreen extends StatefulWidget {
   const MaterialIconButtonScreen({super.key, required this.data});
   final RouterMaterialModel data;
   @override
-  State<MaterialIconButtonScreen> createState() => _MaterialIconButtonScreenState();
+  State<MaterialIconButtonScreen> createState() =>
+      _MaterialIconButtonScreenState();
 }
 
 class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen>
@@ -253,7 +254,8 @@ class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'TopRight Side Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -313,7 +315,8 @@ class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'LeftCenter Side Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -373,7 +376,8 @@ class _MaterialIconButtonScreenState extends State<MaterialIconButtonScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'RightCenter Side Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
         ],

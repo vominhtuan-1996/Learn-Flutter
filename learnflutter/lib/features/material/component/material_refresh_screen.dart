@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/features/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
-import 'package:learnflutter/features/animation/widget/scale_translate.dart';
+import 'package:learnflutter/core/animation/widget/scale_translate.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/features/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/core/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/features/material/material_screen.dart';
@@ -69,69 +69,86 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
                                     content:
                                         'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                                     contentWidget: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
@@ -150,7 +167,8 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -173,7 +191,8 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         child: Container(
-                          color: Colors.primaries[index % Colors.primaries.length],
+                          color:
+                              Colors.primaries[index % Colors.primaries.length],
                         ),
                       );
                     },
@@ -182,7 +201,8 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -205,7 +225,8 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
                         pageController: PageController(viewportFraction: 0.8),
                         child: GestureDetector(
                           child: Container(
-                            color: Colors.primaries[index % Colors.primaries.length],
+                            color: Colors
+                                .primaries[index % Colors.primaries.length],
                           ),
                         ),
                       );
@@ -215,7 +236,8 @@ class _MaterialRefreshScreenState extends State<MaterialRefreshScreen>
               },
               type: MaterialButtonType.commonbutton,
               lableText: ' custom Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
         ],

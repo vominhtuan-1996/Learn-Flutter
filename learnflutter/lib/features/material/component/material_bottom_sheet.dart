@@ -3,11 +3,11 @@ import 'package:learnflutter/core/app/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/bottom_sheet/overlay_bottom_sheet.dart';
 import 'package:learnflutter/shared/widgets/advanced_bottom_sheet.dart';
 import 'package:learnflutter/features/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
-import 'package:learnflutter/features/animation/widget/scale_translate.dart';
+import 'package:learnflutter/core/animation/widget/scale_translate.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/metarial_radio_button.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/features/animation/widget/icon_animation_widget.dart';
+import 'package:learnflutter/core/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/features/material/material_screen.dart';
@@ -22,7 +22,8 @@ class MaterialBottomSheet extends StatefulWidget {
   State<MaterialBottomSheet> createState() => _MaterialBottomSheetState();
 }
 
-class _MaterialBottomSheetState extends State<MaterialBottomSheet> with ComponentMaterialDetail {
+class _MaterialBottomSheetState extends State<MaterialBottomSheet>
+    with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();
@@ -72,69 +73,86 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                                     content:
                                         'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                                     contentWidget: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
                                         const IconAnimationWidget(),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Success',
-                                          style: context.textTheme.titleLarge?.copyWith(
+                                          style: context.textTheme.titleLarge
+                                              ?.copyWith(
                                             color: AppColors.green,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(height: DeviceDimension.padding),
+                                        SizedBox(
+                                            height: DeviceDimension.padding),
                                         Text(
                                           'Your action was successful!',
-                                          style: context.textTheme.bodyMedium?.copyWith(
+                                          style: context.textTheme.bodyMedium
+                                              ?.copyWith(
                                             color: AppColors.grey,
                                           ),
                                         ),
@@ -153,7 +171,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -176,7 +195,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         child: Container(
-                          color: Colors.primaries[index % Colors.primaries.length],
+                          color:
+                              Colors.primaries[index % Colors.primaries.length],
                         ),
                       );
                     },
@@ -185,7 +205,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -205,7 +226,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: ' custom Bottom Action Sheet Draggable',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -228,16 +250,26 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                         MetarialRadioButton.single(
                           enable: true,
                           data: [
-                            RadioItemModel(title: "Radio 1", id: "1", isSelected: true),
-                            RadioItemModel(title: "Radio 2", id: "2", isSelected: false),
-                            RadioItemModel(title: "Radio 3", id: "3", isSelected: false),
-                            RadioItemModel(title: "Radio 4", id: "4", isSelected: false),
-                            RadioItemModel(title: "Radio 5", id: "5", isSelected: false),
-                            RadioItemModel(title: "Radio 6", id: "6", isSelected: false),
-                            RadioItemModel(title: "Radio 7", id: "7", isSelected: false),
-                            RadioItemModel(title: "Radio 8", id: "8", isSelected: false),
-                            RadioItemModel(title: "Radio 9", id: "9", isSelected: false),
-                            RadioItemModel(title: "Radio 10", id: "10", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 1", id: "1", isSelected: true),
+                            RadioItemModel(
+                                title: "Radio 2", id: "2", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 3", id: "3", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 4", id: "4", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 5", id: "5", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 6", id: "6", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 7", id: "7", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 8", id: "8", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 9", id: "9", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 10", id: "10", isSelected: false),
                           ],
                           onChangeValue: (value) {
                             print(value?.title ?? "");
@@ -246,16 +278,26 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
                         MetarialRadioButton.single(
                           enable: true,
                           data: [
-                            RadioItemModel(title: "Radio 1", id: "1", isSelected: true),
-                            RadioItemModel(title: "Radio 2", id: "2", isSelected: false),
-                            RadioItemModel(title: "Radio 3", id: "3", isSelected: false),
-                            RadioItemModel(title: "Radio 4", id: "4", isSelected: false),
-                            RadioItemModel(title: "Radio 5", id: "5", isSelected: false),
-                            RadioItemModel(title: "Radio 6", id: "6", isSelected: false),
-                            RadioItemModel(title: "Radio 7", id: "7", isSelected: false),
-                            RadioItemModel(title: "Radio 8", id: "8", isSelected: false),
-                            RadioItemModel(title: "Radio 9", id: "9", isSelected: false),
-                            RadioItemModel(title: "Radio 10", id: "10", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 1", id: "1", isSelected: true),
+                            RadioItemModel(
+                                title: "Radio 2", id: "2", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 3", id: "3", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 4", id: "4", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 5", id: "5", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 6", id: "6", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 7", id: "7", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 8", id: "8", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 9", id: "9", isSelected: false),
+                            RadioItemModel(
+                                title: "Radio 10", id: "10", isSelected: false),
                           ],
                           onChangeValue: (value) {
                             print(value?.title ?? "");
@@ -268,7 +310,8 @@ class _MaterialBottomSheetState extends State<MaterialBottomSheet> with Componen
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'BottomSheet overlay builder',
-              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle:
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           ),
         ],

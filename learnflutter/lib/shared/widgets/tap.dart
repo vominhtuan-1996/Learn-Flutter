@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/utils/debounce.dart';
-import 'package:learnflutter/core/utils/utils_helpers.dart';
-import 'package:learnflutter/widgets/stateful/enable_widget.dart';
+import 'package:learnflutter/core/debound.dart';
+import 'package:learnflutter/shared/widgets/enable_widget.dart';
+import 'package:mobimap_module/common/utils/utils_helpers.dart';
 
 class Tap extends StatefulWidget {
   final VoidCallback? onTap;

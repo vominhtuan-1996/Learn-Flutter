@@ -1,287 +1,325 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'dart:math' as math;
 
-class TabRenderWidget extends LeafRenderObjectWidget {
+import 'package:flutter/material.dart';
+
+enum AvatarSide { top, bottom, left, right }
+
+class TabRenderWidget extends StatefulWidget {
   const TabRenderWidget({
     super.key,
     required this.tabColor,
     required this.thumbColor,
-    this.thumbSize = 20.0,
+    this.tagColor,
+    this.thumbSize = 40.0,
+    this.avatarSize = 44.0,
+    this.avatarUrls = const [],
+    this.left = 0.0,
+    this.right = 0.0,
+    this.avatarSide = AvatarSide.top,
   });
 
   final Color tabColor;
   final Color thumbColor;
+
+  /// Màu của hình Tag và viền Avatar (nếu null sẽ lấy theo thumbColor)
+  final Color? tagColor;
+
   final double thumbSize;
+  final double avatarSize;
+  final double left;
+  final double right;
+
+  /// Vị trí xuất hiện của Avatar so với thanh trượt
+  final AvatarSide avatarSide;
+
+  /// Danh sách đường dẫn ảnh Avatar dùng để phân hạng người dùng.
+  /// Khi di chuyển thanh trượt, avatar sẽ tự động thay đổi dựa trên phần trăm (%).
+  final List<String> avatarUrls;
 
   @override
-  RenderTabBar createRenderObject(BuildContext context) {
-    return RenderTabBar(
-      tabColor: tabColor,
-      thumbColor: thumbColor,
-      thumbSize: thumbSize,
+  State<TabRenderWidget> createState() => _TabRenderWidgetState();
+}
+
+class _TabRenderWidgetState extends State<TabRenderWidget> {
+  double _currentThumbValue = 0.0;
+
+  void _updateThumbPosition(Offset localPosition, double trackWidth) {
+    const trackPadding = 4.0;
+    final safeThumbRadius = widget.thumbSize / 2;
+
+    // Giới hạn vùng di chuyển của tâm Thumb theo left/right
+    final thumbCenterMinX = safeThumbRadius + trackPadding + widget.left;
+    final thumbCenterMaxX =
+        trackWidth - safeThumbRadius - trackPadding - widget.right;
+
+    if (thumbCenterMaxX <= thumbCenterMinX) return;
+
+    // Giới hạn giá trị X dựa trên vị trí chạm
+    var dx = localPosition.dx.clamp(thumbCenterMinX, thumbCenterMaxX);
+
+    setState(() {
+      _currentThumbValue =
+          (dx - thumbCenterMinX) / (thumbCenterMaxX - thumbCenterMinX);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final trackHeight = math.max(widget.thumbSize, widget.thumbSize + 16);
+    const trackPadding = 4.0;
+    final avatarSize = widget.avatarSize; // Kích thước của Avatar nổi phía trên
+    const spacing = 16.0; // Tăng khoảng cách để thấy rõ Path hình tag
+
+    final Color finalTagColor = widget.tagColor ?? widget.thumbColor;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final trackWidth = constraints.maxWidth;
+
+        // Vị trí render mép trái của Thumb bị giới hạn bởi left/right
+        final thumbMinX = trackPadding + widget.left;
+        final thumbMaxX =
+            trackWidth - widget.thumbSize - trackPadding - widget.right;
+
+        // Tính toán tọa độ X hiện tại của Thumb
+        final thumbLeftPosition =
+            thumbMinX + _currentThumbValue * (thumbMaxX - thumbMinX);
+
+        // Xác định Avatar hiện tại dựa trên _currentThumbValue
+        String? currentAvatar;
+        if (widget.avatarUrls.isNotEmpty) {
+          int index = (_currentThumbValue * widget.avatarUrls.length).floor();
+          if (index >= widget.avatarUrls.length) {
+            index = widget.avatarUrls.length - 1;
+          }
+          currentAvatar = widget.avatarUrls[index];
+        }
+
+        // Xác định kích thước Stack tùy thuộc vào AvatarSide
+        final isVerticalSide = widget.avatarSide == AvatarSide.top ||
+            widget.avatarSide == AvatarSide.bottom;
+        final stackHeight =
+            isVerticalSide ? (avatarSize + spacing + trackHeight) : trackHeight;
+        final trackBottom = widget.avatarSide == AvatarSide.top ? 0.0 : null;
+        final trackTop = widget.avatarSide == AvatarSide.bottom
+            ? 0.0
+            : (isVerticalSide ? null : 0.0);
+
+        // Tính toán tâm của Thumb và Avatar để vẽ đường nối
+        final thumbCenterX = thumbLeftPosition + widget.thumbSize / 2;
+        final trackCenterY = trackTop != null
+            ? trackTop + trackHeight / 2
+            : stackHeight - (trackBottom ?? 0) - trackHeight / 2;
+        final thumbCenter = Offset(thumbCenterX, trackCenterY);
+
+        Offset avatarCenter;
+        switch (widget.avatarSide) {
+          case AvatarSide.top:
+            avatarCenter = Offset(thumbCenterX, avatarSize / 2);
+            break;
+          case AvatarSide.bottom:
+            avatarCenter = Offset(thumbCenterX, stackHeight - avatarSize / 2);
+            break;
+          case AvatarSide.left:
+            avatarCenter = Offset(
+                thumbLeftPosition - spacing - avatarSize / 2, trackCenterY);
+            break;
+          case AvatarSide.right:
+            avatarCenter = Offset(
+                thumbLeftPosition + widget.thumbSize + spacing + avatarSize / 2,
+                trackCenterY);
+            break;
+        }
+
+        return GestureDetector(
+          // Bắt sự kiện chạm và kéo thả trên toàn bộ khu vực widget
+          onHorizontalDragDown: (details) =>
+              _updateThumbPosition(details.localPosition, trackWidth),
+          onHorizontalDragUpdate: (details) =>
+              _updateThumbPosition(details.localPosition, trackWidth),
+          child: SizedBox(
+            height: stackHeight,
+            width: trackWidth,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // 1. Background Track (Thanh trượt)
+                Positioned(
+                  left: widget.left,
+                  right: widget.right,
+                  bottom: trackBottom,
+                  top: trackTop,
+                  height: trackHeight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: widget.tabColor,
+                      borderRadius: BorderRadius.circular(trackHeight / 2),
+                    ),
+                  ),
+                ),
+
+                // 2. Đường nối (Path) giữa Thumb và Avatar hình Tag
+                if (currentAvatar != null && currentAvatar.isNotEmpty)
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: _ConnectionPainter(
+                        p1: thumbCenter,
+                        p2: avatarCenter,
+                        color: finalTagColor,
+                        avatarSize: avatarSize,
+                      ),
+                    ),
+                  ),
+
+                // 2. Nút Thumb
+                Positioned(
+                  left: thumbLeftPosition,
+                  bottom: trackBottom != null
+                      ? (trackHeight - widget.thumbSize) / 2
+                      : null,
+                  top: trackTop != null
+                      ? (trackHeight - widget.thumbSize) / 2
+                      : null,
+                  child: Container(
+                    width: widget.thumbSize,
+                    height: widget.thumbSize,
+                    decoration: BoxDecoration(
+                      color: widget.thumbColor,
+                      shape: BoxShape.circle,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 4.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // 3. Avatar nổi đi theo Thumb
+                if (currentAvatar != null && currentAvatar.isNotEmpty)
+                  Positioned(
+                    left: widget.avatarSide == AvatarSide.left
+                        ? (thumbLeftPosition - avatarSize - spacing)
+                        : widget.avatarSide == AvatarSide.right
+                            ? (thumbLeftPosition + widget.thumbSize + spacing)
+                            : (thumbLeftPosition +
+                                (widget.thumbSize - avatarSize) / 2),
+                    top: widget.avatarSide == AvatarSide.top
+                        ? 0
+                        : widget.avatarSide == AvatarSide.bottom
+                            ? (trackHeight + spacing)
+                            : (trackHeight - avatarSize) / 2,
+                    child: Container(
+                      width: avatarSize,
+                      height: avatarSize,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: finalTagColor, width: 2),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: ClipOval(
+                        child: RotatedBox(
+                          quarterTurns: widget.avatarSide == AvatarSide.right
+                              ? 1
+                              : widget.avatarSide == AvatarSide.bottom
+                                  ? 3
+                                  : widget.avatarSide == AvatarSide.left
+                                      ? 1
+                                      : 0,
+                          child: Image.network(
+                            currentAvatar,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Icon(Icons.person, color: widget.tabColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
-  }
-
-  @override
-  void updateRenderObject(BuildContext context, RenderTabBar renderObject) {
-    renderObject
-      ..tabColor = tabColor
-      ..thumbColor = thumbColor
-      ..thumbSize = thumbSize;
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ColorProperty('tabColor', tabColor));
-    properties.add(ColorProperty('thumbColor', thumbColor));
-    properties.add(DoubleProperty('thumbSize', thumbSize));
   }
 }
 
-class RenderTabBar extends RenderBox {
-  RenderTabBar({
-    required Color tabColor,
-    required Color thumbColor,
-    required double thumbSize,
-  })  : _tabColor = tabColor,
-        _thumbColor = thumbColor,
-        _thumbSize = thumbSize {
-    // initialize the gesture recognizer
-    _drag = HorizontalDragGestureRecognizer()
-      ..onStart = (DragStartDetails details) {
-        _updateThumbPosition(details.localPosition);
-      }
-      ..onUpdate = (DragUpdateDetails details) {
-        _updateThumbPosition(details.localPosition);
-      };
-  }
+class _ConnectionPainter extends CustomPainter {
+  final Offset p1; // Mũi nhọn (tâm Thumb)
+  final Offset p2; // Đáy (tâm Avatar)
+  final Color color;
+  final double avatarSize;
 
-  void _updateThumbPosition(Offset localPosition) {
-    var dx = localPosition.dx.clamp(0, size.width);
-    _currentThumbValue = dx / size.width;
-    markNeedsPaint();
-    markNeedsSemanticsUpdate();
-  }
-
-  Color get tabColor => _tabColor;
-  Color _tabColor;
-  set tabColor(Color value) {
-    if (_tabColor == value) return;
-    _tabColor = value;
-    markNeedsPaint();
-  }
-
-  Color get thumbColor => _thumbColor;
-  Color _thumbColor;
-  set thumbColor(Color value) {
-    if (_thumbColor == value) return;
-    _thumbColor = value;
-    markNeedsPaint();
-  }
-
-  double get thumbSize => _thumbSize;
-  double _thumbSize;
-  set thumbSize(double value) {
-    if (_thumbSize == value) return;
-    _thumbSize = value;
-    markNeedsLayout();
-  }
-
-  static const _minDesiredWidth = 100.0;
+  _ConnectionPainter({
+    required this.p1,
+    required this.p2,
+    required this.color,
+    required this.avatarSize,
+  });
 
   @override
-  double computeMinIntrinsicWidth(double height) => _minDesiredWidth;
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
 
-  @override
-  double computeMaxIntrinsicWidth(double height) => _minDesiredWidth;
+    final path = Path();
+    final delta = p1 - p2;
+    final distance = delta.distance;
+    if (distance == 0) return;
 
-  @override
-  double computeMinIntrinsicHeight(double width) => thumbSize;
+    // Vector hướng từ Avatar tới Thumb
+    final dir = delta / distance;
+    // Vector vuông góc để lấy chiều rộng
+    final perp = Offset(-dir.dy, dir.dx);
 
-  @override
-  double computeMaxIntrinsicHeight(double width) => thumbSize;
+    // Bề rộng của hình chữ nhật được thu nhỏ lại (cố định 16.0) để đảm bảo góc chữ nhật
+    // không bị thò ra ngoài đường cong của hình tròn Avatar, giúp Avatar che khuất hoàn toàn.
+    final thickness = 16.0;
 
-  late HorizontalDragGestureRecognizer _drag;
+    // Độ dài phần mũi nhọn tam giác
+    final triangleLength = 12.0;
 
-  @override
-  bool hitTestSelf(Offset position) => true;
+    // Độ dài phần hình chữ nhật
+    final rectLength = math.max(0.0, distance - triangleLength);
 
-  @override
-  void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
-    assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent) {
-      _drag.addPointer(event);
-    }
+    // 2 góc của hình chữ nhật ở phía tâm Avatar
+    final pRect1 = p2 + perp * (thickness / 2);
+    final pRect2 = p2 - perp * (thickness / 2);
+
+    // 2 góc của hình chữ nhật ở điểm bắt đầu hình tam giác
+    final pBase1 = pRect2 + dir * rectLength;
+    final pBase2 = pRect1 + dir * rectLength;
+
+    path.moveTo(pRect1.dx, pRect1.dy);
+    path.lineTo(pRect2.dx, pRect2.dy);
+    path.lineTo(pBase1.dx, pBase1.dy);
+
+    // Điểm nhọn của tam giác trỏ tới tâm Thumb
+    path.lineTo(p1.dx, p1.dy);
+
+    path.lineTo(pBase2.dx, pBase2.dy);
+    path.close();
+
+    canvas.drawPath(path, paint);
   }
 
   @override
-  void performLayout() {
-    size = computeDryLayout(constraints);
-  }
-
-  @override
-  Size computeDryLayout(BoxConstraints constraints) {
-    final desiredWidth = constraints.maxWidth;
-    final desiredHeight = thumbSize;
-    final desiredSize = Size(desiredWidth, desiredHeight);
-    return constraints.constrain(desiredSize);
-  }
-
-  double _currentThumbValue = 0.0;
-
-  @override
-  void paint(PaintingContext context, Offset offset) async {
-    final canvas = context.canvas;
-    canvas.save();
-    // canvas.translate(offset.dx, offset.dy);
-
-    // paint bar
-    final barPaint = Paint()
-      ..color = tabColor
-      ..strokeWidth = 5;
-
-    // final point2 = Offset(size.width, size.height / 2);
-    // canvas.drawLine(point1, point2, barPaint);
-    var widthtemp = 45;
-    final backgroundTriangleLine = Path();
-    //1
-    const point1 = Offset.zero;
-    backgroundTriangleLine.moveTo(point1.dx, point1.dy);
-    //1+
-    final point1plus = Offset(point1.dx + widthtemp / 2, -30);
-    print(point1plus);
-
-    // backgroundTriangleLine.lineTo(point1plus.dx, point1plus.dy);
-    //2
-    final point2 = Offset(point1.dx + widthtemp, point1plus.dy - 30);
-    print(point2);
-    backgroundTriangleLine.lineTo(point2.dx, point2.dy);
-    //
-    // 2+
-    final point2plust = Offset(point2.dx + 40, size.height / 2 - 60);
-    backgroundTriangleLine.cubicTo(
-        point1.dx, point1.dy, point1plus.dx + 25, point1plus.dy + 25, point2.dx, point2.dy);
-    // 3
-    final point3 = Offset(point2.dx + 30, size.height / 2 - 70);
-    print(point3);
-
-    // backgroundTriangleLine.lineTo(point3.dx, point3.dy);
-    backgroundTriangleLine.cubicTo(
-        point2.dx, point2.dy, point2plust.dx, point2plust.dy, point3.dx, point3.dy);
-    // 4
-    final point4 = Offset(point2.dx + widthtemp * 4, point3.dy);
-    print(point4);
-    backgroundTriangleLine.lineTo(point4.dx, point4.dy);
-    // 5
-    final point5 = Offset(point4.dx, point2.dy);
-    print(point5);
-    backgroundTriangleLine.lineTo(point5.dx, point5.dy);
-    // 5+
-    final point5plus = Offset(point5.dx + widthtemp / 2, point1plus.dy);
-    print(point5plus);
-    backgroundTriangleLine.lineTo(point5plus.dx, point5plus.dy);
-    //6
-    final point6 = Offset(point5plus.dx + widthtemp / 2, point1.dy);
-    print(point6);
-    backgroundTriangleLine.lineTo(point6.dx, point6.dy);
-    // final scale = 2;
-    // final pointstart = Offset(0, 0);
-    // final pointcurve1 = Offset(52, -43);
-    // final pointcurve2 = Offset(88, -43);
-    // final pointend = Offset(140, 0);
-
-    // // final point2 = Offset(pointend.dx + 30, pointend.dy);
-
-    // final pointendcurve1 = Offset(pointend.dx + 2, pointend.dy - 3);
-    // final pointendcurve2 = Offset(pointend.dx + 15, pointend.dy - 2);
-    // final pointend2 = Offset(pointendcurve2.dx + 15, pointend.dy - 2);
-
-    // final pointend2curve1 = Offset(pointend2.dx + 6, pointend2.dy - 13);
-    // final pointend2curve2 = Offset(pointend2curve1.dx + 4, pointend2curve1.dy - 9);
-    // final pointend3 = Offset(pointend2.dx + 40, pointstart.dy);
-
-    // final backgroundTriangleLine = Path()
-    //   ..moveTo(pointstart.dx, pointstart.dy)
-    //   ..cubicTo(pointcurve1.dx * scale, pointcurve1.dy * scale, pointcurve2.dx * scale, pointcurve2.dy * scale, pointend.dx * scale, pointend.dy * scale);
-    // ..cubicTo(pointendcurve1.dx, pointendcurve1.dy, pointendcurve2.dx, pointendcurve2.dy, pointend2.dx, pointend2.dy)
-    // ..cubicTo(pointend2curve1.dx * scale, pointend2curve1.dy * scale, pointend2curve2.dx * scale, pointend2curve2.dy * scale, pointend3.dy * scale, 0);
-    backgroundTriangleLine.close();
-    // backgroundTriangleLine.addArc(rect, startAngle, sweepAngle);
-    canvas.drawPath(backgroundTriangleLine, barPaint);
-    // paint thumb
-
-    // // triangle
-    // thumbPaint.color = Colors.blue;
-    // thumbPaint.strokeCap = StrokeCap.square;
-    // final backgroundTriangleLine = Path();
-    // //start
-    // backgroundTriangleLine.moveTo(thumbDx, (thumbSize));
-    // // point 1
-    // print(_currentThumbValue);
-    // Offset point1Triangle = Offset(thumbDx + (thumbSize / 2), (thumbSize * 2));
-    // backgroundTriangleLine.lineTo(point1Triangle.dx, point1Triangle.dy);
-    // // point 2
-    // Offset point2Triangle = Offset((thumbDx + size.width / 12) * _currentThumbValue - thumbSize, (point1Triangle.dy));
-    // backgroundTriangleLine.lineTo(point2Triangle.dx, point2Triangle.dy);
-    // // point 3
-    // Offset point3Triangle = Offset(point2Triangle.dx, (thumbSize * 6));
-    // backgroundTriangleLine.lineTo(point3Triangle.dx, point3Triangle.dy);
-    // // point 4
-    // Offset point4Triangle = Offset(thumbDx / 2, point3Triangle.dy);
-    // backgroundTriangleLine.lineTo(point4Triangle.dx + (thumbSize * 2), point4Triangle.dy);
-
-    // // print(point4Triangle);
-    // // point 5
-    // // Offset point5Triangle = Offset(point4Triangle.dx, point4Triangle.dx - thumbDx);
-    // // backgroundTriangleLine.lineTo(point5Triangle.dx, point5Triangle.dy);
-    // // // point 6
-    // // Offset point6Triangle = Offset(point5Triangle.dx, point5Triangle.dx);
-    // // backgroundTriangleLine.lineTo(point6Triangle.dx, point6Triangle.dy);
-
-    // backgroundTriangleLine.close();
-    // canvas.drawPath(backgroundTriangleLine, thumbPaint);
-
-    canvas.restore();
-  }
-
-  @override
-  bool get isRepaintBoundary => true;
-
-  @override
-  void describeSemanticsConfiguration(SemanticsConfiguration config) {
-    super.describeSemanticsConfiguration(config);
-
-    // description
-    config.textDirection = TextDirection.ltr;
-    config.label = 'Progress bar';
-    config.value = '${(_currentThumbValue * 100).round()}%';
-
-    // increase action
-    config.onIncrease = increaseAction;
-    final increased = _currentThumbValue + _semanticActionUnit;
-    config.increasedValue = '${((increased).clamp(0.0, 1.0) * 100).round()}%';
-
-    // descrease action
-    config.onDecrease = decreaseAction;
-    final decreased = _currentThumbValue - _semanticActionUnit;
-    config.decreasedValue = '${((decreased).clamp(0.0, 1.0) * 100).round()}%';
-  }
-
-  static const double _semanticActionUnit = 0.05;
-
-  void increaseAction() {
-    final newValue = _currentThumbValue + _semanticActionUnit;
-    _currentThumbValue = (newValue).clamp(0.0, 1.0);
-    markNeedsPaint();
-    markNeedsSemanticsUpdate();
-  }
-
-  void decreaseAction() {
-    final newValue = _currentThumbValue - _semanticActionUnit;
-    _currentThumbValue = (newValue).clamp(0.0, 1.0);
-    markNeedsPaint();
-    markNeedsSemanticsUpdate();
+  bool shouldRepaint(covariant _ConnectionPainter oldDelegate) {
+    return oldDelegate.p1 != p1 ||
+        oldDelegate.p2 != p2 ||
+        oldDelegate.color != color ||
+        oldDelegate.avatarSize != avatarSize;
   }
 }

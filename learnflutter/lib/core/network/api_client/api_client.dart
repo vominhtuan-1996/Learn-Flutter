@@ -3,10 +3,17 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:learnflutter/core/service/talker/app_talker.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
+import 'interceptors/auth_interceptor.dart';
+import 'interceptors/error_interceptor.dart';
+import 'interceptors/retry_interceptor.dart';
 import 'api_exception.dart';
+import 'api_cache_store.dart';
 
 export 'api_exception.dart';
+export 'api_cache_store.dart';
 export 'base_response.dart';
 
 typedef TokenRefreshHandler = Future<String?> Function();
@@ -29,6 +36,9 @@ class ApiClient {
   String? _authToken;
   TokenRefreshHandler? _tokenRefreshHandler;
 
+  String? get authToken => _authToken;
+  TokenRefreshHandler? get tokenRefreshHandler => _tokenRefreshHandler;
+
   /// Initialize the client. Call once during app startup.
   void init({
     required String baseUrl,
@@ -50,50 +60,19 @@ class ApiClient {
       extra: extra ?? {},
     ));
 
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        // attach auth token if present
-        if (_authToken != null && _authToken!.isNotEmpty) {
-          options.headers['Authorization'] = 'Bearer $_authToken';
-        }
-
-        // Log cURL command for debugging
-        final curl = _renderCurl(options);
-        AppTalker.instance.info('🚀 [API Client] Request cURL:\n$curl');
-        log('🚀 [API Client] Request cURL:\n$curl');
-        handler.next(options);
-      },
-      onResponse: (response, handler) {
-        handler.next(response);
-      },
-      onError: (err, handler) async {
-        final dioError = err;
-
-        // If 401 and we have a refresh handler, attempt to refresh token once
-        final status = dioError.response?.statusCode;
-        final options = dioError.requestOptions;
-
-        if (status == 401 && _tokenRefreshHandler != null && options.extra['retried'] != true) {
-          try {
-            final newToken = await _tokenRefreshHandler!();
-            if (newToken != null && newToken.isNotEmpty) {
-              setAuthToken(newToken);
-              // mark as retried to avoid loops
-              options.extra['retried'] = true;
-              final cloneReq = await dio.fetch(options);
-              return handler.resolve(cloneReq);
-            }
-          } catch (_) {
-            // ignore refresh errors and fall through to error handling
-          }
-        }
-
-        // Map DioError to ApiException
-        final message = _extractErrorMessage(dioError);
-        final apiEx = ApiException(message, statusCode: status, data: dioError.response?.data);
-        handler.reject(DioError(requestOptions: options, error: apiEx, type: dioError.type));
-      },
-    ));
+    dio.interceptors.addAll([
+      AuthInterceptor(this),
+      RetryInterceptor(dio: dio, maxRetries: 2),
+      ErrorInterceptor(),
+      TalkerDioLogger(
+        talker: AppTalker.instance,
+        settings: const TalkerDioLoggerSettings(
+          printRequestHeaders: true,
+          printResponseHeaders: false,
+          printResponseMessage: true,
+        ),
+      ),
+    ]);
   }
 
   /// Set Authorization token (Bearer)
@@ -109,81 +88,34 @@ class ApiClient {
     dio.options.headers.remove('Authorization');
   }
 
-  String _extractErrorMessage(DioError error) {
+  /// Download file
+  Future<dynamic> download(
+    String urlPath,
+    String savePath, {
+    ProgressCallback? onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    Options? options,
+  }) async {
     try {
-      final resp = error.response;
-      if (resp?.data is Map && resp?.data['message'] != null) {
-        return resp!.data['message'].toString();
-      }
-      if (resp?.statusMessage != null) return resp!.statusMessage!;
-    } catch (_) {}
-    if (error.type == DioErrorType.connectionTimeout) return 'Connection timed out';
-    if (error.type == DioErrorType.receiveTimeout) return 'Receive timed out';
-    if (error.type == DioErrorType.cancel) return 'Request was cancelled';
-    return error.message ?? 'An unknown error occurred';
-  }
-
-  /// Helper method to convert Dio RequestOptions into a cURL command string for debugging.
-  String _renderCurl(RequestOptions options) {
-    List<String> components = ['curl -i'];
-
-    // Method
-    components.add('-X ${options.method.toUpperCase()}');
-
-    // Headers
-    options.headers.forEach((key, value) {
-      if (key == 'content-length') return; // skip noisy headers
-      components.add('-H "$key: $value"');
-    });
-
-    // Body
-    if (options.data != null) {
-      if (options.data is Map || options.data is List) {
-        // Stringify JSON data
-        try {
-          final dataString = (options.data as dynamic).toString();
-          components.add('-d "$dataString"');
-        } catch (_) {}
-      } else if (options.data is FormData) {
-        // Log FormData fields
-        final formData = options.data as FormData;
-        for (var element in formData.fields) {
-          components.add('-F "${element.key}=${element.value}"');
-        }
-        for (var element in formData.files) {
-          components.add('-F "${element.key}=@${element.value.filename}"');
-        }
-      } else {
-        components.add('-d "${options.data.toString()}"');
-      }
+      final response = await dio.download(
+        urlPath,
+        savePath,
+        onReceiveProgress: onReceiveProgress,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+        options: options,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      if (e.error is ApiException) throw e.error as ApiException;
+      throw ApiException(e.message ?? 'An unknown error occurred', statusCode: e.response?.statusCode, data: e.response?.data);
     }
-
-    // URL Construction
-    String url = options.path;
-    final customBaseUrl = options.extra['baseUrl'] as String?;
-    if (customBaseUrl != null && !url.startsWith('http')) {
-      final base = customBaseUrl.endsWith('/') ? customBaseUrl : '$customBaseUrl/';
-      final path = url.startsWith('/') ? url.substring(1) : url;
-      url = '$base$path';
-    } else if (!url.startsWith('http')) {
-      final base = options.baseUrl.endsWith('/') ? options.baseUrl : '${options.baseUrl}/';
-      final path = url.startsWith('/') ? url.substring(1) : url;
-      url = '$base$path';
-    }
-
-    // Query Parameters
-    if (options.queryParameters.isNotEmpty) {
-      final query = options.queryParameters.entries.map((e) => '${e.key}=${Uri.encodeComponent(e.value.toString())}').join('&');
-      url = url.contains('?') ? '$url&$query' : '$url?$query';
-    }
-
-    components.add('"$url"');
-
-    return components.join(' \\\n  ');
   }
 
   /// Generic request helper. Returns response.data on success.
   /// If `baseUrl` is provided, it will override the default base URL for this specific request.
+  /// If `useCache` is true, it will return the cached response if available for the same parameters.
   Future<dynamic> request(
     String path, {
     String method = 'GET',
@@ -192,7 +124,19 @@ class ApiClient {
     Options? options,
     CancelToken? cancelToken,
     String? baseUrl,
+    bool useCache = false,
   }) async {
+    // Generate cache key and check cache if enabled
+    final String cacheKey = ApiCacheStore.instance.generateKey(method, path, queryParameters, data);
+    if (useCache) {
+      final cachedResponse = ApiCacheStore.instance.get(cacheKey);
+      if (cachedResponse != null) {
+        AppTalker.instance.info('📦 [API Client] Return from Cache: $path');
+        log('📦 [API Client] Return from Cache: $path');
+        return cachedResponse;
+      }
+    }
+
     try {
       // Use the provided baseUrl if present, otherwise use the dio instance default
       final requestOptions = options?.copyWith(method: method) ?? Options(method: method);
@@ -208,6 +152,12 @@ class ApiClient {
         options: requestOptions,
         cancelToken: cancelToken,
       );
+      
+      // Save response to cache if enabled
+      if (useCache && resp.data != null) {
+        ApiCacheStore.instance.set(cacheKey, resp.data);
+      }
+      
       return resp.data;
     } on DioError catch (e) {
       // If we wrapped ApiException, rethrow it
@@ -222,6 +172,7 @@ class ApiClient {
     Options? options,
     CancelToken? cancelToken,
     String? baseUrl,
+    bool useCache = false,
   }) =>
       request(
         path,
@@ -230,6 +181,7 @@ class ApiClient {
         options: options,
         cancelToken: cancelToken,
         baseUrl: baseUrl,
+        useCache: useCache,
       );
 
   Future<dynamic> post(
@@ -239,6 +191,7 @@ class ApiClient {
     Options? options,
     CancelToken? cancelToken,
     String? baseUrl,
+    bool useCache = false,
   }) =>
       request(
         path,
@@ -248,6 +201,7 @@ class ApiClient {
         options: options,
         cancelToken: cancelToken,
         baseUrl: baseUrl,
+        useCache: useCache,
       );
 
   Future<dynamic> put(
@@ -257,6 +211,7 @@ class ApiClient {
     Options? options,
     CancelToken? cancelToken,
     String? baseUrl,
+    bool useCache = false,
   }) =>
       request(
         path,
@@ -266,6 +221,7 @@ class ApiClient {
         options: options,
         cancelToken: cancelToken,
         baseUrl: baseUrl,
+        useCache: useCache,
       );
 
   Future<dynamic> delete(
@@ -275,6 +231,7 @@ class ApiClient {
     Options? options,
     CancelToken? cancelToken,
     String? baseUrl,
+    bool useCache = false,
   }) =>
       request(
         path,
@@ -284,6 +241,7 @@ class ApiClient {
         options: options,
         cancelToken: cancelToken,
         baseUrl: baseUrl,
+        useCache: useCache,
       );
 
   /// Upload file(s) using FormData

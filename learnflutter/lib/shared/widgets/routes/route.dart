@@ -9,7 +9,7 @@ import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dar
 import 'package:learnflutter/shared/widgets/tree_view/tree_view_screen.dart';
 import 'package:learnflutter/data/local/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/main_isolate.dart';
-import 'package:learnflutter/features/animation/animation_screen.dart';
+import 'package:learnflutter/core/animation/animation_screen.dart';
 import 'package:learnflutter/features/balance_bar_screen/balance_bar_screen.dart';
 import 'package:learnflutter/features/camera_wesome/camera_wesome_screen.dart';
 import 'package:learnflutter/features/chart/chart_screen.dart';
@@ -91,8 +91,8 @@ import 'package:learnflutter/features/menu/menu_controller.dart';
 import 'package:learnflutter/features/nested/nested_scroll_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/page_loading_screen.dart';
 import 'package:learnflutter/features/bmprogresshud/bmprogresshud_screen.dart';
-import 'package:learnflutter/features/camera/camera_screen.dart';
-import 'package:learnflutter/features/camera/model/camera_mode.dart';
+import 'package:learnflutter/core/camera/camera_screen.dart';
+import 'package:learnflutter/core/camera/model/camera_mode.dart';
 import 'package:learnflutter/features/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/features/ar_kit/scanner/scanner_screen.dart';
 import 'package:learnflutter/features/photo_3d/photo_3d_screen.dart';
@@ -162,6 +162,10 @@ import 'package:learnflutter/features/community/screens/community_v1_screen.dart
 import 'package:learnflutter/features/course/screens/course_details_v1_screen.dart';
 import 'package:learnflutter/features/home/screens/habit_details_v1_screen.dart';
 import 'package:learnflutter/features/notification/screens/notifications_v1_screen.dart';
+import 'package:learnflutter/features/test_screen/sliver_animation_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/fps_guaranteed_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/tiktok_animation_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/core_anim_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -288,6 +292,10 @@ class Routes {
   static const String newLogin = "/new_login";
   static const String newsScreen = "/news_screen";
   static const String googleMapOffline = "/google_map_offline";
+  static const String sliverAnimationDemo = "/sliver_animation_demo";
+  static const String fpsGuaranteedDemo = "/fps_guaranteed_demo";
+  static const String tiktokAnimationDemo = "/tiktok_animation_demo";
+  static const String coreAnimDemo = "/core_anim_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -419,6 +427,26 @@ class Routes {
         return MaterialPageRoute(
           settings: RouteSettings(name: ticTacToeGame),
           builder: (_) => const GameScreen(),
+        );
+      case sliverAnimationDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: sliverAnimationDemo),
+          builder: (_) => const SliverAnimationDemoScreen(),
+        );
+      case fpsGuaranteedDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: fpsGuaranteedDemo),
+          builder: (_) => const FPSGuaranteedDemoScreen(),
+        );
+      case tiktokAnimationDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: tiktokAnimationDemo),
+          builder: (_) => const TikTokAnimationDemoScreen(),
+        );
+      case coreAnimDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: coreAnimDemo),
+          builder: (_) => const CoreAnimDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(

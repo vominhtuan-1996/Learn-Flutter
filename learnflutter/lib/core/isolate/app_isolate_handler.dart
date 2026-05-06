@@ -1,6 +1,34 @@
 import 'dart:async';
 import 'dart:isolate';
 
+/* ============================================================================
+ * 🛠 ADVANCED MAINTENANCE RULES & FUTURE DIRECTIONS (Quy tắc bảo trì nâng cao)
+ * ============================================================================
+ * 
+ * 1. LỰA CHỌN CƠ CHẾ (Isolate.run vs Isolate.spawn):
+ *    - QUY TẮC: Ưu tiên sử dụng `Isolate.run()` cho các tác vụ tính toán một lần (one-off tasks) 
+ *      vì nó tự động quản lý vòng đời và có hiệu năng tốt hơn (zero-copy cho dữ liệu nhỏ).
+ *    - ĐỊNH HƯỚNG: Chỉ sử dụng `Isolate.spawn()` thủ công (như trong json_parse.dart) 
+ *      khi cần một Isolate chạy nền lâu dài (Long-lived worker) hoặc cần giao tiếp 2 chiều liên tục.
+ * 
+ * 2. GIỚI HẠN DỮ LIỆU TRUYỀN TẢI (Data Passing Limits):
+ *    - QUY TẮC: TUYỆT ĐỐI KHÔNG truyền các object chứa `dart:ui` (Image, Canvas, v.v.) hoặc 
+ *      các đối tượng có trạng thái phức tạp (Closures không tĩnh) qua Isolate.
+ *    - CẢNH BÁO: Việc sao chép dữ liệu giữa các Isolate tốn chi phí CPU. Với dữ liệu cực lớn, 
+ *      hãy cân nhắc sử dụng `TransferableTypedData` để tối ưu bộ nhớ.
+ * 
+ * 3. QUY TẮC VIẾT HÀM COMPUTE (Closure Rules):
+ *    - QUY TẮC: Hàm được truyền vào `compute` nên là hàm Top-level hoặc hàm Static. 
+ *      Tránh sử dụng hàm thuộc instance nếu hàm đó truy cập vào các biến thành viên 
+ *      không thể serialize (non-serializable).
+ * 
+ * 4. QUẢN LÝ TẬP TRUNG (Centralized Management):
+ *    - ĐỊNH HƯỚNG: Mọi tác vụ nặng trong tương lai (Xử lý ảnh, giải mã file lớn, 
+ *      mã hóa dữ liệu) nên được đưa về `AppIsolateHandler` để quản lý tập trung, 
+ *      tránh việc spawn Isolate bừa bãi gây tràn bộ nhớ RAM.
+ * ============================================================================
+ */
+
 /// Lớp quản lý Isolate toàn ứng dụng giúp xử lý các tác vụ tiêu tốn nhiều CPU.
 ///
 /// Trong Flutter, mọi hoạt động mặc định đều diễn ra trên Main Isolate hay còn gọi là UI Thread.

@@ -5,7 +5,7 @@ import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dar
 import 'package:learnflutter/shared/widgets/bottom_sheet/page/bottom_sheet.dart';
 import 'package:learnflutter/features/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/shared/widgets/search_bar/page/search_bar_builder.dart';
-import 'package:learnflutter/features/animation/widget/scale_translate.dart';
+import 'package:learnflutter/core/animation/widget/scale_translate.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/metarial_radio_button.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
@@ -50,7 +50,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
     // Thực hiện yêu cầu đến API tìm kiếm sản phẩm
     // For demonstration, returning a dummy list
     await Future.delayed(Duration(seconds: 1)); // Simulate network delay
-    return List<String>.generate(infrasTypes.length, (index) => '${infrasTypes[index]} for $query');
+    return List<String>.generate(
+        infrasTypes.length, (index) => '${infrasTypes[index]} for $query');
   }
 
   @override
@@ -85,10 +86,14 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                             child: Container(
                               width: sizeIcon,
                               height: sizeIcon,
-                              margin: EdgeInsets.all(DeviceDimension.padding / 2),
+                              margin:
+                                  EdgeInsets.all(DeviceDimension.padding / 2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(sizeIcon / 2),
-                                color: index == indexPage ? Colors.deepOrangeAccent : Colors.grey,
+                                borderRadius:
+                                    BorderRadius.circular(sizeIcon / 2),
+                                color: index == indexPage
+                                    ? Colors.deepOrangeAccent
+                                    : Colors.grey,
                               ),
                               child: Center(
                                 child: Text(
@@ -122,7 +127,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                       pageController: _pageController,
                       index: index,
                       child: Container(
-                        color: Colors.primaries[index % Colors.primaries.length],
+                        color:
+                            Colors.primaries[index % Colors.primaries.length],
                         child: Center(
                           child: Text(
                             'Page ${index + 1}',
@@ -230,7 +236,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                             inputDecorationTheme: InputDecorationTheme(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(color: Colors.transparent),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
                               ),
                             ),
                             // requestFocusOnTap is enabled/disabled by platforms when it is null.
@@ -245,7 +252,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                               });
                             },
 
-                            dropdownMenuEntries: fillters.map<DropdownMenuEntry<String>>(
+                            dropdownMenuEntries:
+                                fillters.map<DropdownMenuEntry<String>>(
                               (dynamic value) {
                                 // Update the parameter type to dynamic
                                 return DropdownMenuEntry<String>(
@@ -321,7 +329,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                                   },
                                   child: Text(
                                     infrasTypes[index],
-                                    style: context.textTheme.bodyMedium?.copyWith(
+                                    style:
+                                        context.textTheme.bodyMedium?.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -347,11 +356,14 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                                   },
                                   icon: Icon(
                                     Icons.remove,
-                                    color: radius != 100 ? AppColors.primary : AppColors.grey,
+                                    color: radius != 100
+                                        ? AppColors.primary
+                                        : AppColors.grey,
                                   )),
                             ),
                             Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: AppColors.primary),
                                   borderRadius: BorderRadius.circular(8),
@@ -371,7 +383,9 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                                   },
                                   icon: Icon(
                                     Icons.add,
-                                    color: radius != 1000 ? AppColors.primary : AppColors.grey,
+                                    color: radius != 1000
+                                        ? AppColors.primary
+                                        : AppColors.grey,
                                   )),
                             ),
                           ],
@@ -441,7 +455,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                   context: context,
                   contentWidget: Container(
                     height: context.mediaQuery.size.height * 0.8,
-                    width: context.mediaQuery.size.width - DeviceDimension.padding,
+                    width:
+                        context.mediaQuery.size.width - DeviceDimension.padding,
                     // color: Colors.red,
                   ));
             },
@@ -472,7 +487,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                         onPressed: () {},
                         child: SizedBox(
                           height: DeviceDimension.defaultSize(60),
-                          width: context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
+                          width: context.mediaQuery.size.width / 2 -
+                              DeviceDimension.padding * 2,
                           child: Center(
                             child: Text(
                               'Degree',
@@ -492,10 +508,12 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                               );
                             },
                           ),
-                          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
                             (Set<MaterialState> states) {
                               if (states.contains(MaterialState.pressed)) {
-                                return Colors.red.withOpacity(0.5); // Feedback color when pressed
+                                return Colors.red.withOpacity(
+                                    0.5); // Feedback color when pressed
                               }
                               return null; // Default color
                             },
@@ -505,7 +523,8 @@ class _TroubleShootingScreenState extends State<TroubleShootingScreen> {
                         onPressed: () {},
                         child: SizedBox(
                           height: DeviceDimension.defaultSize(60),
-                          width: context.mediaQuery.size.width / 2 - DeviceDimension.padding * 2,
+                          width: context.mediaQuery.size.width / 2 -
+                              DeviceDimension.padding * 2,
                           child: Center(
                             child: Text('Agree',
                                 style: context.textTheme.bodyMedium?.copyWith(

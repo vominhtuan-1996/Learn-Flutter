@@ -1,6 +1,36 @@
 import 'package:learnflutter/core/service/log/log_file_service.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+/* ============================================================================
+ * 🛠 ADVANCED MAINTENANCE RULES & FUTURE DIRECTIONS (Quy tắc bảo trì nâng cao)
+ * ============================================================================
+ * 
+ * 1. CẤU HÌNH PRODUCTION (Production Readiness):
+ *    - QUY TẮC: Khi release ứng dụng, cần cân nhắc đặt `useConsoleLogs: false` 
+ *      để tối ưu hiệu năng. Nếu ứng dụng không yêu cầu log offline, có thể đặt 
+ *      `enabled: false`.
+ * 
+ * 2. BẢO MẬT & QUYỀN RIÊNG TƯ (Privacy & Security):
+ *    - QUY TẮC: TUYỆT ĐỐI KHÔNG log các thông tin nhạy cảm như Password, 
+ *      Full Credit Card Number, hoặc Access Token của người dùng.
+ *    - ĐỊNH HƯỚNG: Tích hợp bộ lọc (Filter) tự động đè ký tự '*' lên các key 
+ *      nhạy cảm trong response API trước khi đưa vào Talker.
+ * 
+ * 3. GHI LOG TỪ NHIỀU ISOLATE (Multi-isolate Logging):
+ *    - CẢNH BÁO: Talker mặc định chỉ bắt được log trên Main Isolate. 
+ *    - QUY TẮC: Để bắt log từ các Isolate khác (Isolate.spawn), cần sử dụng 
+ *      `SendPort` để gửi message về Main thread và gọi `AppTalker.instance` tại đó.
+ * 
+ * 4. TÍCH HỢP HỆ THỐNG GIÁM SÁT (Monitoring Integration):
+ *    - ĐỊNH HƯỚNG: Trong tương lai, có thể bổ sung `TalkerObserver` để tự động 
+ *      đẩy các log level `error` hoặc `critical` lên Sentry hoặc Firebase Crashlytics.
+ * 
+ * 5. QUẢN LÝ BỘ NHỚ (Memory Management):
+ *    - QUY TẮC: Giữ `maxHistoryItems` ở mức vừa phải (VD: 1000) để tránh chiếm 
+ *      dụng quá nhiều RAM khi ứng dụng chạy trong thời gian dài.
+ * ============================================================================
+ */
+
 /// [AppTalker] cung cấp một instance Talker duy nhất (singleton) cho toàn bộ ứng dụng.
 /// Sử dụng singleton pattern để đảm bảo [TalkerScreen] có thể hiển thị log
 /// từ mọi nguồn trong app: DioInterceptor, BLoC, Service layer, v.v.

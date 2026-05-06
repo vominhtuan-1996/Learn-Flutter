@@ -1,17 +1,23 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:learnflutter/core/theme/habit_builder_theme.dart';
+import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
+import 'package:learnflutter/features/material/component/material_banner/banner_type_content.dart';
 import 'package:learnflutter/features/material/component/material_banner/material_banner_overlay.dart';
 import 'package:learnflutter/features/material/material_screen.dart';
 import 'package:learnflutter/features/material/material_screen_detail.dart';
+import 'package:learnflutter/shared/widgets/lib/src/utils/utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MaterialSnackbarScreen extends StatefulWidget {
-  const MaterialSnackbarScreen({super.key, required this.data, this.enable = true});
+  const MaterialSnackbarScreen(
+      {super.key, required this.data, this.enable = true});
   final RouterMaterialModel data;
   final bool enable;
   @override
-  State<MaterialSnackbarScreen> createState() => _MaterialRaidoButtonScreenState();
+  State<MaterialSnackbarScreen> createState() =>
+      _MaterialRaidoButtonScreenState();
 }
 
 class _MaterialRaidoButtonScreenState extends State<MaterialSnackbarScreen>
@@ -77,6 +83,55 @@ class _MaterialRaidoButtonScreenState extends State<MaterialSnackbarScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            ElevatedButton(
+              child: const Text('Show Awesome SnackBar'),
+              onPressed: () {
+                TopOverlayBanner.show(
+                  context: context,
+                  content: Center(
+                    child: Text(
+                      'Đây là banner ở trên cùng!\nĐây là banner ở trên cùng!',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  ratioScreenHeight: 0.2,
+                );
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Thông báo thành công'),
+              onPressed: () {
+                TypedBanner.show(
+                  context: context,
+                  type: BannerType.success,
+                  title: 'Thành công',
+                  message: 'Bạn đã đăng ký thành công tài khoản mới!',
+                );
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Thông báo thất bại'),
+              onPressed: () {
+                TypedBanner.show(
+                  context: context,
+                  type: BannerType.error,
+                  title: 'Thất bại',
+                  message: 'Bạn đã thất bại khi đăng ký tài khoản mới!',
+                );
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Thông báo thất bại'),
+              onPressed: () {
+                TypedBanner.show(
+                  context: context,
+                  type: BannerType.warning,
+                  title: 'Cảnh báo',
+                  message: 'Tài khoản này không tồn tại!',
+                );
+              },
+            ),
             ElevatedButton(
               child: const Text('Show Awesome SnackBar'),
               onPressed: () {

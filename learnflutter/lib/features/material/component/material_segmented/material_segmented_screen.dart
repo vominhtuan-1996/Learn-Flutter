@@ -3,25 +3,31 @@ import 'dart:math';
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/features/animation/widget/list_view_animation.dart';
+import 'package:learnflutter/core/animation/widget/list_view_animation.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 
 class MaterialSegmentedScreen extends StatefulWidget {
   const MaterialSegmentedScreen({super.key});
   @override
-  State<MaterialSegmentedScreen> createState() => MaterialSegmentedScreenState();
+  State<MaterialSegmentedScreen> createState() =>
+      MaterialSegmentedScreenState();
 }
 
 class MaterialSegmentedScreenState extends State<MaterialSegmentedScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   late int _indexTab = 0;
-  List colors = [Colors.red.shade200, Colors.blue.shade100, Colors.orange.shade200];
+  List colors = [
+    Colors.red.shade200,
+    Colors.blue.shade100,
+    Colors.orange.shade200
+  ];
   List title = ['ACCOUNT', 'HOME', 'NEW'];
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this, initialIndex: _indexTab);
+    tabController =
+        TabController(length: 3, vsync: this, initialIndex: _indexTab);
     tabController.addListener(() {
       _indexTab = tabController.index;
     });

@@ -24,7 +24,8 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen>
       duration: const Duration(milliseconds: 1500),
     )..reverse();
 
-    _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red).animate(_controller);
+    _colorAnimation = ColorTween(begin: Colors.grey[400], end: Colors.red)
+        .animate(_controller);
 
     _sizeAnimation = TweenSequence(
       <TweenSequenceItem<double>>[
@@ -63,7 +64,8 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedBuilder(
-                animation: CurvedAnimation(parent: _controller, curve: Curves.decelerate),
+                animation: CurvedAnimation(
+                    parent: _controller, curve: Curves.decelerate),
                 builder: (context, child) {
                   return ProgressBar(
                     barColor: Colors.blue,
@@ -87,10 +89,16 @@ class SliderVerticalScreenState extends State<SliderVerticalScreen>
                   });
                 },
               ),
-              const TabRenderWidget(
-                tabColor: Colors.yellow,
+              TabRenderWidget(
+                tabColor: Colors.blue,
                 thumbColor: Colors.red,
-                thumbSize: 20.0,
+                thumbSize: 10.0,
+                avatarSide: AvatarSide.bottom,
+                avatarUrls: const [
+                  'https://i.pravatar.cc/150?img=11', // Hạng 1
+                ],
+                tagColor: Colors.yellow,
+                avatarSize: 48,
               ),
 
               // Slider(

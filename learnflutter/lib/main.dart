@@ -327,7 +327,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               localizationsDelegates: _localization.localizationsDelegates,
               supportedLocales: _localization.supportedLocales,
               debugShowCheckedModeBanner: false,
-              home: const SplashV1Screen(),
+              // home: const SplashV1Screen(),
               onGenerateRoute: Routes.generateRoute,
             );
           },
