@@ -11,3 +11,6 @@ export 'src/controller/core_anim_controller.dart';
 export 'src/widget/animated_repaint.dart';
 export 'src/effect/effects.dart';
 export 'src/painter/ripple_painter.dart';
+export 'src/timeline/timeline_logic.dart';
+export 'src/timeline/timeline_effect.dart';
+export 'src/timeline/anim_presets.dart';

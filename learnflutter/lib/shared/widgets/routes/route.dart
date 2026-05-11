@@ -166,6 +166,8 @@ import 'package:learnflutter/features/test_screen/sliver_animation_demo_screen.d
 import 'package:learnflutter/features/test_screen/fps_guaranteed_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/tiktok_animation_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/core_anim_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/timeline_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/full_list_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -296,6 +298,8 @@ class Routes {
   static const String fpsGuaranteedDemo = "/fps_guaranteed_demo";
   static const String tiktokAnimationDemo = "/tiktok_animation_demo";
   static const String coreAnimDemo = "/core_anim_demo";
+  static const String timelineDemo = "/timeline_demo";
+  static const String fullListDemo = "/full_list_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -447,6 +451,16 @@ class Routes {
         return MaterialPageRoute(
           settings: RouteSettings(name: coreAnimDemo),
           builder: (_) => const CoreAnimDemoScreen(),
+        );
+      case timelineDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: timelineDemo),
+          builder: (_) => const TimelineDemoScreen(),
+        );
+      case fullListDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: fullListDemo),
+          builder: (_) => const FullListDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(

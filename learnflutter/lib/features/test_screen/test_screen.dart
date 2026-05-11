@@ -497,6 +497,28 @@ class _TestScreenState extends State<TestScreen> {
                   .slide(),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.timelineDemo);
+                },
+                child: const Text('Timeline Animation (Sequence)'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF43D8C9))
+                  .animate()
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.fullListDemo);
+                },
+                child: const Text('Full List Animation (Delete → Collapse)'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFFFFB347))
+                  .animate()
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(
                     Routes.cameraScreen,
                     arguments: {
