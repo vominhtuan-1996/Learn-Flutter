@@ -1,4 +1,6 @@
-import 'package:learnflutter/general_import.dart';
+
+import 'package:flutter/material.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 
 class AppText extends StatelessWidget {
   AppText(
@@ -28,7 +30,7 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newStyle = (style ??= context.bodyNormal).copyWith(
+    final newStyle = (style ??= getThemeBloc(context).state.tokens.texts.bodyMedium.toTextStyle(color ?? Colors.transparent)).copyWith(
       color: color,
       fontSize: fontSize,
       fontWeight: weight,
@@ -48,7 +50,7 @@ class AppText extends StatelessWidget {
           text: text,
           style: newStyle,
           children: [
-            TextSpan(text: ' *', style: TextStyle(color: context.theme.requiredIndicator)),
+            TextSpan(text: ' *', style: TextStyle(color: getThemeBloc(context).state.tokens.colors.primary)),
           ],
         ),
       );

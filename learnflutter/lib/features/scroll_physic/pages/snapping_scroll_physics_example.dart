@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/widgets/ripple_override.dart';
 import 'package:learnflutter/shared/widgets/zoom_tap_effect.dart';

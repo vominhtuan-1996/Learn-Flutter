@@ -4,7 +4,7 @@ import 'package:learnflutter/features/material/component/meterial_button_3/widge
 import 'package:learnflutter/features/material/component/meterial_button_3/widget/fab_button.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/widget/icon_button.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/widget/segmented_button.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 
 enum MaterialButtonType {
   commonbutton,

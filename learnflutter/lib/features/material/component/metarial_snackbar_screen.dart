@@ -1,6 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/theme/habit_builder_theme.dart';
+import 'package:learnflutter/app/theme/habit_builder_theme.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/material_banner/banner_type_content.dart';

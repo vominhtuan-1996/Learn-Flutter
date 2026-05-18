@@ -1,11 +1,14 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_assets.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
-import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/core/utils/image_utils.dart';
+import 'package:learnflutter/core/constants/app_assets.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
+import 'package:learnflutter/core/global/func_global.dart';
+import 'package:learnflutter/core/utils/extension/extension_widget.dart';
+import 'package:learnflutter/core/utils/image_helper.dart';
 import 'package:learnflutter/shared/widgets/app_text.dart';
-import 'package:learnflutter/shared/widgets/enable_widget.dart';
 import 'package:learnflutter/shared/widgets/tap.dart';
+import 'package:learnflutter/shared/widgets/enable_widget.dart';
 
 class DetailContainer extends StatelessWidget {
   const DetailContainer({
@@ -57,15 +60,14 @@ class DetailContainer extends StatelessWidget {
         children: [
           Expanded(child: child ?? const SizedBox.shrink()),
           Builder(builder: (context) {
-            return ImageUtils.loadFromAsset(
+            return ImageHelper.loadFromAsset(
               rightIcon,
-              width: minHeight == null ? DeviceDimension.icon20 : null,
-              tintColor:
-                  enable ? context.theme.labelColor : context.theme.hintColor,
+              width: minHeight == null ? DeviceDimension.icon25 : null,
+              tintColor: enable ? getThemeBloc(context).state.tokens.colors.onSurface : getThemeBloc(context).state.tokens.colors.onSurface,
             ).onTap(
               onTapRightIcon,
             );
-          }),
+          }), 
         ],
       ),
     );
@@ -90,7 +92,7 @@ class DetailContainer extends StatelessWidget {
       onTap: onTap,
       minHeight: minHeight,
       alignment: alignment,
-      rightIcon: rightIcon ?? AppAssets.icArrowNoTailDown,
+      rightIcon: rightIcon ?? AppAssets.iconHomeRefresh ,
       requiredMark: requiredMark,
       padding: padding,
       child: child,
@@ -112,7 +114,7 @@ class DetailContainer extends StatelessWidget {
       onTap: onTap,
       minHeight: minHeight,
       alignment: alignment,
-      rightIcon: AppAssets.icCalendarOutline,
+      rightIcon: AppAssets.iconHomeWalletInactive,
       requiredMark: requiredMark,
       child: child,
     );
@@ -120,10 +122,9 @@ class DetailContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor =
-        enable ? context.theme.borderPrimary : context.theme.borderSecondary;
+    final borderColor = enable ? getThemeBloc(context).state.tokens.colors.primary : getThemeBloc(context).state.tokens.colors.onPrimary;
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min, 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title.isNotEmpty)
@@ -132,8 +133,7 @@ class DetailContainer extends StatelessWidget {
             child: AppText(
               title,
               requiredMark: requiredMark,
-              style:
-                  context.bodyNormal.copyWith(color: context.theme.labelColor),
+              style: getThemeBloc(context).state.tokens.texts.bodyMedium.toTextStyle(getThemeBloc(context).state.tokens.colors.onSurface),
             ),
           ),
         EnableWidget(
@@ -148,18 +148,10 @@ class DetailContainer extends StatelessWidget {
               return Tap(
                 onTap: onTap,
                 onLongTap: onLongTap,
-                child: Container(
-                    alignment: alignment,
-                    padding: padding ?? AppEdgeInserts.normal,
-                    width: double.infinity,
-                    child: child),
+                child: Container(alignment: alignment, padding: padding , width: double.infinity, child: child),
               );
             }
-            return Container(
-                alignment: alignment,
-                padding: padding ?? AppEdgeInserts.normal,
-                width: double.infinity,
-                child: child);
+            return Container(alignment: alignment, padding: padding , width: double.infinity, child: child);
           }),
         ),
       ],

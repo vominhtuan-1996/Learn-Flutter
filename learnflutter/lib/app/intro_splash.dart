@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/features/home/home_aniamtion.dart';
-import 'package:learnflutter/shared/widgets/routes/route.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+
+import 'localization/app_local_translate.dart';
 
 /// Lớp IntroSplash đảm nhiệm vai trò giới thiệu tổng quan về bản sắc và giá trị cốt lõi của thương hiệu PetSocial tới người dùng ngay khi họ bắt đầu hành trình trải nghiệm ứng dụng.
 /// Thành phần này kết hợp nhuần nhuyễn giữa các hiệu ứng chuyển động mượt mà của logo và các thông điệp chào mừng để tạo ra một khởi đầu đầy ấn tượng và chuyên nghiệp.

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
-import 'package:learnflutter/data/models/option_model.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 
 class ShowFinderCubit<M extends OptionModel> extends Cubit<ShowFinderState<M>> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/extensions/shape/clipper/bottom_nav_clipper.dart';
 import 'package:learnflutter/features/indicator/indicator_example_screen.dart';
 import 'package:learnflutter/features/material/material_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/material_screen.dart';

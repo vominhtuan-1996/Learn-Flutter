@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/features/material/component/material_lists/model/router_model.dart';

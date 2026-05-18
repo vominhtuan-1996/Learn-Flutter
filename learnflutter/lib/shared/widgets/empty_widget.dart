@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_assets.dart';
-import 'package:learnflutter/core/utils/extension/extension_string.dart';
-import 'package:learnflutter/core/utils/image_helper.dart';
+import 'package:learnflutter/core/constants/app_assets.dart';
+import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/shared/widgets/app_text.dart';
+import 'package:learnflutter/core/utils/image_helper.dart';
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({super.key, this.message});
@@ -15,7 +15,8 @@ class EmptyWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ImageHelper.loadFromAsset(AppAssets.icEmpty),
-        AppText(message ?? 'Không tìm thấy kết quả phù hợp', color: context.theme.labelColor),
+        AppText(message ?? 'Không tìm thấy kết quả phù hợp',
+            color: getThemeBloc(context).state.tokens.colors.onSurface),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/extension/extension_widget.dart';
 import 'package:learnflutter/features/gift_coupon/cubit/gift_coupon_cubit.dart';

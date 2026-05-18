@@ -4,22 +4,21 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 import 'package:learnflutter/shared/widgets/bottom_sheet/cubit/bottom_sheet_cubit.dart';
 import 'package:learnflutter/shared/widgets/bottom_sheet/page/bottom_sheet.dart';
 import 'package:learnflutter/shared/widgets/bottom_sheet/state/bottom_sheet_state.dart';
-import 'package:learnflutter/features/scroll_physic/extension/scroll_physics/nobounce_scroll_physics.dart';
 import 'package:learnflutter/core/debound.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/shared/widgets/keyboard_avoiding.dart';
 import 'package:learnflutter/core/utils/image_helper.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:learnflutter/core/engine_bottom_sheet/engine_bottom_sheet.dart';
 
 /// TypeDialog định nghĩa các loại hộp thoại thông báo khác nhau trong hệ thống.
 /// Mỗi loại sẽ gắn liền với một biểu tượng và màu sắc đặc trưng để người dùng dễ dàng nhận diện tính chất của thông báo.
@@ -254,69 +253,15 @@ class DialogUtils {
     bool showDrag = true,
     RoundedRectangleBorder? shape,
   }) async {
-    StreamController<double> stream = StreamController();
-    double position;
-    await showModalBottomSheet<void>(
-      elevation: elevation,
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: isScrollControlled,
-      isDismissible: isDismissible,
-      sheetAnimationStyle: AnimationStyle(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.decelerate,
+    await AppBottomSheetEngine.show<void>(
+      context,
+      config: AppBottomSheetConfig(
+        title: '',
+        contentWidget: contentWidget,
+        isDismissible: isDismissible,
+        enableDrag: true,
+        showDragHandle: showDrag,
       ),
-      enableDrag: true,
-      shape: shape,
-      builder: (BuildContext context) {
-        return StreamBuilder(
-          stream: stream.stream,
-          initialData: height,
-          builder: (context, snapshot) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(borderRadiusVertical)),
-                color: color ?? Colors.white,
-              ),
-              height: snapshot.data,
-              width: width ?? context.mediaQuery.size.width - DeviceDimension.padding * 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    onHorizontalDragUpdate: (details) {
-                      debugPrint(details.globalPosition.dx.toString());
-                    },
-                    onVerticalDragUpdate: (details) {
-                      position = context.mediaQuery.size.height - details.globalPosition.dy;
-                      if (position <= 35.0) {
-                        Navigator.pop(context);
-                      } else {
-                        updateHeight(position, stream);
-                      }
-                    },
-                    child: SizedBox(
-                      height: DeviceDimension.padding / 3,
-                    ),
-                  ),
-                  if (showDrag)
-                    Container(
-                      height: 4,
-                      width: context.mediaQuery.size.width / 8,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                        color: Colors.grey,
-                      ),
-                    ),
-                  Expanded(child: contentWidget)
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 
@@ -337,60 +282,15 @@ class DialogUtils {
     /// Tỉ lệ chiều cao ban đầu khi vừa hiển thị
     double initialSize = 0.86,
   }) async {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.zero,
+    await AppBottomSheetEngine.show<void>(
+      context,
+      config: AppBottomSheetConfig(
+        title: '',
+        contentWidget: child,
+        isDismissible: false,
+        enableDrag: true,
+        showDragHandle: true,
       ),
-      barrierColor: Colors.transparent,
-      sheetAnimationStyle: AnimationStyle(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.decelerate,
-      ),
-      isDismissible: false,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          initialChildSize: initialSize,
-          minChildSize: minSize,
-          maxChildSize: maxSize,
-          expand: false,
-          builder: (context, scrollController) {
-            return Container(
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(48 * initialSize), topRight: Radius.circular(48 * initialSize)),
-              ),
-              child: SingleChildScrollView(
-                physics: const NoBounceScrollPhysics(),
-                controller: scrollController,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: DeviceDimension.padding / 4, bottom: DeviceDimension.padding / 2),
-                      child: Container(
-                        height: 6,
-                        width: context.mediaQuery.size.width / 7,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(3)),
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: context.mediaQuery.size.height * initialSize,
-                      color: backgroundColor,
-                      child: child,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 
@@ -403,22 +303,16 @@ class DialogUtils {
     String titleCancleAction = 'Hủy',
     List<CupertinoActionSheetAction>? actions,
   }) async {
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => KeyboardAvoiding(
-        duration: const Duration(milliseconds: 600),
-        child: CupertinoActionSheet(
-          title: Text(title),
-          message: content,
-          cancelButton: CupertinoActionSheetAction(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              titleCancleAction,
-              style: context.textTheme.titleMedium?.copyWith(color: Colors.blue),
-            ),
-          ),
-          actions: actions,
-        ),
+    await AppBottomSheetEngine.showCustom(
+      context,
+      title: title,
+      cancelText: titleCancleAction,
+      contentWidget: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          content,
+          if (actions != null) ...actions,
+        ],
       ),
     );
   }

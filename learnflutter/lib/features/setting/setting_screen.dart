@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/app/app_text_style.dart';
+import 'package:learnflutter/app/theme/app_text_style.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/global/var_global.dart';
 import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';

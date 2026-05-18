@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/theme/colors_token.dart';
-import 'package:learnflutter/core/theme/text_token.dart';
-import 'package:learnflutter/core/theme/theme_controller.dart';
-import 'package:learnflutter/core/theme/theme_storage.dart';
+import 'package:learnflutter/app/theme/colors_token.dart';
+import 'package:learnflutter/app/theme/text_token.dart';
+import 'package:learnflutter/app/theme/theme_controller.dart';
+import 'package:learnflutter/app/theme/theme_storage.dart';
 import 'package:learnflutter/features/setting/state/setting_state.dart';
 
 enum ThemeEvent { toggleDark, toggleLight }

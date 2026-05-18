@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/pagination/cubit/pagination_cubit.dart';
 import 'package:learnflutter/shared/widgets/pagination/state/pagination_state.dart';
 import 'package:learnflutter/shared/widgets/pagination/widget/mb_button.dart';

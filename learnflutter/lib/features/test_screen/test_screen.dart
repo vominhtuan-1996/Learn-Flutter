@@ -4,7 +4,7 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:input_history_text_field/input_history_text_field.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/widgets/search_bar/page/search_bar_builder.dart';
 import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
@@ -13,7 +13,7 @@ import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
-import 'package:learnflutter/core/camera/model/camera_mode.dart';
+import 'package:learnflutter/core/services/camera/model/camera_mode.dart';
 import 'package:learnflutter/shared/widgets/attribute_string/attribute_string_widget.dart';
 import 'package:learnflutter/core/animation/widget/icon_animation_widget.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
@@ -23,7 +23,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
 
 // import 'package:file';
@@ -420,17 +420,37 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.of(context).pushNamed(
                     Routes.cameraScreen,
                     arguments: {
-                      'mode': CameraMode.photo,
+                      'initialMode': CameraMode.photo,
                       'onPhotoCaptured': (XFile file) {
                         debugPrint('📸 Ảnh đã chụp: ${file.path}');
                       },
                       'onVideoRecorded': (XFile file) {
                         debugPrint('🎬 Video đã quay: ${file.path}');
                       },
+                      'minZoom': 1,
+                      'maxZoom': 5,
+                      'maxLength': 5,
                     },
                   );
                 },
                 child: const Text('Camera Screen (Zoom + Photo/Video)'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    Routes.cameraScreen,
+                    arguments: {
+                      'initialMode': CameraMode.photo,
+                      'modes': [CameraMode.photo],
+                      'onPhotoCaptured': (XFile file) {
+                        debugPrint('📸 Ảnh chụp chế độ Photo Only: ${file.path}');
+                      },
+                      'minZoom': 1,
+                      'maxZoom': 3,
+                    },
+                  );
+                },
+                child: const Text('📷 Camera Screen (Photo Only - Hide Mode Selector)'),
               ),
               TextButton(
                 onPressed: () {
@@ -514,6 +534,41 @@ class _TestScreenState extends State<TestScreen> {
               )
                   .animate(onPlay: (controller) => controller.repeat())
                   .shimmer(duration: 1200.ms, color: const Color(0xFFFFB347))
+                  .animate()
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.paginationDemo);
+                },
+                child: const Text('Pagination System Demo (TikTok Style)'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF00E5FF))
+                  .animate()
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.engineDialogDemo);
+                },
+                child: const Text(
+                    'Engine Dialog System (Info/Error/Success/Warning)'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFF9333EA))
+                  .animate()
+                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+                  .slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.appStepperDemo);
+                },
+                child:
+                    const Text('💡 Engine Stepper/Pagination System (Premium)'),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(duration: 1200.ms, color: const Color(0xFFEA580C))
                   .animate()
                   .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
                   .slide(),

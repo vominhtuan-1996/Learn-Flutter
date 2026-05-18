@@ -4,8 +4,8 @@ import 'package:learnflutter/core/utils/extension/extension_list.dart';
 import 'package:learnflutter/shared/widgets/multi_select/multi_selector.dart';
 import 'package:learnflutter/shared/widgets/show_selector_widget/acc_item_finder/show_finder_cubit.dart';
 import 'package:learnflutter/shared/widgets/show_selector_widget/show_selector.dart';
-import 'package:learnflutter/data/models/load_more_model.dart';
-import 'package:learnflutter/data/models/option_model.dart';
+import 'package:learnflutter/shared/models/load_more_model.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
 
 class ShowFinder<T extends OptionModel> extends StatefulWidget {
   const ShowFinder({

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/extension/extension_textstyle.dart';
 import 'package:learnflutter/shared/widgets/routes/argument_screen_model.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/metarial_radio_button.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/features/material/component/search_module/search_list_bottom_sheet.dart';

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/data/local/hive_demo/model/person.dart';
+import 'package:learnflutter/core/storage/hive_demo/model/person.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/extension/extension_list.dart';
 import 'package:learnflutter/core/utils/extension/extension_string.dart';

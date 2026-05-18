@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:learnflutter/core/keyboard/global_nokeyboard_rebuild.dart';
+import 'package:learnflutter/core/services/keyboard/global_nokeyboard_rebuild.dart';
 
 void main() {
   runApp(MaterialApp(home: PermissionHandlerWidget()));

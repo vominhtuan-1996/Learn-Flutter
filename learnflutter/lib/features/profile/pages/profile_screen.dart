@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
-import 'package:learnflutter/core/app/app_text_style.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
+import 'package:learnflutter/app/theme/app_text_style.dart';
 import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/features/setting/state/setting_state.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';

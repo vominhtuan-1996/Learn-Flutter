@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:learnflutter/core/service/talker/app_talker.dart';
+import 'package:learnflutter/core/services/talker/app_talker.dart';
 
 class RetryInterceptor extends Interceptor {
   final Dio dio;

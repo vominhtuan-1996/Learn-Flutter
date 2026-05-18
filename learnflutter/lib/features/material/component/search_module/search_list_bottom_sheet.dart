@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/metarial_radio_button.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/features/material/component/search_module/search_module_page.dart';

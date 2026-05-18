@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/theme/extension_theme.dart';
-import 'package:learnflutter/core/theme/text_token.dart';
+import 'package:learnflutter/app/theme/extension_theme.dart';
+import 'package:learnflutter/app/theme/text_token.dart';
 import 'package:learnflutter/features/color_picker/color_picker.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';

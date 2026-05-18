@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
-import 'package:learnflutter/data/repositories/user_repository.dart';
-import 'package:learnflutter/data/models/user_model.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
+import 'package:learnflutter/core/repositories/user_repository.dart';
+import 'package:learnflutter/shared/models/user_model.dart';
 import 'package:learnflutter/core/extensions/form/form.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/routes/argument_screen_model.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/theme/colors_token.dart';
-import 'package:learnflutter/core/theme/extension_theme.dart';
+import 'package:learnflutter/app/theme/colors_token.dart';
+import 'package:learnflutter/app/theme/extension_theme.dart';
 import 'package:learnflutter/features/color_picker/color_picker.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 
 class TestThemeScreen extends StatefulWidget {
   const TestThemeScreen({super.key});

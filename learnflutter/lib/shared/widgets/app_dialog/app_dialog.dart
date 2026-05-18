@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/extension/extension_widget.dart';
 

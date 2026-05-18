@@ -93,7 +93,9 @@ Dự án sử dụng **Cubit** (một phần của thư viện Bloc) để quả
 - **Design System**: Sử dụng màu sắc và typography đã định nghĩa trong `core/theme/`. Tránh hardcode màu (ví dụ: `Colors.blue` -> `context.theme.primaryColor`).
 - **Responsive**: Sử dụng các widget linh hoạt như `Flexible`, `Expanded`, `LayoutBuilder` hoặc các extension hỗ trợ kích thước màn hình.
 - **Assets**: Truy cập file qua một class `AppAssets` để tránh sai sót đường dẫn.
-
+- **Widget dùng chung**: Các widget giao diện được định nghĩa trong `component/` hoặc `features/[feature_name]/widgets/`.  
+- **Engine**: Các engine UI/Logic được định nghĩa trong `core/engine_[feature_name]/`.
+- **Screen**: các screen khi tạo mới luôn được bọc bởi  để tránh overload bottom sheet hoặc các widget khác khi nhập liệu.
 ---
 
 ## 7. Kiểm soát chất lượng

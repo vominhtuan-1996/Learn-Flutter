@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/state/base_loading_state.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 
 /// BaseLoading là một widget bao bọc (wrapper) cung cấp khả năng hiển thị trạng thái đang tải (loading) toàn màn hình.
 /// Nó tích hợp chặt chẽ với BLoC để quản lý trạng thái tải và thông điệp hiển thị một cách tập trung.

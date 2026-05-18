@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pinput/pinput.dart';
-import 'package:learnflutter/core/theme/extension_theme.dart';
+import 'package:learnflutter/app/theme/extension_theme.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 
 /// Trang xác thực mã OTP (One-Time Password) được thiết kế theo phong cách Premium.

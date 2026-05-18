@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
 
 class CommonButton extends StatelessWidget {

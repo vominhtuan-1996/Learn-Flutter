@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 
 class LayoutMarkerPin extends StatelessWidget {
   LayoutMarkerPin({

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/features/qr_code_example/overlay/cccd_scan_overlay.dart';
 import 'package:learnflutter/features/qr_code_example/overlay/qr_scan_blinking_border_overlay.dart';

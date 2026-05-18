@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/features/login/cubit/login_cubit.dart';
 import 'package:learnflutter/features/login/screens/premium_otp_page.dart';
 import 'package:learnflutter/features/login/state/login_state.dart';
-import 'package:learnflutter/core/theme/extension_theme.dart';
+import 'package:learnflutter/app/theme/extension_theme.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';

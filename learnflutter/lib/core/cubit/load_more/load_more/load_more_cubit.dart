@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
 import 'package:learnflutter/core/cubit/load_more/load_more/load_more_state.dart';
 
-import 'package:learnflutter/data/models/base_model.dart';
-import 'package:learnflutter/data/models/load_more_model.dart';
+import 'package:learnflutter/shared/models/base_model.dart';
+import 'package:learnflutter/shared/models/load_more_model.dart';
 
 class LoadMoreCubit<T extends BaseModel> extends Cubit<LoadMoreState<T>> {
   final ScrollController scrollController;

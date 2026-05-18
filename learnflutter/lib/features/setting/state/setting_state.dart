@@ -1,4 +1,4 @@
-import 'package:learnflutter/core/theme/theme_controller.dart';
+import 'package:learnflutter/app/theme/theme_controller.dart';
 
 class SettingThemeState {
   final ThemeTokens tokens;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
-import 'package:learnflutter/core/app/app_text_style.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
+import 'package:learnflutter/app/theme/app_text_style.dart';
 import 'package:learnflutter/shared/widgets/pagination/widget/mb_tap.dart';
 
 const double edgSize = 8;

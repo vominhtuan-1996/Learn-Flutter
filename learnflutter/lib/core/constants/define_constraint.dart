@@ -13,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/features/menu/model/model_menu.dart';
 import 'package:learnflutter/shared/widgets/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/datetime_utils.dart';
 import 'package:notification_center/notification_center.dart';
 import 'package:shared_preferences/shared_preferences.dart';

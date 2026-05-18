@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/service/log/log_google_chat.dart';
+import 'package:learnflutter/core/services/log/log_google_chat.dart';
 import 'package:learnflutter/features/material/component/material_textfield/material_textfield.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;

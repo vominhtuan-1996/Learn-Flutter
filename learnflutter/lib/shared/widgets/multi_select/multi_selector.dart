@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/core/utils/extension/extension_string.dart';
 import 'package:learnflutter/shared/widgets/multi_select/multi_select_cubit.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
+import 'package:learnflutter/shared/widgets/tap.dart';
 
 enum MultiSelectorType {
   // if length = 2, and next select is do nothing, must unselect and reselect

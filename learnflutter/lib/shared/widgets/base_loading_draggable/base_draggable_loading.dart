@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/state/base_loading_state.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/lib/floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 
 class BaseDraggableLoading extends StatefulWidget {

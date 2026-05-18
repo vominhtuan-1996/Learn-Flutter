@@ -1,7 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // _BannerRequest – Data class đại diện một yêu cầu hiển thị banner trong Queue
@@ -150,6 +150,7 @@ class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _slideAnimation;
+  Timer? _dismissTimer; // Để quản lý việc Pause/Resume đếm ngược
 
   bool _dismissed = false;
 
@@ -171,8 +172,13 @@ class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay>
 
     _controller.forward();
 
-    // Auto-dismiss sau [duration].
-    Future.delayed(widget.duration, () {
+    // Khởi chạy bộ đếm giờ auto-dismiss
+    _startTimer(widget.duration);
+  }
+
+  void _startTimer(Duration duration) {
+    _dismissTimer?.cancel();
+    _dismissTimer = Timer(duration, () {
       if (mounted) dismiss();
     });
   }
@@ -180,11 +186,15 @@ class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay>
   void dismiss() {
     if (_dismissed) return;
     _dismissed = true;
-    _controller.reverse().then((_) => widget.onDismiss());
+    _dismissTimer?.cancel();
+    _controller.reverse().then((_) {
+      if (mounted) widget.onDismiss();
+    });
   }
 
   @override
   void dispose() {
+    _dismissTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -202,20 +212,42 @@ class _AnimatedBannerOverlayState extends State<_AnimatedBannerOverlay>
           color: Colors.transparent,
           child: Padding(
             padding: EdgeInsets.fromLTRB(16, topPadding + 12, 16, 0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: widget.backgroundColor,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
+            child: Dismissible(
+              key: UniqueKey(),
+              direction: DismissDirection.up,
+              onDismissed: (_) {
+                _dismissed = true;
+                _dismissTimer?.cancel();
+                widget.onDismiss();
+              },
+              child: GestureDetector(
+                onTapDown: (_) {
+                  // Tạm dừng bộ đếm giờ khi người dùng chạm/nhấn giữ để đọc tin
+                  _dismissTimer?.cancel();
+                },
+                onTapUp: (_) {
+                  // Khởi chạy lại đếm ngược (cho thêm 2 giây đọc) khi người dùng thả tay
+                  _startTimer(const Duration(seconds: 2));
+                },
+                onTapCancel: () {
+                  _startTimer(const Duration(seconds: 2));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: widget.backgroundColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
-                ],
+                  child: widget.content,
+                ),
               ),
-              child: widget.content,
             ),
           ),
         ),

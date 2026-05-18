@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 
 /// Lớp CustomSearchBar là thành phần tìm kiếm được thiết kế riêng, không sử dụng SearchAnchor của Material.

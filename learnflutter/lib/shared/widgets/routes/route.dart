@@ -7,7 +7,7 @@ import 'package:learnflutter/features/transformer_example/transformer_example_pa
 import 'package:learnflutter/shared/widgets/base_loading_draggable/draggable_example_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/widgets/tree_view/tree_view_screen.dart';
-import 'package:learnflutter/data/local/hive_demo/screen/info_screen.dart';
+import 'package:learnflutter/core/storage/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/main_isolate.dart';
 import 'package:learnflutter/core/animation/animation_screen.dart';
 import 'package:learnflutter/features/balance_bar_screen/balance_bar_screen.dart';
@@ -34,7 +34,7 @@ import 'package:learnflutter/features/indicator/pages/home_refresh_indicator_pag
 import 'package:learnflutter/features/indicator/pages/ice_cream_indicator.dart';
 import 'package:learnflutter/features/log/log_screen.dart';
 import 'package:learnflutter/features/log/talker_example_screen.dart';
-import 'package:learnflutter/core/service/talker/app_talker.dart';
+import 'package:learnflutter/core/services/talker/app_talker.dart';
 // import 'package:learnflutter/features/login/page/login_screen.dart';
 import 'package:learnflutter/features/map/map_screen.dart';
 import 'package:learnflutter/features/map/example/example_map_screen.dart';
@@ -91,8 +91,8 @@ import 'package:learnflutter/features/menu/menu_controller.dart';
 import 'package:learnflutter/features/nested/nested_scroll_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/page_loading_screen.dart';
 import 'package:learnflutter/features/bmprogresshud/bmprogresshud_screen.dart';
-import 'package:learnflutter/core/camera/camera_screen.dart';
-import 'package:learnflutter/core/camera/model/camera_mode.dart';
+import 'package:learnflutter/core/services/camera/camera_screen.dart';
+import 'package:learnflutter/core/services/camera/model/camera_mode.dart';
 import 'package:learnflutter/features/ar_kit/arkit_screen.dart';
 import 'package:learnflutter/features/ar_kit/scanner/scanner_screen.dart';
 import 'package:learnflutter/features/photo_3d/photo_3d_screen.dart';
@@ -143,8 +143,8 @@ import 'package:learnflutter/features/web_view/web_view_screen.dart';
 import 'package:learnflutter/features/web_view/street_view_screen.dart';
 import 'package:learnflutter/shared/widgets/lib/story_router/story_page_container_builder.dart';
 import 'package:learnflutter/shared/widgets/lib/story_router/story_route.dart';
-import 'package:learnflutter/games/tic_tac_toe/screens/game_screen.dart';
-import 'package:learnflutter/games/rubik/screens/rubik_screen.dart';
+import 'package:learnflutter/features/games/tic_tac_toe/screens/game_screen.dart';
+import 'package:learnflutter/features/games/rubik/screens/rubik_screen.dart';
 import 'package:learnflutter/features/news/presentation/news_screen.dart';
 import 'package:learnflutter/features/onboarding/screens/splash_v1_screen.dart';
 import 'package:learnflutter/features/onboarding/screens/onboarding_step1_screen.dart';
@@ -168,6 +168,9 @@ import 'package:learnflutter/features/test_screen/tiktok_animation_demo_screen.d
 import 'package:learnflutter/features/test_screen/core_anim_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/timeline_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/full_list_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/pagination_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/engine_dialog_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -248,19 +251,16 @@ class Routes {
   static const String materialDialog = 'metarial_dialog';
   static const String materialDivider = 'metarial_divider';
   static const String materialFloatingButton = 'material_floating_button';
-  static const String materialProgressIndicators =
-      "material_progress_indicators";
+  static const String materialProgressIndicators = "material_progress_indicators";
   static const String materialTextField = "metarial_textfield_screen";
   static const String materialSwitch = "material_switch";
-  static const String materialNavigationDrawer =
-      'material_navigation_drawer_screen';
+  static const String materialNavigationDrawer = 'material_navigation_drawer_screen';
   static const String materialSearchBar = 'material_searchbar';
   static const String materialChip = 'material_chip_screen';
   static const String materialRadioButton = 'metarial_radio_button_screen';
   static const String materialMenu = 'material_menus_detail';
   static const String materialSnackbar = 'metarial_snackbar_screen';
-  static const String materialNavigationRail =
-      "material_navigation_rail_screen";
+  static const String materialNavigationRail = "material_navigation_rail_screen";
   static const String materialSideSheetScreen = "material_side_sheet_screen";
   static const String materialIConButton = "material_icon_button_screen";
   static const String materialLists = "material_lists_screen";
@@ -300,6 +300,9 @@ class Routes {
   static const String coreAnimDemo = "/core_anim_demo";
   static const String timelineDemo = "/timeline_demo";
   static const String fullListDemo = "/full_list_demo";
+  static const String paginationDemo = "/pagination_demo";
+  static const String engineDialogDemo = "/engine_dialog_demo";
+  static const String appStepperDemo = "/app_stepper_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -323,12 +326,9 @@ class Routes {
   static const String flutterMapOsmScreen = 'flutter_map_osm_screen';
 
   //*regions Sliver
-  static const String sliverAppbarCollapsingHeaderHero =
-      "sliver_appbar_collapsing_header_hero";
-  static const String sliverAppbarPersistentHeaderTabbar =
-      "sliver_appbar_persistent_header_tabbar";
-  static const String sliverAnimationListWrapperExample =
-      "sliver_animation_list_wrapper_example";
+  static const String sliverAppbarCollapsingHeaderHero = "sliver_appbar_collapsing_header_hero";
+  static const String sliverAppbarPersistentHeaderTabbar = "sliver_appbar_persistent_header_tabbar";
+  static const String sliverAnimationListWrapperExample = "sliver_animation_list_wrapper_example";
   static const String sliverParalaxSticky = "sliver_parallax_sticky_page";
   static const String sliverMasonryGrid = "masonry_sliver_grid_page";
   static const String sliverEmptyState = "sliver_empty_state";
@@ -337,14 +337,11 @@ class Routes {
   static const String sliverCollapseToFAB = "sliver_collapse_FAB_example";
   static const String sliverPullToRefreshPage = "sliver_pull_torefresh_page";
   static const String sliverTimeLinePage = "sliver_timeline_page";
-  static const String scrollSpySliverViewExample =
-      "scroll_spy_sliver_view_example";
+  static const String scrollSpySliverViewExample = "scroll_spy_sliver_view_example";
   static const String stickyHeaderExample = "sticky_header_example";
-  static const String sliverOnboardingWithContentExample =
-      "sliver_onboarding_with_content_example";
+  static const String sliverOnboardingWithContentExample = "sliver_onboarding_with_content_example";
   static const String sliverMapPreviewExample = "sliver_map_preview_example";
-  static const String sliverFadeSearchHeaderExample =
-      "fade_search_header_example";
+  static const String sliverFadeSearchHeaderExample = "fade_search_header_example";
   //*regions Sliver
 
   static const String visibilityDetectorExample = "visibility_detector_example";
@@ -364,8 +361,7 @@ class Routes {
   static const String dropWaterIndicator = "drop_water_indicator";
   static const String iceCreamIndicator = "ice_cream_indicator";
   static const String fetchMoreIndicator = "fetch_more_indicator_page";
-  static const String dropWaterLottieRefreshIndicator =
-      "drop_water_lottie_refresh_indicator_page";
+  static const String dropWaterLottieRefreshIndicator = "drop_water_lottie_refresh_indicator_page";
   static const String arrowDownIndicator = "arrow_down_indicator_page";
   static const String homeRefreshIndicator = "home_refresh_indicator_page";
 
@@ -373,21 +369,14 @@ class Routes {
 
   //* regions ScrollPhysic
   static const String scrollPhysicScreen = "scroll_physic_screen";
-  static const String alwaysBounceScrollPhysicsExample =
-      "always_bounce_scroll_physics_example";
+  static const String alwaysBounceScrollPhysicsExample = "always_bounce_scroll_physics_example";
   static const String noScrollPhysicExample = "no_scroll_physics_example";
-  static const String noBounceScrollPhysicsExample =
-      "no_bounce_scroll_physics_example";
-  static const String reversedScrollPhysicsExample =
-      "reversed_scroll_physics_example";
-  static const String rubberBandScrollPhysicsExample =
-      "rubber_band_scroll_physics_example";
-  static const String slowDownScrollPhysicsExample =
-      "slow_down_scroll_physics_example";
-  static const String snappingScrollPhysicsExample =
-      "snapping_scroll_physics_example";
-  static const String rubberSpringBackPhysicsExample =
-      "rubber_spring_back_physics_example";
+  static const String noBounceScrollPhysicsExample = "no_bounce_scroll_physics_example";
+  static const String reversedScrollPhysicsExample = "reversed_scroll_physics_example";
+  static const String rubberBandScrollPhysicsExample = "rubber_band_scroll_physics_example";
+  static const String slowDownScrollPhysicsExample = "slow_down_scroll_physics_example";
+  static const String snappingScrollPhysicsExample = "snapping_scroll_physics_example";
+  static const String rubberSpringBackPhysicsExample = "rubber_spring_back_physics_example";
   //* regions ScrollPhysic
   static const String pmsSDKLogin = "pms_login";
 
@@ -408,14 +397,10 @@ class Routes {
   // talker logger example
   static const String talkerScreen = 'talker_example_screen';
 
-  static String current(BuildContext context) =>
-      ModalRoute.of(context)?.settings.name ?? '';
+  static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    final arguments =
-        settings.arguments != null && settings.arguments is ArgumentsScreenModel
-            ? settings.arguments as ArgumentsScreenModel
-            : ArgumentsScreenModel(title: "unknowns");
+    final arguments = settings.arguments != null && settings.arguments is ArgumentsScreenModel ? settings.arguments as ArgumentsScreenModel : ArgumentsScreenModel(title: "unknowns");
     switch (settings.name) {
       case talkerScreen:
         return SlideRightRoute(
@@ -461,6 +446,21 @@ class Routes {
         return MaterialPageRoute(
           settings: RouteSettings(name: fullListDemo),
           builder: (_) => const FullListDemoScreen(),
+        );
+      case paginationDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: paginationDemo),
+          builder: (_) => const PaginationDemoScreen(),
+        );
+      case engineDialogDemo:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: engineDialogDemo),
+          builder: (_) => const EngineDialogDemoScreen(),
+        );
+      case appStepperDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: appStepperDemo),
+          builder: (_) => const AppStepperDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(
@@ -726,15 +726,23 @@ class Routes {
                   message: 'Đang cập nhật dữ liệu...',
                 ));
       case cameraScreen:
-        final cameraArgs = settings.arguments as Map<String, dynamic>?;
+        final cameraArgs = settings.arguments is Map ? (settings.arguments as Map) : null;
+        final initialMode = (cameraArgs?['initialMode'] ?? cameraArgs?['mode']) as CameraMode? ?? CameraMode.photo;
+        final minZoom = (cameraArgs?['minZoom'] as num?)?.toDouble();
+        final maxZoom = (cameraArgs?['maxZoom'] as num?)?.toDouble();
+        final maxLength = (cameraArgs?['maxLength'] ?? cameraArgs?['maxleght']) as int?;
+        final modesList = cameraArgs?['modes'];
+        final modes = modesList is List ? List<CameraMode>.from(modesList) : null;
         return SlideRightRoute(
           routeSettings: RouteSettings(name: cameraScreen),
           builder: (_) => CameraScreen(
-            initialMode: cameraArgs?['mode'] as CameraMode? ?? CameraMode.photo,
-            onPhotoCaptured:
-                cameraArgs?['onPhotoCaptured'] as void Function(XFile)?,
-            onVideoRecorded:
-                cameraArgs?['onVideoRecorded'] as void Function(XFile)?,
+            initialMode: initialMode,
+            onPhotoCaptured: cameraArgs?['onPhotoCaptured'] as void Function(XFile)?,
+            onVideoRecorded: cameraArgs?['onVideoRecorded'] as void Function(XFile)?,
+            minZoom: minZoom,
+            maxZoom: maxZoom,
+            maxLength: maxLength,
+            modes: modes,
           ),
         );
       case openFileScreen:
@@ -1010,37 +1018,21 @@ class Routes {
           builder: (_) => (MaterialListsDetail(data: param)),
         );
       case graphicsScreen:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: graphicsScreen),
-            builder: (_) => GraphicsScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: graphicsScreen), builder: (_) => GraphicsScreen());
       case customPaintScreen:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: customPaintScreen),
-            builder: (_) => CustomPainterScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: customPaintScreen), builder: (_) => CustomPainterScreen());
       case reducerScreen:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: reducerScreen),
-            builder: (_) => ReducerScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: reducerScreen), builder: (_) => ReducerScreen());
       case notificationScrollScreen:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: reducerScreen),
-            builder: (_) => NotificationScrollScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: reducerScreen), builder: (_) => NotificationScrollScreen());
       case menu:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: reducerScreen),
-            builder: (_) => SliverAppMenu());
+        return SlideRightRoute(routeSettings: RouteSettings(name: reducerScreen), builder: (_) => SliverAppMenu());
       case log:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: reducerScreen),
-            builder: (_) => LogScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: reducerScreen), builder: (_) => LogScreen());
       case pickFile:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: pickFile),
-            builder: (_) => PickFileScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: pickFile), builder: (_) => PickFileScreen());
       case scanScreen:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: scanScreen),
-            builder: (_) => ScanScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: scanScreen), builder: (_) => ScanScreen());
       case segmented:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: segmented),
@@ -1149,8 +1141,7 @@ class Routes {
         );
       case sliverAppbarPersistentHeaderTabbar:
         return SlideRightRoute(
-          routeSettings:
-              RouteSettings(name: sliverAppbarPersistentHeaderTabbar),
+          routeSettings: RouteSettings(name: sliverAppbarPersistentHeaderTabbar),
           builder: (_) => SliverAppbarPersistentHeaderTabbar(),
         );
       case sliverAnimationListWrapperExample:
@@ -1210,8 +1201,7 @@ class Routes {
         );
       case sliverOnboardingWithContentExample:
         return SlideRightRoute(
-          routeSettings:
-              RouteSettings(name: sliverOnboardingWithContentExample),
+          routeSettings: RouteSettings(name: sliverOnboardingWithContentExample),
           builder: (_) => SliverOnboardingWithContentExample(),
         );
       case sliverMapPreviewExample:
@@ -1379,9 +1369,7 @@ class Routes {
         );
       case defaultRoute:
       default:
-        return SlideRightRoute(
-            routeSettings: RouteSettings(name: defaultRoute),
-            builder: (_) => TestScreen());
+        return SlideRightRoute(routeSettings: RouteSettings(name: defaultRoute), builder: (_) => TestScreen());
     }
   }
 }
@@ -1391,8 +1379,7 @@ class SlideRightRoute extends PageRouteBuilder {
   final RouteSettings? routeSettings;
   final bool vertical;
 
-  SlideRightRoute(
-      {required this.builder, this.routeSettings, this.vertical = false})
+  SlideRightRoute({required this.builder, this.routeSettings, this.vertical = false})
       : super(
           settings: routeSettings,
           pageBuilder: (
@@ -1408,14 +1395,9 @@ class SlideRightRoute extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) {
-            final offsetAnimation =
-                Tween<Offset>(begin: Offset(0.0, 0.1), end: Offset.zero)
-                    .chain(CurveTween(curve: Curves.easeOut))
-                    .animate(animation);
+            final offsetAnimation = Tween<Offset>(begin: Offset(0.0, 0.1), end: Offset.zero).chain(CurveTween(curve: Curves.easeOut)).animate(animation);
 
-            final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0)
-                .chain(CurveTween(curve: Curves.easeOut))
-                .animate(animation);
+            final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeOut)).animate(animation);
             // const begin = Offset(1.0, 0.0);
             // const end = Offset.zero;
             // const curve = Curves.ease;

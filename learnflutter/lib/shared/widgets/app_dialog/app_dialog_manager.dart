@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_update_patch_dialog.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
-import 'package:learnflutter/features/gift_coupon/cubit/gift_coupon_cubit.dart';
+import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/features/gift_coupon/repos/gift_coupon_repository.dart';
-import 'package:learnflutter/features/gift_coupon/widgets/gift_coupon_process_dialog.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
 
 /// AppDialogManager chịu trách nhiệm quản lý việc hiển thị các hộp thoại trong ứng dụng.
@@ -120,22 +119,37 @@ class AppDialogManager {
     );
   }
 
-  /// [showGiftCouponAction] hiển thị popup tiến trình. Nếu có [pmsCode], bước 1 sẽ được xác định là hoàn thành.
+  /// [showGiftCouponAction] hiển thị popup tiến trình dưới dạng cấu hình (config-driven steps).
   static void showGiftCouponAction({String? pmsCode}) {
-    showGeneralDialog(
-      context: _context,
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, anim1, anim2) => const SizedBox.shrink(),
-      transitionBuilder: (context, anim1, anim2, child) {
-        return ScaleTransition(
-          scale: CurvedAnimation(parent: anim1, curve: Curves.easeOutBack),
-          child: BlocProvider(
-            create: (context) => GiftCouponCubit(pmsCode: pmsCode)..startProcess(),
-            child: const GiftCouponProcessDialog(),
-          ),
-        );
+    AppDialogEngine.showStepper(
+      _context,
+      title: 'Tiến trình tạo phiếu triển khai quà tặng',
+      steps: [
+        AppProcessStepConfig(
+          title: 'Tạo phiếu triển khai PMS',
+          processingSubtitle: 'Đang tạo phiếu...',
+          initialStatus: pmsCode != null ? AppProcessStepStatus.completed : AppProcessStepStatus.pending,
+          initialResult: pmsCode != null ? {'status': 'success', 'pmsCode': pmsCode} : null,
+          action: () => GiftCouponRepository.instance.createPMSCoupon(data: {'type': 'GIFT_PMS'}),
+          subtitleBuilder: (result) => 'Mã phiếu: ${result['pmsCode'] ?? ''}',
+        ),
+        AppProcessStepConfig(
+          title: 'Tạo phiếu thi công Inside',
+          processingSubtitle: 'Đang tạo phiếu thi công Inside...',
+          action: () => GiftCouponRepository.instance.createInsideCoupon(data: {'type': 'GIFT_INSIDE'}),
+          subtitleBuilder: (result) => 'Mã phiếu: ${result['insideCode'] ?? ''} - Nhân sự thi công: ${result['staff'] ?? ''}',
+        ),
+      ],
+      summaryTitleBuilder: (results) {
+        return 'Hoàn tất tạo phiếu triển khai - phiếu thi công quà tặng';
+      },
+      summaryNotesBuilder: (results) {
+        final pmsRes = results[0];
+        final insideRes = results[1];
+        return [
+          if (pmsRes != null) 'Mã phiếu triển khai PMS: ${pmsRes['pmsCode'] ?? ''}',
+          if (insideRes != null) 'Mã phiếu thi công: ${insideRes['insideCode'] ?? ''} - Nhân sự: ${insideRes['staff'] ?? ''}',
+        ];
       },
     );
   }

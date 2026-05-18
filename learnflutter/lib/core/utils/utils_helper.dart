@@ -185,4 +185,11 @@ class UtilsHelper {
     }
     return defaultList ?? <T>[];
   }
+
+  static void dismissKeyBoard({required BuildContext context}) {
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
 }

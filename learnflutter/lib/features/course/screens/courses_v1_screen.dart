@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
-import 'package:learnflutter/core/theme/habit_builder_theme.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
+import 'package:learnflutter/app/theme/habit_builder_theme.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 
 class CoursesV1Screen extends StatefulWidget {

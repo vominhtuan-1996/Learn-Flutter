@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:learnflutter/data/models/base_model.dart';
+import 'package:learnflutter/shared/models/base_model.dart';
 
 class LoadMoreState<T extends BaseModel> extends Equatable {
   final int pageSize;

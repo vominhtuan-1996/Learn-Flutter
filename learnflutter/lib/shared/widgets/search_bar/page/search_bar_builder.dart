@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 import 'package:learnflutter/shared/widgets/search_bar/cubit/search_bar_cubit.dart';
 import 'package:learnflutter/shared/widgets/search_bar/state/search_bar_state.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';

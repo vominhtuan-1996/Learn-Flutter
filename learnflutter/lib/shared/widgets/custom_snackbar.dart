@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_text_style.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/app/theme/app_text_style.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 
 class SnackBarPosition {

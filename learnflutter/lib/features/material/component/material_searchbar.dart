@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/search_bar/cubit/search_bar_cubit.dart';
 import 'package:learnflutter/shared/widgets/search_bar/page/search_bar_builder.dart';
 import 'package:learnflutter/shared/widgets/search_bar/state/search_bar_state.dart';

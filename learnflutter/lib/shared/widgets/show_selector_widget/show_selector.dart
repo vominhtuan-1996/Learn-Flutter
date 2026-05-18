@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:learnflutter/shared/widgets/app_text.dart';
 import 'package:learnflutter/shared/widgets/detail_container.dart';
 import 'package:learnflutter/shared/widgets/multi_select/multi_selector.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/load_more_selector.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/debound.dart';
-import 'package:learnflutter/data/models/load_more_model.dart';
-import 'package:learnflutter/data/models/option_model.dart';
+import 'package:learnflutter/shared/models/load_more_model.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
 import 'package:learnflutter/core/utils/extension/extension_string.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';

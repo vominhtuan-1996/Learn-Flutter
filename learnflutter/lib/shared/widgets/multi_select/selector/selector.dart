@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/shared/widgets/multi_select/multi_selector.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/selector_cubit.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/selector_state.dart';
-import 'package:learnflutter/data/models/option_model.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 

@@ -4,11 +4,11 @@ import 'package:learnflutter/shared/widgets/multi_select/multi_selector.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/selector.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/selector_cubit.dart';
 import 'package:learnflutter/shared/widgets/multi_select/selector/selector_state.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/cubit/load_more/load_more/load_more_cubit.dart';
 import 'package:learnflutter/core/cubit/load_more/load_more/load_more_state.dart';
-import 'package:learnflutter/data/models/load_more_model.dart';
-import 'package:learnflutter/data/models/option_model.dart';
+import 'package:learnflutter/shared/models/load_more_model.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
 
 class LoadMoreSelector<T extends OptionModel> extends Selector<T> {
   const LoadMoreSelector({

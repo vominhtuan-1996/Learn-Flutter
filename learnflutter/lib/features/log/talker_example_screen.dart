@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/service/log/daily_log_scheduler.dart';
-import 'package:learnflutter/core/service/log/log_file_service.dart';
-import 'package:learnflutter/core/service/log/log_google_chat.dart';
+import 'package:learnflutter/core/services/log/daily_log_scheduler.dart';
+import 'package:learnflutter/core/services/log/log_file_service.dart';
+import 'package:learnflutter/core/services/log/log_google_chat.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:talker_flutter/talker_flutter.dart';

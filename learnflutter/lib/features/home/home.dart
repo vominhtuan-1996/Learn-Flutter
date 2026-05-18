@@ -1,7 +1,7 @@
 // tạo 1 màn hình home sử dụng tabbar button , gồm 5 tab , tab ở giữa có UI circle button lớn hơn các tab còn lạiimport 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/app_box_decoration.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_box_decoration.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 import 'package:learnflutter/core/extensions/shape/border/arrow_elastic_shape.dart';
 import 'package:learnflutter/core/extensions/shape/clipper/wave.dart';
 import 'package:learnflutter/features/test_screen/test_screen.dart';

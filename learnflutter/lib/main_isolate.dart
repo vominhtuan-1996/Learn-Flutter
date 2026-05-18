@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/isolate/api_service.dart';
-import 'package:learnflutter/core/isolate/json_parse.dart';
+import 'package:learnflutter/core/services/isolate/api_service.dart';
+import 'package:learnflutter/core/services/isolate/json_parse.dart';
 import 'package:learnflutter/core/animation/widget/list_view_animation.dart';
 
 class IsolateJsonParsingScreen extends StatefulWidget {

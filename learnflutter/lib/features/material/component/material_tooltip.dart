@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/meterial_button_3/material_button_3.dart';
 import 'package:learnflutter/features/material/material_screen.dart';
 import 'package:learnflutter/features/material/material_screen_detail.dart';
-import 'package:learnflutter/core/app/app_colors.dart';
+import 'package:learnflutter/app/theme/app_colors.dart';
 
 class MaterialToolTip extends StatefulWidget {
   const MaterialToolTip({super.key, required this.data});

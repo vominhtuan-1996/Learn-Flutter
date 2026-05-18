@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/debound.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
-import 'package:mobimap_module/common/utils/utils_helpers.dart';
+import 'package:learnflutter/core/utils/utils_helper.dart';
+
 
 class Tap extends StatefulWidget {
   final VoidCallback? onTap;
@@ -52,7 +53,7 @@ class _TapState extends State<Tap> {
           splashColor: widget.splashColor ?? Colors.transparent,
           onLongPress: widget.onLongTap,
           onTap: () {
-            if (widget.dismissKeyboard) UtilsHelpers.dismissKeyBoard();
+            if (widget.dismissKeyboard) UtilsHelper.dismissKeyBoard(context: context);
 
             if (widget.isDelay) {
               debounce.runBefore(

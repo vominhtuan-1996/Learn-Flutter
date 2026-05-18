@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:learnflutter/features/auth/cubit/login_cubit.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 

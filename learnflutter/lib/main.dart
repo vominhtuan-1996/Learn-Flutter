@@ -7,19 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:learnflutter/app/app_root.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
-import 'package:learnflutter/core/theme/extension_theme.dart';
-import 'package:learnflutter/core/theme/habit_builder_theme.dart';
-import 'package:learnflutter/features/onboarding/screens/splash_v1_screen.dart';
+import 'package:learnflutter/app/theme/extension_theme.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';
-import 'package:learnflutter/core/app/device_dimension.dart';
+import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/search_bar/cubit/search_bar_cubit.dart';
-import 'package:learnflutter/core/keyboard/global_nokeyboard_rebuild.dart';
-import 'package:learnflutter/core/keyboard/keyboard_service.dart';
-import 'package:learnflutter/data/local/hive_demo/model/person.dart';
+import 'package:learnflutter/core/services/keyboard/global_nokeyboard_rebuild.dart';
+import 'package:learnflutter/core/services/keyboard/keyboard_service.dart';
+import 'package:learnflutter/core/storage/hive_demo/model/person.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
-import 'package:learnflutter/core/app/app_theme.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';
 import 'package:learnflutter/features/setting/state/setting_state.dart';
@@ -28,10 +23,13 @@ import 'package:notification_center/notification_center.dart';
 import 'package:learnflutter/core/network/api_client/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
-import 'package:learnflutter/core/service/talker/app_talker.dart';
-import 'package:learnflutter/core/service/log/log_file_service.dart';
-import 'package:learnflutter/core/service/log/daily_log_scheduler.dart';
-import 'package:learnflutter/core/service/log/log_google_chat.dart';
+import 'package:learnflutter/core/services/talker/app_talker.dart';
+import 'package:learnflutter/core/services/log/log_file_service.dart';
+import 'package:learnflutter/core/services/log/daily_log_scheduler.dart';
+import 'package:learnflutter/core/services/log/log_google_chat.dart';
+
+import 'app/localization/app_local_translate.dart';
+import 'app/theme/habit_builder_theme.dart';
 // import 'package:shorebird/shorebird.dart';
 
 /// Hàm main đóng vai trò là điểm khởi đầu chính thức cho toàn bộ vòng đời của ứng dụng Flutter.
@@ -44,7 +42,6 @@ void main() {
   /// Việc khởi tạo sớm này giúp ứng dụng có thể xử lý chính xác các sự kiện hệ thống và chuẩn bị một môi trường vận hành ổn định cho các thành phần UI phía sau.
   /// Đây là một bước chuẩn bị bắt buộc nhằm tránh các lỗi tiềm ẩn khi ứng dụng cố gắng giao tiếp với các dịch vụ cấp thấp của hệ điều hành.
   WidgetsFlutterBinding.ensureInitialized();
-
   // Khởi tạo Workmanager cho các task chạy ngầm (như gửi log định kỳ)
   Workmanager().initialize(
     callbackDispatcher,
@@ -72,11 +69,9 @@ void main() {
         tokenRefreshHandler: () async {
           try {
             // Example refresh flow: read refresh token from SharedPreferences, call refresh endpoint
-            final refreshToken =
-                SharedPreferenceUtils.prefs.getString('refresh_token');
+            final refreshToken = SharedPreferenceUtils.prefs.getString('refresh_token');
             if (refreshToken == null) return null;
-            final resp = await ApiClient.instance
-                .post('/auth/refresh', data: {'refreshToken': refreshToken});
+            final resp = await ApiClient.instance.post('/auth/refresh', data: {'refreshToken': refreshToken});
             final newToken = resp['accessToken'] ?? resp['token'];
             if (newToken != null && newToken is String) {
               ApiClient.instance.setAuthToken(newToken);
@@ -103,15 +98,11 @@ void main() {
 /// Mỗi khóa tương ứng với một loại logic nghiệp vụ cụ thể như gửi thông báo đẩy, đồng bộ hóa dữ liệu định kỳ hoặc xử lý các tệp tin lớn trong nền.
 /// Việc tập trung các khóa này tại một nơi giúp ngăn chặn sự nhầm lẫn giữa các tác vụ và hỗ trợ việc bảo trì điều phối các luồng xử lý nền trở nên dễ dàng hơn.
 const String simpleTaskKey = "be.tramckrijte.workmanagerExample.simpleTask";
-const String rescheduledTaskKey =
-    "be.tramckrijte.workmanagerExample.rescheduledTask";
+const String rescheduledTaskKey = "be.tramckrijte.workmanagerExample.rescheduledTask";
 const String failedTaskKey = "be.tramckrijte.workmanagerExample.failedTask";
-const String simpleDelayedTask =
-    "be.tramckrijte.workmanagerExample.simpleDelayedTask";
-const String simplePeriodicTask =
-    "be.tramckrijte.workmanagerExample.simplePeriodicTask";
-const String simplePeriodic1HourTask =
-    "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask";
+const String simpleDelayedTask = "be.tramckrijte.workmanagerExample.simpleDelayedTask";
+const String simplePeriodicTask = "be.tramckrijte.workmanagerExample.simplePeriodicTask";
+const String simplePeriodic1HourTask = "be.tramckrijte.workmanagerExample.simplePeriodic1HourTask";
 
 /// Hàm callbackDispatcher đóng vai trò là trình điều phối các tác vụ chạy ngầm được gọi trực tiếp bởi hệ điều hành thông qua WorkManager.
 /// Nó được đánh dấu với chỉ thị vm:entry-point để đảm bảo trình biên dịch không loại bỏ trong quá trình tối ưu hóa mã nguồn.
@@ -168,8 +159,7 @@ void callbackDispatcher() {
           final file = await LogFileService.getLatestLogFile();
           if (file != null) {
             // 2. Gửi file log qua Google Chat
-            final success = await LogGoogleChat.sendLogFile(file,
-                title: '📬 Background Log Report');
+            final success = await LogGoogleChat.sendLogFile(file, title: '📬 Background Log Report');
             if (success) {
               // 3. Nếu gửi xong thành công, dọn dẹp log cũ (giữ 7 ngày)
               await LogFileService.clearOldLogFiles();
@@ -316,14 +306,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
             /// MaterialApp đóng vai trò là thành phần định nghĩa phong cách thiết kế và cấu hình cơ bản nhất cho toàn bộ hệ thống giao diện Flutter.
             /// Tại đây, chúng tôi thiết lập khóa điều hướng toàn cục, các bộ đại diện đa ngôn ngữ, và các chủ đề hiển thị (Theme) cho cả chế độ sáng và tối.
-            /// Widget home được gán cho AppRoot để dẫn dắt người dùng vào luồng splash screen đầu tiên ngay khi ứng dụng vừa được khởi chạy thành công.
+            /// Widget home được gán cho App để dẫn dắt người dùng vào luồng splash screen đầu tiên ngay khi ứng dụng vừa được khởi chạy thành công.
             /// Ngoài ra, cơ chế onGenerateRoute cũng được tích hợp để tự động điều phối việc chuyển cảnh dựa trên các định danh route đã được đăng ký trước.
             return MaterialApp(
               navigatorKey: UtilsHelper.navigatorKey,
-              theme: HabitBuilderTheme.light
-                  .toThemeData(), // AppThemes.primaryTheme(context, state),
-              darkTheme: HabitBuilderTheme.dark
-                  .toThemeData(), //AppThemes.primaryTheme(context, state),
+              theme: HabitBuilderTheme.light.toThemeData(), // AppThemes.primaryTheme(context, state),
+              darkTheme: HabitBuilderTheme.dark.toThemeData(), //AppThemes.primaryTheme(context, state),
               localizationsDelegates: _localization.localizationsDelegates,
               supportedLocales: _localization.supportedLocales,
               debugShowCheckedModeBanner: false,

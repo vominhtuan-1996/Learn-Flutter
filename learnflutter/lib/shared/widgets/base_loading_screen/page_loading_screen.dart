@@ -4,7 +4,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 
 /// PageLoadingScreen là một màn hình ví dụ dùng để trình diễn khả năng hoạt động của BaseLoading.
 /// Nó cung cấp một giao diện đơn giản với nút kích hoạt để giả lập quá trình tải dữ liệu bất đồng bộ.

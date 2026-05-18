@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:another_transformer_page_view/another_transformer_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:learnflutter/core/app/app_local_translate.dart';
+import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 /// Enum đại diện cho các loại transformer khác nhau có sẵn trong ví dụ này.

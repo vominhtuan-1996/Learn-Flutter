@@ -2,9 +2,9 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/core/app/app_theme.dart';
+import 'package:learnflutter/app/theme/app_theme.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/theme/colors_token.dart';
+import 'package:learnflutter/app/theme/colors_token.dart';
 import 'package:learnflutter/features/color_picker/color_picker.dart';
 
 class ColorPickerScreen extends StatefulWidget {
