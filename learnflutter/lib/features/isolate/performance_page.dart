@@ -14,8 +14,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/isolate/app_isolate_handler.dart';
+import 'package:learnflutter/core/services/isolate/app_isolate_handler.dart';
 
 // Computes the nth number in the Fibonacci sequence.
 int fib(int n) {
@@ -58,11 +57,7 @@ class _PerformancePageState extends State<PerformancePage> {
                   builder: (context, snapshot) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(elevation: 8.0),
-                      onPressed: switch (snapshot.connectionState) {
-                        ConnectionState.done => () =>
-                            handleComputeOnMain(context),
-                        _ => null
-                      },
+                      onPressed: switch (snapshot.connectionState) { ConnectionState.done => () => handleComputeOnMain(context), _ => null },
                       child: const Text('Compute on Main'),
                     );
                   },
@@ -72,11 +67,7 @@ class _PerformancePageState extends State<PerformancePage> {
                   builder: (context, snapshot) {
                     return ElevatedButton(
                         style: ElevatedButton.styleFrom(elevation: 8.0),
-                        onPressed: switch (snapshot.connectionState) {
-                          ConnectionState.done => () =>
-                              handleComputeOnSecondary(context),
-                          _ => null
-                        },
+                        onPressed: switch (snapshot.connectionState) { ConnectionState.done => () => handleComputeOnSecondary(context), _ => null },
                         child: const Text('Compute on Secondary'));
                   },
                 ),
@@ -139,8 +130,7 @@ class SmoothAnimationWidget extends StatefulWidget {
   State<SmoothAnimationWidget> createState() => _SmoothAnimationWidgetState();
 }
 
-class _SmoothAnimationWidgetState extends State<SmoothAnimationWidget>
-    with TickerProviderStateMixin {
+class _SmoothAnimationWidgetState extends State<SmoothAnimationWidget> with TickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<BorderRadius?> _borderAnimation;
 
@@ -148,13 +138,9 @@ class _SmoothAnimationWidgetState extends State<SmoothAnimationWidget>
   void initState() {
     super.initState();
 
-    _animationController =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    _animationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
-    _borderAnimation = BorderRadiusTween(
-            begin: BorderRadius.circular(100.0),
-            end: BorderRadius.circular(0.0))
-        .animate(_animationController);
+    _borderAnimation = BorderRadiusTween(begin: BorderRadius.circular(100.0), end: BorderRadius.circular(0.0)).animate(_animationController);
 
     _animationController.repeat(reverse: true);
   }

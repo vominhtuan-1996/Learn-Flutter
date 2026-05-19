@@ -12,6 +12,7 @@ import 'package:learnflutter/shared/widgets/app_divider.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
 
 import 'package:learnflutter/core/utils/utils_helper.dart';
+import 'package:learnflutter/shared/widgets/custom_textfield.dart';
 
 class Selector<T extends OptionModel> extends StatefulWidget {
   const Selector({
@@ -51,6 +52,7 @@ class SelectorScreenState<T extends OptionModel, Screen extends Selector<T>>
     extends State<Screen> {
   final SelectorCubit<T> selectorCubit = SelectorCubit<T>();
   String searchKeyword = '';
+  final TextEditingController _searchController = TextEditingController();
 
   void updateItems({List<T> items = const []}) {
     selectorCubit.changeItems(items);
@@ -60,6 +62,12 @@ class SelectorScreenState<T extends OptionModel, Screen extends Selector<T>>
   void initState() {
     selectorCubit.init(widget.items, widget.selectedItems);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -90,15 +98,22 @@ class SelectorScreenState<T extends OptionModel, Screen extends Selector<T>>
 
   Widget searchBar() {
     return Padding(
-      padding: AppEdgeInserts.normal.copyWith(bottom: 0),
-      child: AppTextField(
-        text: searchKeyword,
+      padding: EdgeInsets.all(DeviceDimension.padding).copyWith(bottom: 0),
+      child: CustomTextField(
+        controller: _searchController,
+        hintText: widget.hint,
+        secureText: false,
+        textAlign: TextAlign.start,
+        keyboardType: TextInputType.text,
+        borderRadius: 8,
+        textCapitalization: TextCapitalization.none,
+        isShowCounterText: false,
         autoFocus: widget.autoFocus,
-        prefix: Padding(
+        prefixIcon: Padding(
           padding: EdgeInsets.all(DeviceDimension.padding / 1.5),
           child: ImageHelper.loadFromAsset(AppAssets.iconHomeRefresh),
         ),
-        onChanged: onKeywordChanged,
+        onTextChange: onKeywordChanged,
       ),
     );
   }

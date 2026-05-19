@@ -2,12 +2,16 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/services/camera/model/camera_mode.dart';
+import 'package:learnflutter/core/services/camera/widgets/camera_bottom_controls.dart';
+import 'package:learnflutter/core/services/camera/widgets/camera_gallery_preview.dart';
+import 'package:learnflutter/core/services/camera/widgets/camera_mode_selector.dart';
+import 'package:learnflutter/core/services/camera/widgets/camera_top_bar.dart';
+import 'package:learnflutter/core/services/camera/widgets/camera_zoom_slider.dart';
 import 'package:video_player/video_player.dart';
 
 /// [CameraScreen] là màn hình camera tái sử dụng được thiết kế để hoạt động độc lập
@@ -321,9 +325,6 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   // ─── Helpers ──────────────────────────────────────────────────
 
-  String _fmt(Duration d) => '${d.inMinutes.remainder(60).toString().padLeft(2, '0')}:'
-      '${d.inSeconds.remainder(60).toString().padLeft(2, '0')}';
-
   IconData get _flashIcon => {
         FlashMode.auto: Icons.flash_auto,
         FlashMode.always: Icons.flash_on,
@@ -355,7 +356,16 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             child: Column(
               children: [
                 // Top bar: đóng / đồng hồ / flash / flip
-                _buildTopBar(),
+                CameraTopBar(
+                  mode: _mode,
+                  isRecording: _recording,
+                  isPaused: _paused,
+                  recDuration: _recDur,
+                  flashIcon: _flashIcon,
+                  onFlashTap: _cycleFlash,
+                  onFlipTap: _flipCam,
+                  onCloseTap: () => Navigator.of(context).pop(),
+                ),
                 const Spacer(),
                 if (_retakeIndex != null) ...[
                   Row(
@@ -398,15 +408,84 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                   const SizedBox(height: 12),
                 ],
                 // Mode selector + zoom slider + nút chụp/quay
-                _buildModeSelector(),
-                _buildZoomSlider(),
-                _buildBottomControls(),
+                CameraModeSelector(
+                  currentMode: _mode,
+                  allowedModes: widget.modes ?? const [CameraMode.photo, CameraMode.video],
+                  isRecording: _recording,
+                  onModeChanged: (newMode) {
+                    setState(() => _mode = newMode);
+                  },
+                ),
+                CameraZoomSlider(
+                  currentZoom: _curZ,
+                  minZoom: _minZ,
+                  maxZoom: _maxZ,
+                  onZoomChanged: (v) async {
+                    setState(() => _curZ = v);
+                    await _ctrl?.setZoomLevel(v);
+                  },
+                ),
+                CameraBottomControls(
+                  mode: _mode,
+                  isRecording: _recording,
+                  isPaused: _paused,
+                  imgFile: _imgFile,
+                  videoPlayerController: _vCtrl,
+                  capturedPhotos: _capturedPhotos,
+                  videoFile: _vFile,
+                  onThumbnailTap: () {
+                    if (_mode == CameraMode.photo && _capturedPhotos.isNotEmpty) {
+                      setState(() {
+                        _galleryIndex = _capturedPhotos.length - 1;
+                        _showGalleryPreview = true;
+                      });
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_pageController.hasClients) {
+                          _pageController.jumpToPage(_capturedPhotos.length - 1);
+                        }
+                      });
+                    }
+                  },
+                  onCaptureTap: _mode == CameraMode.photo
+                      ? _takePicture
+                      : (_recording ? _stopRec : _startRec),
+                  onPauseResumeTap: _paused ? _resumeRec : _pauseRec,
+                  onConfirmTap: () {
+                    if (_mode == CameraMode.photo) {
+                      Navigator.of(context).pop(_capturedPhotos);
+                    } else {
+                      Navigator.of(context).pop(_vFile);
+                    }
+                  },
+                ),
               ],
             ),
           ),
 
           // Layer 3: Gallery preview pageview overlay
-          _buildGalleryPreview(),
+          CameraGalleryPreview(
+            show: _showGalleryPreview,
+            photos: _capturedPhotos,
+            currentIndex: _galleryIndex,
+            controller: _pageController,
+            onPageChanged: (idx) {
+              setState(() {
+                _galleryIndex = idx;
+              });
+            },
+            onCloseTap: () {
+              setState(() {
+                _showGalleryPreview = false;
+              });
+            },
+            onRetakeTap: (idx) {
+              setState(() {
+                _retakeIndex = idx;
+                _showGalleryPreview = false;
+              });
+              _showSnack('Vui lòng chụp lại để thế chỗ ảnh số ${idx + 1}');
+            },
+          ),
         ],
       ),
     );
@@ -429,393 +508,6 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         onScaleStart: _onScaleStart,
         onScaleUpdate: _onScaleUpdate,
         child: CameraPreview(ctrl),
-      ),
-    );
-  }
-
-  /// Thanh điều khiển trên cùng chứa nút đóng, đồng hồ đếm thời gian quay,
-  /// nút flash và nút lật camera. Đồng hồ chỉ hiển thị khi [_recording] là true
-  /// để không chiếm không gian UI khi không cần thiết.
-  Widget _buildTopBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Nút đóng có nền mờ để dễ nhìn trên preview
-          _circleIconButton(
-            icon: Icons.close,
-            onTap: () => Navigator.pop(context),
-          ),
-          if (_recording)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.circle, color: Colors.white, size: 10),
-                  const SizedBox(width: 4),
-                  Text(
-                    _fmt(_recDur),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          else
-            const SizedBox.shrink(),
-          Row(
-            children: [
-              _circleIconButton(icon: _flashIcon, onTap: _cycleFlash),
-              const SizedBox(width: 8),
-              _circleIconButton(icon: Icons.flip_camera_ios, onTap: _flipCam),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// [SegmentedButton] cho phép người dùng chuyển đổi giữa chế độ Ảnh và Video.
-  /// Khi đang quay video, việc đổi chế độ bị chặn để tránh xung đột với stream.
-  Widget _buildModeSelector() {
-    final modesList = widget.modes ?? const [CameraMode.photo, CameraMode.video];
-    if (modesList.length <= 1) return const SizedBox.shrink();
-
-    final segments = <ButtonSegment<CameraMode>>[];
-    if (modesList.contains(CameraMode.photo)) {
-      segments.add(const ButtonSegment(
-        value: CameraMode.photo,
-        label: Text('Ảnh'),
-        icon: Icon(Icons.photo_camera),
-      ));
-    }
-    if (modesList.contains(CameraMode.video)) {
-      segments.add(const ButtonSegment(
-        value: CameraMode.video,
-        label: Text('Video'),
-        icon: Icon(Icons.videocam),
-      ));
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: SegmentedButton<CameraMode>(
-        style: SegmentedButton.styleFrom(
-          foregroundColor: Colors.white,
-          selectedForegroundColor: Colors.black,
-          selectedBackgroundColor: Colors.white,
-          backgroundColor: Colors.black38,
-          side: const BorderSide(color: Colors.white54),
-        ),
-        segments: segments,
-        selected: {_mode},
-        onSelectionChanged: (s) {
-          if (!_recording) setState(() => _mode = s.first);
-        },
-      ),
-    );
-  }
-
-  /// Thanh slider zoom chỉ hiển thị khi thiết bị hỗ trợ zoom ([_maxZ] > [_minZ]).
-  /// Người dùng có thể dùng slider thay cho pinch gesture, cả hai đều cập nhật
-  /// [_curZ] và gọi [setZoomLevel] để đồng bộ với phần cứng camera.
-  Widget _buildZoomSlider() {
-    if (_maxZ <= _minZ) return const SizedBox.shrink();
-    return Row(
-      children: [
-        const SizedBox(width: 8),
-        const Icon(Icons.zoom_out, color: Colors.white70, size: 20),
-        Expanded(
-          child: Slider(
-            value: _curZ,
-            min: _minZ,
-            max: _maxZ,
-            activeColor: Colors.white,
-            inactiveColor: Colors.white24,
-            onChanged: (v) async {
-              setState(() => _curZ = v);
-              await _ctrl?.setZoomLevel(v);
-            },
-          ),
-        ),
-        const Icon(Icons.zoom_in, color: Colors.white70, size: 20),
-        SizedBox(
-          width: 42,
-          child: Text(
-            '${_curZ.toStringAsFixed(1)}x',
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(width: 8),
-      ],
-    );
-  }
-
-  /// Thanh điều khiển dưới cùng gồm thumbnail kết quả, nút capture chính,
-  /// và nút pause/resume chỉ xuất hiện khi đang ở chế độ video và đang quay.
-  /// Nút capture thay đổi hình dạng (tròn → vuông bo góc) để biểu thị trạng thái recording.
-  Widget _buildBottomControls() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildThumbnail(),
-          _buildCaptureButton(),
-          if (_mode == CameraMode.video && _recording)
-            _circleIconButton(
-              icon: _paused ? Icons.play_arrow : Icons.pause,
-              size: 28,
-              onTap: _paused ? _resumeRec : _pauseRec,
-            )
-          else if ((_mode == CameraMode.photo && _capturedPhotos.isNotEmpty) || (_mode == CameraMode.video && _vFile != null))
-            _circleIconButton(
-              icon: Icons.check,
-              color: Colors.greenAccent,
-              size: 28,
-              onTap: () {
-                if (_mode == CameraMode.photo) {
-                  Navigator.of(context).pop(_capturedPhotos);
-                } else {
-                  Navigator.of(context).pop(_vFile);
-                }
-              },
-            )
-          else
-            const SizedBox(width: 52),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildThumbnail() {
-    Widget? child;
-    if (_imgFile != null && _mode == CameraMode.photo) {
-      child = kIsWeb ? Image.network(_imgFile!.path, fit: BoxFit.cover) : Image.file(File(_imgFile!.path), fit: BoxFit.cover);
-    } else if (_vCtrl != null && _mode == CameraMode.video) {
-      child = VideoPlayer(_vCtrl!);
-    }
-    return GestureDetector(
-      onTap: () {
-        if (_mode == CameraMode.photo && _capturedPhotos.isNotEmpty) {
-          setState(() {
-            _galleryIndex = _capturedPhotos.length - 1;
-            _showGalleryPreview = true;
-          });
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_pageController.hasClients) {
-              _pageController.jumpToPage(_capturedPhotos.length - 1);
-            }
-          });
-        }
-      },
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 62,
-            height: 62,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.white70, width: 1.5),
-              color: Colors.black45,
-            ),
-            clipBehavior: Clip.hardEdge,
-            child: child ?? const Icon(Icons.photo, color: Colors.white30),
-          ),
-          if (_mode == CameraMode.photo && _capturedPhotos.isNotEmpty)
-            Positioned(
-              top: -6,
-              right: -6,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: Colors.redAccent,
-                  shape: BoxShape.circle,
-                ),
-                constraints: const BoxConstraints(
-                  minWidth: 20,
-                  minHeight: 20,
-                ),
-                child: Center(
-                  child: Text(
-                    '${_capturedPhotos.length}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCaptureButton() {
-    return GestureDetector(
-      onTap: _mode == CameraMode.photo ? _takePicture : (_recording ? _stopRec : _startRec),
-      child: Container(
-        width: 72,
-        height: 72,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.white, width: 4),
-          color: _recording ? Colors.red : Colors.transparent,
-        ),
-        child: Center(
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: _recording ? 28 : 56,
-            height: _recording ? 28 : 56,
-            decoration: BoxDecoration(
-              color: _recording ? Colors.red[800] : Colors.white,
-              borderRadius: BorderRadius.circular(_recording ? 6 : 28),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// [_circleIconButton] nút icon tròn có nền mờ đen, dùng cho top bar và pause button
-  /// để đảm bảo khả năng nhìn thấy rõ trên bất kỳ nền camera nào.
-  Widget _circleIconButton({
-    required IconData icon,
-    required VoidCallback onTap,
-    double size = 22,
-    Color color = Colors.white,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.black45,
-        ),
-        child: Icon(icon, color: color, size: size),
-      ),
-    );
-  }
-
-  Widget _buildGalleryPreview() {
-    if (!_showGalleryPreview || _capturedPhotos.isEmpty) return const SizedBox.shrink();
-
-    return Positioned.fill(
-      child: Container(
-        color: Colors.black87,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Stack(
-            children: [
-              PageView.builder(
-                controller: _pageController,
-                itemCount: _capturedPhotos.length,
-                onPageChanged: (idx) {
-                  setState(() {
-                    _galleryIndex = idx;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final file = _capturedPhotos[index];
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Hero(
-                        tag: file.path,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: kIsWeb ? Image.network(file.path, fit: BoxFit.contain) : Image.file(File(file.path), fit: BoxFit.contain),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              Positioned(
-                bottom: 40,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      '${_galleryIndex + 1} / ${_capturedPhotos.length}',
-                      style: const TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 10,
-                right: 20,
-                child: SafeArea(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showGalleryPreview = false;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.black54,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.close, color: Colors.white, size: 24),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 10,
-                left: 20,
-                child: SafeArea(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _retakeIndex = _galleryIndex;
-                        _showGalleryPreview = false;
-                      });
-                      _showSnack('Vui lòng chụp lại để thế chỗ ảnh số ${_galleryIndex + 1}');
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.amber[800]?.withOpacity(0.85),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: const [
-                          Icon(Icons.replay, color: Colors.white, size: 18),
-                          SizedBox(width: 6),
-                          Text('Chụp lại', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

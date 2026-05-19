@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/features/indicator/extendsion/drop_water_lottie_refresh_indicator.dart';
-import 'package:learnflutter/features/indicator/extendsion/fetch_more_indicator.dart';
-import 'package:learnflutter/features/indicator/widget/example_list.dart';
+import 'package:learnflutter/features/indicator/widgets/drop_water_lottie_refresh_indicator.dart';
+import 'package:learnflutter/features/indicator/widgets/fetch_more_indicator.dart';
+import 'package:learnflutter/features/indicator/widgets/example_list.dart';
 
 class DropWaterLottieRefreshIndicatorPage extends StatefulWidget {
   const DropWaterLottieRefreshIndicatorPage({super.key});

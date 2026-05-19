@@ -3,6 +3,7 @@ import 'package:learnflutter/core/engine_dialog/models/dialog_config.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/dialog_base_widget.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/process_stepper_widget.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/multi_transfer_dialog.dart';
+import 'package:learnflutter/shared/widgets/highlighted_text.dart';
 
 /// AppDialogEngine – Engine trung tâm để hiển thị tất cả loại dialog.
 ///
@@ -34,6 +35,47 @@ class AppDialogEngine {
         message: message,
         type: AppDialogType.info,
         contentWidget: contentWidget,
+        confirmText: confirmText,
+        cancelText: cancelText,
+        onConfirm: onConfirm,
+        onCancel: onCancel,
+        showCancelButton: showCancelButton,
+        barrierDismissible: barrierDismissible,
+      ),
+    );
+  }
+
+  /// Hiển thị dialog thông báo với nội dung có chứa từ khóa được highlight (nhấn mạnh).
+  static Future<void> showHighlightMessage(
+    BuildContext context, {
+    String title = 'Thông báo',
+    required String message,
+    required Map<String, TextStyle> highlights,
+    String? confirmText,
+    String? cancelText,
+    VoidCallback? onConfirm,
+    VoidCallback? onCancel,
+    bool showCancelButton = false,
+    bool barrierDismissible = true,
+  }) {
+    return show(
+      context,
+      config: AppDialogConfig(
+        title: title,
+        message: '', // Để trống vì chúng ta sử dụng contentWidget
+        type: AppDialogType.info,
+        contentWidget: HighlightedText(
+          message: message,
+          highlights: highlights,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF94A3B8)
+                : const Color(0xFF4B5563),
+            height: 1.6,
+          ),
+        ),
         confirmText: confirmText,
         cancelText: cancelText,
         onConfirm: onConfirm,

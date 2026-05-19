@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/core/engine_bottom_sheet/engine_bottom_sheet.dart';
+import 'package:learnflutter/shared/components/show_selector_widget/show_selector.dart';
+import 'package:learnflutter/shared/models/option_model.dart';
+import 'package:learnflutter/shared/models/load_more_model.dart';
 
 /// EngineDialogDemoScreen – Màn hình demo toàn bộ bộ Engine Dialog.
 ///
@@ -110,6 +113,22 @@ class EngineDialogDemoScreen extends StatelessWidget {
                 barrierDismissible: false,
                 confirmText: 'Đăng nhập lại',
                 onConfirm: () => debugPrint('🔑 Redirect to Login'),
+              ),
+            ),
+            _ListTile(
+              label: 'Highlight – Làm nổi bật từ khóa trong nội dung',
+              color: const Color(0xFF0EA5E9),
+              onTap: () => AppDialogEngine.showHighlightMessage(
+                context,
+                title: 'Xóa tài khoản',
+                message: 'Hành động này sẽ xóa vĩnh viễn tài khoản của bạn. Mọi dữ liệu không thể khôi phục.',
+                highlights: {
+                  'xóa vĩnh viễn': const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                  'không thể khôi phục': const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+                },
+                showCancelButton: true,
+                confirmText: 'Đã hiểu và xóa',
+                cancelText: 'Hủy bỏ',
               ),
             ),
             _ListTile(
@@ -741,6 +760,49 @@ class EngineDialogDemoScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 40),
+
+            _SectionTitle(title: '🔘 Selector Widget', subtitle: 'ShowSelector & LoadMoreSelector'),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE5E7EB)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: ShowSelector<OptionModel>(
+                title: 'Chọn phòng ban',
+                hint: 'Tìm kiếm phòng ban...',
+                selectedItems: const [],
+                selectedLength: 1, // Single select
+                showSelectedConfirm: true,
+                onChanged: (values) {
+                  debugPrint('Selected: $values');
+                },
+                getListFunction: (pageSize, pageNumber, keyword) async {
+                  await Future.delayed(const Duration(seconds: 1)); // Mock network delay
+                  
+                  final mockData = List.generate(
+                    pageSize,
+                    (i) {
+                      final id = (pageNumber - 1) * pageSize + i + 1;
+                      return OptionModel(id: id, name: 'Phòng ban số $id ${keyword.isNotEmpty ? '($keyword)' : ''}');
+                    },
+                  );
+                  
+                  final model = LoadMoreModel<OptionModel>.init(mockData);
+                  model.total = 50; // Mock total records
+                  return model;
+                },
+              ),
+            ),
           ],
         ),
       ),

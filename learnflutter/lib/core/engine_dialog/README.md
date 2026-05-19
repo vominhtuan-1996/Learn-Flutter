@@ -73,6 +73,19 @@ AppDialogEngine.showWarning(
   onConfirm: () => executeDelete(),
   onCancel: () => print('Đã hủy xóa'),
 );
+
+// 5. Dialog Highlight (Làm nổi bật từ khóa trong nội dung)
+AppDialogEngine.showHighlightMessage(
+  context,
+  title: 'Cảnh báo bảo mật',
+  message: 'Mật khẩu của bạn quá yếu. Vui lòng cập nhật mật khẩu mới ngay lập tức.',
+  highlights: {
+    'quá yếu': const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+    'ngay lập tức': const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+  },
+  showCancelButton: true,
+  confirmText: 'Cập nhật',
+);
 ```
 
 #### 🔹 Dialog Tùy chỉnh hoàn toàn (Custom Content)

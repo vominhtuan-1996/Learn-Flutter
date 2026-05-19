@@ -58,15 +58,7 @@ class _ScrollPhysicScreenState extends State<ScrollPhysicScreen> {
             onPressed: () {
               Navigator.pushNamed(context, _scrollPhysicExampleRouter[index].router);
             },
-            child: Text(_scrollPhysicExampleRouter[index].title).highlightText(
-              texthighlight: "Cuộn",
-              highlightStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                backgroundColor: Colors.yellow.withOpacity(0.3),
-              ),
-            ),
+            child: Text(_scrollPhysicExampleRouter[index].title),
           );
         },
       ),

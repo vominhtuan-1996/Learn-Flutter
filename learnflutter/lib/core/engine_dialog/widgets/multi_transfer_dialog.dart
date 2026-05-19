@@ -15,7 +15,8 @@ class AppTransferFileConfig {
 
   /// Hành động thực tế để download/upload file này.
   /// Cung cấp một callback `onProgress(double percent)` nhận giá trị từ `0.0` đến `1.0`.
-  final Future<void> Function(void Function(double progress) onProgress) transferAction;
+  final Future<void> Function(void Function(double progress) onProgress)
+      transferAction;
 
   const AppTransferFileConfig({
     required this.name,
@@ -50,7 +51,7 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
   late List<bool> _isCompleted;
   late List<bool> _isFailed;
   late List<String?> _errorMessages;
-  
+
   bool _isCanceled = false;
   bool _isRunning = false;
   int _currentIndex = 0;
@@ -78,12 +79,12 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
 
     for (int i = 0; i < widget.files.length; i++) {
       if (_isCanceled) break;
-      
+
       // Nếu file này đã completed (từ lần trước), bỏ qua
       if (_isCompleted[i]) continue;
-      
+
       _currentIndex = i;
-      
+
       // Chạy tiến trình cho file hiện tại
       await _transferFile(i);
     }
@@ -109,7 +110,7 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
 
     for (int i = 0; i < widget.files.length; i++) {
       if (_isCanceled) break;
-      
+
       // Chỉ chạy lại những tệp có trạng thái lỗi
       if (_isFailed[i]) {
         _currentIndex = i;
@@ -137,7 +138,7 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
   /// Chạy truyền tải cho một file cụ thể
   Future<void> _transferFile(int index) async {
     final file = widget.files[index];
-    
+
     try {
       await file.transferAction((progress) {
         if (_isCanceled || !mounted) return;
@@ -208,23 +209,33 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
     final hasFailed = _isFailed.any((failed) => failed);
     final isAllDone = _completedCount == widget.files.length;
     final isDone = isAllDone || _isCanceled;
-    
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final themeColor = widget.type == AppTransferType.download ? const Color(0xFF3B82F6) : const Color(0xFF8B5CF6);
-    final themeBg = widget.type == AppTransferType.download 
-        ? (isDark ? const Color(0xFF1E3A8A).withOpacity(0.3) : const Color(0xFFEFF6FF)) 
-        : (isDark ? const Color(0xFF4C1D95).withOpacity(0.3) : const Color(0xFFF5F3FF));
-        
+
+    final themeColor = widget.type == AppTransferType.download
+        ? const Color(0xFF3B82F6)
+        : const Color(0xFF8B5CF6);
+    final themeBg = widget.type == AppTransferType.download
+        ? (isDark
+            ? const Color(0xFF1E3A8A).withOpacity(0.3)
+            : const Color(0xFFEFF6FF))
+        : (isDark
+            ? const Color(0xFF4C1D95).withOpacity(0.3)
+            : const Color(0xFFF5F3FF));
+
     final totalProgressPercent = (_totalProgress * 100).toInt();
 
     // Dark mode color tokens
     final surfaceColor = isDark ? const Color(0xFF1E293B) : Colors.white;
     final titleColor = isDark ? Colors.white : const Color(0xFF1F2937);
-    final subTitleColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
-    final cardBgColor = isDark ? const Color(0xFF334155) : const Color(0xFFF9FAFB);
-    final cardBorderColor = isDark ? const Color(0xFF475569) : const Color(0xFFF3F4F6);
-    final barBgColor = isDark ? const Color(0xFF475569) : const Color(0xFFE5E7EB);
+    final subTitleColor =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final cardBgColor =
+        isDark ? const Color(0xFF334155) : const Color(0xFFF9FAFB);
+    final cardBorderColor =
+        isDark ? const Color(0xFF475569) : const Color(0xFFF3F4F6);
+    final barBgColor =
+        isDark ? const Color(0xFF475569) : const Color(0xFFE5E7EB);
     final itemTextColor = isDark ? Colors.white : const Color(0xFF374151);
 
     return Dialog(
@@ -260,14 +271,17 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      widget.type == AppTransferType.download 
-                          ? Icons.cloud_download_rounded 
+                      widget.type == AppTransferType.download
+                          ? Icons.cloud_download_rounded
                           : Icons.cloud_upload_rounded,
                       color: themeColor,
                       size: 24,
                     ),
-                  ).animate(onPlay: (controller) => controller.repeat())
-                   .shimmer(duration: 1500.ms, color: Colors.white.withOpacity(0.5)),
+                  )
+                      .animate(onPlay: (controller) => controller.repeat())
+                      .shimmer(
+                          duration: 1500.ms,
+                          color: Colors.white.withOpacity(0.5)),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -282,8 +296,8 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                           ),
                         ),
                         Text(
-                          isAllDone 
-                              ? 'Đã hoàn tất truyền tải dữ liệu' 
+                          isAllDone
+                              ? 'Đã hoàn tất truyền tải dữ liệu'
                               : '${widget.type == AppTransferType.download ? "Đang tải xuống" : "Đang tải lên"} • $_completedCount / ${widget.files.length} tệp',
                           style: TextStyle(
                             fontSize: 12,
@@ -296,7 +310,7 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                 ],
               ),
               const SizedBox(height: 20),
-    
+
               // Total Progress Bar
               Container(
                 padding: const EdgeInsets.all(16),
@@ -323,7 +337,9 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF4B5563),
+                            color: isDark
+                                ? const Color(0xFFCBD5E1)
+                                : const Color(0xFF4B5563),
                           ),
                         ),
                       ],
@@ -342,7 +358,7 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                 ),
               ),
               const SizedBox(height: 16),
-    
+
               // File List
               ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 220),
@@ -355,22 +371,31 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                     final progress = _progresses[index];
                     final completed = _isCompleted[index];
                     final failed = _isFailed[index];
-                    final isActive = _isRunning && _currentIndex == index && !completed && !failed;
-    
+                    final isActive = _isRunning &&
+                        _currentIndex == index &&
+                        !completed &&
+                        !failed;
+
                     return Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
                       decoration: BoxDecoration(
-                        color: isActive ? themeBg.withOpacity(0.5) : Colors.transparent,
+                        color: isActive
+                            ? themeBg.withOpacity(0.5)
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isActive ? themeColor.withOpacity(0.2) : Colors.transparent,
+                          color: isActive
+                              ? themeColor.withOpacity(0.2)
+                              : Colors.transparent,
                         ),
                       ),
                       child: Row(
                         children: [
                           // Status Icon
-                          _buildFileStatusIcon(completed, failed, isActive, themeColor, isDark),
+                          _buildFileStatusIcon(
+                              completed, failed, isActive, themeColor, isDark),
                           const SizedBox(width: 12),
                           // File Info & Mini Progress
                           Expanded(
@@ -378,7 +403,8 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Text(
@@ -387,25 +413,31 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 13,
-                                          fontWeight: isActive || completed ? FontWeight.bold : FontWeight.normal,
+                                          fontWeight: isActive || completed
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
                                           color: itemTextColor,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      failed 
-                                          ? 'Lỗi' 
+                                      failed
+                                          ? 'Lỗi'
                                           : '${(progress * 100).toInt()}% • ${file.sizeInMB} MB',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: failed ? Colors.red : subTitleColor,
+                                        color:
+                                            failed ? Colors.red : subTitleColor,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ],
                                 ),
-                                if (isActive || (progress > 0 && !completed && !failed)) ...[
+                                if (isActive ||
+                                    (progress > 0 &&
+                                        !completed &&
+                                        !failed)) ...[
                                   const SizedBox(height: 6),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
@@ -413,7 +445,8 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                                       value: progress,
                                       minHeight: 4,
                                       backgroundColor: cardBorderColor,
-                                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          themeColor),
                                     ),
                                   ),
                                 ],
@@ -427,87 +460,105 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
                 ),
               ),
               const SizedBox(height: 16),
-    
+
               // Action Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // Nút Hủy hiển thị khi đang chạy hoặc chưa xong toàn bộ
-                  if (!isDone)
-                    OutlinedButton(
-                      onPressed: _cancelTransfer,
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: subTitleColor,
-                        side: BorderSide(color: cardBorderColor),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // Nút Hủy hiển thị khi đang chạy hoặc chưa xong toàn bộ
+                      if (!isDone)
+                        OutlinedButton(
+                          onPressed: _cancelTransfer,
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: subTitleColor,
+                            side: BorderSide(color: cardBorderColor),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                          ),
+                          child: const Text(
+                            'Hủy bỏ',
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      ),
-                      child: const Text(
-                        'Hủy bỏ',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  
-                  // NÚT RETRY FAILED ONLY: Xuất hiện nếu có file lỗi và hệ thống đang tạm dừng
-                  if (hasFailed && !_isRunning) ...[
-                    const SizedBox(width: 10),
-                    ElevatedButton.icon(
-                      onPressed: _retryFailedTransfers,
-                      icon: const Icon(Icons.refresh_rounded, size: 16, color: Colors.white),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF59E0B), // Màu Cam Warning
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+
+                      // NÚT RETRY FAILED ONLY: Xuất hiện nếu có file lỗi và hệ thống đang tạm dừng
+                      if (hasFailed && !_isRunning) ...[
+                        const SizedBox(width: 10),
+                        ElevatedButton.icon(
+                          onPressed: _retryFailedTransfers,
+                          icon: const Icon(Icons.refresh_rounded,
+                              size: 16, color: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color(0xFFF59E0B), // Màu Cam Warning
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                          ),
+                          label: const Text(
+                            'Thử lại file lỗi',
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      ),
-                      label: const Text(
-                        'Thử lại file lỗi',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    OutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: subTitleColor,
-                        side: BorderSide(color: cardBorderColor),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                        const SizedBox(width: 10),
+                        OutlinedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: subTitleColor,
+                            side: BorderSide(color: cardBorderColor),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                          ),
+                          child: const Text(
+                            'Đóng',
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      ),
-                      child: const Text(
-                        'Đóng',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
-                  
-                  // Nút Hoàn tất hiển thị khi đã xong sạch sẽ toàn bộ
-                  if (isAllDone)
-                    ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: themeColor,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                      ),
-                      child: const Text(
-                        'Hoàn tất',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                      ),
-                    ).animate().scale(duration: 250.ms, curve: Curves.easeOutBack),
-                ],
-              ),
+                      ],
+
+                      // Nút Hoàn tất hiển thị khi đã xong sạch sẽ toàn bộ
+                      if (isAllDone)
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: themeColor,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 10),
+                          ),
+                          child: const Text(
+                            'Hoàn tất',
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                            .animate()
+                            .scale(duration: 250.ms, curve: Curves.easeOutBack),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -515,14 +566,18 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
     );
   }
 
-  Widget _buildFileStatusIcon(bool completed, bool failed, bool isActive, Color themeColor, bool isDark) {
+  Widget _buildFileStatusIcon(bool completed, bool failed, bool isActive,
+      Color themeColor, bool isDark) {
     if (completed) {
-      return const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 20)
-          .animate().scale(duration: 200.ms);
+      return const Icon(Icons.check_circle_rounded,
+              color: Color(0xFF10B981), size: 20)
+          .animate()
+          .scale(duration: 200.ms);
     }
     if (failed) {
       return const Icon(Icons.error_rounded, color: Colors.red, size: 20)
-          .animate().shake(duration: 300.ms);
+          .animate()
+          .shake(duration: 300.ms);
     }
     if (isActive) {
       return SizedBox(
@@ -535,8 +590,8 @@ class _AppMultiTransferDialogState extends State<AppMultiTransferDialog> {
       );
     }
     return Icon(
-      Icons.insert_drive_file_outlined, 
-      color: isDark ? const Color(0xFF475569) : const Color(0xFF9CA3AF), 
+      Icons.insert_drive_file_outlined,
+      color: isDark ? const Color(0xFF475569) : const Color(0xFF9CA3AF),
       size: 20,
     );
   }

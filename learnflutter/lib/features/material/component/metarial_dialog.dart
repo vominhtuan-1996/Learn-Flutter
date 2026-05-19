@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
-import 'package:learnflutter/shared/widgets/attribute_string/highlighted_text.dart';
 import 'package:learnflutter/shared/widgets/mt_progress_hub/mt_progess_hub.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
@@ -22,8 +21,7 @@ class MaterialDialog extends StatefulWidget {
   State<MaterialDialog> createState() => _MaterialDialogState();
 }
 
-class _MaterialDialogState extends State<MaterialDialog>
-    with ComponentMaterialDetail {
+class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialDetail {
   @override
   void initState() {
     super.initState();
@@ -54,14 +52,12 @@ class _MaterialDialogState extends State<MaterialDialog>
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                 );
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Basic dialog title',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -158,8 +154,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Tiến trình xưt lý tạo phiếu triển khải quà tặng',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -172,8 +167,7 @@ class _MaterialDialogState extends State<MaterialDialog>
                 DialogUtils.showBasicDialog(
                   title: 'Basic dialog title',
                   context: context,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -247,8 +241,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'dialog Title',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -261,14 +254,12 @@ class _MaterialDialogState extends State<MaterialDialog>
                 DialogUtils.showDialogWithHeroIcon(
                     context: context,
                     type: TypeDialog.success,
-                    content:
-                        'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                    content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                     title: 'Dialog with hero icon');
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog with hero icon',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -281,8 +272,7 @@ class _MaterialDialogState extends State<MaterialDialog>
                 DialogUtils.showDialogWithHeroIcon(
                   context: context,
                   type: TypeDialog.success,
-                  content:
-                      'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
+                  content: 'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made. ',
                   title: 'Dialog with hero icon',
                   contentWidget: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -357,8 +347,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog with hero icon',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -375,8 +364,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog Download File',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -387,15 +375,9 @@ class _MaterialDialogState extends State<MaterialDialog>
               textAlign: TextAlign.center,
               onTap: () async {
                 List uploadList = [
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'start of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '2'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '4'),
                   RadioItemModel(id: 'id', title: '5'),
                   RadioItemModel(
@@ -404,15 +386,9 @@ class _MaterialDialogState extends State<MaterialDialog>
                           'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '7'),
                   RadioItemModel(id: 'id', title: '8'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                   RadioItemModel(id: 'id', title: '10'),
-                  RadioItemModel(
-                      id: 'id',
-                      title:
-                          'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
+                  RadioItemModel(id: 'id', title: 'end 11 of 2320 libraries in 2,847ms (compile: 57 ms, reload: 1137 ms, reassemble: 1542 ms)'),
                 ];
                 DialogUtils.showUploadProgress(
                   contextDialog: context,
@@ -433,8 +409,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Dialog upload File',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -451,8 +426,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Đang lấy thông tin ấn phẩm',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -469,8 +443,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'Đang lấy thông tin ấn phẩm',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -484,8 +457,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager success',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -499,8 +471,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager info ',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -514,8 +485,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager error',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
             MaterialButton3(
               disible: false,
@@ -529,8 +499,7 @@ class _MaterialDialogState extends State<MaterialDialog>
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager info',
-              labelTextStyle:
-                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              labelTextStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ).paddingOnly(bottom: DeviceDimension.padding / 2),
           ],
         ),

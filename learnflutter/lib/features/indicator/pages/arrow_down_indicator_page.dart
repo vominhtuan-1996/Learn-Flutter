@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/features/indicator/extendsion/arrow_down_refresh_Indicator.dart';
+import 'package:learnflutter/features/indicator/widgets/arrow_down_refresh_indicator.dart';
 
 class ArrowDownIndicatorPage extends StatefulWidget {
   final IndicatorController? controller;

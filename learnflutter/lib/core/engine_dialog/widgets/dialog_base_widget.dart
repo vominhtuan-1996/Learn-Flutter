@@ -48,58 +48,61 @@ class DialogBaseWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // ── Icon + Title + Message ─────────────────────
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 28, 24, 0),
-                child: Column(
-                  children: [
-                    // Icon badge
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: isDark ? bgColor.withOpacity(0.15) : bgColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: borderColor.withOpacity(0.3), width: 2),
-                      ),
-                      child: config.customIcon ??
-                          Icon(
-                            type.icon,
-                            color: iconColor,
-                            size: 32,
-                          ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Title
-                    Text(
-                      config.title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: titleColor,
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    // Message or custom content
-                    config.contentWidget ??
-                        Text(
-                          config.message,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: messageColor,
-                            height: 1.6,
-                          ),
+              Flexible(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 28, 24, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Icon badge
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: isDark ? bgColor.withOpacity(0.15) : bgColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: borderColor.withOpacity(0.3), width: 2),
                         ),
-                  ],
+                        child: config.customIcon ??
+                            Icon(
+                              type.icon,
+                              color: iconColor,
+                              size: 32,
+                            ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Title
+                      Text(
+                        config.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: titleColor,
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+
+                      // Message or custom content
+                      config.contentWidget ??
+                          Text(
+                            config.message,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: messageColor,
+                              height: 1.6,
+                            ),
+                          ),
+                    ],
+                  ),
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
 
               // ── Divider ───────────────────────────────────
               Divider(height: 1, thickness: 1, color: dividerColor),

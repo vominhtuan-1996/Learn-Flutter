@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/features/indicator/extendsion/home_refresh_indicator.dart';
+import 'package:learnflutter/features/indicator/widgets/home_refresh_indicator.dart';
 import 'package:learnflutter/features/loadmore/extension/pullup_loadmore_wrapper.dart';
 
 class HomeRefreshIndicatorPage extends StatefulWidget {

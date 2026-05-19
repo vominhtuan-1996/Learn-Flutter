@@ -96,7 +96,8 @@ Dự án sử dụng **Cubit** (một phần của thư viện Bloc) để quả
 - **Widget dùng chung**: Các widget giao diện được định nghĩa trong `component/` hoặc `features/[feature_name]/widgets/`.  
 - **Engine**: Các engine UI/Logic được định nghĩa trong `core/engine_[feature_name]/`.
 - **Screen**: các screen khi tạo mới luôn được bọc bởi  để tránh overload bottom sheet hoặc các widget khác khi nhập liệu.
----
+- quy hoạch để sau này dễ maintence, đọc và sử dụng 
+- **thông báo**: khi có lỗi xảy ra cần phải thông báo cho người dùng biết, sử dụng agine_dialog và agine_snackbar 
 
 ## 7. Kiểm soát chất lượng
 

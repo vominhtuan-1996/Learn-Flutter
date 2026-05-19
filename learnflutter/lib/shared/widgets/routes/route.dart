@@ -171,6 +171,7 @@ import 'package:learnflutter/features/test_screen/full_list_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/pagination_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/engine_dialog_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/google_map_engine_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -303,6 +304,7 @@ class Routes {
   static const String paginationDemo = "/pagination_demo";
   static const String engineDialogDemo = "/engine_dialog_demo";
   static const String appStepperDemo = "/app_stepper_demo";
+  static const String googleMapEngineDemo = "/google_map_engine_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -461,6 +463,11 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: appStepperDemo),
           builder: (_) => const AppStepperDemoScreen(),
+        );
+      case googleMapEngineDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: googleMapEngineDemo),
+          builder: (_) => const GoogleMapEngineDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(

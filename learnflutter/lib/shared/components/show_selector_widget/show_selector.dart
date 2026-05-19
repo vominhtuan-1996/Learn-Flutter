@@ -5,7 +5,6 @@ import 'package:learnflutter/shared/components/multi_select/selector/load_more_s
 import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/core/debound.dart';
 import 'package:learnflutter/core/global/func_global.dart';
-import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/shared/widgets/app_text.dart';
 import 'package:learnflutter/shared/widgets/detail_container.dart';
 import 'package:learnflutter/shared/widgets/tap.dart';
@@ -13,6 +12,7 @@ import 'package:learnflutter/shared/models/load_more_model.dart';
 import 'package:learnflutter/shared/models/option_model.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
+import 'package:learnflutter/core/engine_bottom_sheet/engine_bottom_sheet.dart';
 
 ///
 class ShowSelector<T extends OptionModel> extends StatefulWidget {
@@ -103,78 +103,71 @@ class _ShowSelectorState<T extends OptionModel> extends State<ShowSelector<T>> {
     return DetailContainer.arrowDown(
       enable: widget.enableDisplay,
       title: widget.title,
-      child: AppText(value.toString(), color: context.theme.primary),
+      child: AppText(value.toString(), color: getThemeBloc(context).state.tokens.colors.primary),
     );
   }
 
   Widget itemBuilder(T item, bool isSelected) {
-    if (widget.itemBuilder != null)
+    if (widget.itemBuilder != null) {
       return widget.itemBuilder!(item, isSelected);
+    }
     return AppText(item.toString(),
-        color: isSelected ? context.theme.primary : null);
+        color: isSelected ? getThemeBloc(context).state.tokens.colors.primary : null);
   }
 
   void find() {
-    DialogUtils.showBottomSheet(
-      title: widget.title,
-      heightRatio: widget.heightRatio,
-      isDismissible: widget.dismissWhenClickOutside,
-      onBackPress: UtilsHelpers.pop,
-      titleRightAction: titleRightAction(context),
-      child: LoadMoreSelector<T>(
-        key: selectorKey,
-        itemBuilder: itemBuilder,
-        getItemsFunction: widget.getListFunction,
-        selectedItems: value,
-        selectLength: widget.selectedLength,
-        onChanged: (value) {
-          HapticFeedback.selectionClick();
-          widget.onChanged?.call(value);
-          if (mounted) {
-            setState(() {
-              this.value = value;
-            });
-          }
-        },
+    AppBottomSheetEngine.show<void>(
+      context,
+      config: AppBottomSheetConfig(
         title: widget.title,
-        hasTitle: widget.hasTitle,
-        enable: widget.enableDisplay,
-        enableItem: widget.enableItem,
-        hasSearchBar: widget.hasSearchBar,
-        autoFocus: widget.autoFocusSearch,
-        selectorType: widget.selectorType,
-        hint: widget.hint,
-        preAnalyzeSearch: (searchFunction, keyword) {
-          if (!widget.doPreAnalyzeSearch) return searchFunction();
-          if (keyword.isEmpty) {
-            debounce.runAfter(action: searchFunction, rate: 600);
-            return;
-          }
-          if (keyword.length < widget.minTextLength) return;
-          debounce.runAfter(action: searchFunction, rate: 600);
-        },
-        onItemTap: (value) {
-          if (!widget.showSelectedConfirm) {
-            selectorKey.currentState?.onSelectedItem(value);
-            selectorKey.currentState?.onConfirmPress();
-            UtilsHelper.pop(context);
-          }
-        },
-      ),
-    );
-  }
-
-  Widget? titleRightAction(BuildContext context) {
-    if (!widget.showSelectedConfirm) return null;
-    return Tap(
-      onTap: () {
-        selectorKey.currentState?.onConfirmPress();
-        UtilsHelper.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.all(DeviceDimension.padding / 2).copyWith(right: 0),
-        color: Colors.transparent,
-        child: AppText('Xác nhận', color: getThemeBloc(context).state.tokens.colors.primary),
+        isDismissible: widget.dismissWhenClickOutside,
+        confirmText: widget.showSelectedConfirm ? 'Xác nhận' : null,
+        onConfirm: widget.showSelectedConfirm ? () {
+          selectorKey.currentState?.onConfirmPress();
+        } : null,
+        contentWidget: SizedBox(
+          height: DeviceDimension.screenHeight * widget.heightRatio,
+          child: LoadMoreSelector<T>(
+            key: selectorKey,
+            itemBuilder: itemBuilder,
+            getItemsFunction: widget.getListFunction,
+            selectedItems: value,
+            selectLength: widget.selectedLength,
+            onChanged: (value) {
+              HapticFeedback.selectionClick();
+              widget.onChanged?.call(value);
+              if (mounted) {
+                setState(() {
+                  this.value = value;
+                });
+              }
+            },
+            title: widget.title,
+            hasTitle: widget.hasTitle,
+            enable: widget.enableDisplay,
+            enableItem: widget.enableItem,
+            hasSearchBar: widget.hasSearchBar,
+            autoFocus: widget.autoFocusSearch,
+            selectorType: widget.selectorType,
+            hint: widget.hint,
+            preAnalyzeSearch: (searchFunction, keyword) {
+              if (!widget.doPreAnalyzeSearch) return searchFunction();
+              if (keyword.isEmpty) {
+                debounce.runAfter(action: searchFunction, rate: 600);
+                return;
+              }
+              if (keyword.length < widget.minTextLength) return;
+              debounce.runAfter(action: searchFunction, rate: 600);
+            },
+            onItemTap: (value) {
+              if (!widget.showSelectedConfirm) {
+                selectorKey.currentState?.onSelectedItem(value);
+                selectorKey.currentState?.onConfirmPress();
+                UtilsHelper.pop(context);
+              }
+            },
+          ),
+        ),
       ),
     );
   }

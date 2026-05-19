@@ -2,9 +2,16 @@
 
 Module Camera trong dự án được thiết kế để cung cấp khả năng chụp ảnh và quay video linh hoạt, có thể tái sử dụng ở bất kỳ đâu trong ứng dụng.
 
-## Cấu trúc thư mục
-- `lib/core/camera/camera_screen.dart`: Widget chính hiển thị giao diện camera.
-- `lib/core/camera/model/camera_mode.dart`: Enum định nghĩa các chế độ (`photo`, `video`).
+## Cấu trúc thư mục quy hoạch mới (Dễ bảo trì)
+- `lib/core/services/camera/camera_screen.dart`: Widget Shell chính quản lý luồng phần cứng, trạng thái chụp và xử lý callback.
+- `lib/core/services/camera/model/camera_mode.dart`: Enum chế độ hoạt động (`photo`, `video`).
+- `lib/core/services/camera/widgets/`: Thư mục chứa các thành phần giao diện tách biệt:
+  - `circle_icon_button.dart`: Nút bấm icon mờ tròn đa dụng trên preview nền camera.
+  - `camera_top_bar.dart`: Thanh công cụ trên cùng (Đóng, Flash, Flip, Thời lượng video).
+  - `camera_zoom_slider.dart`: Điều khiển zoom phần cứng bằng kéo slider mượt mà.
+  - `camera_mode_selector.dart`: Lựa chọn chế độ Ảnh/Video (tự ẩn nếu chỉ cấu hình 1 mode).
+  - `camera_bottom_controls.dart`: Bộ điều khiển dưới (Thumbnail kết quả kèm bộ đếm ảnh, nút capture chính, nút hoàn thành).
+  - `camera_gallery_preview.dart`: Overlay mờ nghệ thuật xem lại ảnh PageView vuốt mượt mà, hỗ trợ chụp thế chỗ đúng index ảnh đang xem.
 
 ## Cách sử dụng
 

@@ -109,9 +109,10 @@ class _MultiSelectorState<T> extends State<MultiSelector<T>> {
   }
 
   Widget buildContainerItems() {
-    if (widget.itemContainerBuilder != null)
+    if (widget.itemContainerBuilder != null) {
       return widget.itemContainerBuilder!(
           buildItem, items, selectCubit.state.selectedItems);
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: items.map(
@@ -132,8 +133,9 @@ class _MultiSelectorState<T> extends State<MultiSelector<T>> {
       onTap: () => selectCubit.selectItem(item),
       child: Builder(
         builder: (context) {
-          if (widget.itemBuilder != null)
+          if (widget.itemBuilder != null) {
             return widget.itemBuilder!(item, isSelected);
+          }
           Color color = isSelected
               ? (widget.selectedColor ?? getThemeBloc(context).state.tokens.colors.primary)
               : (widget.unselectedColor ?? getThemeBloc(context).state.tokens.colors.onPrimary);
