@@ -172,6 +172,8 @@ import 'package:learnflutter/features/test_screen/pagination_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/engine_dialog_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/google_map_engine_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/queue_engine_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/network_queue_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -305,6 +307,8 @@ class Routes {
   static const String engineDialogDemo = "/engine_dialog_demo";
   static const String appStepperDemo = "/app_stepper_demo";
   static const String googleMapEngineDemo = "/google_map_engine_demo";
+  static const String queueEngineDemo = "/queue_engine_demo";
+  static const String networkQueueDemo = "/network_queue_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -468,6 +472,16 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: googleMapEngineDemo),
           builder: (_) => const GoogleMapEngineDemoScreen(),
+        );
+      case queueEngineDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: queueEngineDemo),
+          builder: (_) => const QueueEngineDemoScreen(),
+        );
+      case networkQueueDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: networkQueueDemo),
+          builder: (_) => const NetworkQueueDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(

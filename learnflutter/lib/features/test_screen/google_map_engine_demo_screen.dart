@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:learnflutter/core/engine_google_map/engine_google_map.dart';
 import 'package:learnflutter/core/services/isolate/app_isolate_handler.dart';
 import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/core/engine_bottom_sheet/engine_bottom_sheet.dart';
+import 'package:learnflutter/core/engine_queue/engine_queue.dart';
 
 /// [GoogleMapEngineDemoScreen] – Màn hình demo toàn bộ bộ Engine Google Map.
 ///
@@ -40,13 +42,32 @@ class _GoogleMapEngineDemoBody extends StatefulWidget {
   const _GoogleMapEngineDemoBody();
 
   @override
-  State<_GoogleMapEngineDemoBody> createState() =>
-      _GoogleMapEngineDemoBodyState();
+  State<_GoogleMapEngineDemoBody> createState() => _GoogleMapEngineDemoBodyState();
 }
 
 class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
   bool _isLoadingPolygons = false;
   int _loadedPolygonsCount = 0;
+  bool _isLoadingHeatmap = false;
+  int _loadedHeatmapPointsCount = 0;
+
+  late final InMemoryQueueEngine _mapQueueEngine;
+
+  @override
+  void initState() {
+    super.initState();
+    _mapQueueEngine = InMemoryQueueEngine(
+      config: const QueueConfig(
+        concurrency: 1, // Tuần tự xử lý các thao tác bản đồ nặng để giữ vững 60fps
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _mapQueueEngine.dispose();
+    super.dispose();
+  }
 
   // ─── Mock Data ────────────────────────────────
 
@@ -132,7 +153,7 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
 
       // ─── Boundary of Tân Thuận ───
       points.addAll(const [
-        WeightedLatLng(LatLng(10.7735101, 106.7476816), weight: 1),
+        WeightedLatLng(LatLng(10.7735101, 106.7476816), weight: 10),
         WeightedLatLng(LatLng(10.7740551, 106.7470609), weight: 2),
         WeightedLatLng(LatLng(10.7743204, 106.7467441), weight: 5),
         WeightedLatLng(LatLng(10.7745988, 106.7464009), weight: 2),
@@ -376,9 +397,7 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
         final list = dataObj['data'] as List;
         for (final item in list) {
           if (item is Map<String, dynamic>) {
-            final id = item['insideId']?.toString() ??
-                item['areaId']?.toString() ??
-                '';
+            final id = item['insideId']?.toString() ?? item['areaId']?.toString() ?? '';
             final latlngStr = item['latlng']?.toString() ?? '';
             final borderColor = item['borderColor']?.toString() ?? '';
             final bgColor = item['bgColor']?.toString() ?? '';
@@ -442,76 +461,190 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
     );
   }
 
-  // Tải dữ liệu JSON & gọi Isolate để xử lý tính toán nặng
+  // Tải dữ liệu JSON & gọi Isolate để xử lý tính toán nặng bằng QueueEngine
   Future<void> _loadHcmPolygonsFromAsset() async {
     setState(() {
       _isLoadingPolygons = true;
     });
 
-    try {
-      // 1. Đọc dữ liệu nhị phân thô (raw bytes) cực nhanh từ asset trên Main Thread
-      // Tránh dùng rootBundle.loadString() vì nó thực hiện decode UTF-8 trên UI thread gây khựng spinner loading
-      final byteData = await rootBundle.load('assets/json/boudery_hcm.json');
-      final bytes = byteData.buffer.asUint8List();
+    final task = CallbackQueueTask(
+      id: 'load_hcm_polygons',
+      name: 'Nạp và phân tích địa giới HCM',
+      maxRetries: 1,
+      callback: () async {
+        try {
+          // 1. Đọc dữ liệu nhị phân thô (raw bytes) cực nhanh từ asset
+          final byteData = await rootBundle.load('assets/json/boudery_hcm.json');
+          final bytes = byteData.buffer.asUint8List();
 
-      // 2. Chuyển tác vụ giải mã UTF-8, parse JSON & tạo PolygonConfig vào Isolate hoàn toàn
-      final configs = await _GoogleMapEngineDemoBodyState.runParsing(bytes);
+          // 2. Chuyển tác vụ giải mã UTF-8, parse JSON vào Isolate hoàn toàn
+          final configs = await _GoogleMapEngineDemoBodyState.runParsing(bytes);
 
-      if (mounted) {
-        final cubit = context.read<GoogleMapCubit>();
+          if (mounted) {
+            final cubit = context.read<GoogleMapCubit>();
 
-        // Xóa các polygons cũ trước khi nạp mới
-        cubit.clearPolygons();
+            // Xóa các polygons cũ trước khi nạp mới
+            cubit.clearPolygons();
 
-        setState(() {
-          _loadedPolygonsCount = configs.length;
-        });
+            setState(() {
+              _loadedPolygonsCount = configs.length;
+            });
 
-        // 3. Tiến hành phân phối (batch rendering) polygon lên bản đồ theo từng đợt để tránh giật lag UI thread
-        const int batchSize =
-            20; // Nạp 20 polygon mỗi đợt giúp hệ điều hành xử lý mượt mà
-        for (int i = 0; i < configs.length; i += batchSize) {
-          if (!mounted) break;
+            // 3. Tiến hành phân phối (batch rendering) polygon lên bản đồ theo từng đợt
+            const int batchSize = 20; 
+            for (int i = 0; i < configs.length; i += batchSize) {
+              if (!mounted) break;
 
-          final end =
-              (i + batchSize < configs.length) ? i + batchSize : configs.length;
-          final chunk = configs.sublist(i, end);
+              final end = (i + batchSize < configs.length) ? i + batchSize : configs.length;
+              final chunk = configs.sublist(i, end);
 
-          // Thêm lô polygon hiện tại vào state để hiển thị
-          cubit.addPolygons(chunk);
+              // Thêm lô polygon hiện tại vào state để hiển thị
+              cubit.addPolygons(chunk);
 
-          // Chờ 30ms (khoảng 2 khung hình) trước khi nạp tiếp để luồng giao diện có thể render mượt mà
-          await Future.delayed(const Duration(milliseconds: 30));
+              // Chờ 30ms trước khi nạp tiếp để luồng giao diện có thể render mượt mà
+              await Future.delayed(const Duration(milliseconds: 30));
+            }
+
+            if (mounted) {
+              // Tự động zoom camera bao quát toàn bộ Polygon sau khi đã nạp xong
+              cubit.zoomToFitAll();
+
+              AppSnackbarEngine.showSuccess(
+                context,
+                message: 'Đã nạp mượt mà $_loadedPolygonsCount địa giới TP.HCM nhờ cơ chế Isolate + Batch Rendering!',
+              );
+            }
+          }
+        } catch (e) {
+          if (mounted) {
+            AppDialogEngine.showError(
+              context,
+              title: 'Lỗi nạp dữ liệu',
+              message: e.toString(),
+            );
+          }
+          rethrow;
         }
+      },
+    );
 
-        if (mounted) {
-          // Tự động zoom camera bao quát toàn bộ Polygon sau khi đã nạp xong
-          cubit.zoomToFitAll();
+    _mapQueueEngine.enqueue(task);
 
-          // Sử dụng AppSnackbarEngine để hiển thị thông báo thành công theo Core UI
-          AppSnackbarEngine.showSuccess(
-            context,
-            message:
-                'Đã nạp mượt mà $_loadedPolygonsCount địa giới TP.HCM nhờ cơ chế Isolate + Batch Rendering!',
-          );
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        // Sử dụng AppDialogEngine để hiển thị lỗi chuẩn hóa
-        AppDialogEngine.showError(
-          context,
-          title: 'Lỗi nạp dữ liệu',
-          message: e.toString(),
-        );
-      }
-    } finally {
+    late StreamSubscription<List<QueueTask>> subscription;
+    subscription = _mapQueueEngine.tasksStream.listen((tasks) {
+      final t = tasks.where((element) => element.id == 'load_hcm_polygons');
+      if (t.isEmpty) return;
+      final currentTask = t.first;
+
       if (mounted) {
         setState(() {
-          _isLoadingPolygons = false;
+          _isLoadingPolygons = currentTask.status == QueueTaskStatus.executing || 
+                              currentTask.status == QueueTaskStatus.pending;
         });
+      }
+
+      if (currentTask.status == QueueTaskStatus.completed || 
+          currentTask.status == QueueTaskStatus.failed ||
+          currentTask.status == QueueTaskStatus.cancelled) {
+        subscription.cancel();
+      }
+    });
+  }
+
+  // ─── Heatmap (Port WH Quick) – parse trong Isolate ───
+  static List<WeightedLatLng> _parseHeatmapJsonBytes(Uint8List bytes) {
+    final jsonString = utf8.decode(bytes);
+    final decoded = json.decode(jsonString);
+    final List<WeightedLatLng> out = [];
+    if (decoded is Map<String, dynamic> && decoded['points'] is List) {
+      final list = decoded['points'] as List;
+      for (final p in list) {
+        if (p is List && p.length >= 3) {
+          final lat = (p[0] as num).toDouble();
+          final lng = (p[1] as num).toDouble();
+          final w = (p[2] as num).toDouble();
+          out.add(WeightedLatLng(LatLng(lat, lng), weight: w));
+        }
       }
     }
+    return out;
+  }
+
+  static Future<List<WeightedLatLng>> _runParseHeatmap(Uint8List bytes) {
+    final handler = AppIsolateHandler();
+    return handler.parseJson<List<WeightedLatLng>>(
+      () => _parseHeatmapJsonBytes(bytes),
+    );
+  }
+
+  Future<void> _loadHeatmapFromAsset() async {
+    setState(() => _isLoadingHeatmap = true);
+
+    final task = CallbackQueueTask(
+      id: 'load_heatmap',
+      name: 'Nạp và phân tích dữ liệu Heatmap',
+      maxRetries: 1,
+      callback: () async {
+        try {
+          final byteData = await rootBundle.load('assets/json/heatmap_port_wh_quick.json');
+          final bytes = byteData.buffer.asUint8List();
+          final points = await _runParseHeatmap(bytes);
+
+          if (!mounted) return;
+          final cubit = context.read<GoogleMapCubit>();
+          cubit.removeHeatmap('heatmap_port_wh_quick');
+          cubit.addHeatmap(HeatmapConfig(
+            id: 'heatmap_port_wh_quick',
+            data: points,
+            radius: const HeatmapRadius.fromPixels(25),
+            gradient: const HeatmapGradient([
+              HeatmapGradientColor(Colors.blue, 0.2),
+              HeatmapGradientColor(Colors.green, 0.5),
+              HeatmapGradientColor(Colors.yellow, 0.8),
+              HeatmapGradientColor(Colors.red, 1.0),
+            ]),
+          ));
+
+          setState(() => _loadedHeatmapPointsCount = points.length);
+          cubit.zoomToFitAll();
+          AppSnackbarEngine.showSuccess(
+            context,
+            message: 'Đã nạp $_loadedHeatmapPointsCount điểm heatmap (Isolate)!',
+          );
+        } catch (e) {
+          if (mounted) {
+            AppDialogEngine.showError(
+              context,
+              title: 'Lỗi nạp heatmap',
+              message: e.toString(),
+            );
+          }
+          rethrow;
+        }
+      },
+    );
+
+    _mapQueueEngine.enqueue(task);
+
+    late StreamSubscription<List<QueueTask>> subscription;
+    subscription = _mapQueueEngine.tasksStream.listen((tasks) {
+      final t = tasks.where((element) => element.id == 'load_heatmap');
+      if (t.isEmpty) return;
+      final currentTask = t.first;
+
+      if (mounted) {
+        setState(() {
+          _isLoadingHeatmap = currentTask.status == QueueTaskStatus.executing || 
+                             currentTask.status == QueueTaskStatus.pending;
+        });
+      }
+
+      if (currentTask.status == QueueTaskStatus.completed || 
+          currentTask.status == QueueTaskStatus.failed ||
+          currentTask.status == QueueTaskStatus.cancelled) {
+        subscription.cancel();
+      }
+    });
   }
 
   @override
@@ -540,9 +673,7 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
               return IconButton(
                 icon: Icon(
                   state.clusterEnabled ? Icons.bubble_chart : Icons.location_on,
-                  color: state.clusterEnabled
-                      ? const Color(0xFF2563EB)
-                      : Colors.grey,
+                  color: state.clusterEnabled ? const Color(0xFF2563EB) : Colors.grey,
                 ),
                 tooltip: state.clusterEnabled ? 'Tắt Cluster' : 'Bật Cluster',
                 onPressed: cubit.toggleCluster,
@@ -557,8 +688,7 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
           BlocBuilder<GoogleMapCubit, GoogleMapState>(
             builder: (context, state) {
               return GoogleMap(
-                initialCameraPosition:
-                    GoogleMapEngineDemoScreen._initialPosition,
+                initialCameraPosition: GoogleMapEngineDemoScreen._initialPosition,
                 markers: state.displayMarkers,
                 polylines: state.polylines,
                 polygons: state.polygons,
@@ -660,6 +790,7 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
                       contentWidget: _MapControlBottomSheet(
                         cubit: cubit,
                         onLoadHcm: _loadHcmPolygonsFromAsset,
+                        onLoadHeatmap: _loadHeatmapFromAsset,
                         sampleMarkers: _sampleMarkers,
                         samplePolyline: _samplePolyline,
                         samplePolygon: _samplePolygon,
@@ -671,8 +802,8 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
             ),
           ),
 
-          // Loading overlay when parsing polygons using Isolate
-          if (_isLoadingPolygons)
+          // Loading overlay when parsing polygons / heatmap using Isolate
+          if (_isLoadingPolygons || _isLoadingHeatmap)
             Container(
               color: Colors.black.withOpacity(0.5),
               child: Center(
@@ -682,20 +813,17 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
                         CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Color(0xFF16A34A)),
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF16A34A)),
                         ),
                         SizedBox(height: 16),
                         Text(
-                          'Đang parse JSON địa giới HCM...',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 14),
+                          'Đang parse JSON trong Isolate...',
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                         ),
                         SizedBox(height: 4),
                         Text(
@@ -775,6 +903,7 @@ class _MapControlBottomSheet extends StatelessWidget {
   const _MapControlBottomSheet({
     required this.cubit,
     required this.onLoadHcm,
+    required this.onLoadHeatmap,
     required this.sampleMarkers,
     required this.samplePolyline,
     required this.samplePolygon,
@@ -782,6 +911,7 @@ class _MapControlBottomSheet extends StatelessWidget {
 
   final GoogleMapCubit cubit;
   final VoidCallback onLoadHcm;
+  final VoidCallback onLoadHeatmap;
   final List<MarkerConfig> sampleMarkers;
   final PolylineConfig samplePolyline;
   final PolygonConfig samplePolygon;
@@ -882,8 +1012,7 @@ class _MapControlBottomSheet extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Polygon & Isolate HCM boundaries
-              const _SectionLabel(
-                  label: '🔷 Polygon & HCM Boundaries (Isolate)'),
+              const _SectionLabel(label: '🔷 Polygon & HCM Boundaries (Isolate)'),
               _ButtonRow(children: [
                 _Btn(
                   label: '⚡ Load HCM Polygons (Isolate)',
@@ -920,9 +1049,16 @@ class _MapControlBottomSheet extends StatelessWidget {
                   label: 'Add Heatmap',
                   color: const Color(0xFFEAB308),
                   onTap: () {
-                    cubit.addHeatmap(
-                        _GoogleMapEngineDemoBodyState._sampleHeatmap);
+                    cubit.addHeatmap(_GoogleMapEngineDemoBodyState._sampleHeatmap);
                     Navigator.pop(context);
+                  },
+                ),
+                _Btn(
+                  label: '⚡ Load Port WH (API/Isolate)',
+                  color: const Color(0xFFDC2626),
+                  onTap: () {
+                    Navigator.pop(context);
+                    onLoadHeatmap();
                   },
                 ),
                 _Btn(
@@ -988,10 +1124,7 @@ class _SectionLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 6),
       child: Text(
         label,
-        style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF374151)),
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF374151)),
       ),
     );
   }
@@ -1025,8 +1158,7 @@ class _Btn extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: const TextStyle(
-              fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
     );

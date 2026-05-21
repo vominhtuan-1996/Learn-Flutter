@@ -69,6 +69,7 @@ dependencies:
   awesome_snackbar_content: any
   qr_code_scanner: ^1.0.1
   camera: ^0.11.0+1
+  sensors_plus: ^6.0.1
   video_player: ^2.7.2
   open_file_plus: ^3.4.1
   path_provider: ^2.1.5
@@ -210,6 +211,7 @@ flutter:
     - assets/json/vietname_praraces_islands.geo.json
     - assets/json/vietname_spratly_islands.geo.json
     - assets/json/boudery_hcm.json
+    - assets/json/heatmap_port_wh_quick.json
     - assets/3d/business_man.glb
     - assets/lottie/refresh_water_drop.json
     - assets/sound/sound_effect_refreshing.wav

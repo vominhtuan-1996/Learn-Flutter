@@ -781,6 +781,18 @@ class _TestScreenState extends State<TestScreen> {
               ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFF9980)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.queueEngineDemo);
+                },
+                child: const Text('⚙️ Queue Engine Dashboard (Retry / Concurrency)'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF818CF8)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.networkQueueDemo);
+                },
+                child: const Text('🌐 Network Queue (API Auto-Retry & Sync)'),
+              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF2DD4BF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              TextButton(
+                onPressed: () {
                   Navigator.of(context).pushNamed(Routes.flutterMapOsmScreen);
                 },
                 child: const Text('Flutter Map OSM (flutter_map)'),

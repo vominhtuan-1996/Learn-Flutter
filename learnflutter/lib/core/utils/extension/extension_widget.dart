@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
-import 'package:learnflutter/shared/widgets/highlighted_text.dart';
 
 /// Extension cho Widget cung cấp hàng loạt phương thức tiện ích để thao tác với widget một cách ngắn gọn và dễ đọc.
 /// Bao gồm padding, margin, alignment, constraints, scrolling, và nhiều tiện ích khác giúp code gọn gàng hơn.

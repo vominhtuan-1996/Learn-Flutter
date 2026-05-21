@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:learnflutter/core/services/camera/model/camera_mode.dart';
 import 'package:learnflutter/core/services/camera/widgets/camera_bottom_controls.dart';
 import 'package:learnflutter/core/services/camera/widgets/camera_gallery_preview.dart';
@@ -71,6 +73,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   int? _retakeIndex;
   late PageController _pageController;
 
+  StreamSubscription<AccelerometerEvent>? _accelSub;
+  DeviceOrientation _deviceOrientation = DeviceOrientation.portraitUp;
+
   XFile? _imgFile;
   XFile? _vFile;
   VideoPlayerController? _vCtrl;
@@ -90,6 +95,31 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }
     WidgetsBinding.instance.addObserver(this);
     _initCameras();
+    _startOrientationListener();
+  }
+
+  /// Lắng nghe accelerometer để suy ra hướng vật lý của thiết bị (portrait/
+  /// landscape) bất kể UI có khóa portrait hay không. Mỗi khi orientation đổi,
+  /// gọi [CameraController.lockCaptureOrientation] để ảnh/video xuất ra luôn
+  /// đúng chiều người dùng đang cầm máy.
+  void _startOrientationListener() {
+    _accelSub = accelerometerEventStream().listen((e) {
+      final newOrientation = _orientationFromAccel(e.x, e.y);
+      if (newOrientation == _deviceOrientation) return;
+      _deviceOrientation = newOrientation;
+      final ctrl = _ctrl;
+      if (ctrl != null && ctrl.value.isInitialized) {
+        ctrl.lockCaptureOrientation(newOrientation).catchError((_) {});
+      }
+    });
+  }
+
+  DeviceOrientation _orientationFromAccel(double x, double y) {
+    if (x.abs() < 1.5 && y.abs() < 1.5) return _deviceOrientation;
+    if (y.abs() > x.abs()) {
+      return y > 0 ? DeviceOrientation.portraitUp : DeviceOrientation.portraitDown;
+    }
+    return x > 0 ? DeviceOrientation.landscapeLeft : DeviceOrientation.landscapeRight;
   }
 
   /// [dispose] giải phóng toàn bộ tài nguyên nặng khi widget bị xóa khỏi cây.
@@ -99,6 +129,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   void dispose() {
     _pageController.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    _accelSub?.cancel();
     _ctrl?.dispose();
     _vCtrl?.dispose();
     _timer?.cancel();
@@ -158,6 +189,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       _maxZ = widget.maxZoom != null ? widget.maxZoom!.clamp(_minZ, hardwareMax) : hardwareMax;
 
       _curZ = _minZ;
+      await c.lockCaptureOrientation(_deviceOrientation);
     } catch (e) {
       debugPrint('Controller init error: $e');
     }
