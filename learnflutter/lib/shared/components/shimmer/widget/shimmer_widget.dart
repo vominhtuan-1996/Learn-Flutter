@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:learnflutter/shared/widgets/shimmer/shimmer_utils/shimmer_utils.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/shared/components/shimmer/shimmer_utils/shimmer_utils.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/shimmer_loading_widget.dart';
 
 class Shimmer extends StatefulWidget {
   static ShimmerState? of(BuildContext context) {

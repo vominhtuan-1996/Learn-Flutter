@@ -347,6 +347,111 @@ class EngineDialogDemoScreen extends StatelessWidget {
 
             const SizedBox(height: 28),
 
+            // ── UPDATE PATCH DIALOG ──────────────────────
+            _SectionTitle(
+              title: '🚀 Update Patch Dialog',
+              subtitle: 'AppDialogEngine.showUpdatePatch — Hot patch / Code push',
+            ),
+            const SizedBox(height: 12),
+
+            _DemoRow(children: [
+              _DemoCard(
+                label: 'Default',
+                icon: Icons.system_update_rounded,
+                color: const Color(0xFF2575FC),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '1.2.3',
+                  changelog: const [
+                    'Sửa lỗi crash khi mở camera trên Android 14.',
+                    'Cải thiện tốc độ tải danh sách phiếu thi công.',
+                    'Tinh chỉnh nhỏ về typography & spacing.',
+                  ],
+                  onUpdate: () => debugPrint('▶️ User bấm Cập nhật (chưa simulate)'),
+                ),
+              ),
+              _DemoCard(
+                label: 'Auto sim',
+                icon: Icons.play_circle_fill_rounded,
+                color: const Color(0xFF16A34A),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '2.0.0',
+                  changelog: const [
+                    'Đại tu giao diện theo design system mới.',
+                    'Hỗ trợ Dark mode toàn bộ ứng dụng.',
+                    'Tích hợp Shorebird code push hoàn chỉnh.',
+                  ],
+                  isDownloading: true,
+                  autoSimulate: true,
+                  onUpdate: () {},
+                ),
+              ),
+              _DemoCard(
+                label: 'Manual sim',
+                icon: Icons.touch_app_rounded,
+                color: const Color(0xFFEA580C),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '1.5.0-beta',
+                  changelog: const [
+                    'Thêm tab "Quà tặng" trong menu chính.',
+                    'Tối ưu memory khi xem ảnh dung lượng lớn.',
+                  ],
+                  showSimulator: true,
+                  onUpdate: () => debugPrint('▶️ Bắt đầu mô phỏng tải...'),
+                ),
+              ),
+              _DemoCard(
+                label: 'Long log',
+                icon: Icons.description_rounded,
+                color: const Color(0xFF7C3AED),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '3.0.0',
+                  changelog: List.generate(
+                    15,
+                    (i) =>
+                        'Thay đổi #${i + 1}: tối ưu hiệu năng module ${String.fromCharCode(65 + i)}.',
+                  ),
+                  onUpdate: () {},
+                ),
+              ),
+            ]),
+
+            const SizedBox(height: 16),
+
+            _DemoRow(children: [
+              _DemoCard(
+                label: 'Progress 30%',
+                icon: Icons.donut_small_rounded,
+                color: const Color(0xFF0EA5E9),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '1.4.0',
+                  changelog: const [
+                    'Đang tiếp tục bản tải dở trước đó.',
+                    'Khôi phục checkpoint từ phiên trước.',
+                  ],
+                  progress: 0.3,
+                  isDownloading: true,
+                  autoSimulate: true,
+                  onUpdate: () {},
+                ),
+              ),
+              _DemoCard(
+                label: 'Patch tối thiểu',
+                icon: Icons.bug_report_rounded,
+                color: const Color(0xFFDC2626),
+                onTap: () => AppDialogEngine.showUpdatePatch(
+                  version: '1.2.4-hotfix',
+                  changelog: const [
+                    'Hotfix lỗi đăng nhập trên iOS 18.',
+                  ],
+                  onUpdate: () {},
+                ),
+              ),
+              const SizedBox.shrink(),
+              const SizedBox.shrink(),
+            ]),
+
+            const SizedBox(height: 28),
+
             // ── SNACKBARS ────────────────────────────────
             _SectionTitle(title: '🍞 Snackbars – Bottom', subtitle: 'AppSnackbarEngine'),
             const SizedBox(height: 12),

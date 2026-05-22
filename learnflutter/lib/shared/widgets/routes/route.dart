@@ -6,7 +6,7 @@ import 'package:learnflutter/features/login/screens/login_page.dart';
 import 'package:learnflutter/features/transformer_example/transformer_example_page.dart';
 import 'package:learnflutter/shared/widgets/base_loading_draggable/draggable_example_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:learnflutter/shared/widgets/tree_view/tree_view_screen.dart';
+import 'package:learnflutter/shared/components/tree_view/tree_view_test_screen.dart';
 import 'package:learnflutter/core/storage/hive_demo/screen/info_screen.dart';
 import 'package:learnflutter/main_isolate.dart';
 import 'package:learnflutter/core/animation/animation_screen.dart';
@@ -99,8 +99,10 @@ import 'package:learnflutter/features/photo_3d/photo_3d_screen.dart';
 import 'package:learnflutter/features/photo_to_3d/photo_to_3d_screen.dart';
 import 'package:learnflutter/shared/widgets/routes/argument_screen_model.dart';
 import 'package:learnflutter/features/courasel/courasel_screen.dart';
-import 'package:learnflutter/features/date_picker/calender.dart';
-import 'package:learnflutter/features/date_picker/date_time_input.dart';
+import 'package:learnflutter/shared/components/calendar/calendar.dart';
+import 'package:learnflutter/shared/components/calendar/date_time_input.dart';
+import 'package:learnflutter/shared/components/calendar/calendar_picker_test_screen.dart';
+import 'package:learnflutter/core/services/notification_center/notification_center_test_screen.dart';
 import 'package:learnflutter/features/datetime_picker/datetime_picker_screen.dart';
 import 'package:learnflutter/features/draggbel_scroll/draggel_scroll_screen.dart';
 import 'package:learnflutter/shared/widgets/hero_animation/hero_animation_screen.dart';
@@ -174,6 +176,9 @@ import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/google_map_engine_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/queue_engine_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/network_queue_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/local_notification_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/widgets_gallery_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/shimmer_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -210,6 +215,8 @@ class Routes {
   static const String datePicker = "/date_picker";
   static const String dateTimeInput = "/date_time_input";
   static const String calender = "/calender";
+  static const String calendarPickerTest = "/calendar_picker_test";
+  static const String notificationCenterTest = "/notification_center_test";
   static const String tiePickerScreen = "/tie_picker_screen";
   static const String progressHudScreen = "/progress_hud_screen";
   static const String shimmerWidget = "/shimmer_widget";
@@ -309,6 +316,9 @@ class Routes {
   static const String googleMapEngineDemo = "/google_map_engine_demo";
   static const String queueEngineDemo = "/queue_engine_demo";
   static const String networkQueueDemo = "/network_queue_demo";
+  static const String localNotificationDemo = "/local_notification_demo";
+  static const String widgetsGalleryDemo = "/widgets_gallery_demo";
+  static const String shimmerDemo = "/shimmer_demo";
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -482,6 +492,21 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: networkQueueDemo),
           builder: (_) => const NetworkQueueDemoScreen(),
+        );
+      case localNotificationDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: localNotificationDemo),
+          builder: (_) => const LocalNotificationDemoScreen(),
+        );
+      case widgetsGalleryDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: widgetsGalleryDemo),
+          builder: (_) => const WidgetsGalleryDemoScreen(),
+        );
+      case shimmerDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: shimmerDemo),
+          builder: (_) => const ShimmerDemoScreen(),
         );
       case testScreen:
         return MaterialPageRoute(
@@ -704,6 +729,16 @@ class Routes {
           builder: (_) => CalenderScreen(
             title: '',
           ),
+        );
+      case calendarPickerTest:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: calendarPickerTest),
+          builder: (_) => const CalendarPickerTestScreen(),
+        );
+      case notificationCenterTest:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: notificationCenterTest),
+          builder: (_) => const NotificationCenterTestScreen(),
         );
       case progressHudScreen:
         return SlideRightRoute(
@@ -1077,7 +1112,7 @@ class Routes {
       case treeScreen:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: treeScreen),
-          builder: (_) => TreeViewScreen(),
+          builder: (_) => const TreeViewTestScreen(),
         );
       case draggableExampleScreen:
         return SlideRightRoute(

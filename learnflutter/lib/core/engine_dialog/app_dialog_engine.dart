@@ -3,6 +3,8 @@ import 'package:learnflutter/core/engine_dialog/models/dialog_config.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/dialog_base_widget.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/process_stepper_widget.dart';
 import 'package:learnflutter/core/engine_dialog/widgets/multi_transfer_dialog.dart';
+import 'package:learnflutter/core/engine_dialog/widgets/update_patch_dialog.dart';
+import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:learnflutter/shared/widgets/highlighted_text.dart';
 
 /// AppDialogEngine – Engine trung tâm để hiển thị tất cả loại dialog.
@@ -10,6 +12,44 @@ import 'package:learnflutter/shared/widgets/highlighted_text.dart';
 /// Sử dụng [showGeneralDialog] với hiệu ứng Scale + Fade để tạo cảm giác premium.
 class AppDialogEngine {
   AppDialogEngine._();
+
+  /// Context global lấy từ `UtilsHelper.navigatorKey` — dùng cho các shortcut
+  /// **context-free** (có thể gọi từ Cubit/Bloc/Repository mà không cần truyền
+  /// `BuildContext`).
+  static BuildContext get _globalContext =>
+      UtilsHelper.navigatorKey.currentContext!;
+
+  // ────────────────────────────────────────────
+  // Context-free shortcuts (dùng navigatorKey)
+  // Cho phép gọi từ Cubit / Repository không có BuildContext.
+  // ────────────────────────────────────────────
+
+  /// Shortcut context-free: hiển thị dialog thông tin.
+  static Future<void> info(String message, {String title = 'Thông báo'}) =>
+      showInfo(_globalContext, title: title, message: message);
+
+  /// Shortcut context-free: hiển thị dialog thành công.
+  static Future<void> success(String message, {String title = 'Thành công'}) =>
+      showSuccess(_globalContext, title: title, message: message);
+
+  /// Shortcut context-free: hiển thị dialog lỗi.
+  static Future<void> error(String message, {String title = 'Lỗi'}) =>
+      showError(_globalContext, title: title, message: message);
+
+  /// Shortcut context-free: hiển thị dialog cảnh báo (2 nút).
+  static Future<void> warning(
+    String message, {
+    String title = 'Cảnh báo',
+    VoidCallback? onConfirm,
+    VoidCallback? onCancel,
+  }) =>
+      showWarning(
+        _globalContext,
+        title: title,
+        message: message,
+        onConfirm: onConfirm,
+        onCancel: onCancel,
+      );
 
   // ────────────────────────────────────────────
   // Public shortcut methods
@@ -202,6 +242,52 @@ class AppDialogEngine {
       },
       pageBuilder: (ctx, animation, secondaryAnimation) {
         return DialogBaseWidget(config: config);
+      },
+    );
+  }
+
+  /// Hiển thị dialog **cập nhật bản vá (hot patch / code push)** kiểu premium
+  /// — header gradient, changelog cuộn, nút progress tích hợp.
+  ///
+  /// Context-free (dùng `navigatorKey`), có thể gọi từ Cubit/Service.
+  ///
+  /// - [version]       : chuỗi version hiển thị (vd `"1.2.3"`).
+  /// - [changelog]     : danh sách bullet thay đổi.
+  /// - [onUpdate]      : callback khi user bấm "Cập nhật ngay".
+  /// - [progress]      : tiến độ ban đầu (0..1).
+  /// - [isDownloading] : trạng thái đang tải lúc mở.
+  /// - [showSimulator] / [autoSimulate] : flag mô phỏng tiến trình (demo).
+  static Future<void> showUpdatePatch({
+    required String version,
+    required List<String> changelog,
+    required VoidCallback onUpdate,
+    double progress = 0.0,
+    bool isDownloading = false,
+    bool showSimulator = false,
+    bool autoSimulate = false,
+  }) {
+    return showGeneralDialog(
+      context: _globalContext,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.6),
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, anim1, anim2) => const SizedBox.shrink(),
+      transitionBuilder: (context, anim1, anim2, child) {
+        return Transform.scale(
+          scale: Curves.easeInOutBack.transform(anim1.value),
+          child: FadeTransition(
+            opacity: anim1,
+            child: AppUpdatePatchDialog(
+              version: version,
+              changelog: changelog,
+              onUpdate: onUpdate,
+              progress: progress,
+              isDownloading: isDownloading,
+              showSimulator: showSimulator,
+              autoSimulate: autoSimulate,
+            ),
+          ),
+        );
       },
     );
   }

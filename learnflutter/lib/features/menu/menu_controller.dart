@@ -10,7 +10,7 @@ import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dar
 import 'package:learnflutter/features/menu/model/model_menu.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learnflutter/shared/widgets/notification_center/notification_center.dart';
+import 'package:learnflutter/core/services/notification_center/notification_center.dart';
 import 'package:learnflutter/core/utils/bitmap_utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:notification_center/notification_center.dart';

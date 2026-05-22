@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learnflutter/features/menu/model/model_menu.dart';
-import 'package:learnflutter/shared/widgets/notification_center/notification_center.dart';
+import 'package:learnflutter/core/services/notification_center/notification_center.dart';
 import 'package:learnflutter/main.dart';
 import 'package:learnflutter/app/theme/app_box_decoration.dart';
 import 'package:learnflutter/core/utils/datetime_utils.dart';

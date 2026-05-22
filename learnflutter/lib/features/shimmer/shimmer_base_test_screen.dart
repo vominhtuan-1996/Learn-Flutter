@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/base_shimmer_builder.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/shimmer_box.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/base_shimmer_builder.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/shimmer_box.dart';
 
 class ShimmerBaseTestScreen extends StatefulWidget {
   const ShimmerBaseTestScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
+import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/core/cubit/load_more/load_more/load_more_state.dart';
 
 import 'package:learnflutter/shared/models/base_model.dart';
@@ -55,7 +55,7 @@ class LoadMoreCubit<T extends BaseModel> extends Cubit<LoadMoreState<T>> {
         isEnd: data.total == items.length,
       ));
     } catch (e) {
-      AppDialogManager.error(e.toString());
+      AppDialogEngine.error(e.toString());
       emit(state.copyWith(isLoadingMore: false));
     }
   }
@@ -71,7 +71,7 @@ class LoadMoreCubit<T extends BaseModel> extends Cubit<LoadMoreState<T>> {
           isEnd: data.total == items.length,
           items: items));
     } catch (e) {
-      AppDialogManager.error(e.toString());
+      AppDialogEngine.error(e.toString());
       emit(state.copyWith(isLoading: false));
     }
   }

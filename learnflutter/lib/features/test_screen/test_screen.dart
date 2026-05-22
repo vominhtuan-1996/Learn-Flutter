@@ -23,7 +23,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/app/localization/app_local_translate.dart';
-import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
+import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
+import 'package:learnflutter/features/gift_coupon/gift_coupon_dialog.dart';
 
 // import 'package:file';
 /// Lớp TestScreen được thiết kế như một không gian thử nghiệm đa năng cho các tính năng mới trong ứng dụng.
@@ -368,17 +369,17 @@ class _TestScreenState extends State<TestScreen> {
                 ),
               ),
               const Divider(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.newLogin);
-                },
-                child: Text(AppLocaleTranslate.testGlobalNoKeyboardRebuild.getString(context)),
+              const _FeatureCard(
+                title: 'Global No-Keyboard Rebuild',
+                description: 'Tránh rebuild toàn cây khi keyboard show/hide — fix layout shift.',
+                routeName: Routes.newLogin,
+                accent: Color(0xFF0D9488),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.camerawesome);
-                },
-                child: Text(AppLocaleTranslate.cameraWesome.getString(context)),
+              const _FeatureCard(
+                title: 'Camerawesome',
+                description: 'Camera nâng cao với camerawesome package — control filter / focus.',
+                routeName: Routes.camerawesome,
+                accent: Color(0xFF7C3AED),
               ),
 
               /// [TextButton] điều hướng tới [CameraScreen] mới với đầy đủ tính năng zoom và 2 chế độ.
@@ -421,79 +422,79 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: const Text('📷 Camera Screen (Photo Only - Hide Mode Selector)'),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.arkit);
-                },
-                child: const Text('AR Kit (3D Model Overlay)'),
+              const _FeatureCard(
+                title: 'AR Kit (3D Model Overlay)',
+                description: 'Overlay model 3D lên camera dùng ARKit.',
+                routeName: Routes.arkit,
+                accent: Color(0xFF7C3AED),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.lidarScanner);
-                },
-                child: const Text('AR Kit (3D Model Overlay)'),
+              const _FeatureCard(
+                title: 'LiDAR Scanner',
+                description: 'Quét môi trường 3D bằng LiDAR (iPhone Pro).',
+                routeName: Routes.lidarScanner,
+                accent: Color(0xFF7C3AED),
               ),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.photo3D);
-                },
-                child: const Text('Photo 3D Viewer (Album)'),
+              const _FeatureCard(
+                title: 'Photo 3D Viewer (Album)',
+                description: 'Xem ảnh dưới dạng 3D với hiệu ứng parallax / depth map.',
+                routeName: Routes.photo3D,
+                accent: Color(0xFF9333EA),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.sliverAnimationDemo);
-                },
-                child: const Text('Sliver Animation System (Reusable)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFF80AB)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.fpsGuaranteedDemo);
-                },
-                child: const Text('60FPS Guaranteed (Zero Rebuild)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.tiktokAnimationDemo);
-                },
-                child: const Text('TikTok Viewport Animation (PRO)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFF6584)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.coreAnimDemo);
-                },
-                child: const Text('Core Anim Package (Spring Physics)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF6C63FF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.timelineDemo);
-                },
-                child: const Text('Timeline Animation (Sequence)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF43D8C9)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.fullListDemo);
-                },
-                child: const Text('Full List Animation (Delete → Collapse)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFFB347)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.paginationDemo);
-                },
-                child: const Text('Pagination System Demo (TikTok Style)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF00E5FF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.engineDialogDemo);
-                },
-                child: const Text('Engine Dialog System (Info/Error/Success/Warning)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF9333EA)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.appStepperDemo);
-                },
-                child: const Text('💡 Engine Stepper/Pagination System (Premium)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFEA580C)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
+              const _FeatureCard(
+                title: 'Sliver Animation System',
+                description: 'Hệ thống animation tái sử dụng dựa trên Sliver — scroll mượt 60fps.',
+                routeName: Routes.sliverAnimationDemo,
+                accent: Color(0xFFFF80AB),
+              ),
+              const _FeatureCard(
+                title: '60FPS Guaranteed (Zero Rebuild)',
+                description: 'Kỹ thuật loại bỏ rebuild thừa, đảm bảo 60fps trên list lớn.',
+                routeName: Routes.fpsGuaranteedDemo,
+                accent: Color(0xFF16A34A),
+              ),
+              const _FeatureCard(
+                title: 'TikTok Viewport Animation (PRO)',
+                description: 'Animation theo viewport kiểu TikTok — scale/opacity phần tử khi vào khung hình.',
+                routeName: Routes.tiktokAnimationDemo,
+                accent: Color(0xFFFF6584),
+              ),
+              const _FeatureCard(
+                title: 'Core Anim Package (Spring Physics)',
+                description: 'Hệ thống animation dựa trên spring physics — bouncy, vật lý thật.',
+                routeName: Routes.coreAnimDemo,
+                accent: Color(0xFF6C63FF),
+              ),
+              const _FeatureCard(
+                title: 'Timeline Animation (Sequence)',
+                description: 'Chuỗi animation theo timeline — orchestrate nhiều bước tuần tự.',
+                routeName: Routes.timelineDemo,
+                accent: Color(0xFF43D8C9),
+              ),
+              const _FeatureCard(
+                title: 'Full List Animation (Delete → Collapse)',
+                description: 'Hiệu ứng xoá item rồi collapse phần còn lại của list mượt mà.',
+                routeName: Routes.fullListDemo,
+                accent: Color(0xFFFFB347),
+              ),
+              const _FeatureCard(
+                title: 'Pagination System (TikTok Style)',
+                description: 'Phân trang vô tận theo style TikTok với preload và snap.',
+                routeName: Routes.paginationDemo,
+                accent: Color(0xFF00B8D4),
+              ),
+              const _FeatureCard(
+                title: 'Engine Dialog System',
+                description: 'Hệ thống dialog chuẩn: Info / Error / Success / Warning, dùng chung toàn app.',
+                routeName: Routes.engineDialogDemo,
+                accent: Color(0xFF9333EA),
+              ),
+              const _FeatureCard(
+                title: '💡 Engine Stepper / Pagination (Premium)',
+                description: 'Stepper + pagination engine cao cấp, animation seamless.',
+                routeName: Routes.appStepperDemo,
+                accent: Color(0xFFEA580C),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
@@ -520,7 +521,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  AppDialogManager.showUpdatePatch(
+                  AppDialogEngine.showUpdatePatch(
                     version: '1.0.2+5',
                     changelog: [
                       'Sửa lỗi hiển thị trên màn hình iPhone 15 Pro Max.',
@@ -539,7 +540,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  AppDialogManager.showUpdatePatch(
+                  AppDialogEngine.showUpdatePatch(
                     version: '1.0.2+5',
                     changelog: [
                       'Sửa lỗi hiển thị trên màn hình iPhone 15 Pro Max.',
@@ -558,7 +559,7 @@ class _TestScreenState extends State<TestScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  AppDialogManager.showUpdatePatch(
+                  AppDialogEngine.showUpdatePatch(
                     version: '1.1.0+9',
                     changelog: [
                       '🆕 Tự động hóa trình mô phỏng tải xuống mượt mà.',
@@ -591,11 +592,23 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: Text(AppLocaleTranslate.mobimapModule.getString(context)),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.colorPicker);
-                },
-                child: Text(AppLocaleTranslate.colorPickerScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Color Picker',
+                description: 'Chọn màu với HSV / RGB / Hex preview.',
+                routeName: Routes.colorPicker,
+                accent: Color(0xFFEC4899),
+              ),
+              const _FeatureCard(
+                title: 'Calendar Picker Test',
+                description: 'Kiểm thử các chế độ chọn ngày của component CalendarPicker: single, multi, range.',
+                routeName: Routes.calendarPickerTest,
+                accent: Color(0xFF2563EB),
+              ),
+              const _FeatureCard(
+                title: 'Notification Center',
+                description: 'Pub/sub event bus trong app — subscribe / post / unsubscribe + log realtime.',
+                routeName: Routes.notificationCenterTest,
+                accent: Color(0xFF7C3AED),
               ),
               InputHistoryTextField(
                 historyKey: 'search',
@@ -610,53 +623,53 @@ class _TestScreenState extends State<TestScreen> {
                 ),
               ),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.scrollPhysicScreen);
-                },
-                child: Text(AppLocaleTranslate.scrollPhysicScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Scroll Physic',
+                description: 'Custom ScrollPhysics — tuỳ chỉnh ma sát / bounce / snap.',
+                routeName: Routes.scrollPhysicScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.indicatorExampleScreen);
-                },
-                child: Text(AppLocaleTranslate.indicatorExample.getString(context)),
+              const _FeatureCard(
+                title: 'Indicator Example',
+                description: 'Các kiểu page indicator: dots, line, worm, animated.',
+                routeName: Routes.indicatorExampleScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.pmsSDKLogin);
-                },
-                child: Text(AppLocaleTranslate.pluginNghiemThu.getString(context)),
+              const _FeatureCard(
+                title: 'PMS SDK Login',
+                description: 'Plugin nghiệm thu PMS — flow login + signature.',
+                routeName: Routes.pmsSDKLogin,
+                accent: Color(0xFF0D9488),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.flutter3dScreen);
-                },
-                child: Text(AppLocaleTranslate.flutter3dScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Flutter 3D Screen',
+                description: 'Render mô hình 3D (.glb/.obj) trực tiếp trong Flutter.',
+                routeName: Routes.flutter3dScreen,
+                accent: Color(0xFF7C3AED),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.visibilityDetectorExample);
-                },
-                child: Text(AppLocaleTranslate.visibilityDetectorExample.getString(context)),
+              const _FeatureCard(
+                title: 'Visibility Detector',
+                description: 'Detect widget có đang visible trong viewport hay không.',
+                routeName: Routes.visibilityDetectorExample,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.login);
-                },
-                child: Text(AppLocaleTranslate.loginButton.getString(context)),
+              const _FeatureCard(
+                title: 'Login Screen',
+                description: 'Màn hình đăng nhập chuẩn (legacy).',
+                routeName: Routes.login,
+                accent: Color(0xFF0D9488),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.excellScreen);
-                },
-                child: Text(AppLocaleTranslate.workExcellFile.getString(context)),
+              const _FeatureCard(
+                title: 'Excel File Worker',
+                description: 'Đọc/ghi file Excel (.xlsx) bằng Dart thuần.',
+                routeName: Routes.excellScreen,
+                accent: Color(0xFF16A34A),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.qrScreen);
-                },
-                child: Text(AppLocaleTranslate.scan.getString(context)),
+              const _FeatureCard(
+                title: 'QR Scanner',
+                description: 'Quét mã QR qua camera, decode realtime.',
+                routeName: Routes.qrScreen,
+                accent: Color(0xFF6366F1),
               ),
               //       TextButton(
               //         onPressed: () {
@@ -664,17 +677,17 @@ class _TestScreenState extends State<TestScreen> {
               //         },
               //         child: Text('Open WebView'),
               //       ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.ticTacToeGame);
-                },
-                child: const Text('Tic Tac Toe Game (Flame)'),
+              const _FeatureCard(
+                title: 'Tic Tac Toe Game (Flame)',
+                description: 'Game cờ caro mini built with Flame engine.',
+                routeName: Routes.ticTacToeGame,
+                accent: Color(0xFFEAB308),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.rubikGame);
-                },
-                child: const Text('Rubik 2D Challenge (Flame)'),
+              const _FeatureCard(
+                title: 'Rubik 2D Challenge (Flame)',
+                description: 'Mini-game Rubik 2D — sort màu theo cột/hàng.',
+                routeName: Routes.rubikGame,
+                accent: Color(0xFFEAB308),
               ),
               //       TextButton(
               //         onPressed: () {
@@ -694,126 +707,129 @@ class _TestScreenState extends State<TestScreen> {
               //         },
               //         child: Text("send log to google chat"),
               //       ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.transformerPageView);
-                },
-                child: Text(AppLocaleTranslate.transformerPageViewExample.getString(context)),
+              const _FeatureCard(
+                title: 'Transformer PageView',
+                description: 'PageView với hiệu ứng 3D transform khi vuốt giữa các trang.',
+                routeName: Routes.transformerPageView,
+                accent: Color(0xFF9333EA),
               ),
 
               /// Nhóm các nút chức năng hỗ trợ việc tải dữ liệu và tương tác bản đồ.
               /// Các thành phần này giúp kiểm tra khả năng phản hồi của giao diện khi xử lý khối lượng dữ liệu lớn.
               /// Đồng thời, nó cũng xác nhận tính ổn định của các dịch vụ định vị và hiển thị bản đồ địa lý.
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.smartLoadmoreScreen);
-                },
-                child: Text(AppLocaleTranslate.smartLoadmoreScreen.getString(context)),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
-                  .animate() // this wraps the previous Animate in another Animate
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.newsScreen);
-                },
-                child: const Text('Multi-Domain News Demo'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.newLogin);
-                },
-                child: const Text('Test New Login Module'),
+              const _FeatureCard(
+                title: 'Smart Load More',
+                description: 'List với loading thông minh: pull-to-refresh + load more khi cuộn cuối.',
+                routeName: Routes.smartLoadmoreScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Multi-Domain News Demo',
+                description: 'Aggregate tin tức từ nhiều domain, parse RSS/HTML.',
+                routeName: Routes.newsScreen,
+                accent: Color(0xFFEAB308),
+              ),
+              const _FeatureCard(
+                title: 'Test New Login Module',
+                description: 'Module login mới được tách package — verify auth flow.',
+                routeName: Routes.newLogin,
+                accent: Color(0xFF0D9488),
+              ),
+              const _FeatureCard(
+                title: 'Isolate Parse Data',
+                description: 'Parse JSON khối lượng lớn trong Isolate, không block UI.',
+                routeName: Routes.isolateParseScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Vietnam Map',
+                description: 'Bản đồ Việt Nam tuỳ biến — vẽ vùng địa lý.',
+                routeName: Routes.mapScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Flutter Map Example (OSM)',
+                description: 'flutter_map với OpenStreetMap, marker và polyline.',
+                routeName: Routes.exampleMapScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Offline MBTiles Map',
+                description: 'Render bản đồ từ file MBTiles offline, không cần mạng.',
+                routeName: Routes.offlineMbtilesMapScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Google Map Base (Custom UI)',
+                description: 'Google Map với UI/control tuỳ biến phong cách riêng.',
+                routeName: Routes.googleMapBase,
+                accent: Color(0xFFEAB308),
+              ),
+              const _FeatureCard(
+                title: 'Google Map Offline Pin (Hive)',
+                description: 'Lưu marker offline qua Hive, sync khi có mạng trở lại.',
+                routeName: Routes.googleMapOffline,
+                accent: Color(0xFF16A34A),
+              ),
+              const _FeatureCard(
+                title: '🔥 Google Map Engine Demo',
+                description: 'Auto Cluster + parse polygon trong Isolate — render 60fps trên data lớn.',
+                routeName: Routes.googleMapEngineDemo,
+                accent: Color(0xFFEF4444),
+              ),
+              const _FeatureCard(
+                title: '⚙️ Queue Engine Dashboard',
+                description: 'Dashboard quản lý queue task: retry / concurrency / priority.',
+                routeName: Routes.queueEngineDemo,
+                accent: Color(0xFF818CF8),
+              ),
+              const _FeatureCard(
+                title: '🌐 Network Queue',
+                description: 'API queue tự động retry & sync khi mất kết nối — không mất request.',
+                routeName: Routes.networkQueueDemo,
+                accent: Color(0xFF2DD4BF),
+              ),
+              const _FeatureCard(
+                title: '🔔 Local Notification',
+                description: 'Service notification cục bộ + custom in-app banner widget.',
+                routeName: Routes.localNotificationDemo,
+                accent: Color(0xFFFCD34D),
+              ),
+              const _FeatureCard(
+                title: '🎨 Widgets Gallery',
+                description: 'Tổng hợp các widget trong shared/widgets — test trực quan.',
+                routeName: Routes.widgetsGalleryDemo,
+                accent: Color(0xFFA78BFA),
+              ),
+              const _FeatureCard(
+                title: '✨ Shimmer Demo',
+                description: 'Skeleton loading: Box / ListTile / Card + flow gọi API thật.',
+                routeName: Routes.shimmerDemo,
+                accent: Color(0xFF94A3B8),
+              ),
+              const _FeatureCard(
+                title: 'Flutter Map OSM',
+                description: 'Demo flutter_map với tile OSM cơ bản.',
+                routeName: Routes.flutterMapOsmScreen,
+                accent: Color(0xFF0EA5E9),
+              ),
+              const _FeatureCard(
+                title: 'Street View 360 (WebView)',
+                description: 'Nhúng Street View 360° qua WebView.',
+                routeName: Routes.streetViewScreen,
+                accent: Color(0xFF0EA5E9),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.isolateParseScreen);
-                },
-                child: Text(AppLocaleTranslate.testParseDataIsolate.getString(context)),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
-                  .animate() // this wraps the previous Animate in another Animate
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.mapScreen);
-                },
-                child: Text(AppLocaleTranslate.vietnamMap.getString(context)),
-              )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
-                  .animate() // this wraps the previous Animate in another Animate
-                  .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
-                  .slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.exampleMapScreen);
-                },
-                child: const Text('Flutter Map Example (OSM)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.offlineMbtilesMapScreen);
-                },
-                child: const Text('Offline MBTiles Map'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.googleMapBase);
-                },
-                child: const Text('Google Map Base (Custom UI)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.googleMapOffline);
-                },
-                child: const Text('Google Map Offline Pin (Hive)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.googleMapEngineDemo);
-                },
-                child: const Text('🔥 Google Map Engine Demo (Auto Cluster / Isolate Polygon)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFF9980)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.queueEngineDemo);
-                },
-                child: const Text('⚙️ Queue Engine Dashboard (Retry / Concurrency)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF818CF8)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.networkQueueDemo);
-                },
-                child: const Text('🌐 Network Queue (API Auto-Retry & Sync)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF2DD4BF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.flutterMapOsmScreen);
-                },
-                child: const Text('Flutter Map OSM (flutter_map)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.streetViewScreen);
-                },
-                child: const Text('Street View 360 (WebView)'),
-              ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
-              TextButton(
-                onPressed: () {
                   // Rule 1: Chạy PMS ngầm, thành công mới hiện popup
-                  AppDialogManager.startGiftCouponProcessFlow();
+                  GiftCouponDialog.startFlow();
                 },
                 child: const Text('🎁 [Rule] PMS Success -> Show Inside Popup'),
               ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFF80FFAD)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
               TextButton(
                 onPressed: () {
                   // Rule 2: Đã có mã PMS, hiện popup và tập trung ngay vào Inside
-                  AppDialogManager.showGiftCouponAction();
+                  GiftCouponDialog.showAction();
                 },
                 child: const Text('🎁 [Rule] PMS Already Done -> Direct Inside Popup'),
               ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 1200.ms, color: const Color(0xFFFDFF80)).animate().fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad).slide(),
@@ -865,152 +881,152 @@ class _TestScreenState extends State<TestScreen> {
               /// Nhóm các thành phần giao diện đặc thù như widget trôi nổi và cấu trúc cây dữ liệu.
               /// Những thành phần này thường được sử dụng trong các tình huống quản lý dữ liệu phức tạp hoặc bảng điều khiển.
               /// Thử nghiệm giúp đảm bảo khả năng tổ chức thông tin phân cấp luôn rõ ràng và dễ tiếp cận.
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.draggableExampleScreen);
-                },
-                child: Text(AppLocaleTranslate.floatingDraggableWidget.getString(context)),
+              const _FeatureCard(
+                title: 'Floating Draggable Widget',
+                description: 'Widget nổi có thể kéo thả khắp màn hình (FAB tuỳ chỉnh).',
+                routeName: Routes.draggableExampleScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.treeScreen);
-                },
-                child: Text(AppLocaleTranslate.treeNode.getString(context)),
-              ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.balanceBar);
-                },
-                child: Text(AppLocaleTranslate.balanceBar.getString(context)),
+              const _FeatureCard(
+                title: 'Tree Node View',
+                description: 'Cây dữ liệu phân cấp, expand/collapse, drag-reorder.',
+                routeName: Routes.treeScreen,
+                accent: Color(0xFF16A34A),
               ),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.segmented);
-                },
-                child: Text(AppLocaleTranslate.getPointIntoFileSvg.getString(context)),
+              const _FeatureCard(
+                title: 'Balance Bar',
+                description: 'Thanh hiển thị tỉ lệ cân đối (positive/negative).',
+                routeName: Routes.balanceBar,
+                accent: Color(0xFF0D9488),
+              ),
+
+              const _FeatureCard(
+                title: 'Get Point Into File SVG',
+                description: 'Extract toạ độ điểm từ file SVG để inject lên map.',
+                routeName: Routes.segmented,
+                accent: Color(0xFFEAB308),
               ),
               MaterialButton3.icon(
                 fabIcon: Icons.close,
                 onPressed: () {},
               ),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.segmented);
-                },
-                child: Text(AppLocaleTranslate.segmented.getString(context)),
+              const _FeatureCard(
+                title: 'Segmented Control',
+                description: 'Cupertino segmented switch / tab inline kiểu iOS.',
+                routeName: Routes.segmented,
+                accent: Color(0xFF6366F1),
               ),
 
               /// Các công cụ hệ thống cơ bản như quét mã, chọn tệp và xem nhật ký hoạt động.
               /// Đây là những tiện ích thiết yếu phục vụ cho việc nhập liệu và theo dõi luồng vận hành của ứng dụng.
               /// Việc kiểm tra kỹ lưỡng giúp ngăn ngừa các lỗi liên quan đến quyền truy cập tệp và thiết bị ngoại vi.
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.scanScreen);
-                },
-                child: Text(AppLocaleTranslate.scan.getString(context)),
+              const _FeatureCard(
+                title: 'Scan Screen',
+                description: 'Màn hình quét code chung — gateway cho các loại scanner.',
+                routeName: Routes.scanScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.pickFile);
-                },
-                child: Text(AppLocaleTranslate.pickFile.getString(context)),
+              const _FeatureCard(
+                title: 'Pick File',
+                description: 'Chọn file từ device qua file_picker, đa dạng định dạng.',
+                routeName: Routes.pickFile,
+                accent: Color(0xFF16A34A),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.log);
-                },
-                child: Text(AppLocaleTranslate.log.getString(context)),
+              const _FeatureCard(
+                title: 'Log Viewer',
+                description: 'Xem log nội bộ của app, filter theo level.',
+                routeName: Routes.log,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.talkerScreen);
-                },
-                child: const Text('Talker Logger (Advanced)'),
+              const _FeatureCard(
+                title: 'Talker Logger (Advanced)',
+                description: 'Logger nâng cao với Talker — log HTTP / Bloc / Error / Custom.',
+                routeName: Routes.talkerScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.menu);
-                },
-                child: Text(AppLocaleTranslate.sliderAppBar.getString(context)),
+              const _FeatureCard(
+                title: 'Slider AppBar Menu',
+                description: 'AppBar trượt + menu drawer tuỳ biến.',
+                routeName: Routes.menu,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.notificationScrollScreen);
-                },
-                child: Text(AppLocaleTranslate.notificationScrollScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Notification Scroll',
+                description: 'List thông báo với scroll-to-load và mark-as-read.',
+                routeName: Routes.notificationScrollScreen,
+                accent: Color(0xFFEAB308),
               ),
 
               /// Các màn hình minh họa kỹ thuật lập trình nâng cao như Reducer, vẽ tùy chỉnh và đồ họa.
               /// Những ví dụ này đóng vai trò là tài liệu hướng dẫn về cách triển khai các hiệu ứng thị giác phức tạp.
               /// Nó cũng là nơi thử nghiệm hiệu năng của GPU khi xử lý các khung hình đồ họa mật độ cao.
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.reducerScreen);
-                },
-                child: Text(AppLocaleTranslate.reducerScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Reducer Screen',
+                description: 'State management dạng Reducer (Redux-like), action → state.',
+                routeName: Routes.reducerScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.customPaintScreen);
-                },
-                child: Text(AppLocaleTranslate.customPaintScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Custom Paint',
+                description: 'Vẽ custom shape bằng CustomPainter — path, gradient, blob.',
+                routeName: Routes.customPaintScreen,
+                accent: Color(0xFFEC4899),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.graphicsScreen);
-                },
-                child: Text(AppLocaleTranslate.graphicsScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Graphics Screen',
+                description: 'GPU graphics test — vẽ frame mật độ cao.',
+                routeName: Routes.graphicsScreen,
+                accent: Color(0xFFEC4899),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.materialScreen);
-                },
-                child: Text(AppLocaleTranslate.material3UI.getString(context)),
+              const _FeatureCard(
+                title: 'Material 3 UI',
+                description: 'Showcase các component Material 3 — Card, Chip, Button mới.',
+                routeName: Routes.materialScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.customScrollScreen);
-                },
-                child: Text(AppLocaleTranslate.customScrollScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Custom Scroll',
+                description: 'CustomScrollView với Sliver — flexible header, sticky.',
+                routeName: Routes.customScrollScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.regexExampleScreen);
-                },
-                child: Text(AppLocaleTranslate.regexExampleScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Regex Example',
+                description: 'Playground test regex patterns realtime.',
+                routeName: Routes.regexExampleScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.dragTargetScreen);
-                },
-                child: Text(AppLocaleTranslate.dragTargetScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Drag Target',
+                description: 'DragTarget + Draggable — kéo thả widget giữa các vùng.',
+                routeName: Routes.dragTargetScreen,
+                accent: Color(0xFFEAB308),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.chart);
-                },
-                child: Text(AppLocaleTranslate.chartScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Chart Screen',
+                description: 'Biểu đồ dạng line / bar / pie với data động.',
+                routeName: Routes.chart,
+                accent: Color(0xFF0D9488),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.refreshControl);
-                },
-                child: Text(AppLocaleTranslate.refreshControlScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Refresh Control',
+                description: 'Pull-to-refresh custom với indicator riêng.',
+                routeName: Routes.refreshControl,
+                accent: Color(0xFF0EA5E9),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.colorPicker);
-                },
-                child: Text(AppLocaleTranslate.colorPickerScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Color Picker (alt)',
+                description: 'Bản color picker khác — duplicate cho test compare.',
+                routeName: Routes.colorPicker,
+                accent: Color(0xFFEC4899),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.arkit);
-                },
-                child: Text(AppLocaleTranslate.arKitScreen.getString(context)),
+              const _FeatureCard(
+                title: 'ARKit Screen',
+                description: 'ARKit screen tổng quát — placement model trong không gian thực.',
+                routeName: Routes.arkit,
+                accent: Color(0xFF7C3AED),
               ),
 
               /// Thành phần tìm kiếm và gợi ý dữ liệu tích hợp sẵn trong giao diện.
@@ -1046,35 +1062,35 @@ class _TestScreenState extends State<TestScreen> {
                   print(value);
                 },
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.setting);
-                },
-                child: Text('Test setting'),
+              const _FeatureCard(
+                title: 'Settings',
+                description: 'Màn hình settings tổng — theme, language, notifications.',
+                routeName: Routes.setting,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.animationScreen);
-                },
-                child: Text('Test Animation'),
+              const _FeatureCard(
+                title: 'Animation Playground',
+                description: 'Tổng hợp các animation cơ bản: tween / curve / staggered.',
+                routeName: Routes.animationScreen,
+                accent: Color(0xFF9333EA),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.materialSegmentedScreen);
-                },
-                child: Text(AppLocaleTranslate.segmented.getString(context)),
+              const _FeatureCard(
+                title: 'Material Segmented',
+                description: 'Segmented control kiểu Material 3.',
+                routeName: Routes.materialSegmentedScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.silderVerticalScreen);
-                },
-                child: Text(AppLocaleTranslate.sliderAppBar.getString(context)),
+              const _FeatureCard(
+                title: 'Slider Vertical',
+                description: 'Slider chiều dọc tuỳ chỉnh, hữu ích cho volume/brightness.',
+                routeName: Routes.silderVerticalScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.numberFormatScreen);
-                },
-                child: const Text('Number Format Screen'),
+              const _FeatureCard(
+                title: 'Number Format',
+                description: 'Format số: tiền tệ, %, separator, masking input.',
+                routeName: Routes.numberFormatScreen,
+                accent: Color(0xFF0D9488),
               ),
               TextButton(
                 onPressed: () {
@@ -1082,119 +1098,119 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: Text(AppLocaleTranslate.splitString.getString(context)),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.pageThemeScreen);
-                },
-                child: Text(AppLocaleTranslate.testTheme.getString(context)),
+              const _FeatureCard(
+                title: 'Page Theme',
+                description: 'Test dynamic theme — dark/light, primary swap runtime.',
+                routeName: Routes.pageThemeScreen,
+                accent: Color(0xFF7C3AED),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.webBrowserScreen);
-                },
-                child: Text(AppLocaleTranslate.testWebBrowser.getString(context)),
+              const _FeatureCard(
+                title: 'Web Browser',
+                description: 'In-app WebView browser với navigation controls.',
+                routeName: Routes.webBrowserScreen,
+                accent: Color(0xFF0EA5E9),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.draggelScrollScreen);
-                },
-                child: Text(AppLocaleTranslate.testDraggelScrollScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Draggable Scroll',
+                description: 'DraggableScrollableSheet — bottom sheet kéo lên xuống.',
+                routeName: Routes.draggelScrollScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.pathProviderScreen);
-                },
-                child: const Text('path_provider_screen'),
+              const _FeatureCard(
+                title: 'Path Provider',
+                description: 'Truy cập thư mục hệ thống: documents / cache / temporary.',
+                routeName: Routes.pathProviderScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.openFileScreen);
-                },
-                child: Text(AppLocaleTranslate.openFile.getString(context)),
+              const _FeatureCard(
+                title: 'Open File',
+                description: 'Mở file ngoài app bằng intent của hệ điều hành.',
+                routeName: Routes.openFileScreen,
+                accent: Color(0xFF16A34A),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.cameraScreen);
-                },
-                child: Text(AppLocaleTranslate.testCamera.getString(context)),
+              const _FeatureCard(
+                title: 'Test Camera',
+                description: 'Camera screen mặc định — preview + chụp ảnh cơ bản.',
+                routeName: Routes.cameraScreen,
+                accent: Color(0xFF7C3AED),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.pageLoadingScreen);
-                },
-                child: Text(AppLocaleTranslate.pageLoadingScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Page Loading',
+                description: 'Các pattern loading: skeleton / spinner / shimmer overlay.',
+                routeName: Routes.pageLoadingScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.snackBarScreen);
-                },
-                child: Text(AppLocaleTranslate.awesomeSnackBarExample.getString(context)),
+              const _FeatureCard(
+                title: 'Awesome SnackBar',
+                description: 'Snackbar đẹp với icon + color theo type (info/success/error).',
+                routeName: Routes.snackBarScreen,
+                accent: Color(0xFFEAB308),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.shimmerWidget);
-                },
-                child: Text(AppLocaleTranslate.testShimmerWidget.getString(context)),
+              const _FeatureCard(
+                title: 'Shimmer Widget (legacy)',
+                description: 'Shimmer cũ trước khi tách thành component riêng.',
+                routeName: Routes.shimmerWidget,
+                accent: Color(0xFF94A3B8),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.shimmerBaseTest);
-                },
-                child: const Text('Base Shimmer Test'),
+              const _FeatureCard(
+                title: 'Base Shimmer Test',
+                description: 'Test BaseShimmerBuilder + ShimmerBox/Tile/Card.',
+                routeName: Routes.shimmerBaseTest,
+                accent: Color(0xFF94A3B8),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.heroAnimationScreen);
-                },
-                child: Text(AppLocaleTranslate.heroAnimationScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Hero Animation',
+                description: 'Hero transition giữa các route — shared element.',
+                routeName: Routes.heroAnimationScreen,
+                accent: Color(0xFFEC4899),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.infoScreen);
-                },
-                child: Text(AppLocaleTranslate.hiveDemo.getString(context)),
+              const _FeatureCard(
+                title: 'Hive Demo',
+                description: 'Lưu trữ local với Hive — box, type adapter.',
+                routeName: Routes.infoScreen,
+                accent: Color(0xFFEAB308),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.matixScreen);
-                },
-                child: Text(AppLocaleTranslate.matixScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Matrix Screen',
+                description: 'Transform Matrix4 — translate / rotate / scale / perspective.',
+                routeName: Routes.matixScreen,
+                accent: Color(0xFF9333EA),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.progressHudScreen);
-                },
-                child: Text(AppLocaleTranslate.progressHudScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Progress Hud',
+                description: 'Loading HUD overlay toàn màn hình kiểu MBProgressHUD.',
+                routeName: Routes.progressHudScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.popoverScreen);
-                },
-                child: Text(AppLocaleTranslate.popoverClick.getString(context)),
+              const _FeatureCard(
+                title: 'Popover Click',
+                description: 'Popover hiển thị bên cạnh element được click — kiểu macOS.',
+                routeName: Routes.popoverScreen,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.nesredScroll);
-                },
-                child: Text(AppLocaleTranslate.nestedScrollScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Nested Scroll',
+                description: 'NestedScrollView với SliverAppBar + TabBar content.',
+                routeName: Routes.nesredScroll,
+                accent: Color(0xFF6366F1),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.courasel);
-                },
-                child: Text(AppLocaleTranslate.couraselScreen.getString(context)),
+              const _FeatureCard(
+                title: 'Carousel',
+                description: 'Slider ảnh tự động chuyển, indicator + zoom hover.',
+                routeName: Routes.courasel,
+                accent: Color(0xFFEAB308),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.bmprogresshudScreen);
-                },
-                child: Text(AppLocaleTranslate.bmProgressHudScreen.getString(context)),
+              const _FeatureCard(
+                title: 'BM Progress HUD',
+                description: 'Modal progress HUD với nhiều style loading.',
+                routeName: Routes.bmprogresshudScreen,
+                accent: Color(0xFF6B7280),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.intertiveviewScreen);
-                },
-                child: Text(AppLocaleTranslate.interactiveViewer.getString(context)),
+              const _FeatureCard(
+                title: 'Interactive Viewer',
+                description: 'Zoom & pan với InteractiveViewer — ảnh / pdf / canvas.',
+                routeName: Routes.intertiveviewScreen,
+                accent: Color(0xFF7C3AED),
               ),
 
               /// Các thành phần giao dịch đặc thù của Cupertino (iOS style).
@@ -1230,23 +1246,23 @@ class _TestScreenState extends State<TestScreen> {
                 },
                 child: Text(AppLocaleTranslate.cupertinoAlertDialog.getString(context)),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.datetimePickerScreen);
-                },
-                child: Text(AppLocaleTranslate.dateTimePicker.getString(context)),
+              const _FeatureCard(
+                title: 'DateTime Picker',
+                description: 'Picker chọn ngày giờ — Cupertino + Material style.',
+                routeName: Routes.datetimePickerScreen,
+                accent: Color(0xFF0EA5E9),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.dateTimeInput);
-                },
-                child: Text(AppLocaleTranslate.dateTimeInput.getString(context)),
+              const _FeatureCard(
+                title: 'DateTime Input',
+                description: 'Text input có mask DD/MM/YYYY HH:mm, auto-format.',
+                routeName: Routes.dateTimeInput,
+                accent: Color(0xFF0EA5E9),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.calender);
-                },
-                child: Text(AppLocaleTranslate.calendar.getString(context)),
+              const _FeatureCard(
+                title: 'Calendar',
+                description: 'Calendar tháng / tuần với event highlight.',
+                routeName: Routes.calender,
+                accent: Color(0xFF0EA5E9),
               ),
 
               const SizedBox(
@@ -1318,6 +1334,94 @@ class _TestScreenState extends State<TestScreen> {
             child: Text(AppLocaleTranslate.yes.getString(context)),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Card hiển thị mỗi tính năng demo trong [TestScreen].
+///
+/// Thay cho các [TextButton] đơn giản chỉ điều hướng route — card cung cấp
+/// title rõ ràng + description ngắn giúp dev nhanh chóng nhận biết chức năng
+/// mà không phải đọc tên route.
+class _FeatureCard extends StatelessWidget {
+  const _FeatureCard({
+    required this.title,
+    required this.description,
+    required this.routeName,
+    this.icon = Icons.arrow_forward_ios_rounded,
+    this.accent = const Color(0xFF2563EB),
+  });
+
+  final String title;
+  final String description;
+  final String routeName;
+  final IconData icon;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => Navigator.of(context).pushNamed(routeName),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFE5E7EB)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: accent.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(Icons.auto_awesome, color: accent, size: 18),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF111827),
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF6B7280),
+                          height: 1.35,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(icon, size: 14, color: const Color(0xFF9CA3AF)),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

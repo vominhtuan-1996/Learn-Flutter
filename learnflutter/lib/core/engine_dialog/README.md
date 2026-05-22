@@ -27,8 +27,16 @@ lib/core/engine_dialog/
     ├── dialog_base_widget.dart     # Giao diện nền tảng cho Dialogs
     ├── snackbar_base_widget.dart   # Giao diện nền tảng cho Snackbars
     ├── process_stepper_widget.dart # Quy trình xử lý nhiều bước động
-    └── multi_transfer_dialog.dart  # Tiến trình tải/upload nhiều file
+    ├── multi_transfer_dialog.dart  # Tiến trình tải/upload nhiều file
+    └── update_patch_dialog.dart    # Dialog cập nhật bản vá (Hot Patch)
 ```
+
+> 💡 **Đã merge từ `shared/widgets/app_dialog/`** (tháng 2026-05):
+> Folder cũ đã bị xoá. Toàn bộ API của `AppDialogManager` được merge vào `AppDialogEngine` —
+> bao gồm các **shortcut context-free** (`AppDialogEngine.info/success/error/warning`)
+> và **`showUpdatePatch`** (xem mục 5 bên dưới). Các flow đặc thù feature
+> (`showGiftCouponAction`, `startGiftCouponProcessFlow`) đã chuyển sang
+> `features/gift_coupon/gift_coupon_dialog.dart` thành class `GiftCouponDialog`.
 
 ---
 
@@ -87,6 +95,23 @@ AppDialogEngine.showHighlightMessage(
   confirmText: 'Cập nhật',
 );
 ```
+
+#### 🔹 Shortcut **không cần `BuildContext`** (dùng `navigatorKey`)
+Có thể gọi trực tiếp từ Cubit / Bloc / Repository — engine tự lấy context từ `UtilsHelper.navigatorKey`:
+
+```dart
+AppDialogEngine.info('Đã đồng bộ dữ liệu thành công.');
+AppDialogEngine.success('Đã lưu phiếu!');
+AppDialogEngine.error(e.toString());
+AppDialogEngine.warning(
+  'Bạn có chắc muốn huỷ phiếu này?',
+  onConfirm: () => repo.cancel(),
+);
+```
+
+> Khác biệt với 4 method có context (`showInfo`, `showSuccess`, …): các shortcut này
+> chỉ nhận `message` + tuỳ chọn `title`. Khi cần custom đầy đủ (`contentWidget`, `barrierDismissible`, …)
+> hãy dùng bản có context.
 
 #### 🔹 Dialog Tùy chỉnh hoàn toàn (Custom Content)
 Bạn có thể nhét bất kỳ Widget nào vào làm nội dung của Dialog thông qua thuộc tính `contentWidget`:
@@ -279,6 +304,40 @@ AppDialogEngine.showMultiDownload(
 *   Đối với tải lên, chỉ cần thay bằng phương thức gọi: `AppDialogEngine.showMultiUpload(context, files: [...])`.
 *   Dialog tự động đổi màu sắc nhận diện: **Xanh dương (Blue)** cho Download và **Tím (Violet)** cho Upload để đảm bảo tính đồng nhất hệ thống thông tin.
 *   Tự động khóa tương tác nền để tránh gián đoạn, chỉ hiển thị nút **Hoàn tất** phóng to mượt mà sau khi tất cả các tệp truyền dữ liệu thành công.
+
+---
+
+### 5. 🔄 Update Patch Dialog (Hot Patch / Code Push)
+Dialog premium báo cho user biết có **bản vá nóng** (Shorebird / Code Push) — header gradient tím-xanh, changelog cuộn, nút "Cập nhật ngay" tích hợp progress bar shimmer.
+
+API là **context-free** (dùng `navigatorKey`):
+
+```dart
+AppDialogEngine.showUpdatePatch(
+  version: '1.2.3',
+  changelog: const [
+    'Sửa lỗi crash khi mở camera trên Android 14',
+    'Cải thiện tốc độ load danh sách phiếu thi công',
+    'Thêm chế độ tối (Dark mode) thử nghiệm',
+  ],
+  onUpdate: () async {
+    // Trigger download/apply patch thật
+    await ShorebirdUpdater().update();
+  },
+);
+```
+
+Các tham số nâng cao (dùng cho demo / preview UI):
+
+| Tham số | Loại | Mặc định | Ý nghĩa |
+|---|---|---|---|
+| `version` | `String` | required | Hiển thị badge `v1.2.3` |
+| `changelog` | `List<String>` | required | Bullet danh sách thay đổi |
+| `onUpdate` | `VoidCallback` | required | Callback khi user bấm nút |
+| `progress` | `double` | `0.0` | Tiến độ ban đầu (0..1) |
+| `isDownloading` | `bool` | `false` | Mở dialog đã ở trạng thái đang tải |
+| `showSimulator` | `bool` | `false` | Cho phép start automation khi tap nút |
+| `autoSimulate` | `bool` | `false` | Tự chạy auto progress khi mở (cho demo) |
 
 ---
 

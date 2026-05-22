@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/shimmer_widget.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/shimmer_widget.dart';
 
 class ShimmerLoading extends StatefulWidget {
   const ShimmerLoading({

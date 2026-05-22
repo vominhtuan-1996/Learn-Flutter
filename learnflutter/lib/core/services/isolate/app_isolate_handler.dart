@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 /* ============================================================================
  * 🛠 ADVANCED MAINTENANCE RULES & FUTURE DIRECTIONS (Quy tắc bảo trì nâng cao)
  * ============================================================================
@@ -56,6 +58,11 @@ class AppIsolateHandler {
   /// Sau khi tác vụ hoàn tất, nó sẽ gửi dữ liệu về Main thread và tự động tiêu hủy Isolate đó.
   /// Cách làm này giúp mã nguồn của chúng ta ngắn gọn và an toàn hơn so với việc quản lý thủ công.
   Future<T> compute<T>(FutureOr<T> Function() computation) async {
+    // Web không hỗ trợ dart:isolate (Isolate.run sẽ throw UnsupportedError).
+    // Chạy trực tiếp trên main thread khi ở môi trường Web.
+    if (kIsWeb) {
+      return await computation();
+    }
     try {
       return await Isolate.run(computation);
     } catch (e) {

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/shimmer_loading_widget.dart';
 
 /* ============================================================================
  * 🛠 WIDGET MAINTENANCE RULES & FUTURE DIRECTIONS (Quy tắc bảo trì Widget)

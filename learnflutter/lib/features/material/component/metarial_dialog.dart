@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/utils/device_dimension.dart';
-import 'package:learnflutter/shared/widgets/app_dialog/app_dialog_manager.dart';
+import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/shared/widgets/mt_progress_hub/mt_progess_hub.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
@@ -453,7 +453,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                AppDialogManager.success('Đã lưu thành công!');
+                AppDialogEngine.success('Đã lưu thành công!');
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager success',
@@ -467,7 +467,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                AppDialogManager.info('Đã lưu thành công!');
+                AppDialogEngine.info('Đã lưu thành công!');
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager info ',
@@ -481,7 +481,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                AppDialogManager.error('Đã lưu thành công!');
+                AppDialogEngine.error('Đã lưu thành công!');
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager error',
@@ -495,7 +495,7 @@ class _MaterialDialogState extends State<MaterialDialog> with ComponentMaterialD
               shadowColor: AppColors.grey,
               textAlign: TextAlign.center,
               onTap: () async {
-                AppDialogManager.info('Đã lưu thành công!');
+                AppDialogEngine.info('Đã lưu thành công!');
               },
               type: MaterialButtonType.commonbutton,
               lableText: 'AppDialogManager info',

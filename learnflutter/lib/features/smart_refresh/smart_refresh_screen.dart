@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/widgets/smart_refresh/lib/pull_to_refresh.dart';
-import 'package:learnflutter/shared/widgets/shimmer/widget/shimmer_loading_widget.dart';
+import 'package:learnflutter/shared/components/shimmer/widget/shimmer_loading_widget.dart';
 
 class SmartRefreshScreen extends StatefulWidget {
   const SmartRefreshScreen({super.key});
