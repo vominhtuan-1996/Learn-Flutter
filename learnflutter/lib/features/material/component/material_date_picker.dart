@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/material_screen.dart';

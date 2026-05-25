@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:learnflutter/features/auth/screens/login_screen.dart';
 import 'package:learnflutter/features/flutter_3d/pages/flutter_3d_screen.dart';
 import 'package:learnflutter/features/login/screens/login_page.dart';
-import 'package:learnflutter/features/transformer_example/transformer_example_page.dart';
-import 'package:learnflutter/shared/widgets/base_loading_draggable/draggable_example_screen.dart';
+import 'package:learnflutter/shared/components/transformer_page/transformer_page_test_screen.dart';
+import 'package:learnflutter/shared/components/base_loading_draggable/draggable_example_screen.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/components/tree_view/tree_view_test_screen.dart';
 import 'package:learnflutter/core/storage/hive_demo/screen/info_screen.dart';
@@ -105,7 +105,7 @@ import 'package:learnflutter/shared/components/calendar/calendar_picker_test_scr
 import 'package:learnflutter/core/services/notification_center/notification_center_test_screen.dart';
 import 'package:learnflutter/features/datetime_picker/datetime_picker_screen.dart';
 import 'package:learnflutter/features/draggbel_scroll/draggel_scroll_screen.dart';
-import 'package:learnflutter/shared/widgets/hero_animation/hero_animation_screen.dart';
+import 'package:learnflutter/core/animation/hero_animation/hero_animation_screen.dart';
 import 'package:learnflutter/features/interractive_view/intertiveview_screen.dart';
 import 'package:learnflutter/features/matix/matix_screen.dart';
 import 'package:learnflutter/features/noti_scroll/notification_scroll_screen.dart';
@@ -115,7 +115,10 @@ import 'package:learnflutter/features/path_provider/path_provider_screen.dart';
 import 'package:learnflutter/features/pick_file/pick_file_screen.dart';
 import 'package:learnflutter/features/popover/popover_scren.dart';
 import 'package:learnflutter/features/progress_hub/progress_hud_screen.dart';
-import 'package:learnflutter/features/qr_code_example/qr_code_screen.dart';
+import 'package:learnflutter/core/services/qr_code/qr_code_screen.dart';
+import 'package:learnflutter/core/services/qr_code/qr_overlays_demo_screen.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_builder_test_screen.dart';
+import 'package:learnflutter/shared/components/luxury_card_stack/luxury_card_stack_test_screen.dart';
 import 'package:learnflutter/features/reducer/reducer_screen.dart';
 import 'package:learnflutter/features/regex/regex_example_screen.dart';
 import 'package:learnflutter/features/scan/scan_screen.dart';
@@ -167,9 +170,9 @@ import 'package:learnflutter/features/notification/screens/notifications_v1_scre
 import 'package:learnflutter/features/test_screen/sliver_animation_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/fps_guaranteed_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/tiktok_animation_demo_screen.dart';
-import 'package:learnflutter/features/test_screen/core_anim_demo_screen.dart';
-import 'package:learnflutter/features/test_screen/timeline_demo_screen.dart';
-import 'package:learnflutter/features/test_screen/full_list_demo_screen.dart';
+import 'package:learnflutter/core/animation/core_anim/core_anim_playground_screen.dart';
+import 'package:learnflutter/core/particle_engine/demo/particle_demo_screen.dart';
+import 'package:learnflutter/core/network/network_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/pagination_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/engine_dialog_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
@@ -297,6 +300,9 @@ class Routes {
   static const String webViewScreen = "web_view_screen";
   static const String streetViewScreen = "street_view_screen";
   static const String qrScreen = 'qr_code_screen';
+  static const String qrOverlaysDemoScreen = 'qr_overlays_demo_screen';
+  static const String tapBuilderDemoScreen = 'tap_builder_demo_screen';
+  static const String luxuryCardStackDemoScreen = 'luxury_card_stack_demo_screen';
   static const String excellScreen = 'excel_screen';
   static const String login = "login_screen";
   static const String transformerPageView = "transformer_page_view";
@@ -307,9 +313,9 @@ class Routes {
   static const String sliverAnimationDemo = "/sliver_animation_demo";
   static const String fpsGuaranteedDemo = "/fps_guaranteed_demo";
   static const String tiktokAnimationDemo = "/tiktok_animation_demo";
-  static const String coreAnimDemo = "/core_anim_demo";
-  static const String timelineDemo = "/timeline_demo";
-  static const String fullListDemo = "/full_list_demo";
+  static const String coreAnimPlayground = "/core_anim_playground";
+  static const String particleEngineDemo = "/particle_engine_demo";
+  static const String networkDemo = "/network_demo";
   static const String paginationDemo = "/pagination_demo";
   static const String engineDialogDemo = "/engine_dialog_demo";
   static const String appStepperDemo = "/app_stepper_demo";
@@ -448,20 +454,20 @@ class Routes {
           settings: RouteSettings(name: tiktokAnimationDemo),
           builder: (_) => const TikTokAnimationDemoScreen(),
         );
-      case coreAnimDemo:
+      case coreAnimPlayground:
         return MaterialPageRoute(
-          settings: RouteSettings(name: coreAnimDemo),
-          builder: (_) => const CoreAnimDemoScreen(),
+          settings: RouteSettings(name: coreAnimPlayground),
+          builder: (_) => const CoreAnimPlaygroundScreen(),
         );
-      case timelineDemo:
+      case particleEngineDemo:
         return MaterialPageRoute(
-          settings: RouteSettings(name: timelineDemo),
-          builder: (_) => const TimelineDemoScreen(),
+          settings: RouteSettings(name: particleEngineDemo),
+          builder: (_) => const ParticleDemoScreen(),
         );
-      case fullListDemo:
+      case networkDemo:
         return MaterialPageRoute(
-          settings: RouteSettings(name: fullListDemo),
-          builder: (_) => const FullListDemoScreen(),
+          settings: RouteSettings(name: networkDemo),
+          builder: (_) => const NetworkDemoScreen(),
         );
       case paginationDemo:
         return MaterialPageRoute(
@@ -599,7 +605,7 @@ class Routes {
       case transformerPageView:
         return MaterialPageRoute(
           settings: RouteSettings(name: transformerPageView),
-          builder: (_) => TransformerExamplePage(),
+          builder: (_) => const TransformerPageTestScreen(),
         );
       case courasel:
         return SlideRightRoute(
@@ -1168,6 +1174,21 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: qrScreen),
           builder: (_) => QRViewExample(),
+        );
+      case qrOverlaysDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: qrOverlaysDemoScreen),
+          builder: (_) => const QrOverlaysDemoScreen(),
+        );
+      case tapBuilderDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: tapBuilderDemoScreen),
+          builder: (_) => const TapBuilderTestScreen(),
+        );
+      case luxuryCardStackDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: luxuryCardStackDemoScreen),
+          builder: (_) => const LuxuryCardStackTestScreen(),
         );
       case webViewScreen:
         return SlideRightRoute(

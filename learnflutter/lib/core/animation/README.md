@@ -5,7 +5,13 @@ Module này cung cấp các Widget và Helper hỗ trợ tạo hiệu ứng chuy
 ## Cấu trúc thư mục
 - `lib/core/animation/animation_helper.dart`: Lớp Helper cung cấp các ví dụ mẫu và hàm khởi tạo nhanh các animation.
 - `lib/core/animation/animation_screen.dart`: Màn hình demo tổng hợp các loại transition.
-- `lib/core/animation/widget/`: Thư mục chứa các Widget animation riêng biệt (Icon, ListView, Ripple, v.v.)
+- `lib/core/animation/widget/`: Thư mục chứa các Widget animation riêng biệt (Icon, ListView, Ripple, v.v.).
+- `lib/core/animation/core_anim/`: Các animation primitive dùng chung.
+- `lib/core/animation/sliver_animation/`: Animation cho sliver / scroll-driven effects.
+- `lib/core/animation/performance/`: Tiện ích đo và tối ưu hiệu năng animation.
+- `lib/core/animation/hero_animation/`: Hero transition demo + helper.
+  - `hero_animation_screen.dart`: Màn hình demo Hero transition (Page1 → Page2 với `CustomRectTween`).
+  - `hero_utils/hero_animation_utils.dart`: `CustomRectTween` cong (arc) cho hiệu ứng Hero mềm mại hơn `RectTween` mặc định.
 
 ## Các Widget Animation tiêu biểu
 
@@ -23,6 +29,18 @@ Hiệu ứng vòng tròn lan tỏa thường dùng cho các nút bấm quan tr�
 
 ### 3. ListViewAnimated
 Hỗ trợ hiển thị danh sách với hiệu ứng trượt vào từng phần tử (Slide-in) cực kỳ chuyên nghiệp.
+
+### 4. Hero Animation (`hero_animation/`)
+Demo Hero transition giữa 2 màn hình với `CustomRectTween` — Tween đi theo cung tròn (arc) thay vì đường thẳng, tạo cảm giác "bay" mượt hơn `RectTween` mặc định của Flutter.
+
+```dart
+Hero(
+  tag: 'avatar',
+  createRectTween: (begin, end) => CustomRectTween(begin: begin, end: end),
+  child: ...,
+)
+```
+Xem demo tại `Routes.heroAnimationScreen`.
 
 ## Các quy tắc quan trọng (Maintenance Rules)
 

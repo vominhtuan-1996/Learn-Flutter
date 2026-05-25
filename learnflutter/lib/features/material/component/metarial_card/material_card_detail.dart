@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/utils/device_dimension.dart';
-import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/features/material/component/component_material_mixi.dart';
 import 'package:learnflutter/features/material/component/metarial_card/horizontal_card_widget.dart';

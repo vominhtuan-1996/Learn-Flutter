@@ -7,8 +7,8 @@ import 'package:input_history_text_field/input_history_text_field.dart';
 import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
 import 'package:learnflutter/shared/widgets/search_bar/page/search_bar_builder.dart';
-import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
-import 'package:learnflutter/shared/widgets/tap_builder/tap_delayed_pressed_button_builder.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_animated_button_builder.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_delayed_pressed_button_builder.dart';
 import 'package:learnflutter/core/global/func_global.dart';
 import 'package:learnflutter/features/material/component/metarial_radio_button/radio_item_model.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
@@ -460,22 +460,22 @@ class _TestScreenState extends State<TestScreen> {
                 accent: Color(0xFFFF6584),
               ),
               const _FeatureCard(
-                title: 'Core Anim Package (Spring Physics)',
-                description: 'Hệ thống animation dựa trên spring physics — bouncy, vật lý thật.',
-                routeName: Routes.coreAnimDemo,
+                title: 'Core Anim Playground',
+                description: 'Effects + Timeline presets + Full List (swipe/pin/collapse) trong 1 màn hình.',
+                routeName: Routes.coreAnimPlayground,
                 accent: Color(0xFF6C63FF),
               ),
               const _FeatureCard(
-                title: 'Timeline Animation (Sequence)',
-                description: 'Chuỗi animation theo timeline — orchestrate nhiều bước tuần tự.',
-                routeName: Routes.timelineDemo,
-                accent: Color(0xFF43D8C9),
+                title: 'Particle Engine',
+                description: 'Fire / Snow / Sparkle / Explosion — zero-alloc pool + RenderBox paint.',
+                routeName: Routes.particleEngineDemo,
+                accent: Color(0xFFFF6B35),
               ),
               const _FeatureCard(
-                title: 'Full List Animation (Delete → Collapse)',
-                description: 'Hiệu ứng xoá item rồi collapse phần còn lại của list mượt mà.',
-                routeName: Routes.fullListDemo,
-                accent: Color(0xFFFFB347),
+                title: 'Network Module Demo',
+                description: 'REST + NetworkQueue + GraphQL trong 1 màn hình.',
+                routeName: Routes.networkDemo,
+                accent: Color(0xFF0EA5E9),
               ),
               const _FeatureCard(
                 title: 'Pagination System (TikTok Style)',
@@ -670,6 +670,24 @@ class _TestScreenState extends State<TestScreen> {
                 description: 'Quét mã QR qua camera, decode realtime.',
                 routeName: Routes.qrScreen,
                 accent: Color(0xFF6366F1),
+              ),
+              const _FeatureCard(
+                title: 'QR Overlays Demo',
+                description: 'Preview tất cả overlay quét QR/CCCD trên nền giả camera.',
+                routeName: Routes.qrOverlaysDemoScreen,
+                accent: Color(0xFF8B5CF6),
+              ),
+              const _FeatureCard(
+                title: 'Tap Builder Demo',
+                description: 'AnimatedTapButton 3D + TapDelayedPressedButton.',
+                routeName: Routes.tapBuilderDemoScreen,
+                accent: Color(0xFFEC4899),
+              ),
+              const _FeatureCard(
+                title: 'Luxury Card Stack Demo',
+                description: 'Stack thẻ swipe vật lý kiểu Tinder/Apple Card.',
+                routeName: Routes.luxuryCardStackDemoScreen,
+                accent: Color(0xFF0EA5E9),
               ),
               //       TextButton(
               //         onPressed: () {

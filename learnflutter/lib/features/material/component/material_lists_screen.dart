@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/utils/device_dimension.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
-import 'package:learnflutter/shared/widgets/tap_builder/tap_animated_button_builder.dart';
+import 'package:learnflutter/shared/components/tap_builder/tap_animated_button_builder.dart';
 import 'package:learnflutter/features/material/component/material_lists/model/router_model.dart';
 import 'package:learnflutter/shared/widgets/lib/src/utils/utils.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';

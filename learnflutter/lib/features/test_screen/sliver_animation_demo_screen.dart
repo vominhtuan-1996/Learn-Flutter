@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/animation/sliver_animation/sliver_animation_coordinator.dart';
-import 'package:learnflutter/core/animation/sliver_animation/sliver_animation_state.dart';
-import 'package:learnflutter/core/animation/sliver_animation/sliver_effects.dart';
-import 'package:learnflutter/core/animation/sliver_animation/sliver_animated_item.dart';
+import 'package:learnflutter/core/animation/sliver_animation/sliver_animation.dart';
 
 class SliverAnimationDemoScreen extends StatefulWidget {
   const SliverAnimationDemoScreen({super.key});
@@ -52,7 +49,7 @@ class _SliverAnimationDemoScreenState extends State<SliverAnimationDemoScreen> {
             effect: CombinedEffect([
               FadeEffect(),
               ScaleEffect(minScale: 0.5),
-              ParallaxEffect(offset: 150),
+              ParallaxEffect(maxOffsetY: 150),
             ]),
             child: Container(
               height: 300,
@@ -82,7 +79,7 @@ class _SliverAnimationDemoScreenState extends State<SliverAnimationDemoScreen> {
             state: _item1State,
             effect: CombinedEffect([
               FadeEffect(),
-              ParallaxEffect(offset: 80),
+              ParallaxEffect(maxOffsetY: 80),
             ]),
             child: _buildCard("Fade & Parallax Effect", Colors.orange),
           ),

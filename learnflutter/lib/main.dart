@@ -64,7 +64,7 @@ void main() {
       await Hive.openBox('peopleBox');
 
       // Initialize ApiClient with base URL and optional token refresh handler
-      (
+      ApiClient.instance.init(
         baseUrl: 'https://apis-stag.fpt.vn',
         tokenRefreshHandler: () async {
           try {
