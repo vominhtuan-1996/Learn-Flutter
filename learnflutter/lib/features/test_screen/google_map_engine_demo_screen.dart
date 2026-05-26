@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:learnflutter/core/engine_google_map/engine_google_map.dart';
+import 'package:learnflutter/core/engines/engine_google_map/engine_google_map.dart';
 import 'package:learnflutter/core/services/isolate/app_isolate_handler.dart';
-import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
-import 'package:learnflutter/core/engine_bottom_sheet/engine_bottom_sheet.dart';
-import 'package:learnflutter/core/engine_queue/engine_queue.dart';
+import 'package:learnflutter/core/engines/engine_dialog/engine_dialog.dart';
+import 'package:learnflutter/core/engines/engine_bottom_sheet/engine_bottom_sheet.dart';
+import 'package:learnflutter/core/engines/engine_queue/engine_queue.dart';
 
 /// [GoogleMapEngineDemoScreen] – Màn hình demo toàn bộ bộ Engine Google Map.
 ///

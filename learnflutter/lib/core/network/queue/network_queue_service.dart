@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
-import 'package:learnflutter/core/engine_queue/controller/in_memory_queue_engine.dart';
-import 'package:learnflutter/core/engine_queue/models/queue_config.dart';
-import 'package:learnflutter/core/engine_queue/models/queue_task.dart';
+import 'package:learnflutter/core/engines/engine_queue/controller/in_memory_queue_engine.dart';
+import 'package:learnflutter/core/engines/engine_queue/models/queue_config.dart';
+import 'package:learnflutter/core/engines/engine_queue/models/queue_task.dart';
 import 'package:learnflutter/core/services/talker/app_talker.dart';
 import 'network_queue_task.dart';
 

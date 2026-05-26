@@ -88,6 +88,8 @@ void main() {
       runApp(GlobalNoKeyboardRebuild(
         addBottomPadding: true,
         animationDurationMs: 50,
+        // Gradient default white → gray (đã set trong GlobalNoKeyboardRebuild),
+        // có thể override bằng bottomFillGradient: LinearGradient(...) tại đây.
         child: MyApp(),
       ));
     },

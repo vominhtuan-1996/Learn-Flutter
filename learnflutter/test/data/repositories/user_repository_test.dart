@@ -3,9 +3,9 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:learnflutter/core/network/api_client.dart';
-import 'package:learnflutter/data/repositories/user_repository.dart';
-import 'package:learnflutter/db/models/user_model.dart';
+import 'package:learnflutter/core/network/api_client/api_client.dart';
+import 'package:learnflutter/core/repositories/user_repository.dart';
+import 'package:learnflutter/shared/models/user_model.dart';
 
 class _FakeAdapter implements HttpClientAdapter {
   final Future<ResponseBody> Function(RequestOptions options) handler;

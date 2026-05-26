@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:learnflutter/core/engine_queue/models/queue_task.dart';
+import 'package:learnflutter/core/engines/engine_queue/models/queue_task.dart';
 import 'package:learnflutter/core/network/queue/network_queue_service.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:learnflutter/core/services/talker/app_talker.dart';

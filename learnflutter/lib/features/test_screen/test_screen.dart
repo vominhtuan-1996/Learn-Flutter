@@ -23,7 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/app/localization/app_local_translate.dart';
-import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
+import 'package:learnflutter/core/engines/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/features/gift_coupon/gift_coupon_dialog.dart';
 
 // import 'package:file';
@@ -676,6 +676,24 @@ class _TestScreenState extends State<TestScreen> {
                 description: 'Preview tất cả overlay quét QR/CCCD trên nền giả camera.',
                 routeName: Routes.qrOverlaysDemoScreen,
                 accent: Color(0xFF8B5CF6),
+              ),
+              const _FeatureCard(
+                title: '🎨 Engine Rendering (Custom Layer)',
+                description: 'Canvas layer engine — background/glow/orbit/starfield, không rebuild widget.',
+                routeName: Routes.engineRenderingDemoScreen,
+                accent: Color(0xFF8B5CF6),
+              ),
+              const _FeatureCard(
+                title: '🪟 Engine Viewport Transform',
+                description: 'Pipeline scale/blur/opacity/rotation/parallax theo vị trí item trong viewport.',
+                routeName: Routes.engineViewportTransformDemoScreen,
+                accent: Color(0xFF06B6D4),
+              ),
+              const _FeatureCard(
+                title: '⌨️ KeyboardTextField (Toolbar + Counter)',
+                description: 'TextField hiển thị toolbar trên keyboard, counter ký tự bên phải, fully customizable.',
+                routeName: Routes.keyboardTextFieldDemoScreen,
+                accent: Color(0xFF0EA5E9),
               ),
               const _FeatureCard(
                 title: 'Tap Builder Demo',

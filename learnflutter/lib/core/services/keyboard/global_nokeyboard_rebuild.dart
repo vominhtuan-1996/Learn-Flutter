@@ -60,21 +60,28 @@ class GlobalNoKeyboardRebuild extends StatefulWidget {
   /// Loại đường cong mô tả tốc độ của hiệu ứng animation.
   final Curve animationCurve;
 
+  /// Gradient fill cho vùng keyboard. Null = không paint (trong suốt). Đặt trên scaffold
+  /// qua Stack nên không bị scaffoldBackgroundColor đè khi dismiss.
+  final Gradient? bottomFillGradient;
+
   const GlobalNoKeyboardRebuild({
     super.key,
     required this.child,
     this.addBottomPadding = true,
     this.animationDurationMs = KeyboardPaddingConstants.animationDurationMs,
     this.animationCurve = KeyboardPaddingConstants.animationCurve,
+    this.bottomFillGradient = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xFFFFFFFF), Color(0xFF9CA3AF)],
+    ),
   });
 
   @override
-  State<GlobalNoKeyboardRebuild> createState() =>
-      _GlobalNoKeyboardRebuildState();
+  State<GlobalNoKeyboardRebuild> createState() => _GlobalNoKeyboardRebuildState();
 }
 
-class _GlobalNoKeyboardRebuildState extends State<GlobalNoKeyboardRebuild>
-    with WidgetsBindingObserver {
+class _GlobalNoKeyboardRebuildState extends State<GlobalNoKeyboardRebuild> with WidgetsBindingObserver {
   /// Lưu viewInsets.bottom lần trước để phân biệt keyboard-change vs non-keyboard-change.
   double _lastKeyboardInset = 0.0;
 
@@ -129,6 +136,7 @@ class _GlobalNoKeyboardRebuildState extends State<GlobalNoKeyboardRebuild>
           ? _KeyboardPaddingWrapper(
               animationDurationMs: widget.animationDurationMs,
               animationCurve: widget.animationCurve,
+              bottomFillGradient: widget.bottomFillGradient,
               child: widget.child,
             )
           : widget.child,
@@ -146,22 +154,31 @@ class _KeyboardPaddingWrapper extends StatefulWidget {
   final Widget child;
   final int animationDurationMs;
   final Curve animationCurve;
+  final Gradient? bottomFillGradient;
 
   const _KeyboardPaddingWrapper({
     required this.child,
     required this.animationDurationMs,
     required this.animationCurve,
+    this.bottomFillGradient,
   });
 
   @override
-  State<_KeyboardPaddingWrapper> createState() =>
-      _KeyboardPaddingWrapperState();
+  State<_KeyboardPaddingWrapper> createState() => _KeyboardPaddingWrapperState();
 }
 
-class _KeyboardPaddingWrapperState extends State<_KeyboardPaddingWrapper>
-    with WidgetsBindingObserver {
-  /// Chiều cao bàn phím hiện tại (logical pixels), cập nhật real-time mỗi frame native.
+class _KeyboardPaddingWrapperState extends State<_KeyboardPaddingWrapper> with WidgetsBindingObserver, TickerProviderStateMixin {
+  /// Chiều cao bàn phím hiện tại theo viewInsets — drive cho [Padding] để layout
+  /// nội dung tránh keyboard. Mirror chính xác viewInsets từng frame.
   double _keyboardHeight = 0.0;
+
+  /// Chiều cao decay cho overlay fill — tách rời khỏi viewInsets để giữ vùng
+  /// fill phủ trên scaffold trong suốt thời gian keyboard slide xuống, kể cả
+  /// khi iOS report viewInsets = 0 ngay khi dismiss bắt đầu.
+  double _fillHeight = 0.0;
+
+  AnimationController? _dismissCtrl;
+  double _dismissFrom = 0.0;
 
   @override
   void initState() {
@@ -172,6 +189,7 @@ class _KeyboardPaddingWrapperState extends State<_KeyboardPaddingWrapper>
 
   @override
   void dispose() {
+    _dismissCtrl?.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -187,15 +205,35 @@ class _KeyboardPaddingWrapperState extends State<_KeyboardPaddingWrapper>
     final view = WidgetsBinding.instance.platformDispatcher.views.first;
     final rawHeight = view.viewInsets.bottom / view.devicePixelRatio;
 
-    // Tính screen height trực tiếp từ view để tránh gọi MediaQuery.of() ngoài build().
     final screenHeight = view.physicalSize.height / view.devicePixelRatio;
-    final clamped = rawHeight.isNaN || rawHeight < 0
-        ? 0.0
-        : rawHeight.clamp(0.0, screenHeight * 0.7);
+    final clamped = rawHeight.isNaN || rawHeight < 0 ? 0.0 : rawHeight.clamp(0.0, screenHeight * 0.7);
 
-    // Chỉ setState khi có thay đổi đủ lớn để tránh rebuild thừa.
-    if ((clamped - _keyboardHeight).abs() > 0.5) {
-      setState(() => _keyboardHeight = clamped);
+    if ((clamped - _keyboardHeight).abs() < 0.5) return;
+
+    final wasOpen = _keyboardHeight > 0;
+    final nowClosed = clamped == 0;
+    _keyboardHeight = clamped;
+
+    if (wasOpen && nowClosed) {
+      // Dismiss: viewInsets có thể nhảy về 0 ngay (iOS). Decay _fillHeight riêng
+      // qua AnimationController để overlay che kín suốt thời gian keyboard slide
+      // xuống — không cho scaffoldBg lộ ra ở vùng keyboard.
+      _dismissFrom = _fillHeight;
+      _dismissCtrl?.dispose();
+      _dismissCtrl = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: widget.animationDurationMs),
+      )
+        ..addListener(() {
+          setState(() {
+            _fillHeight = _dismissFrom * (1 - _dismissCtrl!.value);
+          });
+        })
+        ..forward();
+    } else {
+      // Show hoặc resize: fill bám sát keyboard ngay lập tức.
+      _dismissCtrl?.stop();
+      setState(() => _fillHeight = clamped);
     }
   }
 
@@ -218,13 +256,37 @@ class _KeyboardPaddingWrapperState extends State<_KeyboardPaddingWrapper>
       });
     }
 
-    // Padding follow đúng từng pixel native keyboard.
-    // Native đã tự animate — ta chỉ mirror lại giá trị thực mỗi frame.
-    return Container(
-      color: Colors.transparent, // [Rule 4] Sử dụng transparent thay vì white để hỗ trợ Dark Mode
-      child: Padding(
-        padding: EdgeInsets.only(bottom: _keyboardHeight),
-        child: widget.child,
+    // Padding mirror viewInsets cho content (scaffold compress đúng nhịp keyboard).
+    final padded = Padding(
+      padding: EdgeInsets.only(bottom: _keyboardHeight),
+      child: widget.child,
+    );
+
+    // Khi không cần fill → trả Padding trực tiếp; scaffoldBg sẽ lộ ra khi dismiss.
+    final gradient = widget.bottomFillGradient;
+    if (gradient == null) return padded;
+
+    // Khi có gradient → đặt overlay NẰM TRÊN scaffold qua Stack, cao đúng _fillHeight
+    // (decay riêng khi dismiss) → vùng keyboard luôn có gradient này, không bị
+    // scaffoldBg đè lên trong lúc keyboard trượt xuống. Stack cần Directionality.
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Stack(
+        children: [
+          Positioned.fill(child: padded),
+          if (_fillHeight > 0.5)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: _fillHeight,
+              child: IgnorePointer(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(gradient: gradient),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

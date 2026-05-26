@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
+import 'package:learnflutter/core/engines/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/shared/models/option_model.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 

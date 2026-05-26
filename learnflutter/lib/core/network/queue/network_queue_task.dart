@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:learnflutter/core/engine_queue/models/queue_task.dart';
+import 'package:learnflutter/core/engines/engine_queue/models/queue_task.dart';
 import 'package:learnflutter/core/network/api_client/api_client.dart';
 
 /// Một tác vụ xếp hàng mạng chuyên dụng kế thừa từ [QueueTask].

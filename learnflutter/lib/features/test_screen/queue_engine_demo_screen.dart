@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:learnflutter/core/engine_queue/engine_queue.dart';
+import 'package:learnflutter/core/engines/engine_queue/engine_queue.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 
 class QueueEngineDemoScreen extends StatefulWidget {

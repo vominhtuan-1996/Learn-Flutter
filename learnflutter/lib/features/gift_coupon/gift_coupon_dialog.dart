@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/engine_dialog/engine_dialog.dart';
+import 'package:learnflutter/core/engines/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:learnflutter/features/gift_coupon/repos/gift_coupon_repository.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/cubit/base_loading_cubit.dart';

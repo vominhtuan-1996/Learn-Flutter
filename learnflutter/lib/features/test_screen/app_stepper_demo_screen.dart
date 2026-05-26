@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:learnflutter/core/engine_pagination/engine_pagination.dart';
-import 'package:learnflutter/core/engine_dialog/app_snackbar_engine.dart';
+import 'package:learnflutter/core/engines/engine_pagination/engine_pagination.dart';
+import 'package:learnflutter/core/engines/engine_dialog/app_snackbar_engine.dart';
 
 class AppStepperDemoScreen extends StatefulWidget {
   const AppStepperDemoScreen({super.key});

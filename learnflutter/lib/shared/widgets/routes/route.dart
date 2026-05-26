@@ -118,6 +118,9 @@ import 'package:learnflutter/features/progress_hub/progress_hud_screen.dart';
 import 'package:learnflutter/core/services/qr_code/qr_code_screen.dart';
 import 'package:learnflutter/core/services/qr_code/qr_overlays_demo_screen.dart';
 import 'package:learnflutter/shared/components/tap_builder/tap_builder_test_screen.dart';
+import 'package:learnflutter/shared/components/keyboard_textfield/keyboard_textfield_example_screen.dart';
+import 'package:learnflutter/core/engines/engine_rendering/demo/engine_rendering_example_screen.dart';
+import 'package:learnflutter/core/engines/engine_viewport_transform/demo/engine_viewport_transform_example_screen.dart';
 import 'package:learnflutter/shared/components/luxury_card_stack/luxury_card_stack_test_screen.dart';
 import 'package:learnflutter/features/reducer/reducer_screen.dart';
 import 'package:learnflutter/features/regex/regex_example_screen.dart';
@@ -171,7 +174,7 @@ import 'package:learnflutter/features/test_screen/sliver_animation_demo_screen.d
 import 'package:learnflutter/features/test_screen/fps_guaranteed_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/tiktok_animation_demo_screen.dart';
 import 'package:learnflutter/core/animation/core_anim/core_anim_playground_screen.dart';
-import 'package:learnflutter/core/particle_engine/demo/particle_demo_screen.dart';
+import 'package:learnflutter/core/engines/engine_particle/demo/particle_demo_screen.dart';
 import 'package:learnflutter/core/network/network_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/pagination_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/engine_dialog_demo_screen.dart';
@@ -302,6 +305,9 @@ class Routes {
   static const String qrScreen = 'qr_code_screen';
   static const String qrOverlaysDemoScreen = 'qr_overlays_demo_screen';
   static const String tapBuilderDemoScreen = 'tap_builder_demo_screen';
+  static const String keyboardTextFieldDemoScreen = '/keyboard_textfield_demo';
+  static const String engineRenderingDemoScreen = '/engine_rendering_demo';
+  static const String engineViewportTransformDemoScreen = '/engine_viewport_transform_demo';
   static const String luxuryCardStackDemoScreen = 'luxury_card_stack_demo_screen';
   static const String excellScreen = 'excel_screen';
   static const String login = "login_screen";
@@ -1184,6 +1190,21 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: tapBuilderDemoScreen),
           builder: (_) => const TapBuilderTestScreen(),
+        );
+      case keyboardTextFieldDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: keyboardTextFieldDemoScreen),
+          builder: (_) => const KeyboardTextFieldExampleScreen(),
+        );
+      case engineRenderingDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: engineRenderingDemoScreen),
+          builder: (_) => const EngineRenderingExampleScreen(),
+        );
+      case engineViewportTransformDemoScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: engineViewportTransformDemoScreen),
+          builder: (_) => const EngineViewportTransformExampleScreen(),
         );
       case luxuryCardStackDemoScreen:
         return SlideRightRoute(
