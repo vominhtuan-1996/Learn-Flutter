@@ -56,12 +56,16 @@ windows/
 web/
 android_bak
 release
-.fvm
 .env
 .ios
 .android
 .vscode
 lib/l10n
 
+vendor
+
 .metadata
 mcp
+
+# FVM Version Cache
+.fvm/

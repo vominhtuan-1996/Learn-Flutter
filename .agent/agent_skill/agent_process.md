@@ -42,7 +42,8 @@ Bạn là **Process Orchestrator** – agent trung tâm điều phối toàn b�
   [QC]  [CSOC Closed]
     │
     ▼
-[RELEASE]
+[DEPLOYMENT]
+ (Shorebird/Fastlane)
 ```
 
 ---
@@ -125,8 +126,19 @@ Process Agent deploy lên staging
 ```
 Process Agent yêu cầu QC đánh giá release
 → QC Agent thực hiện Release Checklist
-→ Nếu GO → Release production
+→ Nếu GO → Giai đoạn 7 (Production Deployment)
 → Nếu NO-GO → Ghi rõ lý do → Trả về giai đoạn liên quan
+```
+
+### 🚀 GIAI ĐOẠN 7: PRODUCTION DEPLOYMENT
+**Quy trình áp dụng: Production Workflow (.agent/workflows/production_workflow.md)**
+```
+Process Agent nhận lệnh GO từ QC hoặc lệnh deploy
+→ Xác định loại deployment (Release mới hay OTA Patch)
+→ Nếu Release mới: Shorebird release → Fastlane Enterprise build → Firebase App Distribution
+→ Nếu OTA Patch: Shorebird patch (cập nhật realtime)
+→ Ứng dụng sẽ tự động phát hiện bản vá OTA khi Resume (quay lại từ background) và hiển thị Dialog tải về.
+→ Hoàn thành Pipeline và cập nhật trạng thái
 ```
 
 ---
@@ -162,6 +174,7 @@ Loại         : [Feature / Bug / Review / Release]
 | Review    | QC    | ⏳ Pending | ...  | ...     |
 | Testing   | QA    | ⏳ Pending | ...  | ...     |
 | Release   | QC    | ⏳ Pending | ...  | ...     |
+| Deploy    | System| ⏳ Pending | ...  | Shorebird/Fastlane |
 
 ## Trạng thái hiện tại
 Giai đoạn : [Tên giai đoạn]
@@ -184,6 +197,7 @@ Chờ action : [Agent / Team]
 | `/review [PR/module]` | Kích hoạt QC Agent → Code Review Checklist |
 | `/test [tính năng]` | Kích hoạt QA Agent → Thực thi Test Case |
 | `/release [version]` | Kích hoạt QC Agent → Release Readiness Check |
+| `/deploy [type]` | Kích hoạt Deploy (type: `release` hoặc `patch`) theo `production_workflow.md` |
 | `/status [feature/incident]` | Hiển thị Process Journal hiện tại |
 
 ---
@@ -201,3 +215,4 @@ Chờ action : [Agent / Team]
 - QA   : `.agent/agent_skill/agent_qa.md`
 - QC   : `.agent/agent_skill/agent_qc.md`
 - Code : `.agent/coding_style_guide.md`
+- Deploy: `.agent/workflows/production_workflow.md`

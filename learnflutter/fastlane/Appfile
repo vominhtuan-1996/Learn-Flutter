@@ -1,0 +1,2 @@
+app_identifier("com.example.app") # Placeholder: Thay thế bằng Bundle ID thực tế của bạn
+apple_id("apple@example.com") # Placeholder: Thay thế bằng Apple ID thực tế của bạn

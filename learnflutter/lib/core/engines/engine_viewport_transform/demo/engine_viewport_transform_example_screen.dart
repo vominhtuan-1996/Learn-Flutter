@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,16 +8,22 @@ import '../core/viewport_item.dart';
 import '../core/viewport_pipeline.dart';
 import '../core/viewport_transform.dart';
 import '../transforms/blur_transform.dart';
+import '../transforms/elastic_overshoot_transform.dart';
+import '../transforms/hue_shift_transform.dart';
 import '../transforms/opacity_transform.dart';
 import '../transforms/perspective_flip_transform.dart';
 import '../transforms/rotation_transform.dart';
 import '../transforms/saturation_transform.dart';
 import '../transforms/scale_transform.dart';
+import '../transforms/shadow_transform.dart';
 import '../transforms/skew_transform.dart';
 import '../transforms/squeeze_transform.dart';
+import '../transforms/stagger_index_transform.dart';
 import '../transforms/tint_transform.dart';
 import '../transforms/translate_x_transform.dart';
 import '../transforms/translate_y_transform.dart';
+import '../transforms/velocity_stretch_transform.dart';
+import '../transforms/wave_y_transform.dart';
 
 class EngineViewportTransformExampleScreen extends StatefulWidget {
   const EngineViewportTransformExampleScreen({super.key});
@@ -40,17 +47,23 @@ class _State extends State<EngineViewportTransformExampleScreen> {
   // Toggle state (key → on?)
   final Map<String, bool> _on = {
     'scale': true,
+    'elastic': false,
+    'squeeze': false,
+    'velocityStretch': false,
     'blur': false,
     'opacity': true,
+    'saturation': false,
+    'hueShift': false,
+    'tint': false,
     'rotation': false,
-    'translateY': false,
-    'translateX': false,
     'flipX': false,
     'flipY': false,
     'skew': false,
-    'saturation': false,
-    'tint': false,
-    'squeeze': false,
+    'translateY': false,
+    'translateX': false,
+    'waveY': false,
+    'stagger': false,
+    'shadow': false,
   };
 
   late ViewportPipeline _pipeline = _buildPipeline();
@@ -79,17 +92,23 @@ class _State extends State<EngineViewportTransformExampleScreen> {
   ViewportPipeline _buildPipeline() {
     return ViewportPipeline(transforms: [
       if (_on['scale']!) ScaleTransform(minScale: 0.78),
+      if (_on['elastic']!) ElasticOvershootTransform(peakScale: 1.12, minScale: 0.85),
       if (_on['squeeze']!) SqueezeTransform(minScaleAcrossAxis: 0.55),
+      if (_on['velocityStretch']!) VelocityStretchTransform(),
       if (_on['blur']!) BlurTransform(maxBlur: 8, distanceDivisor: 60),
       if (_on['opacity']!) OpacityTransform(minOpacity: 0.25),
       if (_on['saturation']!) SaturationTransform(minSaturation: 0.0),
+      if (_on['hueShift']!) HueShiftTransform(maxHueDegrees: 90),
+      if (_on['tint']!) TintTransform(color: Colors.black, maxAlpha: 0.65),
       if (_on['rotation']!) RotationTransform(maxAngleDegrees: 10),
       if (_on['flipX']!) PerspectiveFlipTransform(axis: 'X', maxAngleDegrees: 45),
       if (_on['flipY']!) PerspectiveFlipTransform(axis: 'Y', maxAngleDegrees: 45),
       if (_on['skew']!) SkewTransform(maxSkewY: 0.2),
       if (_on['translateY']!) TranslateYTransform(maxOffset: 40),
       if (_on['translateX']!) TranslateXTransform(maxOffset: 60),
-      if (_on['tint']!) TintTransform(color: Colors.black, maxAlpha: 0.65),
+      if (_on['waveY']!) WaveYTransform(amplitude: 22),
+      if (_on['stagger']!) StaggerIndexTransform(offsetX: 18, opacityDip: 0.15),
+      if (_on['shadow']!) ShadowTransform(),
     ]);
   }
 
@@ -169,6 +188,28 @@ class _State extends State<EngineViewportTransformExampleScreen> {
   Widget _applyState(TransformState s, Widget child) {
     Widget w = child;
 
+    // Shadow đổ động — wrap container có boxShadow theo state.
+    if (s.shadowSigma > 0.5) {
+      w = DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.55),
+              blurRadius: s.shadowSigma,
+              offset: Offset(0, s.shadowDy),
+            ),
+          ],
+        ),
+        child: w,
+      );
+    }
+
+    // Hue shift qua ColorFiltered matrix.
+    if (s.hueShift.abs() > 0.001) {
+      w = ColorFiltered(colorFilter: _hueRotationFilter(s.hueShift), child: w);
+    }
+
     // Saturation qua ColorFiltered matrix (chỉ wrap khi cần — đắt).
     if (s.saturation < 0.999) {
       w = ColorFiltered(colorFilter: _saturationFilter(s.saturation), child: w);
@@ -211,6 +252,19 @@ class _State extends State<EngineViewportTransformExampleScreen> {
     return w;
   }
 
+  ColorFilter _hueRotationFilter(double rad) {
+    final cos = math.cos(rad);
+    final sin = math.sin(rad);
+    // Standard hue rotation matrix (luminance-preserving).
+    const lr = 0.213, lg = 0.715, lb = 0.072;
+    return ColorFilter.matrix(<double>[
+      lr + cos * (1 - lr) + sin * (-lr), lg + cos * (-lg) + sin * (-lg), lb + cos * (-lb) + sin * (1 - lb), 0, 0,
+      lr + cos * (-lr) + sin * 0.143, lg + cos * (1 - lg) + sin * 0.140, lb + cos * (-lb) + sin * (-0.283), 0, 0,
+      lr + cos * (-lr) + sin * (-(1 - lr)), lg + cos * (-lg) + sin * lg, lb + cos * (1 - lb) + sin * lb, 0, 0,
+      0, 0, 0, 1, 0,
+    ]);
+  }
+
   ColorFilter _saturationFilter(double sat) {
     // ITU-R BT.601 luminance weights
     const r = 0.213, g = 0.715, b = 0.072;
@@ -238,7 +292,7 @@ class _State extends State<EngineViewportTransformExampleScreen> {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 84,
+            height: 180,
             child: SingleChildScrollView(
               child: Wrap(
                 spacing: 6,

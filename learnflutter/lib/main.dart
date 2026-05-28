@@ -27,10 +27,10 @@ import 'package:learnflutter/core/services/talker/app_talker.dart';
 import 'package:learnflutter/core/services/log/log_file_service.dart';
 import 'package:learnflutter/core/services/log/daily_log_scheduler.dart';
 import 'package:learnflutter/core/services/log/log_google_chat.dart';
+import 'package:learnflutter/core/services/shorebird/shorebird_service.dart';
 
 import 'app/localization/app_local_translate.dart';
 import 'app/theme/habit_builder_theme.dart';
-// import 'package:shorebird/shorebird.dart';
 
 /// Hàm main đóng vai trò là điểm khởi đầu chính thức cho toàn bộ vòng đời của ứng dụng Flutter.
 /// Tại đây, chúng tôi thực hiện việc đảm bảo các ràng buộc giao diện được khởi tạo chính xác, thiết lập dịch vụ giám sát bàn phím và khởi động các thông số cấu hình hệ thống.
@@ -208,6 +208,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.paused) {
       AppTalker.saveHistoryToFile();
     }
+    
+    // Khi app quay lại từ background, tự động check bản vá Shorebird OTA
+    if (state == AppLifecycleState.resumed) {
+      ShorebirdService.instance.checkUpdate();
+    }
   }
 
   @override
@@ -217,6 +222,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     // Khôi phục lịch gửi log nếu user đã bật trước đó
     DailyLogScheduler.restoreIfEnabled();
+
+    // Kiểm tra bản cập nhật Shorebird OTA lần đầu
+    ShorebirdService.instance.checkUpdate();
 
     /// Hệ thống localization được khởi tạo đồng thời với việc định nghĩa các mã ngôn ngữ và các bản đồ dịch thuật tương ứng cho từng vùng quốc gia.
     /// Chúng tôi thiết lập tiếng Việt làm ngôn ngữ mặc định khi ứng dụng bắt đầu khởi chạy để tối ưu hóa trải nghiệm cho nhóm đối tượng người dùng chính.

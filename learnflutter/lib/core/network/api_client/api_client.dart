@@ -7,6 +7,7 @@ import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 import 'interceptors/auth_interceptor.dart';
+import 'interceptors/curl_logger.dart';
 import 'interceptors/error_interceptor.dart';
 import 'interceptors/retry_interceptor.dart';
 import 'api_exception.dart';
@@ -64,6 +65,7 @@ class ApiClient {
       AuthInterceptor(this),
       RetryInterceptor(dio: dio, maxRetries: 2),
       ErrorInterceptor(),
+      CurlLogger(),
       TalkerDioLogger(
         talker: AppTalker.instance,
         settings: const TalkerDioLoggerSettings(

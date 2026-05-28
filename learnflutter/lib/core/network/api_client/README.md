@@ -9,6 +9,7 @@ Module Network của dự án được xây dựng dựa trên gói `Dio`, hỗ 
   - `RetryInterceptor`: Tự động thử lại request khi gặp lỗi mạng/timeout (mặc định 2 lần).
   - `ErrorInterceptor`: Chuyển đổi mọi lỗi về lớp `ApiException` thống nhất.
   - `TalkerDioLogger`: Log thông tin request/response chuyên nghiệp màu sắc trên console.
+  - `CurlLogger`: In ra lệnh `curl` tương ứng với mỗi request (đầy đủ method, headers, body động: JSON / FormData / x-www-form-urlencoded / String) — tiện copy-paste để debug lại trên terminal hoặc Postman.
 - **Caching:** Hỗ trợ In-memory cache với thời gian sống (TTL).
 - **Multi-domain:** Dễ dàng thay đổi `baseUrl` cho từng request cụ thể.
 - **Download:** Hỗ trợ tải file với tiến độ (progress callback).
@@ -76,3 +77,12 @@ try {
 1. **Interceptors:** Khi cần thêm logic chung cho mọi request (ví dụ: gắn thêm header đặc thù), hãy tạo file mới trong thư mục `interceptors/` thay vì viết trực tiếp vào `api_client.dart`.
 2. **Cache Key:** Cơ chế tạo key của `ApiCacheStore` dựa trên Path + Params + Body. Nếu API trả về dữ liệu cá nhân hóa (Personalized), hãy đảm bảo Token được bao gồm trong request để tránh việc user A nhận được cache của user B.
 3. **Log:** Sử dụng `TalkerDioLogger` để debug. Không nên dùng `print` thủ công trong Interceptors.
+4. **CurlLogger:** Mặc định bật cho cả success/error. Có thể tuỳ chỉnh khi khởi tạo:
+   ```dart
+   CurlLogger(
+     printOnSuccess: true,
+     printOnError: true,
+     convertFormData: true, // chuyển FormData thành các flag -F
+   )
+   ```
+   Trong production, cân nhắc tắt hoặc gỡ interceptor này để tránh log dữ liệu nhạy cảm (token, body).

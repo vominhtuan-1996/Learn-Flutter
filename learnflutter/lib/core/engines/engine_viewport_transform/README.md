@@ -23,7 +23,13 @@ core/engines/engine_viewport_transform/
 │   ├── skew_transform.dart             # Skew X/Y theo dấu khoảng cách
 │   ├── translate_y_transform.dart      # Parallax Y
 │   ├── translate_x_transform.dart      # Parallax X
-│   └── z_index_transform.dart          # zIndex cao ở tâm — cho stack overlay
+│   ├── z_index_transform.dart          # zIndex cao ở tâm — cho stack overlay
+│   ├── wave_y_transform.dart           # Sóng sin chạy dọc list theo scrollOffset + index
+│   ├── elastic_overshoot_transform.dart# Bell curve scale, overshoot ở tâm
+│   ├── hue_shift_transform.dart        # Dịch hue theo signed distance
+│   ├── velocity_stretch_transform.dart # Squash/stretch theo velocity cuộn
+│   ├── stagger_index_transform.dart    # So le item lẻ/chẵn
+│   └── shadow_transform.dart           # Box shadow đậm ở tâm, nhẹ ở biên
 └── demo/
     └── engine_viewport_transform_example_screen.dart
 ```
@@ -140,6 +146,9 @@ class HueRotationTransform extends ViewportTransform {
 | `saturation` | `1.0` | 0 = grayscale — apply qua `ColorFiltered` matrix |
 | `tintARGB` | `null` | overlay color (alpha tăng → tint mạnh) |
 | `zIndex` | `0.0` | cho list custom dùng Stack để item ở tâm nổi lên |
+| `hueShift` | `0.0` | radian dịch hue — apply qua `ColorFiltered` hue rotation matrix |
+| `shadowSigma` | `0.0` | blur radius cho `BoxShadow` |
+| `shadowDy` | `0.0` | offset Y cho `BoxShadow` |
 
 ### `ViewportPipeline`
 | Method | Mô tả |
@@ -162,6 +171,12 @@ class HueRotationTransform extends ViewportTransform {
 | `TranslateYTransform` | `maxOffset`, `invert` | Parallax Y. |
 | `TranslateXTransform` | `maxOffset`, `invert` | Parallax X. |
 | `ZIndexTransform` | `maxZ` | Item ở tâm có `zIndex` cao — dùng với Stack custom. |
+| `WaveYTransform` | `amplitude`, `frequency`, `indexPhase` | Sóng sin lan dọc list theo `scrollOffset + index*phase`. |
+| `ElasticOvershootTransform` | `peakScale`, `minScale`, `curvePower` | Bell curve — scale > 1 ở tâm (overshoot), giảm về `minScale` ở biên. |
+| `HueShiftTransform` | `maxHueDegrees` | Dịch hue signed — item trên/dưới ngả 2 phía hue khác nhau. |
+| `VelocityStretchTransform` | `maxStretchY`, `velocityCap` | Squash & stretch — cuộn nhanh → kéo Y, ép X. |
+| `StaggerIndexTransform` | `offsetX`, `opacityDip` | So le item lẻ/chẵn theo X + giảm opacity item lệch. |
+| `ShadowTransform` | `maxSigma`, `maxDy` | BoxShadow đậm ở tâm (item "bay"), tắt dần ở biên. |
 
 ### Map composite — gợi ý wrap order
 

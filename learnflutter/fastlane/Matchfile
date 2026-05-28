@@ -1,0 +1,7 @@
+git_url("https://github.com/example/certificates") # Placeholder: Thay thế bằng URL git lưu trữ certificates của bạn
+
+storage_mode("git")
+type("enterprise") # Sử dụng enterprise profile
+
+app_identifier(["com.example.app"]) # Placeholder
+username("apple@example.com") # Placeholder

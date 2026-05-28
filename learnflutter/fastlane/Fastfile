@@ -1,0 +1,61 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Enterprise Release"
+  lane :enterprise do
+    # Placeholder: Cập nhật workspace và scheme thực tế của dự án
+    build_app(
+      workspace: "ios/Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "enterprise",
+      skip_build_archive: true,
+      archive_path: "build/ios/archive/Runner.xcarchive",
+      output_directory: "build/ios/ipa",
+      export_team_id: "7755R4CX4U",
+      export_options: {
+        method: "enterprise",
+        teamID: "7755R4CX4U",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          # Placeholder: Thay thế Bundle ID và Provisioning Profile Name
+          "com.fpt.isc.prod" => "dis_prod"
+        }
+      }
+    )
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_IOS_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      groups: "testers",
+      release_notes: "Enterprise build"
+    )
+  end
+
+  desc "OTA Patch"
+  lane :patch do
+    sh("shorebird patch ios")
+  end
+end
+
+platform :android do
+
+  desc "Enterprise Android"
+  lane :enterprise do
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_ANDROID_APP_ID"],
+      groups: "tester",
+      release_notes: "Enterprise Android"
+    )
+  end
+
+  desc "OTA Patch"
+  lane :patch do
+    sh("shorebird patch android")
+  end
+end

@@ -15,7 +15,7 @@ case $choice in
     source shore_bird_ci_cd/shorebird.env 
     
     yes | shorebird release ios --flutter-version=3.27.4 --no-codesign
-    cd ios || exit
+    cd learnflutter/ios || exit
     fastlane shorebird_release
     ;;
   "Patch")
@@ -23,7 +23,7 @@ case $choice in
     source shore_bird_ci_cd/shorebird.env 
     shorebird patch ios --no-codesign
     # -- --version 3.27.4 --no-codesign
-    cd ios || exit
+    cd learnflutter/ios || exit
     fastlane shorebird_release
     ;;
   "Preview")

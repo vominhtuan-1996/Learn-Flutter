@@ -33,6 +33,13 @@ class TransformState {
 
   /// Chỉ số xếp lớp — widget có thể render Stack theo zIndex để item ở tâm nổi trên.
   double zIndex = 0.0;
+
+  /// Dịch chuyển hue (radian) — apply qua `ColorFiltered` hue-rotation matrix.
+  double hueShift = 0.0;
+
+  /// Bóng đổ động — sigma blur + offset dy. Widget tự map.
+  double shadowSigma = 0.0;
+  double shadowDy = 0.0;
 }
 
 /// Lớp cơ sở cho các phép toán transform dựa vào khoảng cách của Item và Viewport.
