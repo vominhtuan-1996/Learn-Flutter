@@ -10,6 +10,11 @@ import GoogleMaps
   ) -> Bool {
       GMSServices.provideAPIKey("AIzaSyAZXckNX4q4JSz30_6b2BvdDMUT-JzrUNM")
     GeneratedPluginRegistrant.register(with: self)
+
+    if let registrar = self.registrar(forPlugin: "ScannerBridge") {
+      ScannerBridge.shared.register(with: registrar)
+    }
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
 
   }

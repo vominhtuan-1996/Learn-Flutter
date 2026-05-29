@@ -9,7 +9,7 @@ import 'package:learnflutter/core/constants/define_constraint.dart';
 import 'package:learnflutter/features/open_file/model/item_directory_model.dart';
 import 'package:learnflutter/features/open_file/widget_item/item_widget.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
-import 'package:open_file_plus/open_file_plus.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
 class OpenFileScreen extends StatefulWidget {
@@ -88,7 +88,7 @@ class _MyOpenFileScreen extends State<OpenFileScreen> {
   }
 
   Future<void> openFile(String path) async {
-    final result = await OpenFile.open(path);
+    final result = await OpenFilex.open(path);
     setState(() {
       _openResult = "type=${result.type}  message=${result.message}";
     });

@@ -42,13 +42,32 @@ platform :android do
 
   desc "Enterprise Android"
   lane :enterprise do
-    gradle(
-      task: "bundle",
-      build_type: "Release"
-    )
+    # Firebase App Distribution không upload AAB được nếu project chưa link
+    # Google Play account. Build APK riêng từ AAB của Shorebird để upload.
+    aab_path = File.expand_path("../build/app/outputs/bundle/release/app-release.aab", __dir__)
+    unless File.exist?(aab_path)
+      UI.user_error!("Không tìm thấy AAB tại #{aab_path}. Hãy đảm bảo `shorebird release android` chạy thành công trước.")
+    end
+
+    # Convert AAB → APK qua bundletool để không phải build lại (giữ Shorebird engine)
+    apk_path = File.expand_path("../build/app/outputs/apk/release/app-release.apk", __dir__)
+    bundletool_jar = ENV["BUNDLETOOL_JAR"] || File.expand_path("~/Downloads/bundletool.jar")
+
+    if File.exist?(bundletool_jar)
+      apks_path = "/tmp/app-release.apks"
+      sh("java -jar #{bundletool_jar} build-apks --bundle=#{aab_path} --output=#{apks_path} --mode=universal --overwrite")
+      sh("rm -rf /tmp/apks_extract && mkdir /tmp/apks_extract && unzip -o #{apks_path} -d /tmp/apks_extract")
+      FileUtils.mkdir_p(File.dirname(apk_path))
+      FileUtils.cp("/tmp/apks_extract/universal.apk", apk_path)
+    else
+      UI.user_error!("bundletool.jar không tồn tại tại #{bundletool_jar}. Tải về từ https://github.com/google/bundletool/releases và set BUNDLETOOL_JAR env, hoặc đặt vào ~/Downloads/bundletool.jar.")
+    end
 
     firebase_app_distribution(
       app: ENV["FIREBASE_ANDROID_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      android_artifact_type: "APK",
+      android_artifact_path: apk_path,
       groups: "tester",
       release_notes: "Enterprise Android"
     )

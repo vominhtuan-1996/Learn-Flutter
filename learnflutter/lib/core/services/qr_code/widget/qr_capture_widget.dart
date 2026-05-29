@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:gal/gal.dart';
 import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/extension/extension_string.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -41,8 +41,7 @@ class _QrCaptureWidgetState extends State<QrCaptureWidget> {
 
   Future<void> _captureQR() async {
     try {
-      RenderRepaintBoundary boundary =
-          _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      RenderRepaintBoundary boundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
@@ -56,31 +55,28 @@ class _QrCaptureWidgetState extends State<QrCaptureWidget> {
   }
 
   Future<void> _saveImageToGallery(Uint8List imageBytes) async {
-    // Yêu cầu quyền
-    var status = await Permission.storage.request();
-    if (!status.isGranted) {
-      print('❌ Không có quyền truy cập bộ nhớ.');
-      return;
-    }
     try {
-      final result = await ImageGallerySaver.saveImage(
+      final hasAccess = await Gal.hasAccess(toAlbum: true);
+      if (!hasAccess) {
+        final granted = await Gal.requestAccess(toAlbum: true);
+        if (!granted) {
+          print('❌ Không có quyền truy cập bộ nhớ.');
+          return;
+        }
+      }
+      await Gal.putImageBytes(
         imageBytes,
-        quality: 100,
         name: "qr_code_${DateTime.now().millisecondsSinceEpoch}",
       );
-      if (result['isSuccess'] == true) {
-        print('✅ Đã lưu ảnh vào album.');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('✅ Đã lưu ảnh vào thư viện.')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('❌ Lưu ảnh thất bại.')),
-        );
-      }
-    } catch (e) {
-      print('❌ Lỗi khi kiểm tra quyền truy cập bộ nhớ: $e');
-      return;
+      print('✅ Đã lưu ảnh vào album.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('✅ Đã lưu ảnh vào thư viện.')),
+      );
+    } on GalException catch (e) {
+      print('❌ Gal lỗi: ${e.type.message}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('❌ Lưu ảnh thất bại.')),
+      );
     }
   }
 

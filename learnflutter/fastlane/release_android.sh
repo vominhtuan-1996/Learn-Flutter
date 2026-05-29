@@ -18,6 +18,6 @@ else
   shorebird release android
 fi
 echo "🌊 Starting Fastlane Enterprise Build for Android..."
-fastlane android enterprise
+bundle exec fastlane android enterprise
 
 echo "✅ Android Release Pipeline Completed!"

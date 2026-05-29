@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                     icon: Icons.facebook_rounded,
                                     label: 'Tiếp tục với Facebook',
                                     onTap: () async {
-                                      await context.read<LoginCubit>().loginWithFacebook();
+                                      // await context.read<LoginCubit>().loginWithFacebook();
                                       if (mounted) {
                                         Navigator.push(
                                           context,

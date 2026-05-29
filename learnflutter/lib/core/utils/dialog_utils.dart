@@ -16,7 +16,7 @@ import 'package:learnflutter/core/utils/extension/extension_context.dart';
 import 'package:learnflutter/core/utils/image_helper.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:open_file_plus/open_file_plus.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:learnflutter/core/engines/engine_bottom_sheet/engine_bottom_sheet.dart';
 
@@ -359,7 +359,7 @@ class DialogUtils {
                       if (context.mounted) {
                         dismissPopup(context, complete: () {
                           if (snapshot.data != null) {
-                            OpenFile.open(snapshot.data as String);
+                            OpenFilex.open(snapshot.data as String);
                           }
                         });
                       }

@@ -9,7 +9,7 @@ import 'package:learnflutter/features/open_file/model/item_directory_model.dart'
 import 'package:learnflutter/features/open_file/widget_item/get_file_screen.dart';
 import 'package:learnflutter/core/utils/dialog_utils.dart';
 import 'package:learnflutter/app/theme/app_colors.dart';
-import 'package:open_file_plus/open_file_plus.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:xml/xml.dart';
 
 class ItemOpenFileWidget extends StatefulWidget {
@@ -65,7 +65,7 @@ class _ItemOpenFileWidgetState extends State<ItemOpenFileWidget> {
         },
       );
     } else if (model.type == TypeDirectory.File.name) {
-      await OpenFile.open('${model.path}');
+      await OpenFilex.open('${model.path}');
     } else {
       List listDirectory = model.absolute!.listSync();
       print(listDirectory);

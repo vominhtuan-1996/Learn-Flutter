@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:learnflutter/features/login/model/login_request_model.dart';
 import 'package:learnflutter/features/login/repos/login_repository.dart';
@@ -72,28 +71,28 @@ class LoginCubit extends Cubit<LoginState> {
   /// Nó gọi hàm login của FacebookAuth SDK để yêu cầu quyền truy cập vào thông tin hồ sơ công khai và email của người dùng.
   /// Nếu người dùng chấp thuận, mã thông báo truy cập (Access Token) sẽ được trích xuất và gửi về backend để kiểm tra tính hợp lệ.
   /// Toàn bộ quá trình được bảo mật nghiêm ngặt và đồng bộ với trạng thái ứng dụng nhằm mang lại trải nghiệm đăng nhập không mật khẩu thuận tiện.
-  Future<void> loginWithFacebook() async {
-    try {
-      emit(state.cloneWith(isLoading: true, errorMessage: null));
+  // Future<void> loginWithFacebook() async {
+  //   try {
+  //     emit(state.cloneWith(isLoading: true, errorMessage: null));
 
-      final LoginResult result = await FacebookAuth.instance.login();
+  //     final LoginResult result = await FacebookAuth.instance.login();
 
-      if (result.status == LoginStatus.success) {
-        final response = await _repository.loginWithSocial(
-          provider: 'facebook',
-          token: result.accessToken?.tokenString ?? '',
-        );
-        emit(state.cloneWith(isLoading: false, loginResponse: response));
-      } else {
-        emit(state.cloneWith(
-          isLoading: false,
-          errorMessage: result.message ?? 'Facebook login failed',
-        ));
-      }
-    } catch (e) {
-      emit(state.cloneWith(isLoading: false, errorMessage: e.toString()));
-    }
-  }
+  //     if (result.status == LoginStatus.success) {
+  //       final response = await _repository.loginWithSocial(
+  //         provider: 'facebook',
+  //         token: result.accessToken?.tokenString ?? '',
+  //       );
+  //       emit(state.cloneWith(isLoading: false, loginResponse: response));
+  //     } else {
+  //       emit(state.cloneWith(
+  //         isLoading: false,
+  //         errorMessage: result.message ?? 'Facebook login failed',
+  //       ));
+  //     }
+  //   } catch (e) {
+  //     emit(state.cloneWith(isLoading: false, errorMessage: e.toString()));
+  //   }
+  // }
 
   /// Phương thức loginWithApple tích hợp giải pháp xác thực bảo mật của Apple dành cho người dùng thiết bị iOS và macOS.
   /// Nó sử dụng plugin sign_in_with_apple để thực hiện các yêu cầu xác thực sinh trắc học hoặc mã pin của thiết bị.

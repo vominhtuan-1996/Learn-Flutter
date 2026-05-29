@@ -6,7 +6,7 @@ import 'package:camerawesome/pigeon.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
-import 'package:open_file_plus/open_file_plus.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CameraWeSomeScreen extends StatelessWidget {
@@ -129,6 +129,6 @@ Future<String> path(CaptureMode captureMode) async {
 extension XfileOpen on XFile {
   Future<void> open() async {
     final spath = this.path;
-    await OpenFile.open(spath);
+    await OpenFilex.open(spath);
   }
 }

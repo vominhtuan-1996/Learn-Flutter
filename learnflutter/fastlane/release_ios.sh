@@ -7,6 +7,10 @@ cd "$PROJECT_ROOT"
 
 echo "🚀 Starting iOS Shorebird Release..."
 
+# Force regen toàn bộ plugin registrants + Generated.xcconfig từ pubspec.yaml
+# (workaround bug Flutter 3.29.3 không tự sync khi pub get).
+bash scripts/sync_flutter_plugins.sh
+
 # Extract flutter version from .fvmrc if it exists
 if [ -f .fvmrc ]; then
   FLUTTER_VERSION=$(grep -o '"flutter": "[^"]*' .fvmrc | cut -d'"' -f4)

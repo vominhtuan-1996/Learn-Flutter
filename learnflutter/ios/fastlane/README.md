@@ -15,13 +15,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios custom_lane
+### ios build_ios
 
 ```sh
-[bundle exec] fastlane ios custom_lane
+[bundle exec] fastlane ios build_ios
 ```
 
-Description of what the lane does
+Build iOS IPA with dynamic scheme and get the IPA path
 
 ----
 

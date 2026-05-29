@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:learnflutter/core/engines/engine_dialog/app_dialog_engine.dart';
+import 'package:learnflutter/core/services/local_notification/local_notification_service.dart';
+import 'package:learnflutter/core/utils/utils_helper.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 /// Dịch vụ quản lý các tác vụ liên quan đến Shorebird OTA Patch.
@@ -10,6 +13,19 @@ class ShorebirdService {
   static final ShorebirdService instance = ShorebirdService._();
 
   final ShorebirdUpdater _updater = ShorebirdUpdater();
+
+  /// Payload + ID cho noti "tap để mở lại app áp dụng patch".
+  static const int _restartNotiId = 7700001;
+  static const String restartPayload = 'shorebird:restart_to_apply_patch';
+
+  /// Wire vào `LocalNotificationService.init(onTap: ...)` trong main.
+  /// Khi user bấm noti có payload [restartPayload] → restart app (cold launch
+  /// để Shorebird engine load patch mới).
+  static Future<void> handleNotificationTap(String? payload) async {
+    if (payload != restartPayload) return;
+    debugPrint('Shorebird: User tapped restart noti → restarting app...');
+    await Restart.restartApp();
+  }
 
   // Trạng thái debounce để tránh kiểm tra liên tục
   DateTime? _lastCheckedTime;
@@ -44,8 +60,9 @@ class ShorebirdService {
       _lastCheckedTime = DateTime.now();
 
       if (isUpdateAvailable) {
-        debugPrint('Shorebird: Có bản vá mới! Hiển thị dialog cập nhật.');
-        _showUpdateDialog();
+        debugPrint('Shorebird: Có bản vá mới! Auto-download (silent).');
+        // Auto flow: show simulating dialog + download, không cần user confirm.
+        await _startSilentDownloadAndRestart();
       } else {
         debugPrint('Shorebird: Hiện không có bản vá nào mới.');
       }
@@ -56,83 +73,70 @@ class ShorebirdService {
     }
   }
 
-  /// Hiển thị AppDialogEngine với giao diện cập nhật
-  void _showUpdateDialog() {
-    AppDialogEngine.showUpdatePatch(
-      version: 'Bản vá mới', // Shorebird không trả về version name cụ thể của patch, nên dùng chuỗi mặc định
-      changelog: ['Sửa lỗi ứng dụng & cải thiện hiệu suất', 'Tối ưu hoá trải nghiệm giao diện người dùng', 'Được phân phối qua OTA (Over-The-Air)'],
-      progress: 0.0,
-      isDownloading: false,
-      onUpdate: () async {
-        // Callback khi user ấn cập nhật ngay
-        _startDownloadAndRestart();
-      },
-    );
+  /// Đóng dialog hiện tại (nếu còn).
+  void _dismissCurrentDialog() {
+    final nav = UtilsHelper.navigatorKey.currentState;
+    if (nav != null && nav.canPop()) {
+      nav.pop();
+    }
   }
 
-  /// Xử lý tải bản vá về và khởi động lại
-  Future<void> _startDownloadAndRestart() async {
+  /// Auto-download bản vá silently (không yêu cầu user confirm) + restart
+  /// ngay khi tải xong. UI chỉ là dialog progress mô phỏng để user biết
+  /// app đang cập nhật, không có nút bấm.
+  Future<void> _startSilentDownloadAndRestart() async {
     try {
-      // Kiểm tra status hiện tại trước khi tải.
-      // Nếu patch đã được tải sẵn từ phiên trước (cache) -> chỉ cần khởi động lại.
-      final status = await _updater.checkForUpdate();
+      // Mở dialog download (autoSimulate để progress tự chạy — Shorebird SDK
+      // không expose progress thật).
+      unawaited(
+        AppDialogEngine.showUpdatePatch(
+          version: 'Bản vá mới',
+          changelog: const ['Đang tải bản cập nhật mới...'],
+          progress: 0.0,
+          isDownloading: true,
+          autoSimulate: true,
+          onUpdate: () {},
+        ),
+      );
 
-      if (status == UpdateStatus.restartRequired) {
-        AppDialogEngine.success(
-          'Bản vá đã sẵn sàng. Vui lòng khởi động lại ứng dụng để áp dụng.',
-          title: 'Đã có bản vá',
-        );
-        return;
-      }
-
-      if (status == UpdateStatus.upToDate) {
-        AppDialogEngine.info(
-          'Ứng dụng đã ở phiên bản mới nhất.',
-          title: 'Không có bản vá',
-        );
-        return;
-      }
-
-      if (status != UpdateStatus.outdated) {
-        // unavailable: updater không có trong build (flutter build thường, không phải shorebird release)
-        AppDialogEngine.error('Thiết bị hiện không hỗ trợ cập nhật OTA.', title: 'Không hỗ trợ');
-        return;
-      }
-
-      AppDialogEngine.info('Đang tải bản vá...', title: 'Đang tải');
+      // Đợi dialog mount xong rồi mới bắt đầu download
+      await Future<void>.delayed(const Duration(milliseconds: 50));
 
       await _updater.update();
 
-      // Sau khi update() thành công, trạng thái phải là restartRequired.
+      // Confirm patch sẵn sàng → auto restart, không hỏi user.
       final after = await _updater.checkForUpdate();
+      _dismissCurrentDialog();
+
       if (after == UpdateStatus.restartRequired) {
-        AppDialogEngine.success(
-          'Bản vá đã tải xong. Ứng dụng sẽ áp dụng trong lần khởi động tiếp theo.',
-          title: 'Hoàn tất',
-        );
+        debugPrint('Shorebird: Patch tải xong → push noti để user mở lại app.');
+        await _showRestartNotification();
       } else {
-        // Không có thay đổi sau update — patch có thể đã được áp dụng từ cache mà không cần tải.
-        AppDialogEngine.info('Không có bản vá mới cần tải.', title: 'Đã cập nhật');
+        debugPrint('Shorebird: Update xong nhưng status không phải restartRequired ($after).');
       }
     } on UpdateException catch (e) {
+      _dismissCurrentDialog();
       debugPrint('Shorebird: UpdateException [${e.reason}]: ${e.message}');
-      switch (e.reason) {
-        case UpdateFailureReason.noUpdate:
-          AppDialogEngine.info('Không có bản vá mới.', title: 'Đã cập nhật');
-          break;
-        case UpdateFailureReason.downloadFailed:
-          AppDialogEngine.error('Tải bản vá thất bại. Kiểm tra kết nối mạng và thử lại.', title: 'Lỗi tải');
-          break;
-        case UpdateFailureReason.installFailed:
-          AppDialogEngine.error('Cài đặt bản vá thất bại.', title: 'Lỗi cài đặt');
-          break;
-        case UpdateFailureReason.unknown:
-          AppDialogEngine.error('Không thể cập nhật. Vui lòng thử lại sau.', title: 'Lỗi');
-          break;
-      }
+      // Im lặng với user — đây là silent flow. Chỉ log debug. Nếu muốn
+      // toast cho dev, gỡ comment bên dưới.
+      // AppDialogEngine.error('Tải bản vá thất bại.', title: 'Lỗi');
     } catch (e) {
+      _dismissCurrentDialog();
       debugPrint('Shorebird: Lỗi tải bản vá: $e');
-      AppDialogEngine.error('Không thể cập nhật, vui lòng thử lại sau.', title: 'Lỗi');
+    }
+  }
+
+  /// Push local noti — tap noti sẽ gọi [handleNotificationTap] → restart app.
+  Future<void> _showRestartNotification() async {
+    try {
+      await LocalNotificationService.instance.show(
+        id: _restartNotiId,
+        title: 'Đã có bản cập nhật mới',
+        body: 'Bấm để khởi động lại và áp dụng bản vá.',
+        payload: restartPayload,
+      );
+    } catch (e) {
+      debugPrint('Shorebird: Không show được noti restart: $e');
     }
   }
 }

@@ -69,3 +69,6 @@ mcp
 
 # FVM Version Cache
 .fvm/
+# Local secrets
+.evn
+build_android.ps1
