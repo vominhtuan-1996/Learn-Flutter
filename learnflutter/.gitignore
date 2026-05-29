@@ -48,7 +48,7 @@ app.*.map.json
 /android/app/release
 test/widget_test/
 windows
-
+android/app
 # Clone build platforms (optional)
 linux/
 macos/
