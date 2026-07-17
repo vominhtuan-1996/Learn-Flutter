@@ -826,6 +826,18 @@ class _TestScreenState extends State<TestScreen> {
                 accent: Color(0xFF2DD4BF),
               ),
               const _FeatureCard(
+                title: '🏐 Match Entry',
+                description: 'Badminton Championship — lập lịch trận đấu với live preview.',
+                routeName: Routes.matchEntry,
+                accent: Color(0xFFD9FF3A),
+              ),
+              const _FeatureCard(
+                title: '📍 Custom Markers Test',
+                description: 'Google Map với custom markers, rich info window, & action buttons.',
+                routeName: Routes.googleMapCustomMarkers,
+                accent: Color(0xFF10B981),
+              ),
+              const _FeatureCard(
                 title: '🔔 Local Notification',
                 description: 'Service notification cục bộ + custom in-app banner widget.',
                 routeName: Routes.localNotificationDemo,

@@ -293,6 +293,38 @@ class GoogleMapCubit extends BaseCubit<GoogleMapState> {
   }
 
   // ─────────────────────────────────────────────
+  // Custom Info Window
+  // ─────────────────────────────────────────────
+
+  /// Hiển thị custom info window cho marker được select.
+  /// Tìm [CustomMarkerData] từ marker config hoặc dùng default.
+  void showMarkerInfo(String markerId, CustomMarkerData? customData) {
+    emit(state.copyWith(
+      selectedMarkerId: markerId,
+      selectedMarkerData: customData,
+      showInfoWindow: true,
+    ));
+  }
+
+  /// Ẩn custom info window.
+  void hideMarkerInfo() {
+    emit(state.copyWith(
+      selectedMarkerId: null,
+      selectedMarkerData: null,
+      showInfoWindow: false,
+    ));
+  }
+
+  /// Toggle visibility của custom info window.
+  void toggleMarkerInfo(String markerId, CustomMarkerData? customData) {
+    if (state.selectedMarkerId == markerId && state.showInfoWindow) {
+      hideMarkerInfo();
+    } else {
+      showMarkerInfo(markerId, customData);
+    }
+  }
+
+  // ─────────────────────────────────────────────
   // Cluster Controls
   // ─────────────────────────────────────────────
 

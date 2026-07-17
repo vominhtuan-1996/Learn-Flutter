@@ -1,7 +1,9 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/features/auth/screens/login_screen.dart';
 import 'package:learnflutter/features/flutter_3d/pages/flutter_3d_screen.dart';
+import 'package:learnflutter/features/match_entry/screens/match_entry_screen.dart';
 import 'package:learnflutter/features/login/screens/login_page.dart';
 import 'package:learnflutter/shared/components/transformer_page/transformer_page_test_screen.dart';
 import 'package:learnflutter/shared/components/base_loading_draggable/draggable_example_screen.dart';
@@ -40,6 +42,7 @@ import 'package:learnflutter/features/map/map_screen.dart';
 import 'package:learnflutter/features/map/example/example_map_screen.dart';
 import 'package:learnflutter/features/map/offline/offline_mbtiles_map_screen.dart';
 import 'package:learnflutter/features/map/google_map_base/google_map_base_screen.dart';
+import 'package:learnflutter/features/map/google_map_custom_markers/google_map_custom_markers.dart';
 import 'package:learnflutter/features/map/google_map_offline/google_map_offline_screen.dart';
 import 'package:learnflutter/features/map/flutter_map_osm/flutter_map_osm_screen.dart';
 import 'package:learnflutter/features/material/component/material_badge.dart';
@@ -287,6 +290,7 @@ class Routes {
   static const String menu = "menu";
   static const String log = "log";
   static const String pickFile = "pick_file_screen";
+  static const String matchEntry = "match_entry_screen";
   static const String scanScreen = 'scan_screen';
   static const String segmented = 'segmented_widget';
   static const String balanceBar = 'balanece_bar';
@@ -313,6 +317,7 @@ class Routes {
   static const String login = "login_screen";
   static const String transformerPageView = "transformer_page_view";
   static const String googleMapBase = 'google_map_base';
+  static const String googleMapCustomMarkers = 'google_map_custom_markers';
   static const String newLogin = "/new_login";
   static const String newsScreen = "/news_screen";
   static const String googleMapOffline = "/google_map_offline";
@@ -926,6 +931,14 @@ class Routes {
           routeSettings: RouteSettings(name: googleMapBase),
           builder: (_) => const GoogleMapBaseScreen(),
         );
+      case googleMapCustomMarkers:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: googleMapCustomMarkers),
+          builder: (_) => BlocProvider(
+            create: (_) => TestMarkersCubit(),
+            child: const CustomMarkersTestScreen(),
+          ),
+        );
       case materialBadge:
         final param = arguments.data as RouterMaterialModel;
         return SlideRightRoute(
@@ -1099,6 +1112,11 @@ class Routes {
         return SlideRightRoute(routeSettings: RouteSettings(name: reducerScreen), builder: (_) => LogScreen());
       case pickFile:
         return SlideRightRoute(routeSettings: RouteSettings(name: pickFile), builder: (_) => PickFileScreen());
+      case matchEntry:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: matchEntry),
+          builder: (_) => const MatchEntryScreen(),
+        );
       case scanScreen:
         return SlideRightRoute(routeSettings: RouteSettings(name: scanScreen), builder: (_) => ScanScreen());
       case segmented:

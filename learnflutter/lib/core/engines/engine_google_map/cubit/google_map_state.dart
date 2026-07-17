@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:learnflutter/core/engines/engine_google_map/models/map_overlay_models.dart';
 
 /// Trạng thái hiển thị bản đồ.
 enum MapDisplayStatus { idle, loading, error }
@@ -23,6 +24,11 @@ class GoogleMapState extends Equatable {
   final String? errorMessage;
   final CameraPosition? currentCameraPosition;
 
+  // Custom info window state
+  final String? selectedMarkerId;
+  final CustomMarkerData? selectedMarkerData;
+  final bool showInfoWindow;
+
   const GoogleMapState({
     this.markers = const {},
     this.polylines = const {},
@@ -36,6 +42,9 @@ class GoogleMapState extends Equatable {
     this.status = MapDisplayStatus.idle,
     this.errorMessage,
     this.currentCameraPosition,
+    this.selectedMarkerId,
+    this.selectedMarkerData,
+    this.showInfoWindow = false,
   });
 
   factory GoogleMapState.initial() => const GoogleMapState();
@@ -54,6 +63,9 @@ class GoogleMapState extends Equatable {
     MapDisplayStatus? status,
     String? errorMessage,
     CameraPosition? currentCameraPosition,
+    String? selectedMarkerId,
+    CustomMarkerData? selectedMarkerData,
+    bool? showInfoWindow,
   }) {
     return GoogleMapState(
       markers: markers ?? this.markers,
@@ -68,6 +80,9 @@ class GoogleMapState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage,
       currentCameraPosition: currentCameraPosition ?? this.currentCameraPosition,
+      selectedMarkerId: selectedMarkerId ?? this.selectedMarkerId,
+      selectedMarkerData: selectedMarkerData ?? this.selectedMarkerData,
+      showInfoWindow: showInfoWindow ?? this.showInfoWindow,
     );
   }
 
@@ -90,5 +105,9 @@ class GoogleMapState extends Equatable {
         status,
         errorMessage,
         currentCameraPosition,
+        selectedMarkerId,
+        selectedMarkerData?.title,
+        selectedMarkerData?.description,
+        showInfoWindow,
       ];
 }
