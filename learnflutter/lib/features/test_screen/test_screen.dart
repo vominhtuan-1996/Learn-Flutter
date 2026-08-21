@@ -850,6 +850,42 @@ class _TestScreenState extends State<TestScreen> {
                 accent: Color(0xFFA78BFA),
               ),
               const _FeatureCard(
+                title: '🖼 DartCV4 Demo',
+                description: 'OpenCV trong Dart: grayscale, blur, Canny edge, threshold — xử lý ảnh native.',
+                routeName: Routes.dartcvDemo,
+                accent: Color(0xFF0891B2),
+              ),
+              const _FeatureCard(
+                title: '📷 Camera + OpenCV Focus',
+                description: 'Real-time camera stream, OpenCV Canny + findContours — khung focus vào vật thể.',
+                routeName: Routes.cameraOpencv,
+                accent: Color(0xFF059669),
+              ),
+              const _FeatureCard(
+                title: '🤖 Camera + ONNX Detection',
+                description: 'ONNX Runtime + OpenCV — nhận diện sản phẩm in ấn, đo kích thước bằng vật chuẩn.',
+                routeName: Routes.cameraObjectDetect,
+                accent: Color(0xFF7C3AED),
+              ),
+              const _FeatureCard(
+                title: '🌊 Depth Estimation — MiDaS',
+                description: 'MiDaS v2.1 small ONNX — chụp ảnh → phân tích depth → heatmap overlay.',
+                routeName: Routes.cameraDepth,
+                accent: Color(0xFF0F766E),
+              ),
+              const _FeatureCard(
+                title: '📐 Photo Measure',
+                description: 'Chụp/gallery → tap 2 điểm đặt chuẩn → tap đo bất kỳ object, kết quả mm/cm.',
+                routeName: Routes.photoMeasure,
+                accent: Color(0xFFF59E0B),
+              ),
+              const _FeatureCard(
+                title: '🖼 Depth — Gallery Test',
+                description: 'Chọn ảnh từ gallery → MiDaS depth map → blend / depth-only / colormap.',
+                routeName: Routes.depthGallery,
+                accent: Color(0xFF0369A1),
+              ),
+              const _FeatureCard(
                 title: '✨ Shimmer Demo',
                 description: 'Skeleton loading: Box / ListTile / Card + flow gọi API thật.',
                 routeName: Routes.shimmerDemo,

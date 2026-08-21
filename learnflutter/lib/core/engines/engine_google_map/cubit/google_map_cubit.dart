@@ -32,6 +32,25 @@ class GoogleMapCubit extends BaseCubit<GoogleMapState> {
     _mapController = controller;
   }
 
+  /// Gắn controller, auto-tilt 3D và drop marker tại vị trí GPS ngay khi map load xong.
+  void onMapCreatedWithAutoTilt(GoogleMapController controller, CameraPosition initialPosition) {
+    _mapController = controller;
+    emit(state.copyWith(is3DMode: true));
+    Future.microtask(() async {
+      _mapController?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: initialPosition.target,
+            zoom: initialPosition.zoom,
+            bearing: initialPosition.bearing,
+            tilt: 60.0,
+          ),
+        ),
+      );
+      await goToCurrentLocationWithMarker();
+    });
+  }
+
   /// Giải phóng controller khi Widget bị dispose.
   void disposeController() {
     _mapController?.dispose();
@@ -62,6 +81,40 @@ class GoogleMapCubit extends BaseCubit<GoogleMapState> {
     final position = await Geolocator.getCurrentPosition();
     await _mapController?.animateCamera(
       CameraUpdate.newLatLngZoom(LatLng(position.latitude, position.longitude), zoom),
+    );
+  }
+
+  /// Di chuyển đến vị trí GPS và thêm marker icon location tại đó.
+  Future<void> goToCurrentLocationWithMarker({double zoom = 16.0}) async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) return;
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) return;
+    }
+    if (permission == LocationPermission.deniedForever) return;
+
+    final position = await Geolocator.getCurrentPosition();
+    final latLng = LatLng(position.latitude, position.longitude);
+
+    addMarker(MarkerConfig(
+      id: '_current_location',
+      position: latLng,
+      title: 'Vị trí của bạn',
+      snippet: '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}',
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+    ));
+
+    await _mapController?.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: latLng,
+          zoom: zoom,
+          tilt: state.is3DMode ? 60.0 : 0.0,
+        ),
+      ),
     );
   }
 

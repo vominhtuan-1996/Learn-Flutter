@@ -188,6 +188,12 @@ import 'package:learnflutter/features/test_screen/network_queue_demo_screen.dart
 import 'package:learnflutter/features/test_screen/local_notification_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/widgets_gallery_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/shimmer_demo_screen.dart';
+import 'package:learnflutter/features/camera_opencv/camera_depth_screen.dart';
+import 'package:learnflutter/features/camera_opencv/depth_gallery_screen.dart';
+import 'package:learnflutter/features/camera_opencv/photo_measure_screen.dart';
+import 'package:learnflutter/features/camera_opencv/camera_object_detect_screen.dart';
+import 'package:learnflutter/features/camera_opencv/camera_opencv_screen.dart';
+import 'package:learnflutter/features/dartcv/dartcv_demo_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -429,6 +435,12 @@ class Routes {
 
   // talker logger example
   static const String talkerScreen = 'talker_example_screen';
+  static const String dartcvDemo = '/dartcv_demo';
+  static const String cameraOpencv = '/camera_opencv';
+  static const String cameraObjectDetect = '/camera_object_detect';
+  static const String cameraDepth = '/camera_depth';
+  static const String depthGallery = '/depth_gallery';
+  static const String photoMeasure = '/photo_measure';
 
   static String current(BuildContext context) => ModalRoute.of(context)?.settings.name ?? '';
 
@@ -524,6 +536,36 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: shimmerDemo),
           builder: (_) => const ShimmerDemoScreen(),
+        );
+      case dartcvDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: dartcvDemo),
+          builder: (_) => const DartCVDemoScreen(),
+        );
+      case cameraOpencv:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: cameraOpencv),
+          builder: (_) => const CameraOpenCVScreen(),
+        );
+      case cameraObjectDetect:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: cameraObjectDetect),
+          builder: (_) => const CameraObjectDetectScreen(),
+        );
+      case cameraDepth:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: cameraDepth),
+          builder: (_) => const CameraDepthScreen(),
+        );
+      case depthGallery:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: depthGallery),
+          builder: (_) => const DepthGalleryScreen(),
+        );
+      case photoMeasure:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: photoMeasure),
+          builder: (_) => const PhotoMeasureScreen(),
         );
       case testScreen:
         return MaterialPageRoute(

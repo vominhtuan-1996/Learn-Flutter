@@ -46,6 +46,7 @@ class _KeyboardTextFieldExampleScreenState extends State<KeyboardTextFieldExampl
                 fillColor: Colors.white,
                 counterText: '',
               ),
+              showNavigation: true,
             ),
           ),
           SizedBox(height: 16),

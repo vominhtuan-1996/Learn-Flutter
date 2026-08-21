@@ -72,3 +72,8 @@ mcp
 # Local secrets
 .evn
 build_android.ps1
+.venv
+
+# ML models (large binary files — run scripts/download_models.sh)
+assets/models/*.onnx
+assets/models/*.tflite

@@ -56,6 +56,20 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
   /// [_onMapCreated] nhận controller khi bản đồ sẵn sàng.
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
+    // Auto-tilt 3D khi push vào màn hình
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: widget.initialPosition.target,
+            zoom: widget.initialPosition.zoom,
+            bearing: widget.initialPosition.bearing,
+            tilt: 60.0,
+          ),
+        ),
+      );
+      setState(() => _is3DMode = true);
+    });
     if (widget.kmlAssetPath != null) {
       _loadDataFromAsset();
     }
@@ -206,7 +220,7 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
     );
   }
 
-  /// [_goToCurrentLocation] Di chuyển tới vị trí GPS.
+  /// [_goToCurrentLocation] Di chuyển tới vị trí GPS và thêm marker location.
   Future<void> _goToCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) return;
@@ -218,9 +232,30 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
     }
 
     final position = await Geolocator.getCurrentPosition();
+    final latLng = LatLng(position.latitude, position.longitude);
+
+    // Tạo marker location icon tại vị trí hiện tại
+    final locationMarker = Marker(
+      markerId: const MarkerId('current_location'),
+      position: latLng,
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      infoWindow: const InfoWindow(title: 'Vị trí của bạn'),
+    );
+
+    setState(() {
+      _markers.removeWhere((m) => m.markerId.value == 'current_location');
+      _markers.add(locationMarker);
+    });
+
     _mapController.animateCamera(
-      CameraUpdate.newLatLngZoom(
-          LatLng(position.latitude, position.longitude), 16.0),
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: latLng,
+          zoom: 16.0,
+          tilt: _is3DMode ? 60.0 : 0.0,
+          bearing: _lastCameraPosition?.bearing ?? 0,
+        ),
+      ),
     );
   }
 

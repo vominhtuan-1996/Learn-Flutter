@@ -696,7 +696,10 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
                 mapType: state.mapType,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
-                onMapCreated: cubit.onMapCreated,
+                onMapCreated: (controller) => cubit.onMapCreatedWithAutoTilt(
+                  controller,
+                  GoogleMapEngineDemoScreen._initialPosition,
+                ),
                 onCameraMove: cubit.onCameraMove,
               );
             },
@@ -709,11 +712,11 @@ class _GoogleMapEngineDemoBodyState extends State<_GoogleMapEngineDemoBody> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // 1. GPS Location Button
+                // 1. GPS Location Button (with location marker)
                 _FloatingMapButton(
-                  icon: Icons.my_location,
+                  icon: Icons.location_on,
                   tooltip: 'Vị trí của tôi',
-                  onTap: cubit.goToCurrentLocation,
+                  onTap: cubit.goToCurrentLocationWithMarker,
                 ),
                 const SizedBox(height: 12),
 

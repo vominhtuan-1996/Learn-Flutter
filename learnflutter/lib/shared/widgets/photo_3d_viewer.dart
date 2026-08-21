@@ -1,17 +1,20 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-/// [Photo3DViewer] là một widget hiển thị hình ảnh với hiệu ứng nghiêng 3D đặc trưng.
-/// Khi người dùng chạm và kéo trên bề mặt ảnh, widget sẽ tính toán ma trận xoay
-/// Transform Matrix4 để thay đổi góc nhìn của ảnh, kết hợp với hiệu ứng đổ bóng
-/// và lớp phủ ánh sáng (glare) động để tạo cảm giác vật thể 3D thực thụ.
+/// [Photo3DViewer] — full 360° rotation với inertia sau khi thả tay.
+///
+/// - Pan drag: xoay tự do theo X/Y (không clamp)
+/// - Thả tay: inertia tiếp tục quay rồi giảm dần (friction)
+/// - Double-tap: reset về vị trí ban đầu (spring back)
+/// - Glare overlay: RadialGradient CustomPainter, smooth, không rebuild widget
+/// - ValueNotifier + RepaintBoundary: chỉ repaint Transform + glare, image cached
 class Photo3DViewer extends StatefulWidget {
-  /// [imagePath] có thể là một URL (network) hoặc đường dẫn file cục bộ (local).
   final String imagePath;
   final bool isNetworkImage;
   final double width;
   final double height;
-  final double maxTilt;
 
   const Photo3DViewer({
     super.key,
@@ -19,102 +22,153 @@ class Photo3DViewer extends StatefulWidget {
     this.isNetworkImage = false,
     this.width = 300,
     this.height = 400,
-    this.maxTilt = 0.4,
   });
 
   @override
   State<Photo3DViewer> createState() => _Photo3DViewerState();
 }
 
-class _Photo3DViewerState extends State<Photo3DViewer>
-    with SingleTickerProviderStateMixin {
-  /// [_offset] lưu trữ vị trí tương đối của điểm chạm so với tâm widget (trong khoảng -1.0 đến 1.0).
-  /// Giá trị này quyết định hướng và độ lớn của góc xoay Matrix4.
-  Offset _offset = Offset.zero;
+/// Holds accumulated rotation angles (radians) — unclamped, free 360°.
+typedef _Angles = ({double x, double y});
 
-  /// [AnimationController] và [Animation] được sử dụng để tạo hiệu ứng "đàn hồi" (bounce back)
-  /// khi người dùng thả tay, giúp ảnh quay về vị trí phẳng ban đầu một cách mượt mà.
-  late AnimationController _resetCtrl;
-  late Animation<Offset> _resetAnimation;
+class _Photo3DViewerState extends State<Photo3DViewer>
+    with TickerProviderStateMixin {
+  final _notifier = ValueNotifier<_Angles>((x: 0, y: 0));
+
+  // Inertia
+  late final Ticker _ticker;
+  double _velX = 0, _velY = 0; // radians/ms
+  DateTime? _lastTime;
+  static const _friction = 0.92;
+
+  // Spring-back to zero (double-tap)
+  late final AnimationController _springCtrl;
+  late Animation<_Angles> _springAnim;
 
   @override
   void initState() {
     super.initState();
-    _resetCtrl = AnimationController(
+
+    _ticker = createTicker(_onTick);
+
+    _springCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 500),
     );
-
-    _resetAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _resetCtrl, curve: Curves.elasticOut));
-
-    _resetCtrl.addListener(() {
-      setState(() => _offset = _resetAnimation.value);
-    });
+    _springAnim = _buildSpringAnim((x: 0, y: 0));
+    _springCtrl.addListener(() => _notifier.value = _springAnim.value);
   }
 
   @override
   void dispose() {
-    _resetCtrl.dispose();
+    _ticker.dispose();
+    _springCtrl.dispose();
+    _notifier.dispose();
     super.dispose();
   }
 
-  /// [_onPanUpdate] chuẩn hóa tọa độ chạm dựa trên kích thước thực tế của widget.
-  /// Việc chuẩn hóa này đảm bảo hiệu ứng nghiêng đồng nhất dù kích thước widget thay đổi.
-  void _onPanUpdate(DragUpdateDetails details, BoxConstraints constraints) {
-    if (_resetCtrl.isAnimating) _resetCtrl.stop();
-    setState(() {
-      _offset += Offset(
-        details.delta.dx / (constraints.maxWidth / 2),
-        details.delta.dy / (constraints.maxHeight / 2),
-      );
-      _offset = Offset(
-        _offset.dx.clamp(-1.0, 1.0),
-        _offset.dy.clamp(-1.0, 1.0),
+  // ── Inertia ticker ────────────────────────────────────────────────────────
+
+  void _onTick(Duration elapsed) {
+    final now = DateTime.now();
+    final dt = _lastTime == null ? 16.0 : now.difference(_lastTime!).inMilliseconds.toDouble();
+    _lastTime = now;
+
+    _velX *= _friction;
+    _velY *= _friction;
+
+    final cur = _notifier.value;
+    _notifier.value = (x: cur.x + _velX * dt, y: cur.y + _velY * dt);
+
+    if (_velX.abs() < 0.00005 && _velY.abs() < 0.00005) {
+      _ticker.stop();
+      _lastTime = null;
+    }
+  }
+
+  // ── Gesture handlers ──────────────────────────────────────────────────────
+
+  void _onPanUpdate(DragUpdateDetails d, BoxConstraints c) {
+    if (_springCtrl.isAnimating) _springCtrl.stop();
+    if (_ticker.isActive) _ticker.stop();
+
+    // Convert pixel delta → radians (full drag across widget = ~2π)
+    final dX = d.delta.dy / c.maxHeight * 2 * pi;
+    final dY = d.delta.dx / c.maxWidth  * 2 * pi;
+
+    final now = DateTime.now();
+    final dt = (_lastTime == null ? 16.0 : now.difference(_lastTime!).inMilliseconds.toDouble())
+        .clamp(1.0, 50.0);
+    _lastTime = now;
+
+    _velX = dX / dt;
+    _velY = dY / dt;
+
+    final cur = _notifier.value;
+    _notifier.value = (x: cur.x + dX, y: cur.y + dY);
+  }
+
+  void _onPanEnd(DragEndDetails _) {
+    _lastTime = null;
+    if (_velX.abs() > 0.00005 || _velY.abs() > 0.00005) {
+      _ticker.start();
+    }
+  }
+
+  void _onDoubleTap() {
+    _ticker.stop();
+    _springCtrl.stop();
+    _velX = _velY = 0;
+    _springAnim = _buildSpringAnim(_notifier.value);
+    _springCtrl.forward(from: 0);
+  }
+
+  Animation<_Angles> _buildSpringAnim(_Angles from) {
+    return _AnglesTween(begin: from, end: (x: 0, y: 0))
+        .animate(CurvedAnimation(parent: _springCtrl, curve: Curves.easeOutBack));
+  }
+
+  // ── Build ─────────────────────────────────────────────────────────────────
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (_, constraints) {
+      return GestureDetector(
+        onPanUpdate: (d) => _onPanUpdate(d, constraints),
+        onPanEnd: _onPanEnd,
+        onDoubleTap: _onDoubleTap,
+        child: Center(
+          child: ListenableBuilder(
+            listenable: _notifier,
+            builder: (_, child) {
+              final a = _notifier.value;
+              return Transform(
+                alignment: FractionalOffset.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001) // perspective
+                  ..rotateX(a.x)
+                  ..rotateY(a.y),
+                child: _buildCard(a, child!),
+              );
+            },
+            child: _buildImageLayer(),
+          ),
+        ),
       );
     });
   }
 
-  /// [_onPanEnd] kích hoạt animation đưa ảnh về trạng thái cân bằng.
-  /// Sử dụng [Tween] động để mượt mà hóa từ vị trí hiện tại của ngón tay về [Offset.zero].
-  void _onPanEnd(DragEndDetails details) {
-    _resetAnimation = Tween<Offset>(
-      begin: _offset,
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _resetCtrl, curve: Curves.easeOutBack));
-    _resetCtrl.forward(from: 0);
-  }
+  Widget _buildImageLayer() => RepaintBoundary(
+    child: widget.isNetworkImage
+        ? Image.network(widget.imagePath, fit: BoxFit.cover)
+        : Image.file(File(widget.imagePath), fit: BoxFit.cover),
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GestureDetector(
-          onPanUpdate: (d) => _onPanUpdate(d, constraints),
-          onPanEnd: _onPanEnd,
-          child: Center(
-            child: Transform(
-              alignment: FractionalOffset.center,
-              transform: Matrix4.identity()
-                ..setEntry(3, 2,
-                    0.0012) // Thiết lập Perspective (phối cảnh) cho không gian 3D
-                ..rotateX(-_offset.dy *
-                    widget.maxTilt) // Xoay quanh trục X (nghiêng dọc)
-                ..rotateY(_offset.dx *
-                    widget.maxTilt), // Xoay quanh trục Y (nghiêng ngang)
-              child: _buildImageCard(),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  Widget _buildCard(_Angles a, Widget imageChild) {
+    // Normalize angles to -1..1 for shadow + glare direction
+    final nx = sin(a.y).clamp(-1.0, 1.0); // left-right tilt feel
+    final ny = sin(a.x).clamp(-1.0, 1.0); // up-down tilt feel
 
-  /// [_buildImageCard] xây dựng cấu trúc của tấm ảnh bao gồm ảnh gốc, lớp phủ ánh sáng
-  /// và hiệu ứng đổ bóng động dựa trên độ nghiêng hiện tại.
-  Widget _buildImageCard() {
     return Container(
       width: widget.width,
       height: widget.height,
@@ -122,60 +176,86 @@ class _Photo3DViewerState extends State<Photo3DViewer>
         color: Colors.black26,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          // Đổ bóng thay đổi vị trí theo hướng nghiêng để tăng cảm giác vật thể nổi
           BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 30,
-            offset: Offset(_offset.dx * 25, _offset.dy * 25),
-            spreadRadius: -5,
+            color: Colors.black.withOpacity(0.45),
+            blurRadius: 32,
+            offset: Offset(nx * 28, ny * 28),
+            spreadRadius: -4,
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Hiển thị ảnh từ Network hoặc File tùy theo nguồn dữ liệu
-            widget.isNetworkImage
-                ? Image.network(widget.imagePath, fit: BoxFit.cover)
-                : Image.file(File(widget.imagePath), fit: BoxFit.cover),
-
-            // Lớp phủ Glare (ánh sáng chói) giả lập phản chiếu bề mặt kính
-            _buildGlareOverlay(),
-
-            // Border trang trí làm nổi bật cạnh của block 3D
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: Colors.white24, width: 1),
-              ),
+        child: Stack(fit: StackFit.expand, children: [
+          imageChild,
+          RepaintBoundary(child: _GlareOverlay(notifier: _notifier)),
+          // Border
+          IgnorePointer(child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: Colors.white24, width: 1),
             ),
-          ],
-        ),
+          )),
+        ]),
       ),
     );
+  }
+}
+
+// ── Tween for _Angles ─────────────────────────────────────────────────────
+
+class _AnglesTween extends Tween<_Angles> {
+  _AnglesTween({required super.begin, required super.end});
+
+  @override
+  _Angles lerp(double t) => (
+    x: begin!.x + (end!.x - begin!.x) * t,
+    y: begin!.y + (end!.y - begin!.y) * t,
+  );
+}
+
+// ── Glare overlay ─────────────────────────────────────────────────────────
+
+class _GlareOverlay extends StatelessWidget {
+  const _GlareOverlay({required this.notifier});
+  final ValueNotifier<_Angles> notifier;
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: notifier,
+    builder: (_, __) => CustomPaint(
+      painter: _GlarePainter(notifier.value),
+    ),
+  );
+}
+
+class _GlarePainter extends CustomPainter {
+  const _GlarePainter(this.angles);
+  final _Angles angles;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final nx = sin(angles.y); // -1..1
+    final ny = sin(angles.x); // -1..1
+
+    final cx = size.width  * (0.5 - nx * 0.4);
+    final cy = size.height * (0.5 - ny * 0.4);
+    final radius = size.longestSide * 0.85;
+
+    final paint = Paint()
+      ..shader = RadialGradient(
+        colors: [
+          Colors.white.withOpacity(0.32),
+          Colors.white.withOpacity(0.07),
+          Colors.transparent,
+        ],
+        stops: const [0.0, 0.4, 1.0],
+      ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: radius));
+
+    canvas.drawRect(Offset.zero & size, paint);
   }
 
-  /// [_buildGlareOverlay] tạo một lớp gradient tuyến tính thay đổi theo tọa độ chạm.
-  /// Khi ảnh nghiêng, lớp ánh sáng này sẽ di chuyển ngược hướng, tạo hiệu ứng
-  /// phản xạ ánh sáng cao cấp như trên các vật liệu bóng loáng.
-  Widget _buildGlareOverlay() {
-    return Positioned.fill(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-_offset.dx, -_offset.dy),
-            end: Alignment(_offset.dx, _offset.dy),
-            colors: [
-              Colors.white.withOpacity(0.35),
-              Colors.white.withOpacity(0.05),
-              Colors.transparent,
-            ],
-            stops: const [0.0, 0.4, 1.0],
-          ),
-        ),
-      ),
-    );
-  }
+  @override
+  bool shouldRepaint(_GlarePainter old) =>
+      old.angles.x != angles.x || old.angles.y != angles.y;
 }

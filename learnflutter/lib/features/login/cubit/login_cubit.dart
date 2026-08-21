@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:learnflutter/features/login/model/login_request_model.dart';
 import 'package:learnflutter/features/login/repos/login_repository.dart';
 import 'package:learnflutter/features/login/state/login_state.dart';
@@ -45,23 +45,23 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       emit(state.cloneWith(isLoading: true, errorMessage: null));
 
-      final googleSignIn = GoogleSignIn();
-      final GoogleSignInAccount? account = await googleSignIn.signIn();
+      // final googleSignIn = GoogleSignIn();
+      // final GoogleSignInAccount? account = await googleSignIn.signIn();
 
-      if (account == null) {
-        emit(state.cloneWith(isLoading: false));
-        return;
-      }
+      // if (account == null) {
+      //   emit(state.cloneWith(isLoading: false));
+      //   return;
+      // }
 
-      final GoogleSignInAuthentication auth = await account.authentication;
-      final response = await _repository.loginWithSocial(
-        provider: 'google',
-        token: auth.idToken ?? '',
-        email: account.email,
-        name: account.displayName,
-      );
+      // final GoogleSignInAuthentication auth = await account.authentication;
+      // final response = await _repository.loginWithSocial(
+      //   provider: 'google',
+      //   token: auth.idToken ?? '',
+      //   email: account.email,
+      //   name: account.displayName,
+      // );
 
-      emit(state.cloneWith(isLoading: false, loginResponse: response));
+      // emit(state.cloneWith(isLoading: false, loginResponse: response));
     } catch (e) {
       emit(state.cloneWith(isLoading: false, errorMessage: e.toString()));
     }

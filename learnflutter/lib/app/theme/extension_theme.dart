@@ -104,7 +104,7 @@ extension ThemeTokensX on ThemeTokens {
       ),
 
       // 🪟 Card
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: colorScheme.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(

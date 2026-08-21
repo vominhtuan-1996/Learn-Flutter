@@ -56,6 +56,7 @@ class KeyboardTextField extends StatefulWidget {
     this.showToolbar = true,
     this.toolbarBuilder,
     this.counterBuilder,
+    this.showDone = false,
     this.doneLabel = 'Done',
     this.doneStyle,
     this.counterStyle,
@@ -66,6 +67,9 @@ class KeyboardTextField extends StatefulWidget {
     this.toolbarLeading,
     this.toolbarCenter,
     this.dismissOnDone = true,
+    this.showNavigation = true,
+    this.previousFocusNode,
+    this.nextFocusNode,
   });
 
   // Standard TextField params
@@ -106,6 +110,7 @@ class KeyboardTextField extends StatefulWidget {
   final bool showToolbar;
   final KeyboardToolbarBuilder? toolbarBuilder;
   final KeyboardCounterBuilder? counterBuilder;
+  final bool showDone;
   final String doneLabel;
   final TextStyle? doneStyle;
   final TextStyle? counterStyle;
@@ -117,11 +122,18 @@ class KeyboardTextField extends StatefulWidget {
   final Widget? toolbarCenter;
   final bool dismissOnDone;
 
+  /// Hiện nút ↑↓ trên toolbar để chuyển focus sang field trước/sau.
+  /// Nếu không truyền [previousFocusNode]/[nextFocusNode], dùng FocusScope traversal.
+  final bool showNavigation;
+  final FocusNode? previousFocusNode;
+  final FocusNode? nextFocusNode;
+
   @override
   State<KeyboardTextField> createState() => _KeyboardTextFieldState();
 }
 
-class _KeyboardTextFieldState extends State<KeyboardTextField> {
+class _KeyboardTextFieldState extends State<KeyboardTextField>
+    with WidgetsBindingObserver {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   bool _ownsController = false;
@@ -131,11 +143,18 @@ class _KeyboardTextFieldState extends State<KeyboardTextField> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller = widget.controller ?? TextEditingController();
     _ownsController = widget.controller == null;
     _focusNode = widget.focusNode ?? FocusNode();
     _ownsFocusNode = widget.focusNode == null;
     _focusNode.addListener(_onFocusChange);
+  }
+
+  @override
+  void didChangeMetrics() {
+    // Keyboard animate → re-position overlay
+    _overlay?.markNeedsBuild();
   }
 
   @override
@@ -157,6 +176,7 @@ class _KeyboardTextFieldState extends State<KeyboardTextField> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _removeToolbar();
     _focusNode.removeListener(_onFocusChange);
     if (_ownsFocusNode) _focusNode.dispose();
@@ -180,7 +200,11 @@ class _KeyboardTextFieldState extends State<KeyboardTextField> {
   }
 
   void _removeToolbar() {
-    _overlay?.remove();
+    try {
+      _overlay?.remove();
+    } catch (_) {
+      // Overlay already disposed (e.g. route popped mid-animation)
+    }
     _overlay = null;
   }
 
@@ -218,6 +242,10 @@ class _KeyboardTextFieldState extends State<KeyboardTextField> {
               center: widget.toolbarCenter,
               counterBuilder: widget.counterBuilder,
               onDone: _handleDone,
+              showDone: widget.showDone,
+              showNavigation: widget.showNavigation,
+              onPrevious: _handlePrevious,
+              onNext: _handleNext,
             );
           },
         ),
@@ -228,6 +256,22 @@ class _KeyboardTextFieldState extends State<KeyboardTextField> {
   void _handleDone() {
     if (widget.dismissOnDone) {
       _focusNode.unfocus();
+    }
+  }
+
+  void _handlePrevious() {
+    if (widget.previousFocusNode != null) {
+      widget.previousFocusNode!.requestFocus();
+    } else {
+      FocusScope.of(context).previousFocus();
+    }
+  }
+
+  void _handleNext() {
+    if (widget.nextFocusNode != null) {
+      widget.nextFocusNode!.requestFocus();
+    } else {
+      FocusScope.of(context).nextFocus();
     }
   }
 
@@ -279,6 +323,10 @@ class _DefaultToolbar extends StatelessWidget {
     required this.height,
     required this.padding,
     required this.onDone,
+    required this.showDone,
+    required this.showNavigation,
+    required this.onPrevious,
+    required this.onNext,
     this.doneStyle,
     this.counterStyle,
     this.border,
@@ -299,13 +347,15 @@ class _DefaultToolbar extends StatelessWidget {
   final Widget? leading;
   final Widget? center;
   final VoidCallback onDone;
+  final bool showDone;
   final KeyboardCounterBuilder? counterBuilder;
+  final bool showNavigation;
+  final VoidCallback onPrevious;
+  final VoidCallback onNext;
 
   @override
   Widget build(BuildContext context) {
-    final counterText = counterBuilder != null
-        ? counterBuilder!(length, maxLength)
-        : (maxLength != null ? '$length/$maxLength' : '$length');
+    final counterText = counterBuilder != null ? counterBuilder!(length, maxLength) : (maxLength != null ? '$length/$maxLength' : '$length');
 
     return Container(
       height: height,
@@ -319,24 +369,35 @@ class _DefaultToolbar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          leading ??
-              TextButton(
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  minimumSize: const Size(0, 32),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                onPressed: onDone,
-                child: Text(
-                  doneLabel,
-                  style: doneStyle ??
-                      const TextStyle(
-                        color: Color(0xFF007AFF),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                ),
+          // Leading: custom hoặc Done button (ẩn khi showDone = false)
+          if (leading != null)
+            leading!
+          else if (showDone)
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                minimumSize: const Size(0, 32),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
+              onPressed: onDone,
+              child: Text(
+                doneLabel,
+                style: doneStyle ??
+                    const TextStyle(
+                      color: Color(0xFF007AFF),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+              ),
+            ),
+
+          // Navigation ↑↓
+          if (showNavigation) ...[
+            const SizedBox(width: 4),
+            _NavButton(icon: Icons.keyboard_arrow_up, onTap: onPrevious),
+            _NavButton(icon: Icons.keyboard_arrow_down, onTap: onNext),
+          ],
+
           Expanded(child: Center(child: center ?? const SizedBox.shrink())),
           Text(
             counterText,
@@ -348,6 +409,25 @@ class _DefaultToolbar extends StatelessWidget {
                 ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  const _NavButton({required this.icon, required this.onTap});
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => onTap(), // fire before TextField processes blur
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 52,
+        height: double.infinity,
+        child: Icon(icon, size: 24, color: const Color(0xFF374151)),
       ),
     );
   }
