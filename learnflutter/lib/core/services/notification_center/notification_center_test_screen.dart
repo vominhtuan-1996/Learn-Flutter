@@ -237,7 +237,7 @@ class _NotificationCenterTestScreenState
               ],
             ),
           ),
-          _logsPanel(),
+          Expanded(child: _logsPanel()),
         ],
       ),
     );
@@ -291,7 +291,6 @@ class _NotificationCenterTestScreenState
 
   Widget _logsPanel() {
     return Container(
-      height: 200,
       decoration: const BoxDecoration(
         color: Color(0xFF111827),
         border: Border(top: BorderSide(color: Color(0xFF1F2937))),

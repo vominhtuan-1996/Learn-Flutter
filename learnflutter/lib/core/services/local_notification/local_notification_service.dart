@@ -41,13 +41,18 @@ class LocalNotificationService {
 
   /// Khởi tạo plugin. Gọi 1 lần duy nhất trong [main] trước khi runApp().
   ///
-  /// [onTap] được gọi khi người dùng nhấn vào notification (kèm payload).
+  /// [onTap] — foreground tap callback (kèm payload).
+  /// [onBackgroundTap] — background/terminated tap callback, phải là
+  ///   top-level function annotated với `@pragma('vm:entry-point')`.
   Future<void> init({
     void Function(String? payload)? onTap,
+    DidReceiveBackgroundNotificationResponseCallback? onBackgroundTap,
   }) async {
     if (_initialized) return;
 
-    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+    // Android 5.0+: small icon phải là alpha-only drawable (trắng/transparent).
+    // @mipmap/ic_launcher là colored icon → hiện thành grey square trên status bar.
+    const androidInit = AndroidInitializationSettings('@drawable/ic_notification');
     // iOS/macOS: bật defaultPresent* để banner / sound / badge hiển thị ngay cả khi
     // app đang ở foreground (iOS mặc định KHÔNG hiện banner ở foreground).
     const iosInit = DarwinInitializationSettings(
@@ -74,6 +79,7 @@ class LocalNotificationService {
       onDidReceiveNotificationResponse: (response) {
         onTap?.call(response.payload);
       },
+      onDidReceiveBackgroundNotificationResponse: onBackgroundTap,
     );
 
     // Tạo channel mặc định cho Android (no-op trên iOS/macOS) — bắt buộc
@@ -200,6 +206,7 @@ class LocalNotificationService {
         channelDescription: _defaultChannel.description,
         importance: Importance.high,
         priority: Priority.high,
+        icon: '@drawable/ic_notification',
       ),
       // Set presentBanner/List/Alert TRỰC TIẾP cho từng notification để chắc
       // chắn banner hiển thị khi app đang foreground (override init defaults).

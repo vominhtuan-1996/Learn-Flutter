@@ -37,6 +37,13 @@ target 'Runner' do
   end
 end
 
+# Notification Content Extension — no pods needed, but must be declared
+# so CocoaPods sets up correct build phase ordering (fixes build cycle).
+target 'NotificationContent' do
+  use_frameworks!
+  use_modular_headers!
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)

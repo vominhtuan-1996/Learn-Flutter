@@ -103,7 +103,6 @@ import 'package:learnflutter/features/photo_to_3d/photo_to_3d_screen.dart';
 import 'package:learnflutter/shared/widgets/routes/argument_screen_model.dart';
 import 'package:learnflutter/features/courasel/courasel_screen.dart';
 import 'package:learnflutter/shared/components/calendar/calendar.dart';
-import 'package:learnflutter/shared/components/calendar/date_time_input.dart';
 import 'package:learnflutter/shared/components/calendar/calendar_picker_test_screen.dart';
 import 'package:learnflutter/core/services/notification_center/notification_center_test_screen.dart';
 import 'package:learnflutter/features/datetime_picker/datetime_picker_screen.dart';
@@ -194,6 +193,7 @@ import 'package:learnflutter/features/camera_opencv/photo_measure_screen.dart';
 import 'package:learnflutter/features/camera_opencv/camera_object_detect_screen.dart';
 import 'package:learnflutter/features/camera_opencv/camera_opencv_screen.dart';
 import 'package:learnflutter/features/dartcv/dartcv_demo_screen.dart';
+import 'package:learnflutter/features/language_switch/language_switch_screen.dart';
 // import 'package:path/path.dart';
 
 class Routes {
@@ -342,6 +342,7 @@ class Routes {
   static const String localNotificationDemo = "/local_notification_demo";
   static const String widgetsGalleryDemo = "/widgets_gallery_demo";
   static const String shimmerDemo = "/shimmer_demo";
+  static const String languageSwitchDemo = '/language_switch_demo';
 
   // Monumental Habits Onboarding
   static const String splashV1 = "/splash_v1";
@@ -536,6 +537,11 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: shimmerDemo),
           builder: (_) => const ShimmerDemoScreen(),
+        );
+      case languageSwitchDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: languageSwitchDemo),
+          builder: (_) => const LanguageSwitchDemoScreen(),
         );
       case dartcvDemo:
         return MaterialPageRoute(
@@ -779,8 +785,7 @@ class Routes {
       case dateTimeInput:
         return SlideRightRoute(
           routeSettings: RouteSettings(name: dateTimeInput),
-          // vertical: true,
-          builder: (_) => DateTimeInputScreen(),
+          builder: (_) => DatePickerScreen(),
         );
       case calender:
         return SlideRightRoute(

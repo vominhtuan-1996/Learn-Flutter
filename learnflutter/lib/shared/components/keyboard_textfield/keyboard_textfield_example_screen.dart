@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'keyboard_textfield.dart';
+import 'package:learnflutter/shared/widgets/keyboard_textfield/keyboard_textfield.dart';
 
 /// Demo các tính năng của [KeyboardTextField]:
 /// - Toolbar trên keyboard có counter ký tự ở phải.

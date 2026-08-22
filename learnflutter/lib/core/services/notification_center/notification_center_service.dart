@@ -25,17 +25,16 @@ class NotificationCenterService {
     NotificationCenter().notify(nameNotification, data: data);
   }
 
-  static void subscribeCenterNotification(
-      {required String nameNotification, required Function(dynamic) callback}) {
-    NotificationCenter().subscribe(nameNotification, callback);
+  static void subscribeCenterNotification({required String nameNotification, required Function(dynamic) callback}) {
+    // Wrap để handle cả trường hợp package gọi callback() không có arg (data=null).
+    NotificationCenter().subscribe(nameNotification, ([dynamic data]) => callback(data));
   }
 
   static void unsubscribeCenterNotification({required String nameNotification}) {
     NotificationCenter().unsubscribe(nameNotification);
   }
 
-  static void subscribeCenterNotificationPassingData(
-      {required String nameNotification, required Function callback}) {
+  static void subscribeCenterNotificationPassingData({required String nameNotification, required Function callback}) {
     NotificationCenter().subscribe(nameNotification, (dynamic value) {
       print(value);
       callback(value);

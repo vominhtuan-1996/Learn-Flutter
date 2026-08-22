@@ -28,9 +28,19 @@ import 'package:learnflutter/core/services/log/log_file_service.dart';
 import 'package:learnflutter/core/services/log/daily_log_scheduler.dart';
 import 'package:learnflutter/core/services/log/log_google_chat.dart';
 import 'package:learnflutter/core/services/shorebird/shorebird_service.dart';
+import 'package:learnflutter/core/services/local_notification/local_notification_service.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'app/localization/app_local_translate.dart';
 import 'app/theme/habit_builder_theme.dart';
+
+/// Background notification tap handler — phải là top-level function.
+/// Được gọi khi user tap notification khi app đang background/terminated.
+@pragma('vm:entry-point')
+void onNotificationTapBackground(NotificationResponse response) {
+  // ponytail: log only — navigation cần isolate bridge hoặc shared_prefs
+  debugPrint('[Notif BG] tap id=${response.id} payload=${response.payload}');
+}
 
 /// Hàm main đóng vai trò là điểm khởi đầu chính thức cho toàn bộ vòng đời của ứng dụng Flutter.
 /// Tại đây, chúng tôi thực hiện việc đảm bảo các ràng buộc giao diện được khởi tạo chính xác, thiết lập dịch vụ giám sát bàn phím và khởi động các thông số cấu hình hệ thống.
@@ -62,6 +72,13 @@ void main() {
       await Hive.initFlutter();
       Hive.registerAdapter(PersonAdapter());
       await Hive.openBox('peopleBox');
+
+      // Local notification — init sớm để background handler được đăng ký
+      // trước khi runApp. onBackgroundTap phải là top-level @pragma function.
+      await LocalNotificationService.instance.init(
+        onTap: (payload) => debugPrint('[Notif FG] tap payload=$payload'),
+        onBackgroundTap: onNotificationTapBackground,
+      );
 
       // Initialize ApiClient with base URL and optional token refresh handler
       ApiClient.instance.init(

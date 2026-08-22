@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:learnflutter/features/auth/cubit/login_cubit.dart';
 import 'package:learnflutter/shared/widgets/base_loading_screen/base_loading.dart';
+import 'package:learnflutter/shared/widgets/keyboard_textfield/keyboard_textfield.dart';
 
-/// Lớp LoginScreen đại diện cho thành phần giao diện người dùng chính trong quá trình xác thực tài khoản của ứng dụng.
-/// Widget này đóng vai trò là tầng Hiển thị nơi người dùng trực tiếp tương tác để nhập thông tin đăng nhập bao gồm email và mật khẩu.
-/// Nó được thiết kế dưới dạng một StatefulWidget để có thể quản lý các trạng thái thay đổi tức thời của các controller và hiệu ứng giao diện.
-/// Toàn bộ các xử lý nghiệp vụ phức tạp liên quan đến logic xác thực sẽ được giao phó cho LoginCubit xử lý nhằm đảm bảo tính tách biệt trong kiến trúc.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -19,12 +17,29 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _emailFocus = FocusNode();
+  final _passwordFocus = FocusNode();
   bool _obscurePassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF0F172A),
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Color(0xFF0F172A),
+      systemNavigationBarIconBrightness: Brightness.light,
+    ));
+  }
+
+  @override
   void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _emailController.dispose();
     _passwordController.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
     super.dispose();
   }
 
@@ -33,262 +48,430 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (_) => LoginCubit(),
       child: BaseLoading(
-        child: SafeArea(
-          child: BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state.errorMessage != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.errorMessage!),
-                    backgroundColor: Colors.red,
-                    duration: const Duration(seconds: 3),
-                  ),
-                );
-              }
-              if (state.successMessage != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.successMessage!),
-                    backgroundColor: Colors.green,
-                    duration: const Duration(seconds: 3),
-                  ),
-                );
-              }
+        appBar: AppBar(automaticallyImplyLeading: false, toolbarHeight: 0, elevation: 0),
+        child: BlocListener<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state.errorMessage != null) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.errorMessage!),
+                backgroundColor: const Color(0xFFEF4444),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ));
+            }
+            if (state.successMessage != null) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.successMessage!),
+                backgroundColor: const Color(0xFF10B981),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ));
+            }
+          },
+          child: _LoginBody(
+            emailController: _emailController,
+            passwordController: _passwordController,
+            emailFocus: _emailFocus,
+            passwordFocus: _passwordFocus,
+            obscurePassword: _obscurePassword,
+            onToggleObscure: () => setState(() => _obscurePassword = !_obscurePassword),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-              if (state.isLoginSuccess && state.loggedInUser != null) {
-                Future.delayed(const Duration(seconds: 1), () {
-                  if (mounted) {
-                    // TODO: Navigate to home screen
-                    // Navigator.of(context).pushReplacementNamed('/home');
-                  }
-                });
-              }
-            },
+// ────────────────────────────────────────────────────────────────────────────
+
+class _LoginBody extends StatelessWidget {
+  const _LoginBody({
+    required this.emailController,
+    required this.passwordController,
+    required this.emailFocus,
+    required this.passwordFocus,
+    required this.obscurePassword,
+    required this.onToggleObscure,
+  });
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final FocusNode emailFocus;
+  final FocusNode passwordFocus;
+  final bool obscurePassword;
+  final VoidCallback onToggleObscure;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F172A),
+      body: Stack(
+        children: [
+          Positioned(
+            top: -80,
+            right: -60,
+            child: Container(
+              width: 260,
+              height: 260,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFF6366F1).withOpacity(0.15),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -40,
+            left: -40,
+            child: Container(
+              width: 180,
+              height: 180,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFF818CF8).withOpacity(0.1),
+              ),
+            ),
+          ),
+          SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 60),
-                  _buildHeader(),
-                  const SizedBox(height: 50),
-                  _buildEmailField(),
-                  const SizedBox(height: 20),
-                  _buildPasswordField(),
-                  const SizedBox(height: 12),
-                  _buildForgotPasswordLink(),
-                  const SizedBox(height: 30),
-                  _buildLoginButton(),
-                  const SizedBox(height: 20),
-                  _buildSignUpLink(),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 56),
+                  _buildLogo(),
+                  const SizedBox(height: 48),
+                  _buildCard(context),
+                  const SizedBox(height: 32),
+                  _buildFooter(context),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  /// Phương thức _buildHeader chịu trách nhiệm xây dựng phần tiêu đề đầu trang cho màn hình đăng nhập nhằm định hướng người dùng.
-  /// Nó sử dụng một widget Column để sắp xếp theo chiều dọc hai thành phần văn bản bao gồm tiêu đề chính và lời chào dẫn dắt.
-  /// Các chuỗi văn bản ở đây đã được quốc tế hóa thông qua AppLocaleTranslate để hỗ trợ đa ngôn ngữ linh hoạt trong ứng dụng.
-  /// Kiểu dáng của văn bản được kế thừa từ ThemeData của hệ thống giúp đảm bảo tính nhất quán về mặt thẩm mỹ trên toàn bộ các màn hình.
-  Widget _buildHeader() {
+  Widget _buildLogo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          AppLocaleTranslate.loginTitle.getString(context),
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+        Container(
+          width: 52,
+          height: 52,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF6366F1), Color(0xFF818CF8)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: const Icon(Icons.lock_outline_rounded, color: Colors.white, size: 26),
+        ),
+        const SizedBox(height: 20),
+        const Text(
+          'Chào mừng\ntrở lại 👋',
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Colors.white, height: 1.3),
         ),
         const SizedBox(height: 8),
         Text(
-          AppLocaleTranslate.loginSubtitle.getString(context),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
-              ),
+          'Đăng nhập để tiếp tục sử dụng ứng dụng',
+          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.55)),
         ),
       ],
     );
   }
 
-  /// Widget _buildEmailField được thiết kế để quản lý việc nhập địa chỉ email của người dùng một cách an toàn và chính xác.
-  /// Nó được bao bọc trong một BlocBuilder để lắng nghe các thay đổi về giá trị email cũng như các thông báo lỗi từ LoginCubit.
-  /// Khi người dùng nhập liệu thành phần này sẽ tự động cập nhật trạng thái thông qua hàm updateEmail để thực hiện validate ngay lập tức.
-  /// Cấu trúc giao diện sử dụng TextFormField với các thuộc tính trang trí như icon email và các đường viền bo góc tinh tế.
-  Widget _buildEmailField() {
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.email != current.email || previous.emailError != current.emailError,
-      builder: (context, state) {
-        return TextFormField(
-          controller: _emailController,
-          onChanged: context.read<LoginCubit>().updateEmail,
-          decoration: InputDecoration(
-            hintText: AppLocaleTranslate.emailHint.getString(context),
-            labelText: AppLocaleTranslate.emailLabel.getString(context),
-            prefixIcon: const Icon(Icons.email_outlined),
-            errorText: state.emailError,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.blue, width: 2),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.red),
-            ),
+  Widget _buildCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 40,
+            offset: const Offset(0, 16),
           ),
-          keyboardType: TextInputType.emailAddress,
-        );
-      },
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _EmailField(
+            controller: emailController,
+            focusNode: emailFocus,
+            nextFocusNode: passwordFocus,
+          ),
+          const SizedBox(height: 16),
+          _PasswordField(
+            controller: passwordController,
+            focusNode: passwordFocus,
+            previousFocusNode: emailFocus,
+            obscure: obscurePassword,
+            onToggle: onToggleObscure,
+          ),
+          const SizedBox(height: 8),
+          _buildForgotPassword(context),
+          const SizedBox(height: 24),
+          _LoginButton(),
+        ],
+      ),
     );
   }
 
-  /// Thành phần _buildPasswordField cung cấp cơ chế nhập mật khẩu bảo mật với tính năng ẩn hiện linh hoạt cho người dùng.
-  /// Nó tích hợp chặt chẽ với logic của LoginCubit để đảm bảo mật khẩu tuân thủ các quy tắc bảo mật thông qua state validation.
-  /// Người dùng có thể chuyển đổi trạng thái hiển thị mật khẩu bằng cách nhấn vào biểu tượng con mắt ở cuối khung nhập liệu.
-  /// Thiết kế của widget này sử dụng các thuộc tính borderRadius đồng bộ để duy trì vẻ ngoài hiện đại và chuyên nghiệp cho ứng dụng.
-  Widget _buildPasswordField() {
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password || previous.passwordError != current.passwordError,
-      builder: (context, state) {
-        return TextFormField(
-          controller: _passwordController,
-          onChanged: context.read<LoginCubit>().updatePassword,
-          obscureText: _obscurePassword,
-          decoration: InputDecoration(
-            hintText: AppLocaleTranslate.passwordHint.getString(context),
-            labelText: AppLocaleTranslate.passwordLabel.getString(context),
-            prefixIcon: const Icon(Icons.lock_outlined),
-            suffixIcon: IconButton(
-              icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-              onPressed: () {
-                setState(() => _obscurePassword = !_obscurePassword);
-              },
-            ),
-            errorText: state.passwordError,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.blue, width: 2),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.red),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  /// Phương thức _buildForgotPasswordLink tạo ra một liên kết hỗ trợ người dùng trong trường hợp họ không nhớ thông tin mật khẩu truy cập.
-  /// Nó sử dụng widget Align để căn lề phải liên kết tạo sự cân đối về mặt bố cục so với các thành phần khác trên form.
-  /// Văn bản liên kết được sử dụng màu xanh đặc trưng để biểu thị khả năng có thể nhấn vào và chuyển hướng người dùng.
-  /// Trong tương lai logic điều hướng sẽ được thêm vào hàm onPressed để dẫn người dùng tới trang khôi phục tài khoản tương ứng.
-  Widget _buildForgotPasswordLink() {
+  Widget _buildForgotPassword(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () {
-          // TODO: Navigate to forgot password screen
-        },
+        onPressed: () {},
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
         child: Text(
           AppLocaleTranslate.forgotPassword.getString(context),
-          style: const TextStyle(color: Colors.blue),
+          style: const TextStyle(fontSize: 13, color: Color(0xFF6366F1), fontWeight: FontWeight.w500),
         ),
       ),
     );
   }
 
-  /// Widget _buildLoginButton đại diện cho hành động then chốt khi người dùng thực hiện gửi yêu cầu đăng nhập hệ thống.
-  /// Trạng thái của nút (cho phép nhấn hoặc bị vô hiệu hóa) được quản lý tự động dựa trên tính hợp lệ của dữ liệu đầu vào trong Cubit.
-  /// Khi quá trình xử lý đang diễn ra thành phần này sẽ hiển thị một vòng xoay tải để thông báo cho người dùng chờ đợi phản hồi.
-  /// Sau khi xử lý xong văn bản nút sẽ tự động quay lại trạng thái ban đầu dựa trên các token ngôn ngữ đã được cấu hình sẵn.
-  Widget _buildLoginButton() {
+  Widget _buildFooter(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          AppLocaleTranslate.noAccount.getString(context),
+          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.6)),
+        ),
+        TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 6)),
+          child: Text(
+            AppLocaleTranslate.register.getString(context),
+            style: const TextStyle(fontSize: 14, color: Color(0xFF818CF8), fontWeight: FontWeight.w600),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+
+class _EmailField extends StatelessWidget {
+  const _EmailField({
+    required this.controller,
+    required this.focusNode,
+    required this.nextFocusNode,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode nextFocusNode;
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.isFormValid != current.isFormValid || previous.isLoading != current.isLoading,
+      buildWhen: (p, c) => p.emailError != c.emailError,
       builder: (context, state) {
-        return SizedBox(
-          height: 50,
-          child: ElevatedButton(
-            onPressed: state.isLoading
-                ? null
-                : () {
-                    context.read<LoginCubit>().login();
-                  },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              disabledBackgroundColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
+        return _InputField(
+          controller: controller,
+          focusNode: focusNode,
+          nextFocusNode: nextFocusNode,
+          label: AppLocaleTranslate.emailLabel.getString(context),
+          hint: AppLocaleTranslate.emailHint.getString(context),
+          icon: Icons.email_outlined,
+          errorText: state.emailError,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          onChanged: context.read<LoginCubit>().updateEmail,
+        );
+      },
+    );
+  }
+}
+
+class _PasswordField extends StatelessWidget {
+  const _PasswordField({
+    required this.controller,
+    required this.focusNode,
+    required this.previousFocusNode,
+    required this.obscure,
+    required this.onToggle,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode previousFocusNode;
+  final bool obscure;
+  final VoidCallback onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (p, c) => p.passwordError != c.passwordError,
+      builder: (context, state) {
+        return _InputField(
+          controller: controller,
+          focusNode: focusNode,
+          previousFocusNode: previousFocusNode,
+          label: AppLocaleTranslate.passwordLabel.getString(context),
+          hint: AppLocaleTranslate.passwordHint.getString(context),
+          icon: Icons.lock_outline,
+          errorText: state.passwordError,
+          obscureText: obscure,
+          textInputAction: TextInputAction.done,
+          onChanged: context.read<LoginCubit>().updatePassword,
+          suffixIcon: IconButton(
+            icon: Icon(
+              obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+              size: 20,
+              color: const Color(0xFF9CA3AF),
             ),
-            child: state.isLoading
-                ? const SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 2,
-                    ),
-                  )
-                : Text(
-                    AppLocaleTranslate.loginButton.getString(context),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+            onPressed: onToggle,
           ),
         );
       },
     );
   }
+}
 
-  /// Phương thức _buildSignUpLink tạo ra phần giao diện mời gọi những người dùng mới tham gia vào hệ thống bằng cách đăng ký tài khoản.
-  /// Nó sử dụng một widget Row để kết hợp phần văn bản thông thường và một nút nhấn có chứa nhãn đăng ký nổi bật.
-  /// Nhãn văn bản này được quản lý thông qua hệ thống bản dịch giúp đảm bảo thông điệp luôn được hiển thị đúng định dạng cục bộ.
-  /// Sự kết hợp giữa các kiểu chữ thường và in đậm giúp người dùng dễ dàng nhận ra hành động tiếp theo mà họ có thể thực hiện.
-  Widget _buildSignUpLink() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+// ────────────────────────────────────────────────────────────────────────────
+// _InputField — dùng KeyboardTextField thay TextFormField
+// ────────────────────────────────────────────────────────────────────────────
+
+class _InputField extends StatelessWidget {
+  const _InputField({
+    required this.controller,
+    required this.focusNode,
+    required this.label,
+    required this.hint,
+    required this.icon,
+    required this.onChanged,
+    this.nextFocusNode,
+    this.previousFocusNode,
+    this.errorText,
+    this.obscureText = false,
+    this.keyboardType,
+    this.textInputAction,
+    this.suffixIcon,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode? nextFocusNode;
+  final FocusNode? previousFocusNode;
+  final String label;
+  final String hint;
+  final IconData icon;
+  final String? errorText;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final Widget? suffixIcon;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    const radius = BorderRadius.all(Radius.circular(12));
+    const baseColor = Color(0xFFE5E7EB);
+    const focusColor = Color(0xFF6366F1);
+    const errorColor = Color(0xFFEF4444);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocaleTranslate.noAccount.getString(context)),
-        TextButton(
-          onPressed: () {
-            // TODO: Navigate to sign up screen
-          },
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-          ),
-          child: Text(
-            AppLocaleTranslate.register.getString(context),
-            style: const TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w600,
-            ),
+        Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF374151))),
+        const SizedBox(height: 6),
+        KeyboardTextField(
+          controller: controller,
+          focusNode: focusNode,
+          nextFocusNode: nextFocusNode,
+          previousFocusNode: previousFocusNode,
+          onChanged: onChanged,
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          textInputAction: textInputAction,
+          style: const TextStyle(fontSize: 15, color: Color(0xFF111827)),
+          showToolbar: true,
+          showNavigation: false,
+          showDone: true,
+          toolbarBackgroundColor: const Color(0xFFD1D5DB),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9CA3AF)),
+            prefixIcon: Icon(icon, size: 20, color: const Color(0xFF9CA3AF)),
+            suffixIcon: suffixIcon,
+            errorText: errorText,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            filled: true,
+            fillColor: const Color(0xFFF9FAFB),
+            border: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: baseColor)),
+            enabledBorder: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: baseColor)),
+            focusedBorder: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: focusColor, width: 1.5)),
+            errorBorder: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: errorColor)),
+            focusedErrorBorder: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: errorColor, width: 1.5)),
+            errorStyle: const TextStyle(fontSize: 12, color: errorColor),
           ),
         ),
       ],
+    );
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+
+class _LoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (p, c) => p.isFormValid != c.isFormValid || p.isLoading != c.isLoading,
+      builder: (context, state) {
+        final enabled = state.isFormValid && !state.isLoading;
+        return GestureDetector(
+          onTap: enabled ? () => context.read<LoginCubit>().login() : null,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: 50,
+            decoration: BoxDecoration(
+              gradient: enabled
+                  ? const LinearGradient(
+                      colors: [Color(0xFF6366F1), Color(0xFF818CF8)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    )
+                  : null,
+              color: enabled ? null : const Color(0xFFE5E7EB),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: enabled
+                  ? [BoxShadow(color: const Color(0xFF6366F1).withOpacity(0.35), blurRadius: 12, offset: const Offset(0, 4))]
+                  : null,
+            ),
+            child: Center(
+              child: state.isLoading
+                  ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(Colors.white)),
+                    )
+                  : Text(
+                      AppLocaleTranslate.loginButton.getString(context),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: enabled ? Colors.white : const Color(0xFF9CA3AF),
+                      ),
+                    ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

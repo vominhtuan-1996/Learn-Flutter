@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleCocoa" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PromoNotificationView" customModule="NotificationContent" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyLabel"    destination="bodyLbl"   id="p-out-body"/>
+                <outlet property="ctaButton"    destination="ctaBtn"    id="p-out-cta"/>
+                <outlet property="expandButton" destination="expandBtn" id="p-out-expand"/>
+                <outlet property="headerView"   destination="hdrView"   id="p-out-header"/>
+                <outlet property="titleLabel"   destination="titleLbl"  id="p-out-title"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="rootView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <!-- Gradient header (gradient applied in code via outlet) -->
+                <view id="hdrView" translatesAutoresizingMaskIntoConstraints="NO" contentMode="scaleToFill" clipsToBounds="YES">
+                    <rect key="frame" x="0" y="0" width="375" height="80"/>
+                    <color key="backgroundColor" red="0.388" green="0.400" blue="0.945" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <subviews>
+                        <!-- Badge "MOI" -->
+                        <label id="badgeLbl" translatesAutoresizingMaskIntoConstraints="NO" adjustsFontSizeToFit="NO" numberOfLines="1" text="  MOI  ">
+                            <rect key="frame" x="14" y="14" width="44" height="18"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                            <color key="textColor" red="0.388" green="0.400" blue="0.945" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="p-badge-h"/>
+                            </constraints>
+                        </label>
+                        <!-- Title white -->
+                        <label id="titleLbl" translatesAutoresizingMaskIntoConstraints="NO" adjustsFontSizeToFit="NO" numberOfLines="1">
+                            <rect key="frame" x="14" y="38" width="347" height="26"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="p-hdr-h"/>
+                        <constraint firstItem="badgeLbl" firstAttribute="leading" secondItem="hdrView" secondAttribute="leading" constant="14" id="p-b1"/>
+                        <constraint firstItem="badgeLbl" firstAttribute="top"     secondItem="hdrView" secondAttribute="top"     constant="14" id="p-b2"/>
+                        <constraint firstItem="titleLbl" firstAttribute="leading"  secondItem="hdrView" secondAttribute="leading"  constant="14" id="p-b3"/>
+                        <constraint firstItem="titleLbl" firstAttribute="trailing" secondItem="hdrView" secondAttribute="trailing" constant="-14" id="p-b4"/>
+                        <constraint firstItem="titleLbl" firstAttribute="top"      secondItem="badgeLbl" secondAttribute="bottom"  constant="6"  id="p-b5"/>
+                    </constraints>
+                </view>
+                <!-- Body -->
+                <label id="bodyLbl" translatesAutoresizingMaskIntoConstraints="NO" adjustsFontSizeToFit="NO" numberOfLines="2" lineBreakMode="wordWrap">
+                    <rect key="frame" x="14" y="90" width="347" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.427" green="0.451" blue="0.502" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </label>
+                <!-- Expand -->
+                <button id="expandBtn" translatesAutoresizingMaskIntoConstraints="NO" contentHorizontalAlignment="left" hidden="YES">
+                    <rect key="frame" x="14" y="130" width="120" height="22"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="Xem them">
+                        <color key="titleColor" red="0.388" green="0.400" blue="0.945" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="p-expand-h"/>
+                    </constraints>
+                    <connections>
+                        <action selector="toggleExpand:" destination="-1" id="p-act-expand"/>
+                    </connections>
+                </button>
+                <!-- CTA button indigo full width -->
+                <button id="ctaBtn" translatesAutoresizingMaskIntoConstraints="NO" contentHorizontalAlignment="center">
+                    <rect key="frame" x="14" y="160" width="347" height="38"/>
+                    <color key="backgroundColor" red="0.388" green="0.400" blue="0.945" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <layer key="layer" cornerRadius="6"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                    <state key="normal" title="Xem ngay">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="p-cta-h"/>
+                    </constraints>
+                    <connections>
+                        <action selector="didTapCTA:" destination="-1" id="p-act-cta"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <!-- Header -->
+                <constraint firstItem="hdrView"  firstAttribute="top"     secondItem="rootView" secondAttribute="top" id="p-c1"/>
+                <constraint firstItem="hdrView"  firstAttribute="leading" secondItem="rootView" secondAttribute="leading" id="p-c2"/>
+                <constraint firstItem="hdrView"  firstAttribute="trailing" secondItem="rootView" secondAttribute="trailing" id="p-c3"/>
+                <!-- Body -->
+                <constraint firstItem="bodyLbl"  firstAttribute="leading"  secondItem="rootView" secondAttribute="leading"  constant="14" id="p-c4"/>
+                <constraint firstItem="bodyLbl"  firstAttribute="trailing" secondItem="rootView" secondAttribute="trailing" constant="-14" id="p-c5"/>
+                <constraint firstItem="bodyLbl"  firstAttribute="top"      secondItem="hdrView"  secondAttribute="bottom" constant="10" id="p-c6"/>
+                <!-- Expand -->
+                <constraint firstItem="expandBtn" firstAttribute="leading" secondItem="rootView" secondAttribute="leading" constant="14" id="p-c7"/>
+                <constraint firstItem="expandBtn" firstAttribute="top"    secondItem="bodyLbl"  secondAttribute="bottom" constant="2"  id="p-c8"/>
+                <!-- CTA -->
+                <constraint firstItem="ctaBtn"   firstAttribute="leading"  secondItem="rootView" secondAttribute="leading"  constant="14" id="p-c9"/>
+                <constraint firstItem="ctaBtn"   firstAttribute="trailing" secondItem="rootView" secondAttribute="trailing" constant="-14" id="p-c10"/>
+                <constraint firstItem="ctaBtn"   firstAttribute="top"      secondItem="expandBtn" secondAttribute="bottom" constant="10" id="p-c11"/>
+                <constraint firstItem="ctaBtn"   firstAttribute="bottom"   secondItem="rootView"  secondAttribute="bottom" constant="-14" relation="lessThanOrEqual" id="p-c12"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

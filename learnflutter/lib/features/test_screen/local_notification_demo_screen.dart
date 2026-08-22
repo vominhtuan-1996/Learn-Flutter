@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:learnflutter/core/services/local_notification/local_notification_service.dart';
 import 'package:learnflutter/core/services/local_notification/local_notification_widget.dart';
+import 'package:learnflutter/shared/widgets/keyboard_textfield/keyboard_textfield.dart';
+import 'package:learnflutter/core/services/local_notification/custom_notification_service.dart';
 
 /// Demo màn hình test [LocalNotificationService].
 ///
@@ -28,10 +32,21 @@ class _LocalNotificationDemoScreenState
   String _lastTapPayload = '-';
   final List<String> _logs = [];
 
+  final _titleCtrl = TextEditingController(text: 'Test Notification');
+  final _bodyCtrl = TextEditingController(text: 'Nội dung thông báo');
+  int _delaySeconds = 5;
+
   @override
   void initState() {
     super.initState();
     _initService();
+  }
+
+  @override
+  void dispose() {
+    _titleCtrl.dispose();
+    _bodyCtrl.dispose();
+    super.dispose();
   }
 
   Future<void> _initService() async {
@@ -43,7 +58,6 @@ class _LocalNotificationDemoScreenState
     );
     setState(() => _initialized = true);
     _log('Service initialized');
-    // Auto-check trạng thái permission sau khi init.
     final enabled = await _service.isEnabled();
     setState(() => _permissionGranted = enabled);
     _log('isEnabled() = $enabled');
@@ -123,6 +137,30 @@ class _LocalNotificationDemoScreenState
     setState(() => _lastShownId = null);
   }
 
+  Future<void> _showCustom() => _safeShow(
+        () => _service.show(
+          title: _titleCtrl.text.trim().isEmpty ? 'Custom' : _titleCtrl.text.trim(),
+          body: _bodyCtrl.text.trim().isEmpty ? '...' : _bodyCtrl.text.trim(),
+          payload: 'custom',
+        ),
+        'custom',
+      );
+
+  Future<void> _showDelayed() async {
+    _log('⏱ Sẽ hiện sau $_delaySeconds giây...');
+    Future.delayed(Duration(seconds: _delaySeconds), () {
+      if (!mounted) return;
+      _safeShow(
+        () => _service.show(
+          title: '⏰ Delayed +${_delaySeconds}s',
+          body: _titleCtrl.text.trim().isEmpty ? 'Hẹn giờ thành công!' : _bodyCtrl.text.trim(),
+          payload: 'delayed',
+        ),
+        'delayed',
+      );
+    });
+  }
+
   void _log(String line) {
     setState(() {
       _logs.insert(
@@ -147,7 +185,7 @@ class _LocalNotificationDemoScreenState
         foregroundColor: const Color(0xFF111827),
         elevation: 0,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,22 +206,221 @@ class _LocalNotificationDemoScreenState
               ),
             ]),
             const SizedBox(height: 12),
-            const _SectionLabel(label: '🔔 Hiển thị'),
+            const _SectionLabel(label: '✏️ Custom Input'),
+            _CustomInputSection(
+              titleCtrl: _titleCtrl,
+              bodyCtrl: _bodyCtrl,
+              delaySeconds: _delaySeconds,
+              onDelayChanged: (v) => setState(() => _delaySeconds = v),
+              onSend: _showCustom,
+              onDelayed: _showDelayed,
+            ),
+            const SizedBox(height: 12),
+            const _SectionLabel(label: '🎨 Custom Native View'),
             _ButtonRow(children: [
               _Btn(
-                label: 'Simple',
+                label: 'ℹ️ Info',
+                color: const Color(0xFF6366F1),
+                onTap: () async {
+                  final id = await CustomNotificationService.instance.show(
+                    title: _titleCtrl.text.trim().isEmpty ? 'Thông báo mới' : _titleCtrl.text.trim(),
+                    body: _bodyCtrl.text.trim().isEmpty ? 'Bạn có tin nhắn mới từ hệ thống.' : _bodyCtrl.text.trim(),
+                    type: NotifType.info,
+                    payload: 'notif_info',
+                  );
+                  _log(id != null ? '✅ Info id=$id' : '⚠️ Thất bại');
+                },
+              ),
+              _Btn(
+                label: '✅ Success',
                 color: const Color(0xFF16A34A),
-                onTap: _showSimple,
+                onTap: () async {
+                  final id = await CustomNotificationService.instance.show(
+                    title: 'Thành công',
+                    body: 'Đồng bộ dữ liệu hoàn tất. Tất cả thay đổi đã được lưu.',
+                    type: NotifType.success,
+                    payload: 'notif_success',
+                  );
+                  _log(id != null ? '✅ Success id=$id' : '⚠️ Thất bại');
+                },
               ),
               _Btn(
-                label: 'With Payload',
-                color: const Color(0xFF0D9488),
-                onTap: _showWithPayload,
+                label: '⚠️ Warning',
+                color: const Color(0xFFEA580C),
+                onTap: () async {
+                  final id = await CustomNotificationService.instance.show(
+                    title: 'Cảnh báo hệ thống',
+                    body: 'Phiên đăng nhập sắp hết hạn sau 5 phút. Vui lòng lưu công việc và đăng nhập lại.',
+                    type: NotifType.warning,
+                    payload: 'notif_warning',
+                  );
+                  _log(id != null ? '✅ Warning id=$id' : '⚠️ Thất bại');
+                },
               ),
               _Btn(
-                label: 'Big Text',
-                color: const Color(0xFFEAB308),
-                onTap: _showBigText,
+                label: '🎁 Promo',
+                color: const Color(0xFF7C3AED),
+                onTap: () async {
+                  final id = await CustomNotificationService.instance.show(
+                    title: 'Ưu đãi đặc biệt hôm nay!',
+                    body: 'Giảm 30% cho tất cả gói dịch vụ cao cấp. Chỉ còn 2 giờ để nhận ưu đãi này.',
+                    type: NotifType.promo,
+                    payload: 'notif_promo',
+                  );
+                  _log(id != null ? '✅ Promo id=$id' : '⚠️ Thất bại');
+                },
+              ),
+            ]),
+            const SizedBox(height: 12),
+            const _SectionLabel(label: '🔔 Hiển thị nhanh'),
+            _ButtonRow(children: [
+              _Btn(label: 'Simple', color: const Color(0xFF16A34A), onTap: _showSimple),
+              _Btn(label: 'Payload', color: const Color(0xFF0D9488), onTap: _showWithPayload),
+              _Btn(label: 'Big Text', color: const Color(0xFFEAB308), onTap: _showBigText),
+              _Btn(
+                label: 'Inbox',
+                color: const Color(0xFF2563EB),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '📥 Inbox (3 tin nhắn)',
+                    body: 'Bạn có 3 tin nhắn mới',
+                    details: const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.high,
+                        priority: Priority.high,
+                        styleInformation: InboxStyleInformation(
+                          ['Tuấn: Hey, bạn có rảnh không?', 'An: Meeting lúc 3h nhé!', 'System: Cập nhật thành công.'],
+                          contentTitle: '📥 3 tin nhắn mới',
+                          summaryText: '3 messages',
+                        ),
+                      ),
+                      iOS: DarwinNotificationDetails(),
+                    ),
+                  ),
+                  'inbox',
+                ),
+              ),
+              _Btn(
+                label: 'Progress',
+                color: const Color(0xFF7C3AED),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '⬇️ Đang tải xuống...',
+                    body: 'learnflutter_update_v2.apk',
+                    details: const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.low,
+                        priority: Priority.low,
+                        showProgress: true,
+                        maxProgress: 100,
+                        progress: 65,
+                        onlyAlertOnce: true,
+                      ),
+                      iOS: DarwinNotificationDetails(),
+                    ),
+                  ),
+                  'progress',
+                ),
+              ),
+              _Btn(
+                label: 'Indeterminate',
+                color: const Color(0xFF0891B2),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '🔄 Đang xử lý...',
+                    body: 'Vui lòng chờ trong giây lát',
+                    details: const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.low,
+                        priority: Priority.low,
+                        showProgress: true,
+                        maxProgress: 0,
+                        progress: 0,
+                        indeterminate: true,
+                        onlyAlertOnce: true,
+                      ),
+                      iOS: DarwinNotificationDetails(),
+                    ),
+                  ),
+                  'indeterminate',
+                ),
+              ),
+              _Btn(
+                label: 'Silent',
+                color: const Color(0xFF6B7280),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '🔕 Silent Notification',
+                    body: 'Không có âm thanh, không rung',
+                    details: const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.low,
+                        priority: Priority.low,
+                        playSound: false,
+                        enableVibration: false,
+                      ),
+                      iOS: DarwinNotificationDetails(
+                        presentSound: false,
+                        presentBadge: false,
+                        presentBanner: true,
+                      ),
+                    ),
+                  ),
+                  'silent',
+                ),
+              ),
+              _Btn(
+                label: 'With Actions',
+                color: const Color(0xFFD97706),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '❓ Xác nhận',
+                    body: 'Bạn có muốn đặt lịch nhắc cho ngày mai không?',
+                    details: NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.high,
+                        priority: Priority.high,
+                        actions: [
+                          const AndroidNotificationAction('yes', '✅ Đồng ý', showsUserInterface: true),
+                          const AndroidNotificationAction('no', '❌ Không', cancelNotification: true),
+                        ],
+                      ),
+                      iOS: const DarwinNotificationDetails(categoryIdentifier: 'CUSTOM_NOTIFICATION'),
+                    ),
+                  ),
+                  'with-actions',
+                ),
+              ),
+              _Btn(
+                label: 'Big Picture',
+                color: const Color(0xFFDB2777),
+                onTap: () => _safeShow(
+                  () => _service.show(
+                    title: '🖼 Big Picture',
+                    body: 'Ảnh preview trong notification (Android)',
+                    details: const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                        'default_channel', 'Default',
+                        importance: Importance.high,
+                        priority: Priority.high,
+                        styleInformation: BigPictureStyleInformation(
+                          DrawableResourceAndroidBitmap('@drawable/ic_notification'),
+                          largeIcon: DrawableResourceAndroidBitmap('@drawable/ic_notification'),
+                          contentTitle: '🖼 Big Picture Style',
+                          summaryText: 'Ảnh preview',
+                          hideExpandedLargeIcon: true,
+                        ),
+                      ),
+                      iOS: DarwinNotificationDetails(),
+                    ),
+                  ),
+                  'big-picture',
+                ),
               ),
             ]),
             const SizedBox(height: 12),
@@ -245,7 +482,8 @@ class _LocalNotificationDemoScreenState
             ]),
             const SizedBox(height: 16),
             const _SectionLabel(label: '📜 Logs'),
-            Expanded(
+            SizedBox(
+              height: 220,
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(12),
@@ -413,6 +651,147 @@ class _Btn extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+      ),
+    );
+  }
+}
+
+// ════════════════════════════════════════════
+// Custom Input Section
+// ════════════════════════════════════════════
+
+class _CustomInputSection extends StatelessWidget {
+  const _CustomInputSection({
+    required this.titleCtrl,
+    required this.bodyCtrl,
+    required this.delaySeconds,
+    required this.onDelayChanged,
+    required this.onSend,
+    required this.onDelayed,
+  });
+
+  final TextEditingController titleCtrl;
+  final TextEditingController bodyCtrl;
+  final int delaySeconds;
+  final ValueChanged<int> onDelayChanged;
+  final VoidCallback onSend;
+  final VoidCallback onDelayed;
+
+  @override
+  Widget build(BuildContext context) {
+    const inputDecoration = InputDecoration(
+      isDense: true,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(color: Color(0xFF6366F1), width: 1.5),
+      ),
+      filled: true,
+      fillColor: Colors.white,
+    );
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          KeyboardTextField(
+            controller: titleCtrl,
+            style: const TextStyle(fontSize: 13),
+            showNavigation: false,
+            showDone: true,
+            decoration: inputDecoration.copyWith(hintText: 'Tiêu đề'),
+          ),
+          const SizedBox(height: 8),
+          KeyboardTextField(
+            controller: bodyCtrl,
+            style: const TextStyle(fontSize: 13),
+            showNavigation: false,
+            showDone: true,
+            decoration: inputDecoration.copyWith(hintText: 'Nội dung'),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              // Send now
+              Expanded(
+                child: GestureDetector(
+                  onTap: onSend,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF6366F1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Center(
+                      child: Text('Send Now', style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              // Delay picker
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xFFF9FAFB),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _DelayBtn(icon: Icons.remove, onTap: () { if (delaySeconds > 1) onDelayChanged(delaySeconds - 1); }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('${delaySeconds}s', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    ),
+                    _DelayBtn(icon: Icons.add, onTap: () { if (delaySeconds < 60) onDelayChanged(delaySeconds + 1); }),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              // Send delayed
+              GestureDetector(
+                onTap: onDelayed,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0D9488),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text('Delay', style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600)),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DelayBtn extends StatelessWidget {
+  const _DelayBtn({required this.icon, required this.onTap});
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        child: Icon(icon, size: 16, color: const Color(0xFF374151)),
       ),
     );
   }
