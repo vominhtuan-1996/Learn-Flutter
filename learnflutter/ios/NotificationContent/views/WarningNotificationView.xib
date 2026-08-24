@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleCocoa" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,18 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WarningNotificationView" customModule="NotificationContent" customModuleProvider="target">
-            <connections>
-                <outlet property="bodyLabel"    destination="bodyLbl"   id="w-out-body"/>
-                <outlet property="expandButton" destination="expandBtn" id="w-out-expand"/>
-                <outlet property="iconView"     destination="iconImg"   id="w-out-icon"/>
-                <outlet property="skipButton"   destination="skipBtn"   id="w-out-skip"/>
-                <outlet property="titleLabel"   destination="titleLbl"  id="w-out-title"/>
-                <outlet property="viewButton"   destination="viewBtn"   id="w-out-view"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="rootView">
+        <view contentMode="scaleToFill" id="rootView" customClass="WarningNotificationView" customModule="NotificationContent" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -67,7 +58,7 @@
                         <constraint firstAttribute="height" constant="22" id="w-expand-h"/>
                     </constraints>
                     <connections>
-                        <action selector="toggleExpand:" destination="-1" id="w-act-expand"/>
+                        <action selector="toggleExpand:" destination="rootView" id="w-act-expand"/>
                     </connections>
                 </button>
                 <!-- View button (orange) -->
@@ -83,7 +74,7 @@
                         <constraint firstAttribute="height" constant="36" id="w-view-h"/>
                     </constraints>
                     <connections>
-                        <action selector="didTapView:" destination="-1" id="w-act-view"/>
+                        <action selector="didTapView:" destination="rootView" id="w-act-view"/>
                     </connections>
                 </button>
                 <!-- Skip button (gray) -->
@@ -99,7 +90,7 @@
                         <constraint firstAttribute="height" constant="36" id="w-skip-h"/>
                     </constraints>
                     <connections>
-                        <action selector="didTapSkip:" destination="-1" id="w-act-skip"/>
+                        <action selector="didTapSkip:" destination="rootView" id="w-act-skip"/>
                     </connections>
                 </button>
             </subviews>
@@ -126,6 +117,15 @@
                 <constraint firstItem="skipBtn" firstAttribute="centerY"  secondItem="viewBtn"  secondAttribute="centerY" id="w-c14"/>
                 <constraint firstItem="skipBtn" firstAttribute="width"    secondItem="viewBtn"  secondAttribute="width" id="w-c15"/>
             </constraints>
+            <connections>
+                <outlet property="bodyLabel"    destination="bodyLbl"      id="w-out-body"/>
+                <outlet property="expandButton" destination="expandBtn"    id="w-out-expand"/>
+                <outlet property="headerBanner" destination="headerBanner" id="w-out-banner"/>
+                <outlet property="iconView"     destination="iconImg"      id="w-out-icon"/>
+                <outlet property="skipButton"   destination="skipBtn"      id="w-out-skip"/>
+                <outlet property="titleLabel"   destination="titleLbl"     id="w-out-title"/>
+                <outlet property="viewButton"   destination="viewBtn"      id="w-out-view"/>
+            </connections>
         </view>
     </objects>
 </document>

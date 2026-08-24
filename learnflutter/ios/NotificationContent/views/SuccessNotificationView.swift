@@ -3,11 +3,11 @@ import UserNotifications
 
 final class SuccessNotificationView: UIView, NotificationViewType {
 
-    @IBOutlet weak var iconView:    UIImageView!
-    @IBOutlet weak var titleLabel:  UILabel!
-    @IBOutlet weak var bodyLabel:   UILabel!
-    @IBOutlet weak var expandButton: UIButton!
-    @IBOutlet weak var okButton:    UIButton!
+    @IBOutlet weak var iconView:      UIImageView!
+    @IBOutlet weak var titleLabel:    UILabel!
+    @IBOutlet weak var bodyLabel:     UILabel!
+    @IBOutlet weak var expandButton:  UIButton!
+    @IBOutlet weak var okButton:      UIButton!
 
     var onDismiss:     (() -> Void)?
     var onSizeChanged: (() -> Void)?
@@ -22,9 +22,7 @@ final class SuccessNotificationView: UIView, NotificationViewType {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        iconView.image = UIImage(systemName: "checkmark.circle.fill")
-        iconView.tintColor = NotifColor.green
-        expandButton.isHidden = true
+        applyLiquidGlass()
     }
 
     func apply(notification: UNNotification) {
@@ -44,4 +42,21 @@ final class SuccessNotificationView: UIView, NotificationViewType {
     }
 
     @IBAction func didTapOK(_ sender: Any) { onDismiss?() }
+
+    // MARK: - Liquid Glass
+    private func applyLiquidGlass() {
+        let tint = NotifColor.green
+        LiquidGlass.applyBackground(to: self, tint: tint)
+        LiquidGlass.styleIcon(iconView, name: "checkmark.circle.fill", tint: tint, pointSize: 40)
+        LiquidGlass.styleButton(okButton, tint: tint)
+
+        titleLabel.textColor   = .label
+        titleLabel.font        = .systemFont(ofSize: 15, weight: .semibold)
+        bodyLabel.textColor    = .secondaryLabel
+        bodyLabel.font         = .systemFont(ofSize: 13, weight: .regular)
+
+        expandButton.setTitleColor(tint, for: .normal)
+        expandButton.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
+        expandButton.isHidden = true
+    }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleCocoa" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,17 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuccessNotificationView" customModule="NotificationContent" customModuleProvider="target">
-            <connections>
-                <outlet property="bodyLabel"    destination="bodyLbl"   id="s-out-body"/>
-                <outlet property="expandButton" destination="expandBtn" id="s-out-expand"/>
-                <outlet property="iconView"     destination="iconImg"   id="s-out-icon"/>
-                <outlet property="okButton"     destination="okBtn"     id="s-out-ok"/>
-                <outlet property="titleLabel"   destination="titleLbl"  id="s-out-title"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="rootView">
+        <view contentMode="scaleToFill" id="rootView" customClass="SuccessNotificationView" customModule="NotificationContent" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -49,7 +41,7 @@
                         <constraint firstAttribute="height" constant="22" id="s-expand-h"/>
                     </constraints>
                     <connections>
-                        <action selector="toggleExpand:" destination="-1" id="s-act-expand"/>
+                        <action selector="toggleExpand:" destination="rootView" id="s-act-expand"/>
                     </connections>
                 </button>
                 <button id="okBtn" translatesAutoresizingMaskIntoConstraints="NO" contentHorizontalAlignment="center">
@@ -64,7 +56,7 @@
                         <constraint firstAttribute="height" constant="38" id="s-ok-h"/>
                     </constraints>
                     <connections>
-                        <action selector="didTapOK:" destination="-1" id="s-act-ok"/>
+                        <action selector="didTapOK:" destination="rootView" id="s-act-ok"/>
                     </connections>
                 </button>
             </subviews>
@@ -85,6 +77,13 @@
                 <constraint firstItem="okBtn"     firstAttribute="top"      secondItem="expandBtn" secondAttribute="bottom" constant="10" id="s-c13"/>
                 <constraint firstItem="okBtn"     firstAttribute="bottom"   secondItem="rootView"  secondAttribute="bottom" constant="-16" relation="lessThanOrEqual" id="s-c14"/>
             </constraints>
+            <connections>
+                <outlet property="bodyLabel"    destination="bodyLbl"   id="s-out-body"/>
+                <outlet property="expandButton" destination="expandBtn" id="s-out-expand"/>
+                <outlet property="iconView"     destination="iconImg"   id="s-out-icon"/>
+                <outlet property="okButton"     destination="okBtn"     id="s-out-ok"/>
+                <outlet property="titleLabel"   destination="titleLbl"  id="s-out-title"/>
+            </connections>
         </view>
     </objects>
 </document>

@@ -1,12 +1,14 @@
 import UIKit
 import UserNotifications
 import UserNotificationsUI
+import os.log
 
 enum NotifCategory {
     static let info    = "NOTIF_INFO"
     static let success = "NOTIF_SUCCESS"
     static let warning = "NOTIF_WARNING"
     static let promo   = "NOTIF_PROMO"
+    static let image   = "NOTIF_IMAGE"
 }
 
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
@@ -15,7 +17,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        os_log("🟢 NotifExt viewDidLoad", log: .default, type: .info)
+        view.backgroundColor = .clear
         // Initial size — update sau khi content set
         preferredContentSize = CGSize(width: 0, height: 180)
     }
@@ -23,24 +26,27 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     // MARK: - UNNotificationContentExtension
 
     func didReceive(_ notification: UNNotification) {
-        // Xoá view cũ
+        let cat = notification.request.content.categoryIdentifier
+        os_log("🟢 NotifExt didReceive category=%{public}@ title=%{public}@",
+               log: .default, type: .error, cat,
+               notification.request.content.title)
         contentView?.removeFromSuperview()
         contentView = nil
 
         let category = notification.request.content.categoryIdentifier
         let v = makeView(for: category)
-        view.addSubview(v)
 
-        // Full-fill bằng frame, không dùng Auto Layout để tránh constraint conflict
-        v.frame = view.bounds
-        v.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        // Use screen width — view.bounds may be zero at this point
+        let w = view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width
+        v.frame = CGRect(x: 0, y: 0, width: w, height: 200)
+        v.autoresizingMask = [.flexibleWidth]
+        view.addSubview(v)
 
         v.onSizeChanged = { [weak self] in self?.resizeToFit() }
         v.apply(notification: notification)
         contentView = v
 
-        // Resize sau khi content đã render
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.resizeToFit()
         }
     }
@@ -57,23 +63,21 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     private func resizeToFit() {
         guard let v = contentView else { return }
-        let targetSize = CGSize(
-            width: view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width,
-            height: UIView.layoutFittingCompressedSize.height
-        )
+        let w = view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width
+        let targetSize = CGSize(width: w, height: UIView.layoutFittingCompressedSize.height)
         let h = v.systemLayoutSizeFitting(
             targetSize,
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         ).height
         let finalH = max(h, 120)
-        preferredContentSize = CGSize(width: view.bounds.width, height: finalH)
-        v.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: finalH)
+        preferredContentSize = CGSize(width: w, height: finalH)
+        v.frame = CGRect(x: 0, y: 0, width: w, height: finalH)
     }
 
     private func makeView(for category: String) -> UIView & NotificationViewType {
-        let open    = { [weak self] in self?.extensionContext?.performNotificationDefaultAction() }
-        let dismiss = { [weak self] in self?.extensionContext?.dismissNotificationContentExtension() }
+        let open: () -> Void    = { [weak self] in self?.extensionContext?.performNotificationDefaultAction() }
+        let dismiss: () -> Void = { [weak self] in self?.extensionContext?.dismissNotificationContentExtension() }
 
         switch category {
         case NotifCategory.success:
@@ -88,6 +92,11 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         case NotifCategory.promo:
             let v = PromoNotificationView.fromXib()
             v.onOpen    = open
+            return v
+        case NotifCategory.image:
+            let v = ImageNotificationView.make()
+            v.onOpen    = open
+            v.onDismiss = dismiss
             return v
         default:
             let v = InfoNotificationView.fromXib()

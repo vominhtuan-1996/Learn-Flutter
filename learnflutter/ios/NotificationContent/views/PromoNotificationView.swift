@@ -3,18 +3,18 @@ import UserNotifications
 
 final class PromoNotificationView: UIView, NotificationViewType {
 
-    @IBOutlet weak var titleLabel:   UILabel!
-    @IBOutlet weak var bodyLabel:    UILabel!
-    @IBOutlet weak var expandButton: UIButton!
-    @IBOutlet weak var ctaButton:    UIButton!
-    @IBOutlet weak var headerView:   UIView!
+    @IBOutlet weak var titleLabel:    UILabel!
+    @IBOutlet weak var bodyLabel:     UILabel!
+    @IBOutlet weak var expandButton:  UIButton!
+    @IBOutlet weak var ctaButton:     UIButton!
+    @IBOutlet weak var headerView:    UIView!
 
     var onOpen:        (() -> Void)?
     var onDismiss:     (() -> Void)?
     var onSizeChanged: (() -> Void)?
 
     private var isExpanded    = false
-    private let gradientLayer = CAGradientLayer()
+    private var headerGradient: CAGradientLayer?
 
     static func fromXib() -> PromoNotificationView {
         let nib = UINib(nibName: "PromoNotificationView", bundle: Bundle(for: PromoNotificationView.self))
@@ -23,19 +23,12 @@ final class PromoNotificationView: UIView, NotificationViewType {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        gradientLayer.colors = [
-            UIColor(red: 0.388, green: 0.400, blue: 0.945, alpha: 1).cgColor,
-            UIColor(red: 0.576, green: 0.322, blue: 0.871, alpha: 1).cgColor,
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.endPoint   = CGPoint(x: 1, y: 0.5)
-        headerView?.layer.insertSublayer(gradientLayer, at: 0)
-        expandButton.isHidden = true
+        applyLiquidGlass()
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.frame = headerView?.bounds ?? .zero
+        headerGradient?.frame = headerView.bounds
     }
 
     func apply(notification: UNNotification) {
@@ -55,4 +48,38 @@ final class PromoNotificationView: UIView, NotificationViewType {
     }
 
     @IBAction func didTapCTA(_ sender: Any) { onOpen?() }
+
+    // MARK: - Liquid Glass
+    private func applyLiquidGlass() {
+        let tint = NotifColor.indigo
+        LiquidGlass.applyBackground(to: self, tint: tint)
+
+        // Glass gradient header — indigo → purple
+        headerGradient = LiquidGlass.applyGlassHeader(
+            to: headerView,
+            colors: [NotifColor.indigo, NotifColor.purple]
+        )
+
+        LiquidGlass.styleButton(ctaButton, tint: tint)
+
+        titleLabel.textColor   = .white
+        titleLabel.font        = .systemFont(ofSize: 16, weight: .bold)
+        bodyLabel.textColor    = .label
+        bodyLabel.font         = .systemFont(ofSize: 13, weight: .regular)
+
+        // Badge label — keep white pill style (found via tag or subview traversal)
+        if let badge = headerView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            badge.layer.cornerRadius = 4
+            badge.layer.cornerCurve = .continuous
+            badge.clipsToBounds = true
+            badge.backgroundColor = UIColor.white.withAlphaComponent(0.25)
+            badge.textColor = .white
+            badge.layer.borderWidth = 0.5
+            badge.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+        }
+
+        expandButton.setTitleColor(tint, for: .normal)
+        expandButton.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
+        expandButton.isHidden = true
+    }
 }

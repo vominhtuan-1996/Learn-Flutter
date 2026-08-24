@@ -27,6 +27,10 @@ class LocalNotificationService {
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
+  /// Expose plugin để các service khác (CustomNotificationService) reuse
+  /// cùng instance, tránh double-init native singleton.
+  FlutterLocalNotificationsPlugin get plugin => _plugin;
+
   bool _initialized = false;
   int _autoId = 0;
 
@@ -55,7 +59,7 @@ class LocalNotificationService {
     const androidInit = AndroidInitializationSettings('@drawable/ic_notification');
     // iOS/macOS: bật defaultPresent* để banner / sound / badge hiển thị ngay cả khi
     // app đang ở foreground (iOS mặc định KHÔNG hiện banner ở foreground).
-    const iosInit = DarwinInitializationSettings(
+    final iosInit = DarwinInitializationSettings(
       // Xin quyền ngay khi init để iOS hiển thị popup permission lần đầu.
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -67,8 +71,17 @@ class LocalNotificationService {
       defaultPresentSound: true,
       defaultPresentBanner: true,
       defaultPresentList: true,
+      // Đăng ký categories cho NotificationContent extension.
+      // Phải đặt ở đây (plugin init duy nhất) — không tạo plugin thứ hai.
+      notificationCategories: [
+        DarwinNotificationCategory('NOTIF_INFO'),
+        DarwinNotificationCategory('NOTIF_SUCCESS'),
+        DarwinNotificationCategory('NOTIF_WARNING'),
+        DarwinNotificationCategory('NOTIF_PROMO'),
+        DarwinNotificationCategory('NOTIF_IMAGE'),
+      ],
     );
-    const initSettings = InitializationSettings(
+    final initSettings = InitializationSettings(
       android: androidInit,
       iOS: iosInit,
       macOS: iosInit,
@@ -208,10 +221,10 @@ class LocalNotificationService {
         priority: Priority.high,
         icon: '@drawable/ic_notification',
       ),
-      // Set presentBanner/List/Alert TRỰC TIẾP cho từng notification để chắc
-      // chắn banner hiển thị khi app đang foreground (override init defaults).
-      // iOS 14+: presentAlert đã deprecated, dùng presentBanner + presentList.
+      // categoryIdentifier: 'NOTIF_INFO' → trigger NotificationContent extension
+      // cho mọi notification gửi qua service này (dùng Info view làm default).
       iOS: const DarwinNotificationDetails(
+        categoryIdentifier: 'NOTIF_INFO',
         presentAlert: true,
         presentBanner: true,
         presentList: true,

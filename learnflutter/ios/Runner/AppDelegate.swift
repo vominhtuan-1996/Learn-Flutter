@@ -19,20 +19,6 @@ import UserNotifications
     // Set delegate trước khi plugin init để foreground notifications hiển thị.
     UNUserNotificationCenter.current().delegate = self
 
-    // Register notification categories cho Content Extension
-    let openAction    = UNNotificationAction(identifier: "ACTION_OPEN",    title: "Mở",     options: [.foreground])
-    let dismissAction = UNNotificationAction(identifier: "ACTION_DISMISS", title: "Bỏ qua", options: [.destructive])
-    let okAction      = UNNotificationAction(identifier: "ACTION_OK",      title: "OK",     options: [.destructive])
-    let viewAction    = UNNotificationAction(identifier: "ACTION_VIEW",    title: "Xem ngay", options: [.foreground])
-
-    let categories: Set<UNNotificationCategory> = [
-      UNNotificationCategory(identifier: "NOTIF_INFO",    actions: [openAction, dismissAction], intentIdentifiers: [], options: []),
-      UNNotificationCategory(identifier: "NOTIF_SUCCESS", actions: [okAction],                  intentIdentifiers: [], options: []),
-      UNNotificationCategory(identifier: "NOTIF_WARNING", actions: [viewAction, dismissAction], intentIdentifiers: [], options: []),
-      UNNotificationCategory(identifier: "NOTIF_PROMO",   actions: [viewAction, dismissAction], intentIdentifiers: [], options: []),
-    ]
-    UNUserNotificationCenter.current().setNotificationCategories(categories)
-
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
@@ -42,10 +28,24 @@ import UserNotifications
     willPresent notification: UNNotification,
     withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
   ) {
+    NSLog("🟡 willPresent category='%@' title='%@'",
+          notification.request.content.categoryIdentifier,
+          notification.request.content.title)
     if #available(iOS 14.0, *) {
       completionHandler([.banner, .sound, .badge, .list])
     } else {
       completionHandler([.alert, .sound, .badge])
     }
+  }
+
+  override func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse,
+    withCompletionHandler completionHandler: @escaping () -> Void
+  ) {
+    let action   = response.actionIdentifier
+    let category = response.notification.request.content.categoryIdentifier
+    NSLog("🟢 didReceive action='%@' category='%@'", action, category)
+    completionHandler()
   }
 }

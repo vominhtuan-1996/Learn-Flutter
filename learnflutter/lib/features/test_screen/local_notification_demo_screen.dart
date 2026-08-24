@@ -270,6 +270,19 @@ class _LocalNotificationDemoScreenState
                   _log(id != null ? '✅ Promo id=$id' : '⚠️ Thất bại');
                 },
               ),
+              _Btn(
+                label: '🖼️ Image',
+                color: const Color(0xFF0EA5E9),
+                onTap: () async {
+                  final id = await CustomNotificationService.instance.show(
+                    title: 'Ảnh mới từ hệ thống',
+                    body: 'Nhấn để xem chi tiết hình ảnh.',
+                    type: NotifType.image,
+                    imageUrl: 'https://picsum.photos/seed/notif/800/400',
+                  );
+                  _log(id != null ? '✅ Image id=$id' : '⚠️ Thất bại');
+                },
+              ),
             ]),
             const SizedBox(height: 12),
             const _SectionLabel(label: '🔔 Hiển thị nhanh'),

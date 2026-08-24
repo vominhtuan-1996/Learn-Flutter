@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleCocoa" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="NO" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,19 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfoNotificationView" customModule="NotificationContent" customModuleProvider="target">
-            <connections>
-                <outlet property="bodyLabel" destination="bodyLbl" id="outlet-body"/>
-                <outlet property="expandButton" destination="expandBtn" id="outlet-expand"/>
-                <outlet property="iconView" destination="iconImg" id="outlet-icon"/>
-                <outlet property="openButton" destination="openBtn" id="outlet-open"/>
-                <outlet property="skipButton" destination="skipBtn" id="outlet-skip"/>
-                <outlet property="timeLabel" destination="timeLbl" id="outlet-time"/>
-                <outlet property="titleLabel" destination="titleLbl" id="outlet-title"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="rootView">
+        <view contentMode="scaleToFill" id="rootView" customClass="InfoNotificationView" customModule="NotificationContent" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -73,7 +63,7 @@
                         <constraint firstAttribute="height" constant="22" id="expand-h"/>
                     </constraints>
                     <connections>
-                        <action selector="toggleExpand:" destination="-1" id="action-expand"/>
+                        <action selector="toggleExpand:" destination="rootView" id="action-expand"/>
                     </connections>
                 </button>
                 <!-- Open button -->
@@ -89,7 +79,7 @@
                         <constraint firstAttribute="height" constant="36" id="open-h"/>
                     </constraints>
                     <connections>
-                        <action selector="didTapOpen:" destination="-1" id="action-open"/>
+                        <action selector="didTapOpen:" destination="rootView" id="action-open"/>
                     </connections>
                 </button>
                 <!-- Skip button -->
@@ -105,7 +95,7 @@
                         <constraint firstAttribute="height" constant="36" id="skip-h"/>
                     </constraints>
                     <connections>
-                        <action selector="didTapSkip:" destination="-1" id="action-skip"/>
+                        <action selector="didTapSkip:" destination="rootView" id="action-skip"/>
                     </connections>
                 </button>
             </subviews>
@@ -142,6 +132,15 @@
                 <constraint firstItem="skipBtn" firstAttribute="centerY" secondItem="openBtn" secondAttribute="centerY" id="c21"/>
                 <constraint firstItem="skipBtn" firstAttribute="width" secondItem="openBtn" secondAttribute="width" id="c22"/>
             </constraints>
+            <connections>
+                <outlet property="bodyLabel" destination="bodyLbl" id="outlet-body"/>
+                <outlet property="expandButton" destination="expandBtn" id="outlet-expand"/>
+                <outlet property="iconView" destination="iconImg" id="outlet-icon"/>
+                <outlet property="openButton" destination="openBtn" id="outlet-open"/>
+                <outlet property="skipButton" destination="skipBtn" id="outlet-skip"/>
+                <outlet property="timeLabel" destination="timeLbl" id="outlet-time"/>
+                <outlet property="titleLabel" destination="titleLbl" id="outlet-title"/>
+            </connections>
         </view>
     </objects>
 </document>
