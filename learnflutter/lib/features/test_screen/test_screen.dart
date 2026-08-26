@@ -535,6 +535,7 @@ class _TestScreenState extends State<TestScreen> {
               const _FeatureCard(title: 'Web Browser', description: 'In-app WebView browser với navigation controls.', routeName: Routes.webBrowserScreen, accent: Color(0xFF0EA5E9)),
               const _FeatureCard(title: 'Settings', description: 'Màn hình settings tổng — theme, language, notifications.', routeName: Routes.setting, accent: Color(0xFF6B7280)),
               const _FeatureCard(title: '🔔 Local Notification', description: 'Service notification cục bộ + custom in-app banner widget.', routeName: Routes.localNotificationDemo, accent: Color(0xFFFCD34D)),
+              const _FeatureCard(title: '⚡ Live Activity', description: 'iOS ActivityKit — Lock Screen banner + Dynamic Island real-time update.', routeName: Routes.liveActivityDemo, accent: Color(0xFF3B82F6)),
               const _FeatureCard(title: '🏐 Match Entry', description: 'Badminton Championship — lập lịch trận đấu với live preview.', routeName: Routes.matchEntry, accent: Color(0xFFD9FF3A)),
               TextButton(onPressed: splitCodeString, child: Text(AppLocaleTranslate.splitString.getString(context))),
             ]),

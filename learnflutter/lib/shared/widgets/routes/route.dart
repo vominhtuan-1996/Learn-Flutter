@@ -184,6 +184,7 @@ import 'package:learnflutter/features/test_screen/app_stepper_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/google_map_engine_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/queue_engine_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/network_queue_demo_screen.dart';
+import 'package:learnflutter/features/test_screen/live_activity_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/local_notification_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/widgets_gallery_demo_screen.dart';
 import 'package:learnflutter/features/test_screen/shimmer_demo_screen.dart';
@@ -340,6 +341,7 @@ class Routes {
   static const String queueEngineDemo = "/queue_engine_demo";
   static const String networkQueueDemo = "/network_queue_demo";
   static const String localNotificationDemo = "/local_notification_demo";
+  static const String liveActivityDemo = "/live_activity_demo";
   static const String widgetsGalleryDemo = "/widgets_gallery_demo";
   static const String shimmerDemo = "/shimmer_demo";
   static const String languageSwitchDemo = '/language_switch_demo';
@@ -527,6 +529,11 @@ class Routes {
         return MaterialPageRoute(
           settings: const RouteSettings(name: localNotificationDemo),
           builder: (_) => const LocalNotificationDemoScreen(),
+        );
+      case liveActivityDemo:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: liveActivityDemo),
+          builder: (_) => const LiveActivityDemoScreen(),
         );
       case widgetsGalleryDemo:
         return MaterialPageRoute(

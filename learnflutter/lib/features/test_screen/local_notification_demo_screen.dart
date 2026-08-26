@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:learnflutter/core/services/home_widget/home_widget_service.dart';
+import 'package:learnflutter/core/services/live_activity/live_activity_data.dart';
+import 'package:learnflutter/core/services/live_activity/live_activity_service.dart';
 import 'package:learnflutter/core/services/local_notification/local_notification_service.dart';
 import 'package:learnflutter/core/services/local_notification/local_notification_widget.dart';
 import 'package:learnflutter/shared/widgets/keyboard_textfield/keyboard_textfield.dart';
@@ -159,6 +162,16 @@ class _LocalNotificationDemoScreenState
         'delayed',
       );
     });
+  }
+
+  void _showAddWidgetGuide(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => const _AddWidgetGuideSheet(),
+    );
   }
 
   void _log(String line) {
@@ -480,6 +493,24 @@ class _LocalNotificationDemoScreenState
               ),
             ]),
             const SizedBox(height: 12),
+            const _SectionLabel(label: '🏠 Home Widget'),
+            _HomeWidgetForm(
+              onUpdate: (data) async {
+                await HomeWidgetService.instance.update(data);
+                _log('✅ Home Widget updated: ${data.userName}');
+              },
+              onClear: () async {
+                await HomeWidgetService.instance.clear();
+                _log('🗑️ Home Widget cleared');
+              },
+              onGuide: () => _showAddWidgetGuide(context),
+            ),
+            const SizedBox(height: 12),
+            const _SectionLabel(label: '⚡ Live Activity'),
+            _LiveActivitySection(
+              onLog: _log,
+            ),
+            const SizedBox(height: 12),
             const _SectionLabel(label: '🧹 Hủy'),
             _ButtonRow(children: [
               _Btn(
@@ -530,6 +561,305 @@ class _LocalNotificationDemoScreenState
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ════════════════════════════════════════════
+// Home Widget Form
+// ════════════════════════════════════════════
+
+class _HomeWidgetForm extends StatefulWidget {
+  const _HomeWidgetForm({
+    required this.onUpdate,
+    required this.onClear,
+    required this.onGuide,
+  });
+  final Future<void> Function(WidgetUserData) onUpdate;
+  final Future<void> Function() onClear;
+  final VoidCallback onGuide;
+
+  @override
+  State<_HomeWidgetForm> createState() => _HomeWidgetFormState();
+}
+
+class _HomeWidgetFormState extends State<_HomeWidgetForm> {
+  final _nameCtrl    = TextEditingController(text: 'Nguyễn Văn A');
+  final _balanceCtrl = TextEditingController(text: '1,234,567 ₫');
+
+  // Mỗi stat có 2 controller: label + value
+  final List<(TextEditingController, TextEditingController)> _stats = [
+    (TextEditingController(text: 'Đơn hàng'),   TextEditingController(text: '12')),
+    (TextEditingController(text: 'Điểm thưởng'), TextEditingController(text: '850')),
+    (TextEditingController(text: 'Voucher'),     TextEditingController(text: '3')),
+    (TextEditingController(text: 'Thông báo'),   TextEditingController(text: '5')),
+  ];
+
+  bool _loading = false;
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _balanceCtrl.dispose();
+    for (final (l, v) in _stats) { l.dispose(); v.dispose(); }
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    setState(() => _loading = true);
+    await widget.onUpdate(WidgetUserData(
+      userName: _nameCtrl.text.trim().isEmpty ? '—' : _nameCtrl.text.trim(),
+      balance:  _balanceCtrl.text.trim().isEmpty ? '—' : _balanceCtrl.text.trim(),
+      stats: _stats
+          .where((s) => s.$1.text.trim().isNotEmpty)
+          .map((s) => {'label': s.$1.text.trim(), 'value': s.$2.text.trim()})
+          .toList(),
+    ));
+    if (mounted) setState(() => _loading = false);
+  }
+
+  void _addStat() {
+    if (_stats.length >= 6) return;
+    setState(() => _stats.add((TextEditingController(), TextEditingController())));
+  }
+
+  void _removeStat(int i) {
+    final (l, v) = _stats[i];
+    l.dispose(); v.dispose();
+    setState(() => _stats.removeAt(i));
+  }
+
+  static const _border = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+    borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+  );
+  static const _focusBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+    borderSide: BorderSide(color: Color(0xFF0F766E), width: 1.5),
+  );
+  static const _decoration = InputDecoration(
+    isDense: true,
+    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+    border: _border,
+    enabledBorder: _border,
+    focusedBorder: _focusBorder,
+    filled: true,
+    fillColor: Colors.white,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Tên + Số dư
+          TextField(
+            controller: _nameCtrl,
+            style: const TextStyle(fontSize: 13),
+            decoration: _decoration.copyWith(hintText: 'Tên người dùng'),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _balanceCtrl,
+            style: const TextStyle(fontSize: 13),
+            decoration: _decoration.copyWith(hintText: 'Số dư (vd: 1,234,567 ₫)'),
+          ),
+          const SizedBox(height: 10),
+          // Stats
+          Row(
+            children: [
+              const Text('Thống kê', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF6B7280))),
+              const Spacer(),
+              if (_stats.length < 6)
+                GestureDetector(
+                  onTap: _addStat,
+                  child: const Text('+ Thêm', style: TextStyle(fontSize: 11, color: Color(0xFF0F766E), fontWeight: FontWeight.w600)),
+                ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          ...List.generate(_stats.length, (i) {
+            final (lCtrl, vCtrl) = _stats[i];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: lCtrl,
+                      style: const TextStyle(fontSize: 12),
+                      decoration: _decoration.copyWith(hintText: 'Label'),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: vCtrl,
+                      style: const TextStyle(fontSize: 12),
+                      decoration: _decoration.copyWith(hintText: 'Value'),
+                    ),
+                  ),
+                  if (_stats.length > 1) ...[
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: () => _removeStat(i),
+                      child: const Icon(Icons.remove_circle_outline, size: 18, color: Color(0xFFEF4444)),
+                    ),
+                  ],
+                ],
+              ),
+            );
+          }),
+          const SizedBox(height: 10),
+          // Actions
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: _loading ? null : _submit,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    decoration: BoxDecoration(
+                      color: _loading ? const Color(0xFF9CA3AF) : const Color(0xFF0F766E),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: _loading
+                          ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                          : const Text('📊 Cập nhật Widget', style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              GestureDetector(
+                onTap: widget.onClear,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3F4F6),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                  ),
+                  child: const Text('🗑️', style: TextStyle(fontSize: 14)),
+                ),
+              ),
+              const SizedBox(width: 6),
+              GestureDetector(
+                onTap: widget.onGuide,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3F4F6),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                  ),
+                  child: const Text('➕', style: TextStyle(fontSize: 14)),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ════════════════════════════════════════════
+// Add Widget Guide Bottom Sheet
+// ════════════════════════════════════════════
+
+class _AddWidgetGuideSheet extends StatelessWidget {
+  const _AddWidgetGuideSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 40),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 36, height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            '🏠 Thêm Widget vào Home Screen',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 16),
+          _step('1', 'Về màn hình Home (nhấn nút Home)'),
+          _step('2', 'Giữ ngón tay vào vùng trống trên màn hình'),
+          _step('3', 'Nhấn nút [+] ở góc trên bên trái'),
+          _step('4', 'Tìm kiếm "Market" hoặc tên app'),
+          _step('5', 'Chọn widget "Tổng quan" → Add Widget'),
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF0FDF4),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color(0xFF86EFAC)),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.tips_and_updates, color: Color(0xFF16A34A), size: 18),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Nhấn "📊 Ghi data mẫu" trước để widget hiển thị data ngay khi thêm vào.',
+                    style: TextStyle(fontSize: 12, color: Color(0xFF166534)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _step(String num, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 24, height: 24,
+            decoration: const BoxDecoration(
+              color: Color(0xFF4F46E5),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(num, style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w700)),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: Text(text, style: const TextStyle(fontSize: 14, color: Color(0xFF374151))),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -805,6 +1135,207 @@ class _DelayBtn extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         child: Icon(icon, size: 16, color: const Color(0xFF374151)),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Live Activity Section
+// ---------------------------------------------------------------------------
+
+class _LiveActivitySection extends StatefulWidget {
+  const _LiveActivitySection({required this.onLog});
+  final void Function(String) onLog;
+
+  @override
+  State<_LiveActivitySection> createState() => _LiveActivitySectionState();
+}
+
+class _LiveActivitySectionState extends State<_LiveActivitySection> {
+  final _service = LiveActivityService.instance;
+
+  final _titleCtrl    = TextEditingController(text: 'Đơn hàng #12345');
+  final _subtitleCtrl = TextEditingController(text: 'Cửa hàng Quận 1');
+  final _statusCtrl   = TextEditingController(text: 'Shipper đang đến');
+  final _etaCtrl      = TextEditingController(text: '10 phút');
+
+  String? _activityId;
+  double _progress = 0.3;
+  bool _supported = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _service.areActivitiesEnabled().then((v) => setState(() => _supported = v));
+  }
+
+  @override
+  void dispose() {
+    _titleCtrl.dispose();
+    _subtitleCtrl.dispose();
+    _statusCtrl.dispose();
+    _etaCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _start() async {
+    final id = await _service.start(LiveActivityData(
+      title: _titleCtrl.text.trim(),
+      subtitle: _subtitleCtrl.text.trim(),
+    ));
+    if (id == null) {
+      widget.onLog('❌ Live Activity không khởi động được (device không hỗ trợ hoặc chưa cấp quyền)');
+      return;
+    }
+    setState(() => _activityId = id);
+    widget.onLog('✅ Live Activity started — id: $id');
+  }
+
+  Future<void> _update() async {
+    if (_activityId == null) return;
+    await _service.update(
+      _activityId!,
+      LiveActivityState(
+        status: _statusCtrl.text.trim(),
+        eta: _etaCtrl.text.trim(),
+        progress: _progress,
+      ),
+    );
+    widget.onLog('🔄 Updated → status="${_statusCtrl.text}" eta="${_etaCtrl.text}" progress=${(_progress * 100).round()}%');
+  }
+
+  Future<void> _end() async {
+    if (_activityId == null) return;
+    await _service.end(_activityId!);
+    widget.onLog('🛑 Live Activity ended — id: $_activityId');
+    setState(() => _activityId = null);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const labelStyle = TextStyle(fontSize: 12, color: Color(0xFF6B7280));
+    const inputDecoration = InputDecoration(
+      isDense: true,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      border: OutlineInputBorder(),
+    );
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0F9FF),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFBAE6FD)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Status badge
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: _supported ? const Color(0xFF22C55E) : const Color(0xFF9CA3AF),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  _supported ? 'Supported' : 'Not supported',
+                  style: const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(width: 8),
+              if (_activityId != null)
+                Expanded(
+                  child: Text(
+                    'ID: $_activityId',
+                    style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280)),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          // Static data (title + subtitle)
+          const Text('Static data', style: labelStyle),
+          const SizedBox(height: 4),
+          TextField(controller: _titleCtrl,    decoration: inputDecoration.copyWith(labelText: 'Title'),    style: const TextStyle(fontSize: 13)),
+          const SizedBox(height: 6),
+          TextField(controller: _subtitleCtrl, decoration: inputDecoration.copyWith(labelText: 'Subtitle'), style: const TextStyle(fontSize: 13)),
+          const SizedBox(height: 10),
+
+          // Dynamic state
+          const Text('Dynamic state', style: labelStyle),
+          const SizedBox(height: 4),
+          TextField(controller: _statusCtrl, decoration: inputDecoration.copyWith(labelText: 'Status'), style: const TextStyle(fontSize: 13)),
+          const SizedBox(height: 6),
+          TextField(controller: _etaCtrl,    decoration: inputDecoration.copyWith(labelText: 'ETA'),    style: const TextStyle(fontSize: 13)),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              const Text('Progress', style: labelStyle),
+              Expanded(
+                child: Slider(
+                  value: _progress,
+                  onChanged: (v) => setState(() => _progress = v),
+                  activeColor: const Color(0xFF3B82F6),
+                ),
+              ),
+              Text('${(_progress * 100).round()}%', style: const TextStyle(fontSize: 12, color: Color(0xFF374151))),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          // Action buttons
+          Row(
+            children: [
+              _LiveBtn(
+                label: 'Start',
+                color: const Color(0xFF3B82F6),
+                onTap: _activityId == null ? _start : null,
+              ),
+              const SizedBox(width: 8),
+              _LiveBtn(
+                label: 'Update',
+                color: const Color(0xFF0D9488),
+                onTap: _activityId != null ? _update : null,
+              ),
+              const SizedBox(width: 8),
+              _LiveBtn(
+                label: 'End',
+                color: const Color(0xFFEF4444),
+                onTap: _activityId != null ? _end : null,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LiveBtn extends StatelessWidget {
+  const _LiveBtn({required this.label, required this.color, required this.onTap});
+  final String label;
+  final Color color;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: onTap != null ? color : const Color(0xFFD1D5DB),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }

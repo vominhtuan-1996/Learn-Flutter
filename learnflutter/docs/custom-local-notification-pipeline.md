@@ -8,11 +8,13 @@ Quy trình tạo và hiển thị local notification với custom native UI trê
 
 ```
 Flutter (Dart)
-  ├── LocalNotificationService      → standard notifications (flutter_local_notifications)
-  └── CustomNotificationService     → custom native view
+  ├── LocalNotificationService      → standard notifications + iOS category registration
+  └── CustomNotificationService     → custom native view (reuse LocalNotificationService.plugin)
         ├── Android: MethodChannel → CustomNotificationHelper.kt (RemoteViews XML)
         └── iOS:     flutter_local_notifications + categoryIdentifier → NotificationContent.appex
 ```
+
+> **Singleton plugin:** `CustomNotificationService` dùng chung `LocalNotificationService.instance.plugin` — KHÔNG tạo `FlutterLocalNotificationsPlugin` thứ hai. Tạo instance thứ hai sẽ double-init native `UNUserNotificationCenter` delegate, reset `defaultPresent*` flags → foreground banner biến mất.
 
 ---
 
@@ -25,16 +27,38 @@ dependencies:
   flutter_local_notifications: ^17.2.2
 ```
 
-### 1.2 CustomNotificationService
+### 1.2 LocalNotificationService — category registration
+
+File: `lib/core/services/local_notification/local_notification_service.dart`
+
+Categories đăng ký **tại đây** (không phải trong `CustomNotificationService`). Phải đủ 5 categories trước khi gửi notification. Nếu bỏ qua, iOS gọi `setNotificationCategories([])` → xóa sạch → long-press không load extension.
+
+```dart
+final iosInit = DarwinInitializationSettings(
+  requestAlertPermission: true,
+  requestBadgePermission: true,
+  requestSoundPermission: true,
+  defaultPresentAlert: true,
+  defaultPresentBadge: true,
+  defaultPresentSound: true,
+  defaultPresentBanner: true,
+  defaultPresentList: true,
+  notificationCategories: [       // ← bắt buộc, đủ 5
+    DarwinNotificationCategory('NOTIF_INFO'),
+    DarwinNotificationCategory('NOTIF_SUCCESS'),
+    DarwinNotificationCategory('NOTIF_WARNING'),
+    DarwinNotificationCategory('NOTIF_PROMO'),
+    DarwinNotificationCategory('NOTIF_IMAGE'),
+  ],
+);
+```
+
+### 1.3 CustomNotificationService
 
 File: `lib/core/services/local_notification/custom_notification_service.dart`
 
-iOS path dùng `flutter_local_notifications` với `categoryIdentifier` để trigger Content Extension.
-
-**Quan trọng:** Phải đăng ký tất cả categories trong `DarwinInitializationSettings.notificationCategories` trước khi gửi notification. Nếu bỏ qua, iOS gọi `setNotificationCategories([])` → xóa sạch categories → long-press không load extension.
-
 ```dart
-enum NotifType { info, success, warning, promo }
+enum NotifType { info, success, warning, promo, image }
 
 extension _NotifTypeExt on NotifType {
   String get categoryId {
@@ -43,36 +67,34 @@ extension _NotifTypeExt on NotifType {
       case NotifType.success: return 'NOTIF_SUCCESS';
       case NotifType.warning: return 'NOTIF_WARNING';
       case NotifType.promo:   return 'NOTIF_PROMO';
+      case NotifType.image:   return 'NOTIF_IMAGE';
     }
   }
 }
+```
 
-Future<void> _ensureInit() async {
-  if (_initialized) return;
-  const categories = [
-    DarwinNotificationCategory('NOTIF_INFO'),
-    DarwinNotificationCategory('NOTIF_SUCCESS'),
-    DarwinNotificationCategory('NOTIF_WARNING'),
-    DarwinNotificationCategory('NOTIF_PROMO'),
-  ];
-  const darwinInit = DarwinInitializationSettings(
-    requestAlertPermission: false,
-    requestBadgePermission: false,
-    requestSoundPermission: false,
-    notificationCategories: categories,   // ← bắt buộc
-  );
-  await _plugin.initialize(const InitializationSettings(iOS: darwinInit));
-  _initialized = true;
-}
+Plugin dùng chung:
+
+```dart
+FlutterLocalNotificationsPlugin get _plugin => LocalNotificationService.instance.plugin;
 ```
 
 **Gọi:**
 
 ```dart
+// Standard
 await CustomNotificationService.instance.show(
   title: 'Cảnh báo',
   body: 'Hệ thống phát hiện bất thường',
   type: NotifType.warning,
+);
+
+// Image (iOS only — imageUrl truyền qua payload)
+await CustomNotificationService.instance.show(
+  title: 'Khuyến mãi',
+  body: 'Xem ngay!',
+  type: NotifType.image,
+  imageUrl: 'https://example.com/banner.jpg',
 );
 ```
 
@@ -199,7 +221,7 @@ class AppDelegate: FlutterAppDelegate {
 }
 ```
 
-> Không cần đăng ký categories trong AppDelegate. Categories được đăng ký qua `DarwinInitializationSettings.notificationCategories` trong `CustomNotificationService`.
+> Không đăng ký categories trong AppDelegate. Categories đăng ký qua `DarwinInitializationSettings.notificationCategories` trong `LocalNotificationService.init()`.
 
 ### 3.2 Notification Content Extension
 
@@ -210,14 +232,15 @@ ios/NotificationContent/
   ├── NotificationViewController.swift
   ├── Info.plist
   └── views/
-        ├── BaseNotificationView.swift          ← protocol + shared helpers
+        ├── BaseNotificationView.swift             ← protocol + shared helpers
         ├── InfoNotificationView.swift + .xib
         ├── SuccessNotificationView.swift + .xib
         ├── WarningNotificationView.swift + .xib
-        └── PromoNotificationView.swift + .xib
+        ├── PromoNotificationView.swift + .xib
+        └── ImageNotificationView.swift            ← programmatic (không có .xib)
 ```
 
-**Info.plist — 4 categories:**
+**Info.plist — 5 categories:**
 
 ```xml
 <key>NSExtension</key>
@@ -230,6 +253,7 @@ ios/NotificationContent/
       <string>NOTIF_SUCCESS</string>
       <string>NOTIF_WARNING</string>
       <string>NOTIF_PROMO</string>
+      <string>NOTIF_IMAGE</string>
     </array>
     <key>UNNotificationExtensionInitialContentSizeRatio</key>
     <real>0.6</real>
@@ -246,17 +270,27 @@ ios/NotificationContent/
 **NotificationViewController.swift** — dispatch theo category:
 
 ```swift
+enum NotifCategory {
+    static let info    = "NOTIF_INFO"
+    static let success = "NOTIF_SUCCESS"
+    static let warning = "NOTIF_WARNING"
+    static let promo   = "NOTIF_PROMO"
+    static let image   = "NOTIF_IMAGE"
+}
+
 func didReceive(_ notification: UNNotification) {
     contentView?.removeFromSuperview()
+    contentView = nil
     let category = notification.request.content.categoryIdentifier
+    let w = view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width
     let v = makeView(for: category)
+    v.frame = CGRect(x: 0, y: 0, width: w, height: 200)
+    v.autoresizingMask = [.flexibleWidth]
     view.addSubview(v)
-    v.frame = view.bounds
-    v.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     v.onSizeChanged = { [weak self] in self?.resizeToFit() }
     v.apply(notification: notification)
     contentView = v
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
         self?.resizeToFit()
     }
 }
@@ -266,21 +300,41 @@ private func makeView(for category: String) -> UIView & NotificationViewType {
     let dismiss: () -> Void = { [weak self] in self?.extensionContext?.dismissNotificationContentExtension() }
 
     switch category {
-    case "NOTIF_SUCCESS":
+    case NotifCategory.success:
         let v = SuccessNotificationView.fromXib(); v.onDismiss = dismiss; return v
-    case "NOTIF_WARNING":
+    case NotifCategory.warning:
         let v = WarningNotificationView.fromXib(); v.onOpen = open; v.onDismiss = dismiss; return v
-    case "NOTIF_PROMO":
+    case NotifCategory.promo:
         let v = PromoNotificationView.fromXib(); v.onOpen = open; return v
+    case NotifCategory.image:
+        let v = ImageNotificationView.make(); v.onOpen = open; v.onDismiss = dismiss; return v
     default: // NOTIF_INFO
         let v = InfoNotificationView.fromXib(); v.onOpen = open; v.onDismiss = dismiss; return v
     }
 }
 ```
 
+**resizeToFit** dùng `systemLayoutSizeFitting`:
+
+```swift
+private func resizeToFit() {
+    guard let v = contentView else { return }
+    let w = view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width
+    let targetSize = CGSize(width: w, height: UIView.layoutFittingCompressedSize.height)
+    let h = v.systemLayoutSizeFitting(
+        targetSize,
+        withHorizontalFittingPriority: .required,
+        verticalFittingPriority: .fittingSizeLevel
+    ).height
+    let finalH = max(h, 120)
+    preferredContentSize = CGSize(width: w, height: finalH)
+    v.frame = CGRect(x: 0, y: 0, width: w, height: finalH)
+}
+```
+
 ### 3.3 XIB Setup — Quy tắc quan trọng
 
-Mỗi view dùng pattern: `UIView subclass` + XIB file. `fromXib()` dùng `withOwner: nil`.
+Mỗi XIB view dùng pattern: `UIView subclass` + XIB file. `fromXib()` dùng `withOwner: nil`.
 
 **`customClass` phải đặt trên root `<view>`, KHÔNG phải File's Owner.**
 
@@ -324,6 +378,8 @@ static func fromXib() -> InfoNotificationView {
     return nib.instantiate(withOwner: nil, options: nil).first as! InfoNotificationView
 }
 ```
+
+> `ImageNotificationView` dùng `make()` (programmatic) — không có .xib. Load image từ `notification.request.content.body` (payload = imageUrl).
 
 ### 3.4 XIB — Xcode 26 Compatibility
 
@@ -401,6 +457,7 @@ Build Phases (Runner):
 | Action buttons | ✅ `addAction()` | ✅ `categoryIdentifier` |
 | Custom XML layout | ✅ `RemoteViews` | ✅ Content Extension + XIB |
 | Big Picture | ✅ `BigPictureStyleInformation` | ❌ |
+| Image (remote URL) | ❌ | ✅ `NOTIF_IMAGE` + `ImageNotificationView` |
 
 ---
 
@@ -418,12 +475,14 @@ Build Phases (Runner):
 ### iOS
 - [ ] `UNUserNotificationCenter.current().delegate = self` trong AppDelegate
 - [ ] `willPresent` override để show foreground banner
-- [ ] `DarwinInitializationSettings.notificationCategories` gồm đủ 4 categories trong `CustomNotificationService`
+- [ ] `DarwinInitializationSettings.notificationCategories` gồm đủ **5 categories** trong `LocalNotificationService.init()`
+- [ ] `CustomNotificationService` reuse `LocalNotificationService.instance.plugin` (không tạo plugin mới)
 - [ ] `NotificationContent` target trong `project.pbxproj`
-- [ ] `Info.plist` với `UNNotificationExtensionCategory` array 4 values
+- [ ] `Info.plist` với `UNNotificationExtensionCategory` array **5 values** (bao gồm `NOTIF_IMAGE`)
 - [ ] XIB files: `targetRuntime="iOS.CocoaTouch"` (Xcode 26+)
 - [ ] XIB files: `customClass` trên root `<view>`, KHÔNG trên File's Owner
 - [ ] XIB files: `<connections>` trong root `<view>`, action `destination` trỏ root view ID
+- [ ] `ImageNotificationView.swift` programmatic (không cần .xib)
 - [ ] `target 'NotificationContent'` trong Podfile → `pod install`
 - [ ] "Embed App Extensions" phase đúng thứ tự trong build phases
 - [ ] Code signing cho extension (Automatically manage signing)

@@ -44,6 +44,18 @@ target 'NotificationContent' do
   use_modular_headers!
 end
 
+# Home Screen Widget Extension — no pods needed
+target 'HomeWidgetExtension' do
+  use_frameworks!
+  use_modular_headers!
+end
+
+# Live Activity Extension — ActivityKit is system framework, no pods needed
+target 'LiveActivityExtension' do
+  use_frameworks!
+  use_modular_headers!
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)

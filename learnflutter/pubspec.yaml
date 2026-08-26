@@ -42,13 +42,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.1.1
   google_fonts: ^4.0.4
-  flutter_svprogresshud: ^1.0.0
   bmprogresshud: ^1.0.1
   shared_preferences: ^2.1.0
   scrollable_positioned_list: ^0.3.8
   # arkit_plugin: ^1.0.6
   workmanager: ^0.6.0
   flutter_local_notifications: ^17.2.2
+  home_widget: ^0.7.0
   notification_center: ^0.0.3
   draggable_fab: ^0.1.4
   flutter_isolate: ^2.0.4
