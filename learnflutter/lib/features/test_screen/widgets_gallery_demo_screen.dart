@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:learnflutter/core/services/local_notification/local_notification_widget.dart';
+import 'package:learnflutter/shared/widgets/app_avatar.dart';
+import 'package:learnflutter/shared/widgets/app_badge.dart';
+import 'package:learnflutter/shared/widgets/app_button.dart';
+import 'package:learnflutter/shared/widgets/app_chip.dart';
+import 'package:learnflutter/shared/widgets/app_dialog.dart';
 import 'package:learnflutter/shared/widgets/app_divider.dart';
+import 'package:learnflutter/shared/widgets/app_image_viewer.dart';
+import 'package:learnflutter/shared/widgets/app_shimmer.dart';
 import 'package:learnflutter/shared/widgets/app_text.dart';
 import 'package:learnflutter/shared/widgets/detail_container.dart';
 import 'package:learnflutter/shared/widgets/empty_widget.dart';
 import 'package:learnflutter/shared/widgets/enable_widget.dart';
+import 'package:learnflutter/shared/widgets/expandable_panel.dart';
 import 'package:learnflutter/shared/widgets/highlighted_text.dart';
+import 'package:learnflutter/shared/widgets/otp_input.dart';
+import 'package:learnflutter/shared/widgets/rating_bar.dart';
 import 'package:learnflutter/shared/widgets/ripple_override.dart';
+import 'package:learnflutter/shared/widgets/step_indicator.dart';
 import 'package:learnflutter/shared/widgets/tap.dart';
 import 'package:learnflutter/shared/widgets/zoom_tap_effect.dart';
 
@@ -22,6 +33,11 @@ class WidgetsGalleryDemoScreen extends StatefulWidget {
 class _WidgetsGalleryDemoScreenState extends State<WidgetsGalleryDemoScreen> {
   bool _enableSample = true;
   int _tapCount = 0;
+  bool _btnLoading = false;
+  double _rating = 3.0;
+  String _otpValue = '';
+  bool _chipFilterSelected = false;
+  int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +269,269 @@ class _WidgetsGalleryDemoScreenState extends State<WidgetsGalleryDemoScreen> {
               );
             }),
           ),
+
+          // ── NEW WIDGETS ──────────────────────────────────────────────
+
+          _Section(
+            title: '🔘 AppButton',
+            description: 'primary / secondary / outline / text + loading state',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppButton.primary(
+                  label: 'Primary',
+                  isLoading: _btnLoading,
+                  onTap: () async {
+                    setState(() => _btnLoading = true);
+                    await Future.delayed(const Duration(seconds: 2));
+                    if (mounted) setState(() => _btnLoading = false);
+                  },
+                ),
+                const SizedBox(height: 8),
+                AppButton.secondary(label: 'Secondary', onTap: () {}),
+                const SizedBox(height: 8),
+                AppButton.outline(label: 'Outline', onTap: () {}),
+                const SizedBox(height: 8),
+                AppButton.text(label: 'Text button', onTap: () {}),
+                const SizedBox(height: 8),
+                AppButton.primary(label: 'Disabled', enable: false, onTap: () {}),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '✨ AppShimmer',
+            description: 'Skeleton loading — box / text / circle',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    AppShimmer.circle(size: 48),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppShimmer.text(width: 160),
+                        const SizedBox(height: 6),
+                        AppShimmer.text(width: 100),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                AppShimmer.box(width: double.infinity, height: 80),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '👤 AppAvatar',
+            description: 'Network image + initials fallback',
+            child: Row(
+              children: [
+                AppAvatar(
+                  imageUrl: 'https://i.pravatar.cc/150?img=3',
+                  size: 56,
+                  borderColor: const Color(0xFFFDA758),
+                  borderWidth: 2,
+                  onTap: () => _toast(context, 'Avatar tapped'),
+                ),
+                const SizedBox(width: 12),
+                const AppAvatar(name: 'Võ Minh Tuấn', size: 56),
+                const SizedBox(width: 12),
+                const AppAvatar(size: 40),
+                const SizedBox(width: 12),
+                const AppAvatar(name: 'A', size: 32),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '🔴 AppBadge',
+            description: 'Overlay badge với count và maxCount',
+            child: Row(
+              children: [
+                AppBadge(
+                  count: 5,
+                  child: const Icon(Icons.notifications_outlined, size: 32),
+                ),
+                const SizedBox(width: 24),
+                AppBadge(
+                  count: 120,
+                  maxCount: 99,
+                  child: const Icon(Icons.mail_outline, size: 32),
+                ),
+                const SizedBox(width: 24),
+                AppBadge(
+                  count: 0,
+                  showZero: true,
+                  color: Colors.green,
+                  child: const Icon(Icons.shopping_cart_outlined, size: 32),
+                ),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '🏷 AppChip',
+            description: 'filter (toggle) / label / action (dismissible)',
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                AppChip.filter(
+                  label: 'Flutter',
+                  selected: _chipFilterSelected,
+                  onTap: () => setState(() => _chipFilterSelected = !_chipFilterSelected),
+                ),
+                AppChip.filter(label: 'Dart', selected: true),
+                AppChip.label(label: 'v3.29.3', color: Colors.green),
+                AppChip.action(
+                  label: 'Xoá được',
+                  onDelete: () => _toast(context, 'Chip deleted'),
+                ),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '🔢 OtpInput',
+            description: 'Auto-focus next field, backspace support',
+            child: Column(
+              children: [
+                OtpInput(
+                  length: 6,
+                  onCompleted: (v) => setState(() => _otpValue = v),
+                  onChanged: (v) => setState(() => _otpValue = v),
+                ),
+                const SizedBox(height: 8),
+                Text('Value: $_otpValue', style: const TextStyle(color: Color(0xFF6B7280))),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '⭐ RatingBar',
+            description: 'Interactive + half-star + readOnly',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RatingBar(
+                  rating: _rating,
+                  halfStarEnabled: true,
+                  onRatingChanged: (v) => setState(() => _rating = v),
+                ),
+                const SizedBox(height: 4),
+                Text('Rating: $_rating', style: const TextStyle(color: Color(0xFF6B7280))),
+                const SizedBox(height: 8),
+                const RatingBar(rating: 4.5, readOnly: true, size: 20),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '📂 ExpandablePanel',
+            description: 'Animated expand/collapse với chevron',
+            child: ExpandablePanel(
+              header: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Text('Nhấn để mở rộng', style: TextStyle(fontWeight: FontWeight.w600)),
+              ),
+              body: const Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 4),
+                child: Text(
+                  'Nội dung được ẩn. ExpandablePanel dùng SizeTransition nên smooth, không giật.',
+                  style: TextStyle(color: Color(0xFF6B7280)),
+                ),
+              ),
+            ),
+          ),
+
+          _Section(
+            title: '📍 StepIndicator',
+            description: 'dot / bar / number — 3 step types',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text('Step: '),
+                    IconButton(
+                      icon: const Icon(Icons.remove, size: 18),
+                      onPressed: () => setState(() {
+                        if (_currentStep > 0) _currentStep--;
+                      }),
+                    ),
+                    Text('$_currentStep'),
+                    IconButton(
+                      icon: const Icon(Icons.add, size: 18),
+                      onPressed: () => setState(() {
+                        if (_currentStep < 4) _currentStep++;
+                      }),
+                    ),
+                  ],
+                ),
+                StepIndicator(totalSteps: 5, currentStep: _currentStep, type: StepIndicatorType.dot),
+                const SizedBox(height: 12),
+                StepIndicator(totalSteps: 5, currentStep: _currentStep, type: StepIndicatorType.bar),
+                const SizedBox(height: 12),
+                StepIndicator(totalSteps: 5, currentStep: _currentStep, type: StepIndicatorType.number),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '💬 AppDialog',
+            description: 'confirm / alert / custom',
+            child: Wrap(
+              spacing: 8,
+              children: [
+                _miniBtn('Confirm', const Color(0xFFFDA758), () {
+                  AppDialog.confirm(
+                    context,
+                    title: 'Xác nhận',
+                    message: 'Bạn có chắc muốn thực hiện thao tác này?',
+                    onConfirm: () => _toast(context, 'Confirmed!'),
+                  );
+                }),
+                _miniBtn('Alert', const Color(0xFF6B7280), () {
+                  AppDialog.alert(
+                    context,
+                    title: 'Thông báo',
+                    message: 'Thao tác đã hoàn tất thành công.',
+                  );
+                }),
+              ],
+            ),
+          ),
+
+          _Section(
+            title: '🖼 AppImageViewer',
+            description: 'Full-screen pinch-to-zoom, swipe-to-dismiss, gallery',
+            child: Wrap(
+              spacing: 8,
+              children: [
+                _miniBtn('Single image', const Color(0xFF2563EB), () {
+                  AppImageViewer.show(
+                    context,
+                    imageUrl: 'https://picsum.photos/seed/flutter/800/600',
+                  );
+                }),
+                _miniBtn('Gallery (3 ảnh)', const Color(0xFF7C3AED), () {
+                  AppImageViewer.showGallery(
+                    context,
+                    images: [
+                      'https://picsum.photos/seed/a/800/600',
+                      'https://picsum.photos/seed/b/800/600',
+                      'https://picsum.photos/seed/c/800/600',
+                    ],
+                  );
+                }),
+              ],
+            ),
+          ),
+
           const SizedBox(height: 16),
         ],
       ),
