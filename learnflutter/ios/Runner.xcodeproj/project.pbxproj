@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0380BC647314CC5297D991D5 /* Pods_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DFF3A9133F5BE8F2F22DCAB /* Pods_ShareExtension.framework */; };
 		058DA7F3303D2F7E00D34BF2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058DA7F2303D2F7E00D34BF2 /* WidgetKit.framework */; };
 		058DA7F5303D2F7E00D34BF2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058DA7F4303D2F7E00D34BF2 /* SwiftUI.framework */; };
 		058DA806303D2F8100D34BF2 /* HomeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 058DA7F1303D2F7D00D34BF2 /* HomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -39,6 +40,10 @@
 		DD0000031CF9000F007C1234 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0000011CF9000F007C0000 /* UserNotifications.framework */; };
 		DD0000041CF9000F007C1234 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0000021CF9000F007C0000 /* UserNotificationsUI.framework */; };
 		F109A8ACA9D7CD35D4F1C9A1 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B6BD1096E787033545325C5 /* Pods_RunnerTests.framework */; };
+		SE0001051CF9000F007C1234 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0001011CF9000F007C1234 /* ShareViewController.swift */; };
+		SE0001061CF9000F007C1234 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = SE0001041CF9000F007C1234 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		SE0001201CF9000F007C1234 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0001191CF9000F007C1234 /* ShareView.swift */; };
+		SE0002021CF9000F007C1234 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = SE0002011CF9000F007C1234 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +75,13 @@
 			remoteGlobalIDString = FA0000071CF9000F007C1234;
 			remoteInfo = LiveActivityExtension;
 		};
+		SE0001161CF9000F007C1234 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = SE0001111CF9000F007C1234;
+			remoteInfo = ShareExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,6 +103,7 @@
 			files = (
 				AA0000161CF9000F007C1234 /* NotificationContent.appex in Embed App Extensions */,
 				058DA806303D2F8100D34BF2 /* HomeWidgetExtension.appex in Embed App Extensions */,
+				SE0001061CF9000F007C1234 /* ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,16 +125,20 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		173AE8017708FCF00CEB9E09 /* Pods-NotificationContent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationContent.debug.xcconfig"; path = "Target Support Files/Pods-NotificationContent/Pods-NotificationContent.debug.xcconfig"; sourceTree = "<group>"; };
+		2482D5409E75C9D6D820ADC7 /* Pods-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-ShareExtension/Pods-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		2B6AD26E9DE06C12CAF3F8E6 /* Pods-LiveActivityExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveActivityExtension.profile.xcconfig"; path = "Target Support Files/Pods-LiveActivityExtension/Pods-LiveActivityExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		3160BD2086EB30381F0DB468 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		4B6BD1096E787033545325C5 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DFF3A9133F5BE8F2F22DCAB /* Pods_ShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		569A6AA0CCFB51BD76A9275D /* Pods_NotificationContent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationContent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57B35FA6E956E6204DE1D00E /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		59B13E228F54071829B3CDA9 /* Pods_HomeWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HomeWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65DC553C34ADFEB7F9029F4D /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		6CAB75EDC0A687FE6B1925D7 /* Pods-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.release.xcconfig"; path = "Target Support Files/Pods-ShareExtension/Pods-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
+		72718FD6F0C8268DF79D22E2 /* Pods-ShareExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.profile.xcconfig"; path = "Target Support Files/Pods-ShareExtension/Pods-ShareExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7658C69F1D2532BB6F9B2EB7 /* Pods-LiveActivityExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveActivityExtension.debug.xcconfig"; path = "Target Support Files/Pods-LiveActivityExtension/Pods-LiveActivityExtension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +175,12 @@
 		E7CC8810F43A80FA5128D8C6 /* Pods-HomeWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-HomeWidgetExtension/Pods-HomeWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		F8F19088F82A9EE7F5ADD245 /* Pods-LiveActivityExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveActivityExtension.release.xcconfig"; path = "Target Support Files/Pods-LiveActivityExtension/Pods-LiveActivityExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FA0000051CF9000F007C1234 /* LiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		SE0001011CF9000F007C1234 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		SE0001191CF9000F007C1234 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		SE0001021CF9000F007C1234 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		SE0001031CF9000F007C1234 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		SE0002011CF9000F007C1234 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		SE0001041CF9000F007C1234 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -249,6 +272,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		SE0001091CF9000F007C1234 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0380BC647314CC5297D991D5 /* Pods_ShareExtension.framework in Frameworks */,
+				SE0002021CF9000F007C1234 /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -274,6 +306,8 @@
 				058DA7F4303D2F7E00D34BF2 /* SwiftUI.framework */,
 				59B13E228F54071829B3CDA9 /* Pods_HomeWidgetExtension.framework */,
 				0D6EB91ED8F885A420949755 /* Pods_LiveActivityExtension.framework */,
+				4DFF3A9133F5BE8F2F22DCAB /* Pods_ShareExtension.framework */,
+				SE0002011CF9000F007C1234 /* MapKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -304,6 +338,9 @@
 				7658C69F1D2532BB6F9B2EB7 /* Pods-LiveActivityExtension.debug.xcconfig */,
 				F8F19088F82A9EE7F5ADD245 /* Pods-LiveActivityExtension.release.xcconfig */,
 				2B6AD26E9DE06C12CAF3F8E6 /* Pods-LiveActivityExtension.profile.xcconfig */,
+				2482D5409E75C9D6D820ADC7 /* Pods-ShareExtension.debug.xcconfig */,
+				6CAB75EDC0A687FE6B1925D7 /* Pods-ShareExtension.release.xcconfig */,
+				72718FD6F0C8268DF79D22E2 /* Pods-ShareExtension.profile.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -331,6 +368,7 @@
 				3E834F064DCE619741F9BE58 /* Pods */,
 				2C1B10C554075C3CDD9E54ED /* Frameworks */,
 				FA0000061CF9000F007C1234 /* LiveActivityExtension */,
+				SE0001181CF9000F007C1234 /* ShareExtension */,
 			);
 			sourceTree = "<group>";
 		};
@@ -342,6 +380,7 @@
 				AA0000101CF9000F007C1234 /* NotificationContent.appex */,
 				058DA7F1303D2F7D00D34BF2 /* HomeWidgetExtension.appex */,
 				FA0000051CF9000F007C1234 /* LiveActivityExtension.appex */,
+				SE0001041CF9000F007C1234 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -390,6 +429,17 @@
 				BB0000071CF9000F007C0000 /* ImageNotificationView.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		SE0001181CF9000F007C1234 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				SE0001011CF9000F007C1234 /* ShareViewController.swift */,
+				SE0001191CF9000F007C1234 /* ShareView.swift */,
+				SE0001021CF9000F007C1234 /* Info.plist */,
+				SE0001031CF9000F007C1234 /* ShareExtension.entitlements */,
+			);
+			path = ShareExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +506,7 @@
 				AA0000181CF9000F007C1234 /* PBXTargetDependency */,
 				058DA805303D2F8100D34BF2 /* PBXTargetDependency */,
 				FA0000111CF9000F007C1234 /* PBXTargetDependency */,
+				SE0001171CF9000F007C1234 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -499,6 +550,24 @@
 			name = LiveActivityExtension;
 			productName = LiveActivityExtension;
 			productReference = FA0000051CF9000F007C1234 /* LiveActivityExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		SE0001111CF9000F007C1234 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = SE0001151CF9000F007C1234 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				1816005242CBBBEAD0FDA8B2 /* [CP] Check Pods Manifest.lock */,
+				SE0001071CF9000F007C1234 /* Sources */,
+				SE0001081CF9000F007C1234 /* Resources */,
+				SE0001091CF9000F007C1234 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = SE0001041CF9000F007C1234 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -549,6 +618,7 @@
 				AA0000091CF9000F007C1234 /* NotificationContent */,
 				058DA7F0303D2F7D00D34BF2 /* HomeWidgetExtension */,
 				FA0000071CF9000F007C1234 /* LiveActivityExtension */,
+				SE0001111CF9000F007C1234 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -597,6 +667,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		SE0001081CF9000F007C1234 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -615,6 +692,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1816005242CBBBEAD0FDA8B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ShareExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
@@ -826,6 +925,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		SE0001071CF9000F007C1234 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				SE0001051CF9000F007C1234 /* ShareViewController.swift in Sources */,
+				SE0001201CF9000F007C1234 /* ShareView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -848,6 +956,11 @@
 			isa = PBXTargetDependency;
 			target = FA0000071CF9000F007C1234 /* LiveActivityExtension */;
 			targetProxy = FA0000021CF9000F007C1234 /* PBXContainerItemProxy */;
+		};
+		SE0001171CF9000F007C1234 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = SE0001111CF9000F007C1234 /* ShareExtension */;
+			targetProxy = SE0001161CF9000F007C1234 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -885,7 +998,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = HomeWidget/HomeWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -909,7 +1022,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.HomeWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dis_homewidget;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_homeWidget;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -1327,7 +1440,7 @@
 			baseConfigurationReference = 173AE8017708FCF00CEB9E09 /* Pods-NotificationContent.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
@@ -1344,7 +1457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.NotificationContent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dis_notification_extendsion;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_notificationContent;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1424,7 +1537,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = LiveActivityExtension/LiveActivityExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1449,7 +1562,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.HomeLiveActivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = live_activity_dis;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_homeLiveActivity;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -1558,6 +1671,96 @@
 			};
 			name = Profile;
 		};
+		SE0001121CF9000F007C1234 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2482D5409E75C9D6D820ADC7 /* Pods-ShareExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7755R4CX4U;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		SE0001131CF9000F007C1234 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CAB75EDC0A687FE6B1925D7 /* Pods-ShareExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7755R4CX4U;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		SE0001141CF9000F007C1234 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72718FD6F0C8268DF79D22E2 /* Pods-ShareExtension.profile.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7755R4CX4U;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fpt.isc.prod.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1617,6 +1820,16 @@
 				FA0000121CF9000F007C1234 /* Debug */,
 				FA0000131CF9000F007C1234 /* Release */,
 				FA0000141CF9000F007C1234 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		SE0001151CF9000F007C1234 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				SE0001121CF9000F007C1234 /* Debug */,
+				SE0001131CF9000F007C1234 /* Release */,
+				SE0001141CF9000F007C1234 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

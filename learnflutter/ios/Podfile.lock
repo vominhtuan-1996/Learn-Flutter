@@ -197,6 +197,8 @@ PODS:
     - MTBBarcodeScanner
   - qr_code_tools (0.1.0):
     - Flutter
+  - receive_sharing_intent (1.8.1):
+    - Flutter
   - restart_app (1.8.3):
     - Flutter
   - SDWebImage (5.21.7):
@@ -279,6 +281,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - qr_code_tools (from `.symlinks/plugins/qr_code_tools/ios`)
+  - receive_sharing_intent (from `.symlinks/plugins/receive_sharing_intent/ios`)
   - restart_app (from `.symlinks/plugins/restart_app/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
@@ -368,6 +371,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
   qr_code_tools:
     :path: ".symlinks/plugins/qr_code_tools/ios"
+  receive_sharing_intent:
+    :path: ".symlinks/plugins/receive_sharing_intent/ios"
   restart_app:
     :path: ".symlinks/plugins/restart_app/ios"
   sensors_plus:
@@ -437,6 +442,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   qr_code_tools: a2c9e4ee5ec641df1cde93e4fc9e31b677ad0d5a
+  receive_sharing_intent: 79c848f5b045674ad60b9fea3bafea59962ad2c1
   restart_app: ac66828d4c69f5e8d40e61a75ad15aafde0098e6
   SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
   SDWebImageWebPCoder: 0e06e365080397465cc73a7a9b472d8a3bd0f377
@@ -453,6 +459,6 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: a4af96a051138e28e29f60101d094683b9f82188
   workmanager: 0afdcf5628bbde6924c21af7836fed07b42e30e6
 
-PODFILE CHECKSUM: c30db71e1021142cb7f94e6846089e04696c5f37
+PODFILE CHECKSUM: c5477a15c146d458fda90043dd12b84e97db8e27
 
 COCOAPODS: 1.16.2

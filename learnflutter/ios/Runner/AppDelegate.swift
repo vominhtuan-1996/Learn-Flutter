@@ -66,6 +66,20 @@ struct LiveActivityAttributes: ActivityAttributes {
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
+    // MARK: - URL Scheme (Share Extension → app)
+
+    override func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
+        // learnflutter://shared — triggered by ShareViewController after saving to App Group
+        if url.scheme == "learnflutter" && url.host == "shared" {
+            return true // receive_sharing_intent handles reading the data
+        }
+        return super.application(app, open: url, options: options)
+    }
+
     // MARK: - Live Activity handlers
 
     private func startLiveActivity(args: [String: Any]?, result: @escaping FlutterResult) {

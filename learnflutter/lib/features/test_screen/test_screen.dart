@@ -24,6 +24,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:learnflutter/app/localization/app_local_translate.dart';
 import 'package:learnflutter/core/engines/engine_dialog/engine_dialog.dart';
 import 'package:learnflutter/features/gift_coupon/gift_coupon_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learnflutter/features/share_extension/cubit/share_extension_cubit.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -199,6 +201,18 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void initState() {
     super.initState();
+    // Auto-navigate to ShareExtensionScreen when app opened via Android share intent
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final cubit = context.read<ShareExtensionCubit>();
+      if (cubit.state.status == ShareExtensionStatus.loaded) {
+        Navigator.of(context).pushNamed(Routes.shareExtension);
+      }
+      cubit.stream.listen((state) {
+        if (state.status == ShareExtensionStatus.loaded && mounted) {
+          Navigator.of(context).pushNamed(Routes.shareExtension);
+        }
+      });
+    });
     setState(() => _isUpdaterAvailable = _updater.isAvailable);
     _updater.readCurrentPatch().then((currentPatch) {
       setState(() => _currentPatch = currentPatch);
@@ -536,6 +550,7 @@ class _TestScreenState extends State<TestScreen> {
               const _FeatureCard(title: 'Settings', description: 'Màn hình settings tổng — theme, language, notifications.', routeName: Routes.setting, accent: Color(0xFF6B7280)),
               const _FeatureCard(title: '🔔 Local Notification', description: 'Service notification cục bộ + custom in-app banner widget.', routeName: Routes.localNotificationDemo, accent: Color(0xFFFCD34D)),
               const _FeatureCard(title: '⚡ Live Activity', description: 'iOS ActivityKit — Lock Screen banner + Dynamic Island real-time update.', routeName: Routes.liveActivityDemo, accent: Color(0xFF3B82F6)),
+              const _FeatureCard(title: '📤 Share Extension', description: 'Nhận URL / ảnh / text được share từ Safari và các app khác.', routeName: Routes.shareExtension, accent: Color(0xFF10B981)),
               const _FeatureCard(title: '🏐 Match Entry', description: 'Badminton Championship — lập lịch trận đấu với live preview.', routeName: Routes.matchEntry, accent: Color(0xFFD9FF3A)),
               TextButton(onPressed: splitCodeString, child: Text(AppLocaleTranslate.splitString.getString(context))),
             ]),

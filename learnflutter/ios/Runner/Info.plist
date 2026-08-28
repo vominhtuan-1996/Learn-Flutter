@@ -102,5 +102,19 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>AppGroupId</key>
+	<string>group.com.fpt.isc.prod.HomeWidget</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>learnflutter</string>
+				<string>ShareMedia-com.fpt.isc.prod</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

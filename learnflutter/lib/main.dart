@@ -17,6 +17,7 @@ import 'package:learnflutter/core/storage/hive_demo/model/person.dart';
 import 'package:learnflutter/core/constants/define_constraint.dart';
 import 'package:learnflutter/shared/widgets/routes/route.dart';
 import 'package:learnflutter/features/setting/cubit/setting_cubit.dart';
+import 'package:learnflutter/features/share_extension/cubit/share_extension_cubit.dart';
 import 'package:learnflutter/features/setting/state/setting_state.dart';
 import 'package:learnflutter/core/utils/utils_helper.dart';
 import 'package:notification_center/notification_center.dart';
@@ -319,6 +320,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
           BlocProvider(
             create: (context) => SearchCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ShareExtensionCubit(),
           ),
         ],
         // BlocBuilder lắng nghe SettingThemeCubit state changes
