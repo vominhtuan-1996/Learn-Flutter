@@ -9,17 +9,42 @@ import 'package:learnflutter/core/engines/engine_dialog/models/dialog_config.dar
 /// 2. **Tablet & Landscape**: Giới hạn kích thước `maxWidth: 480` ở trung tâm đáy màn hình.
 /// 3. **Drag Handle & Gestures**: Hiển thị thanh kéo tinh xảo.
 /// 4. **Header & Badge**: Tích hợp icon badge trạng thái chuẩn màu DialogColorToken.
-class BottomSheetBaseWidget extends StatelessWidget {
+/// 5. **Realtime Height**: Gọi [onHeightChanged] mỗi khi chiều cao widget thay đổi.
+class BottomSheetBaseWidget extends StatefulWidget {
   final AppBottomSheetConfig config;
+
+  /// Callback trả về chiều cao thực tế (logical pixels) mỗi khi layout thay đổi.
+  final ValueChanged<double>? onHeightChanged;
 
   const BottomSheetBaseWidget({
     super.key,
     required this.config,
+    this.onHeightChanged,
   });
 
   @override
+  State<BottomSheetBaseWidget> createState() => _BottomSheetBaseWidgetState();
+}
+
+class _BottomSheetBaseWidgetState extends State<BottomSheetBaseWidget> {
+  final _containerKey = GlobalKey();
+  double _lastHeight = 0;
+
+  void _measureHeight() {
+    final renderBox = _containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return;
+    final height = renderBox.size.height;
+    if (height != _lastHeight) {
+      _lastHeight = height;
+      widget.onHeightChanged?.call(height);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _measureHeight());
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final config = widget.config;
 
     // Tokens màu động hỗ trợ Dark Mode
     final surfaceBg = isDark ? const Color(0xFF1E293B) : Colors.white;
@@ -155,6 +180,7 @@ class BottomSheetBaseWidget extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 480),
           child: Container(
+            key: _containerKey,
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
             decoration: BoxDecoration(
               color: surfaceBg,
