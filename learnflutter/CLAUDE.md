@@ -71,6 +71,14 @@ lib/
 
 **Localization:** `flutter_localization` (Riverpod). Languages: vi, en. Switch via `lib/l10n/helper.dart`. Access: `AppLocalizations.of(context)?.key`.
 
+## Native extensions & release
+
+- Git root is `learn_flutter/` (parent of this dir); Flutter project is `learnflutter/`.
+- iOS has extra targets beyond Runner: `ShareExtension`, `LiveActivityExtension`, `NotificationContent`, `HomeWidget`. Extensions use manual signing matching Runner — keep in sync when touching `project.pbxproj`.
+- Dart side of native pipelines: `lib/core/services/{live_activity,home_widget,firebase_message,local_notification}` and `lib/features/share_extension`.
+- Release/OTA: `fastlane/` (`release_ios.sh`, `release_android.sh`, `patch.sh`; see `fastlane/SHOREBIRD_PIPELINE.md`) and `shore_bird_ci_cd/`.
+- Root `*.py` / `*.xlsx` / `*.csv` files are one-off geocoding/data scripts, not app code.
+
 ## Rules & Docs
 
 Detailed rules live in `docs/claude/`:
