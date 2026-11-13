@@ -1,0 +1,176 @@
+<style>
+.r1{max-width:68rem;margin-inline:auto;display:flex;flex-direction:column;gap:var(--cds-gap-lg);font-family:var(--font-anthropic-sans);color:var(--color-fg)}
+.r1 *{box-sizing:border-box}
+.r1-head h1{margin:0;font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title)}
+.r1-head p{margin:var(--cds-gap-xs) 0 0;color:var(--color-fg-muted);font-size:var(--cds-font-size-body);max-width:52rem}
+.r1-kpis{display:grid;gap:var(--cds-gap-md);grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr))}
+.r1-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0}
+.r1-card h2{margin:0;font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium)}
+.r1-card .note{margin:2px 0 var(--cds-gap-md);color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.r1-kpi .lbl{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.r1-kpi .num{display:block;margin-top:var(--cds-gap-xs);font-family:var(--font-anthropic-serif);font-weight:400;font-size:2.5rem;line-height:1.1;font-variant-numeric:tabular-nums;min-height:2.75rem}
+.r1-kpi.warn .num{color:var(--color-bad)}
+.r1-charts{display:grid;gap:var(--cds-gap-md);grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr))}
+.r1-bars{display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-height:7rem}
+.r1-bar{display:grid;grid-template-columns:minmax(6rem,38%) 1fr 2rem;align-items:center;gap:var(--cds-gap-sm);font-size:var(--cds-font-size-caption)}
+.r1-bar .name{overflow-wrap:anywhere;color:var(--color-fg)}
+.r1-bar .track{height:.75rem;background:var(--cds-chart-grid);border-radius:.375rem;overflow:hidden}
+.r1-bar .fill{height:100%;border-radius:.375rem}
+.r1-bar .val{text-align:right;font-variant-numeric:tabular-nums}
+.r1-tools{display:flex;flex-wrap:wrap;gap:var(--cds-gap-sm);margin-bottom:var(--cds-gap-md)}
+.r1-tools input[type=search]{flex:1 1 14rem;min-width:0;padding:var(--cds-pad-xs) var(--cds-pad-sm);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:var(--color-bg);color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption)}
+.r1-tools button{padding:var(--cds-pad-xs) var(--cds-pad-sm);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:var(--color-bg);color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}
+.r1-tools button[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg)}
+.r1-scroll{max-height:34rem;overflow:auto;border:1px solid var(--color-border-line);border-radius:var(--cds-radius)}
+.r1-table{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-caption)}
+.r1-table th{position:sticky;top:0;background:var(--color-panel);text-align:left;font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.r1-table td{padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.r1-table td.k{white-space:nowrap;font-variant-numeric:tabular-nums}
+.r1-table td.sum{min-width:16rem}
+.r1-pill{display:inline-block;padding:0 .5rem;border-radius:999px;border:1px solid var(--color-border-line);white-space:nowrap}
+.r1-pill.todo{border-color:var(--cds-chart-status-critical);color:var(--color-bad)}
+.r1-high{font-weight:var(--cds-font-weight-medium);color:var(--color-bad)}
+.r1-empty{padding:var(--cds-pad-lg);color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.r1-foot{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:0}
+@media (max-width:40rem){.r1-hide-sm{display:none}}
+</style>
+<div class="r1">
+  <header class="r1-head">
+    <h1>{{TITLE}}</h1>
+    <p>{{SUBTITLE}}</p>
+  </header>
+
+  <section class="r1-kpis" aria-label="Tổng quan theo trạng thái">
+    <div class="r1-kpi r1-card"><span class="lbl">Tổng bug</span><b class="num dash-skeleton" data-source="kpi" data-field="n" data-where="k=total">—</b></div>
+    <div class="r1-kpi r1-card warn"><span class="lbl">To Do</span><b class="num dash-skeleton" data-source="kpi" data-field="n" data-where="k=todo">—</b></div>
+    <div class="r1-kpi r1-card"><span class="lbl">In progress</span><b class="num dash-skeleton" data-source="kpi" data-field="n" data-where="k=progress">—</b></div>
+    <div class="r1-kpi r1-card"><span class="lbl">In review</span><b class="num dash-skeleton" data-source="kpi" data-field="n" data-where="k=review">—</b></div>
+    <div class="r1-kpi r1-card"><span class="lbl">Done</span><b class="num dash-skeleton" data-source="kpi" data-field="n" data-where="k=done">—</b></div>
+  </section>
+
+  <section class="r1-charts">
+    <div class="r1-card" id="r1-c-status"><h2>Theo trạng thái</h2><p class="note">Số bug theo trạng thái Jira</p><div class="r1-bars dash-skeleton" id="r1-status" data-source="by_status"></div></div>
+    <div class="r1-card" id="r1-c-assignee"><h2>Theo người xử lý</h2><p class="note">Số bug mỗi người đang giữ</p><div class="r1-bars dash-skeleton" id="r1-assignee" data-source="by_assignee"></div></div>
+    <div class="r1-card" id="r1-c-module"><h2>Theo module</h2><p class="note">Số bug theo nhóm test case</p><div class="r1-bars dash-skeleton" id="r1-module" data-source="by_module"></div></div>
+    <div class="r1-card" id="r1-c-priority"><h2>Theo mức ưu tiên</h2><p class="note">Số bug theo priority trên Jira</p><div class="r1-bars dash-skeleton" id="r1-priority" data-source="by_priority"></div></div>
+  </section>
+
+  <section class="r1-card" id="r1-list">
+    <h2>Danh sách bug</h2>
+    <p class="note">Tìm theo mã, tóm tắt, người xử lý hoặc module</p>
+    <div class="r1-tools">
+      <input type="search" id="r1-q" placeholder="Tìm bug" aria-label="Tìm bug">
+      <button type="button" id="r1-all" aria-pressed="true">Tất cả</button>
+      <button type="button" id="r1-todo" aria-pressed="false">Chỉ To Do</button>
+    </div>
+    <div class="r1-scroll">
+      <table class="r1-table" id="r1-table" data-source="bugs" data-row-key="key">
+        <thead><tr>
+          <th data-field="key">Mã</th>
+          <th data-field="summary">Tóm tắt</th>
+          <th data-field="status">Trạng thái</th>
+          <th data-field="assignee">Người xử lý</th>
+          <th data-field="module" class="r1-hide-sm">Module</th>
+          <th data-field="priority">Ưu tiên</th>
+        </tr></thead>
+        <tbody id="r1-body"></tbody>
+      </table>
+    </div>
+  </section>
+  <p class="r1-foot">{{SOURCE_NOTE}}</p>
+</div>
+<script>
+dash.calc('kpi', {inputs: ['bugs'], title: 'Bug theo trạng thái', description: 'Đếm bug theo trạng thái Jira.',
+  fn: (bugs) => { const c = (s) => bugs.filter((b) => b.status === s).length;
+    return [{k: 'total', n: bugs.length}, {k: 'todo', n: c('To Do')}, {k: 'progress', n: c('In progress')}, {k: 'review', n: c('In review')}, {k: 'done', n: c('Done')}]; }});
+dash.calc('by_status', {inputs: ['bugs'], title: 'Bug theo trạng thái (biểu đồ)', description: 'Đếm bug theo trạng thái, theo thứ tự quy trình.',
+  fn: (bugs) => { const o = {'To Do': 0, 'In progress': 1, 'In review': 2, 'Done': 3}; const m = {}; for (const b of bugs) { const k = b.status || 'Không rõ'; m[k] = (m[k] || 0) + 1; }
+    return Object.entries(m).map(([label, n]) => ({label, n})).sort((a, b) => (o[a.label] ?? 9) - (o[b.label] ?? 9)); }});
+dash.calc('by_assignee', {inputs: ['bugs'], title: 'Bug theo người xử lý', description: 'Đếm bug theo assignee, nhiều nhất trước.',
+  fn: (bugs) => { const m = {}; for (const b of bugs) { const k = b.assignee || 'Không rõ'; m[k] = (m[k] || 0) + 1; }
+    return Object.entries(m).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n); }});
+dash.calc('by_module', {inputs: ['bugs'], title: 'Bug theo module', description: 'Đếm bug theo module/flow test case, nhiều nhất trước.',
+  fn: (bugs) => { const m = {}; for (const b of bugs) { const k = b.module || 'Không rõ'; m[k] = (m[k] || 0) + 1; }
+    return Object.entries(m).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n); }});
+dash.calc('by_priority', {inputs: ['bugs'], title: 'Bug theo mức ưu tiên', description: 'Đếm bug theo priority, từ cao xuống thấp.',
+  fn: (bugs) => { const o = {Highest: 0, High: 1, Medium: 2, Low: 3, Lowest: 4}; const m = {}; for (const b of bugs) { const k = b.priority || 'Không rõ'; m[k] = (m[k] || 0) + 1; }
+    return Object.entries(m).map(([label, n]) => ({label, n})).sort((a, b) => (o[a.label] ?? 9) - (o[b.label] ?? 9)); }});
+
+const fmt = d3.format(',');
+let onlyTodo = false;
+
+const fillKpis = () => {
+  const d = dash.data('kpi');
+  document.querySelectorAll('#dash-root [data-source="kpi"]').forEach((el) => {
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const k = (el.getAttribute('data-where') || '').split('=')[1];
+    const row = d.data.find((r) => r.k === k);
+    el.textContent = row ? fmt(row.n) : '—';
+    el.classList.remove('dash-skeleton');
+  });
+};
+
+const drawBars = (id, elId, color) => {
+  const el = document.getElementById(elId);
+  const card = el.closest('.r1-card');
+  const d = dash.data(id);
+  el.replaceChildren();
+  if (d.status !== 'ok') return;
+  el.classList.remove('dash-skeleton');
+  // File summary không có cột này (mọi dòng "Không rõ") thì ẩn cả thẻ biểu đồ.
+  card.hidden = d.data.length === 1 && d.data[0].label === 'Không rõ';
+  if (card.hidden) return;
+  const max = Math.max(1, ...d.data.map((r) => r.n));
+  for (const r of d.data) {
+    const row = document.createElement('div'); row.className = 'r1-bar';
+    const name = document.createElement('span'); name.className = 'name'; name.textContent = r.label;
+    const track = document.createElement('div'); track.className = 'track';
+    const fill = document.createElement('div'); fill.className = 'fill';
+    fill.style.width = (r.n / max * 100) + '%'; fill.style.background = color(r.label);
+    track.append(fill);
+    const val = document.createElement('span'); val.className = 'val'; val.textContent = fmt(r.n);
+    row.append(name, track, val); el.append(row);
+  }
+};
+
+const cell = (tr, text, cls) => { const td = document.createElement('td'); if (cls) td.className = cls; td.textContent = text || '—'; tr.append(td); return td; };
+const drawTable = () => {
+  const body = document.getElementById('r1-body');
+  const d = dash.data('bugs');
+  body.replaceChildren();
+  if (d.status !== 'ok') return;
+  const q = document.getElementById('r1-q').value.trim().toLowerCase();
+  let shown = 0;
+  for (const r of d.data) {
+    if (onlyTodo && r.status !== 'To Do') continue;
+    if (q && ![r.key, r.summary, r.assignee, r.module, r.status, r.priority].join(' ').toLowerCase().includes(q)) continue;
+    const tr = document.createElement('tr'); tr.setAttribute('data-key', r.key);
+    cell(tr, r.key, 'k');
+    cell(tr, r.summary, 'sum');
+    const st = cell(tr, r.status); st.className = ''; st.textContent = ''; const p = document.createElement('span');
+    p.className = 'r1-pill' + (r.status === 'To Do' ? ' todo' : ''); p.textContent = r.status; st.append(p);
+    cell(tr, r.assignee);
+    cell(tr, r.module, 'r1-hide-sm');
+    const pr = cell(tr, r.priority); if (r.priority === 'High') pr.className = 'r1-high';
+    body.append(tr); shown++;
+  }
+  if (!shown) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 6; td.className = 'r1-empty'; td.textContent = 'Không có bug nào khớp.'; tr.append(td); body.append(tr); }
+};
+
+const prio = {Highest: 'var(--cds-chart-status-critical)', High: 'var(--cds-chart-status-critical)', Medium: 'var(--cds-chart-muted)', Low: 'var(--cds-chart-muted)', Lowest: 'var(--cds-chart-muted)'};
+const stat = {'To Do': 'var(--cds-chart-status-critical)'};
+dash.onData(() => {
+  fillKpis();
+  drawBars('by_status', 'r1-status', (l) => stat[l] || dash.colors[0]);
+  drawBars('by_assignee', 'r1-assignee', () => dash.colors[0]);
+  drawBars('by_module', 'r1-module', () => dash.colors[0]);
+  drawBars('by_priority', 'r1-priority', (l) => prio[l] || dash.colors[0]);
+  drawTable();
+});
+document.getElementById('r1-q').addEventListener('input', drawTable);
+const setMode = (todo) => { onlyTodo = todo;
+  document.getElementById('r1-all').setAttribute('aria-pressed', String(!todo));
+  document.getElementById('r1-todo').setAttribute('aria-pressed', String(todo)); drawTable(); };
+document.getElementById('r1-all').addEventListener('click', () => setMode(false));
+document.getElementById('r1-todo').addEventListener('click', () => setMode(true));
+</script>
