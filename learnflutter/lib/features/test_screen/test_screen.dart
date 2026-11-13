@@ -369,6 +369,8 @@ class _TestScreenState extends State<TestScreen> {
               const _FeatureCard(title: 'Scroll Physic', description: 'Custom ScrollPhysics — tuỳ chỉnh ma sát / bounce / snap.', routeName: Routes.scrollPhysicScreen, accent: Color(0xFF6366F1)),
               const _FeatureCard(title: 'Indicator Example', description: 'Các kiểu page indicator: dots, line, worm, animated.', routeName: Routes.indicatorExampleScreen, accent: Color(0xFF6366F1)),
               const _FeatureCard(title: 'Flutter 3D Screen', description: 'Render mô hình 3D (.glb/.obj) trực tiếp trong Flutter.', routeName: Routes.flutter3dScreen, accent: Color(0xFF7C3AED)),
+              const _FeatureCard(title: '3D Scene Test', description: 'Chọn model .glb, xoay/zoom, preset camera, auto-rotate, trạng thái loading/lỗi.', routeName: Routes.scene3dTestScreen, accent: Color(0xFF7C3AED)),
+              const _FeatureCard(title: 'House Viewer', description: 'Xem chi tiết ngôi nhà 3D: 4 mặt, từng phòng nội thất, cận cảnh cửa/cửa sổ/ống khói.', routeName: Routes.houseViewerScreen, accent: Color(0xFF7C3AED)),
               const _FeatureCard(title: 'Visibility Detector', description: 'Detect widget có đang visible trong viewport hay không.', routeName: Routes.visibilityDetectorExample, accent: Color(0xFF6366F1)),
               const _FeatureCard(title: 'Tap Builder Demo', description: 'AnimatedTapButton 3D + TapDelayedPressedButton.', routeName: Routes.tapBuilderDemoScreen, accent: Color(0xFFEC4899)),
               AnimatedTapButtonBuilder(

@@ -214,6 +214,13 @@ flutter:
     - assets/json/boudery_hcm.json
     - assets/json/heatmap_port_wh_quick.json
     - assets/3d/business_man.glb
+    - assets/3d/house.glb
+    - assets/3d/house_scene.glb
+    - assets/3d/modules/
+    - assets/3d/house_detailed.glb
+    - assets/3d/house_interior.glb
+    - assets/3d/house_tube.glb
+    - assets/3d/house_tube_interior.glb
     - assets/lottie/refresh_water_drop.json
     - assets/sound/sound_effect_refreshing.wav
     - assets/kml/
@@ -255,3 +262,6 @@ flutter:
 #     # base_url: 'https://dev.api.example.com'
 #     auto_update: true
 
+dependency_overrides:
+  flutter_3d_controller:
+    path: third_party/flutter_3d_controller

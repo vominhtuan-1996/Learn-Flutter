@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learnflutter/features/auth/screens/login_screen.dart';
 import 'package:learnflutter/features/flutter_3d/pages/flutter_3d_screen.dart';
+import 'package:learnflutter/features/scene_3d_test/screens/scene_3d_test_screen.dart';
+import 'package:learnflutter/features/house_viewer/screens/house_viewer_screen.dart';
 import 'package:learnflutter/features/match_entry/screens/match_entry_screen.dart';
 import 'package:learnflutter/features/login/screens/login_page.dart';
 import 'package:learnflutter/shared/components/transformer_page/transformer_page_test_screen.dart';
@@ -390,6 +392,8 @@ class Routes {
 
   static const String visibilityDetectorExample = "visibility_detector_example";
   static const String flutter3dScreen = "flutter_3d_screen";
+  static const String scene3dTestScreen = "scene_3d_test_screen";
+  static const String houseViewerScreen = "house_viewer_screen";
 
   //*regions Chart
   static const String sfCartesianChartPage = "sf_cartesian_chart_page";
@@ -1420,6 +1424,16 @@ class Routes {
         return SlideRightRoute(
           routeSettings: RouteSettings(name: flutter3dScreen),
           builder: (_) => Flutter3dScreen(),
+        );
+      case scene3dTestScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: scene3dTestScreen),
+          builder: (_) => const Scene3dTestScreen(),
+        );
+      case houseViewerScreen:
+        return SlideRightRoute(
+          routeSettings: RouteSettings(name: houseViewerScreen),
+          builder: (_) => const HouseViewerScreen(),
         );
 
       case indicatorExampleScreen:

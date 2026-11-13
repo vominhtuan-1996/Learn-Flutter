@@ -561,10 +561,9 @@ packages:
   flutter_3d_controller:
     dependency: "direct main"
     description:
-      name: flutter_3d_controller
-      sha256: "7b5bcd3deab4a58798e1b2cef382374a4c210badac1853d9ec680f66bb3030b4"
-      url: "https://pub.dev"
-    source: hosted
+      path: "third_party/flutter_3d_controller"
+      relative: true
+    source: path
     version: "2.3.0"
   flutter_animate:
     dependency: "direct main"
